@@ -1,0 +1,36 @@
+'Regular',
+   	'RegularOverTime',
+
+   	'NightDiff',
+   	'RegularOTNightDiff',
+
+	'RestDay',
+	'RestDayOT',
+
+	'RestDayNightDiff',
+	'RestDayNightDiffOT',
+
+	'LegalHoliday',
+	'LegalHolidayOT',
+
+	'LegalHolidayNightDiff',
+	'LegalHolidayNightDiffOT',
+
+	'SpecialHoliday',
+	'SpecialHolidayOT',
+
+	'SpecialHolidayND',
+	'SpecialHolidayNDOT',
+
+	'RestDayLegalHoliday',
+	'RestDayLegalHolidayOT',
+
+	'RestDayLegalHolidayND',
+	'RestDayLegalHolidayNDOT',
+
+
+	'RestDaySpecialHoliday',
+	'RestDaySpecialHolidayOT',
+
+	'RestDaySpecialHolidayND',
+	'RestDaySpecialHolidayNDOT'

@@ -1,0 +1,87 @@
+<label class="col-md-2 control-label">Last name</label>
+										<div class="col-md-4"><input type="text" value='.$lastname.' id = "lastname" onpaste="return false" onDrop="return false" class="form-control cap" name = "employeeid" required="" onKeyPress="return lettersonly(this, event)"></div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-2 control-label">First name</label>
+										<div class="col-md-4"><input type="text" value='.$firstname.' id = "firstname" onpaste="return false" onDrop="return false" class="form-control cap" name = "employeeid" required="" onKeyPress="return lettersonly(this, event)"></div>
+										<label class="col-md-2 control-label">Middle name</label>
+										<div class="col-md-4"><input type="text" value='.$middlename.'  id = "middlename" onpaste="return false" onDrop="return false"  class="form-control cap" name = "employeeid" required="" onKeyPress="return lettersonly(this, event)"></div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-2 control-label">Gender</label>
+										<div class="col-md-4"><select class = "form-control" id = "gender" value = "Select" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select gender...</option><option value = "Male">Male</option><option value = "Female">Female</option></select></div>
+										<label class="col-md-2 control-label">Birthdate</label>
+										<div class="col-md-4"><input id = "birthday" id = "date" type="text"  class="form-control" required="" name="daterange" onKeyPress="return noneonly(this, event)"/></div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-2 control-label">Marital Status</label>
+										<div class="col-md-4"><select class = "form-control" id = "marital" data-default-value="z" required=""><option selected="true" disabled="disabled" value = "" >Select marital status...</option><option value = "Single">Single</option><option value = "Married">Married</option><option value = "Widowed">Widowed</option><option value = "Separated">Separated</option><option value = "Divorced">Divorced</option></select></div>
+									</div>
+									<div class="hr-line-dashed"></div><BR>
+									<div class="form-group"><h2>Contact information<h2></div>
+									<div class="form-group">
+										<label class="col-md-2 control-label">Address</label>
+										<div class="col-md-10"><input id = "address" onpaste="return false" onDrop="return false" type="text" class="form-control cap" name = "employeeid" required=""></div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-2 control-label">City</label>
+										<div class="col-md-4"><input type="text" id = "city" onpaste="return false" onDrop="return false" class="form-control cap" name = "employeeid" required="" onKeyPress="return lettersonly(this, event)"></div>
+										<label class="col-md-2 control-label">ZIP</label>
+										<div class="col-md-4"><input type="text" id = "zip" class="form-control" data-mask="9999" name = "employeeid" required="" onKeyPress="return numbersonly(this, event)"></div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-2 control-label">Email</label>
+										<div class="col-md-4"><input type="email" id = "email" onpaste="return false" onDrop="return false" class="form-control" required="" name = "employeeid"></div>
+										<label class="col-md-2 control-label">Mobile number</label>
+										<div class="col-md-4"><input type="text" id = "mobile" onpaste="return false" onDrop="return false" class="form-control" data-mask="99999999999" name = "employeeid" required="" onKeyPress="return numbersonly(this, event)"></div>
+									</div>
+									<div class="hr-line-dashed"></div><BR>
+									<div class="form-group"><h2>Employee information<h2></div>
+									<div class="form-group">
+										<label class="col-md-2 control-label">Shift type</label>
+										<div class="col-md-4"><select class = "form-control" id = "emptype" value = "Select" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select shift type...</option>  <option value = "Fixed">Fixed</option><option value = "Flexi">Flexi</option><option value = "Shifting">Shifting</option></select></div>
+										<label class="col-md-2 control-label">Department</label>
+										<div class="col-md-4"><input type="text" id = "department" onpaste="return false" onDrop="return false" class="form-control cap" required="" name = "employeeid"></div>
+									</div>									
+									<div class="form-group">
+										<label class="col-md-2 control-label">Job title</label>
+										<div class="col-md-4"><input type="text" id = "jobtitle" onpaste="return false" onDrop="return false" class="form-control cap" name = "employeeid" required="" onKeyPress="return lettersonly(this, event)"></div>
+										<label class="col-md-2 control-label">Monthly rate</label>
+										<div class="col-md-4"><input type="text" id = "rate" onpaste="return false" onDrop="return false"class="form-control" name = "employeeid" required="" onKeyPress="return doubleonly(this, event)"></div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-2 control-label">Tax code</label>
+										<div class="col-md-4"><select class = "form-control" id = "taxcode" name = "taxcode" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select tax code...</option><option value = "Z">Z</option><option value = "S/ME">S/ME</option><option value = "ME1/S1">ME1/S1</option><option value = "ME2/S2">ME2/S2</option><option value = "ME3/S3">ME3/S3</option><option value = "ME4/S4">ME4/S4</option></select></div>
+										<label class="col-md-2 control-label">SSS</label>
+										<div class="col-md-4"> <input type="text"  id = "sss" onpaste="return false" onDrop="return false" class="form-control" data-mask="99-9999999-9" required="" placeholder=""></div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-2 control-label">Philhealth</label>
+										<div class="col-md-4"> <input type="text" id = "philhealth" onpaste="return false" onDrop="return false" class="form-control" data-mask="99-999999999-9" required="" placeholder=""></div>
+										<label class="col-md-2 control-label">HDMF</label>
+										<div class="col-md-4"><input type="text" id = "pagibig" onpaste="return false" onDrop="return false"class="form-control" data-mask="9999-9999-9999" required="" placeholder=""></div>
+									</div>
+									<div class="form-group">	
+										<label class="col-md-2 control-label">TIN</label>
+										<div class="col-md-4"> <input type="text" id = "tin" onpaste="return false" onDrop="return false"class="form-control" data-mask="999-999-999" required="" placeholder=""></div>
+										<label class="col-md-2 control-label">Date hired</label>
+											<div class="col-md-4"><input id = "datehired" id = "date" type="text"  onpaste="return false" onDrop="return false" class="form-control" name="daterange" required="" onKeyPress="return noneonly(this, event)"/></div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-2 control-label">Shift start</label>
+										<div class="col-md-4"><input type="text" id = "shift" onpaste="return false" onDrop="return false" class="form-control timepicker1" required="" name = "employeeid"></div>
+										<label class="col-md-2 control-label">Shift end</label>
+										<div class="col-md-4"><input type="text" id = "shift2" onpaste="return false" onDrop="return false"class="form-control timepicker1" required="" name = "employeeid"></div>
+									</div>    
+									<div class="form-group">
+										<label class="col-md-2 control-label">Rest day</label>
+										<div class="col-md-4"><select class = "form-control" id = "restday" name = "restday" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select rest day...</option><option value = "1">Monday</option><option value = "Tuesday">Tuesday</option><option value = "Wednesday">Wednesday</option><option value = "Thursday">Thursday</option><option value = "Friday">Friday</option><option value = "Saturday">Saturday</option><option value = "Sunday">Sunday</option></select></div>
+										<label class="col-md-2 control-label">Password</label>
+										<div class="col-md-4"> <input type="text" id = "password" onpaste="return false" onDrop="return false" class="form-control" required=""></div>
+									</div>	
+									<div class="form-group">
+										<label class="col-md-2 control-label">Access level</label>
+										<div class="col-md-4"><select class = "form-control" id = "access" name = "access" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select access level...</option><option value = "1">1</option><option value = "2">2</option><option value = "3">3</option></select></div>
+										<label class="col-md-2 control-label">Team</label>
+										<div class="col-md-4"><input type="text" id = "team" onpaste="return false" onDrop="return false" class="form-control cap" name = "team" required=""></div>
+									</div>

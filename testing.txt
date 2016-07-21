@@ -1,0 +1,37 @@
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function (e) {
+	$("#uploadForm").on('submit',(function(e) {
+		e.preventDefault();
+		$.ajax({
+        	url: "upload.php",
+			type: "POST",
+			data:  new FormData(this),
+			contentType: false,
+    	    cache: false,
+			processData:false,
+			success: function(data)
+		    {
+			$("#targetLayer").html(data);
+		    },
+		  	error: function() 
+	    	{
+	    	} 	        
+	   });
+	}));
+});
+</script>								
+
+
+
+
+
+
+
+
+								<div class="col-sm-4">
+											<img class="responsive" id="test" src="img/user/default.png" width="150px" height="150px" id="img1">   
+											<input onchange="readURL(this);"  type="file" id="blogo" name="blogo">
+											<input type="hidden" name="userID" id="userID" value="<?php echo $user; ?>">
+										</div>
