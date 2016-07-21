@@ -442,7 +442,7 @@
 								{
 									if ($result1->num_rows > 0) //display records if any
 									{
-										echo '<form method="POST" action = "editprocessing.php"  class="form-horizontal"><input type="hidden" value="$selection" name="cutsel" id="cutsel">';
+										echo '<form method="POST" action = "editprocessing.php"  class="form-horizontal" id="form1"><input type="hidden" value="$selection" name="cutsel" id="cutsel">';
 										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
@@ -585,7 +585,7 @@
 							<div class="tab-content">
 								<div id="newedit" class="tab-pane fade active in" >
 									<div class="panel-body">
-										<form method="POST" action = "editprocessing.php"  class="form-horizontal">
+										<form method="POST" action = "editprocessing.php"  class="form-horizontal" id="editform">
 										<input type="hidden" value="<?php echo $empid; ?>" name="empid" id="empid"/>
 										<input type="hidden" value="<?php echo $selection;?>" name="cutsel" id="cutsel">
 										<div class="form-group">
@@ -602,20 +602,21 @@
 												<div class="col-sm-4"><select class = "form-control" id = "recurrence" name = "recurrence" required="" ><option value = ""></option><option value = "Once">Once</option><option value = "Multiple">Multiple</option></select></div>
 												<br><br><br> -->
 											<label class="col-sm-3 control-label">Particular</label>
-												<div class="col-md-4" id="partinp" style="display:block;"><input id = "particularsel" name = "particularsel" onkeyup="" type="text" class="form-control"></div>
-												<div class="col-md-4" id="partsel" style="display:none;"><select id = "particularsel" name = "particularsel" onchange="" type="text" class="form-control"></select></div>
+												<div class="col-md-4" id="partinp" style="display:block;"><input id = "particularsel" name = "particularsel" onkeyup="" type="text" class="form-control" required></div>
+												<!-- <div class="col-md-4" id="partsel" style="display:none;"><select id = "particularsel" name = "particularsel" onchange="" type="text" class="form-control" required></select></div> -->
 												<br><br><br>								
 											<label class="col-sm-3 control-label">Amount</label>
 												<div class="col-md-4"><input id = "amount" name = "amount" type="text" class="form-control" onkeyup="filter_amount(this.value)" placeholder="Enter Amount" onKeyPress="return numbersonly(this, event)" required></div>
 												<br><br><br>
 											<label class="col-sm-3 control-label">From</label>
-												<div class="col-md-4" id="frmnew" style="display:block;"><input type="text" id = "fromdate" onpaste="return false" onDrop="return false" class="form-control" name="daterange2" value="<?php echo $initialcut; ?>" readonly></div>
-												<div class="col-md-4" id="frmedit" style="display:none;"><input type="text" id = "fromdate" onpaste="return false" onDrop="return false" class="form-control" name="daterange2" required=""></div>
+												<div class="col-md-4" id="frmnew" style="display:block;"><input type="text" id = "fromdate" class="form-control" name="daterange" value="<?php echo $initialcut; ?>" readonly></div>
+												<!-- <div class="col-md-4" id="frmedit" style="display:none;"><input type="text" id = "fromdate" onpaste="return false" onDrop="return false" class="form-control" name="daterange2" required=""></div> -->
 											<br><br><br>
 												<label class="col-sm-3 control-label">To</label>
 												<div class="col-md-4" id="tonew" style="display:block;"><input type="text" id = "todate" onpaste="return false" onDrop="return false" class="form-control" name="daterange3" placeholder="click to pick date (optional)"></div>
 												<div class="col-md-4" id="toedit" style="display:none;"><input type="text" id = "todate" onpaste="return false" onDrop="return false" class="form-control" name="daterange3"></div>
 										</div>
+										</form>
 									</div>
 								</div>
 								
@@ -687,8 +688,8 @@
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-									<button type="submit" id="editsub" name="editsub" class="btn btn-primary">Submit</button>
-									</form>
+									<button type="submit" id="editsub" name="editsub" class="btn btn-primary" form="editform">Submit</button>
+									
 								</div>
 								
 							</div>
@@ -715,14 +716,14 @@
 		function filter_action(elem){
 			if(elem == 'Edit'){
 				var empid = <?php echo $empid; ?>;
-				document.getElementById('partinp').style.display="none";
+				/*document.getElementById('partinp').style.display="none";
 				document.getElementById('partsel').style.display="block";
 				document.getElementById('frmnew').style.display="none";
 				document.getElementById('frmedit').style.display="block";
 				document.getElementById('tonew').style.display="none";
-				document.getElementById('toedit').style.display="block";
+				document.getElementById('toedit').style.display="block";*/
 				
-				$("#particularsel").load("filter.php?choice=" + elem + "&empid=" + empid);
+				$("#partinp").remove().load("filter.php?choice=" + elem + "&empid=" + empid);
 			}
 			if(elem == 'New'){
 				document.getElementById('partinp').style.display="block";
@@ -767,6 +768,21 @@
 	</script>
 	<script>
 		$(document).ready(function(){
+			/*$('#actionsel').change(function(){
+				var empid = <?php echo $empid; ?>;
+				var info = "choice=" + elem + "&empid=" + empid;
+	             $.ajax({
+
+	                    url: "filter.php",
+	                    type: "GET",
+	                    data:info,
+	                    success: function(data) {
+	                        eval(data);
+	                        alert(data);
+	                    }
+	                });
+	        });*/
+
 			$('#particularsel').change(function(){
 	            var partic = $(this).val();
 	            var elem = $("#actionsel").val();

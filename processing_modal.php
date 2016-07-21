@@ -34,13 +34,16 @@ if($hourly_rate == "0.00"){
 	$hourly_rate = "0";
 }
 
-$total_comp_salary = $mysqli->query("SELECT * FROM total_comp_salary WHERE employee_id=$empid AND cutoff='".$cutoff."'")->fetch_object();
-$comp_id = $total_comp_salary->comp_id;
-$taxable_earnings = sprintf('%.2f',$total_comp_salary->taxable_earnings);
-$nontaxable_earnings = sprintf('%.2f',$total_comp_salary->nontaxable_earnings);
-$taxable_deductions = sprintf('%.2f',$total_comp_salary->taxable_deductions);
-$nontaxable_deductions = sprintf('%.2f',$total_comp_salary->nontaxable_deductions);
-$net_pay = sprintf('%.2f',$total_comp_salary->net_pay);
+$results = $mysqli->query("SELECT * FROM totalcomputation WHERE EmployeeID=$empid AND CutoffID='".$cutoff."'")->fetch_object();
+$comp_id = $results->CompID;
+$taxable_earnings = sprintf('%.2f',$results->TotalTaxableEarnings);
+$nontaxable_earnings = sprintf('%.2f',$results->TotalNonTaxableIncome);
+$taxable_deductions = sprintf('%.2f',$results->TotalTaxableDeduction);
+$nontaxable_deductions = sprintf('%.2f',$results->TotalNonTaxableDeduction);
+$total_statutory_benefits= sprintf('%.2f',$results->TotalStatutoryBenefits);
+$net_income_after_tax = sprintf('%.2f',$results->NetIncomeAfterTax);
+$net_taxable_income = sprintf('%.2f',$results->NetTaxableIncome);
+$net_pay = sprintf('%.2f',$results->NetPay);
 
 
 		echo '<div class="modal-header">
@@ -91,16 +94,19 @@ $net_pay = sprintf('%.2f',$total_comp_salary->net_pay);
 											<label class="col-sm-3 control-label">Payment Schedule:</label>
 											<div class="col-sm-3"><input type="text" id = "password"  name = "password" readonly = "readonly" required="" value="'.$paytype.'"></div>
 									</div>
-								</div>
+								</div>';
 
-								<div id="summary" class="tab-pane" >
+								//summary section
+								//$taxable_earnings=
+
+							echo   '<div id="summary" class="tab-pane" >
 									<div class="panel-body">
 										<div class="form-group"></div>
 											<label class="col-sm-3 control-label">Total Taxable Earnings</label>
 											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" readonly = "readonly" required="" value="'.$taxable_earnings.'"></div>
 										<div class="form-group"></div>
 											<label class="col-sm-3">Net Income After Tax</label>
-											<div class="col-sm-3"><input type="text" id = "password"  name = "password" readonly = "readonly" required=""></div>
+											<div class="col-sm-3"><input type="text" id = "password"  name = "password" readonly = "readonly"  value="'.$net_income_after_tax.'"></div>
 											<br>
 										<div class="form-group"></div>
 											<label class="col-sm-3 control-label">Total Taxable Deduction</label>
@@ -114,7 +120,7 @@ $net_pay = sprintf('%.2f',$total_comp_salary->net_pay);
 										
 										<div class="form-group"></div>
 											<label class="col-sm-3 control-label">Total Statutory Benefits</label>
-											<div class="col-sm-3"><input type = "text" id = "password" name = "password" readonly = "readonly" required="" value=""></div>
+											<div class="col-sm-3"><input type = "text" id = "password" name = "password" readonly = "readonly" required="" value="'.$total_statutory_benefits.'"></div>
 										<div class="form-group"></div>
 											<label class="col-sm-3 control-label">Total Non-Taxable Deduction</label>
 											<div class="col-sm-3"><input type = "text" id = "password" name = "password" readonly = "readonly" required="" value="'.$nontaxable_deductions.'"></div>
@@ -123,7 +129,7 @@ $net_pay = sprintf('%.2f',$total_comp_salary->net_pay);
 											<br>
 										<div class="form-group"></div>	
 											<label class="col-sm-3 control-label">Net Taxable Income</label>
-											<div class="col-sm-3"><input type="text" id = "password"  name = "password" readonly = "readonly" required="" value=""></div>
+											<div class="col-sm-3"><input type="text" id = "password"  name = "password" readonly = "readonly" required="" value="'.$net_taxable_income.'"></div>
 										<div class="form-group"></div>
 											<label class="col-sm-3 control-label">Net Pay</label>
 											<div class="col-sm-3"><input type="text" id = "password" name="password" readonly = "readonly" readonly = "readonly" required="" value="'.$net_pay.'"></div>
@@ -149,7 +155,7 @@ $net_pay = sprintf('%.2f',$total_comp_salary->net_pay);
 													if($emp_earnings->num_rows > 0){
 														while($earn = $emp_earnings->fetch_object()){
 															echo '<tr>';
-															echo '<td>x'.$earn->initial_date.'</td>';
+															echo '<td>'.$earn->initial_date.'</td>';
 															echo '<td>'.$earn->end_date.'</td>';
 															echo '<td>'.$earn->earn_type.'</td>';
 															echo '<td>'.$earn->earn_name.'</td>';
@@ -205,7 +211,7 @@ $net_pay = sprintf('%.2f',$total_comp_salary->net_pay);
 												</tr>
 											</thead>
 											<tbody>';
-													$leave_det = $mysqli->query("SELECT * FROM tbl_leave WHERE employee_id='$empid' AND leave_start BETWEEN '$initialcut' AND '$endcut'");
+													$leave_det = $mysqli->query("SELECT * FROM tbl_leave WHERE employee_id='$empid' AND leave_status != 'Pending' AND leave_start BETWEEN '$initialcut' AND '$endcut'");
 													if($leave_det->num_rows > 0){
 														while($leave = $leave_det->fetch_object()){
 															$duration = "00:00";
@@ -234,29 +240,25 @@ $net_pay = sprintf('%.2f',$total_comp_salary->net_pay);
 											<thead>
 												<tr>
 													<th>Date</th>
-													<th>Paid</th>
-													<th>Payable</th>
+													<th>Type</th>
 													<th>Retro</th>
 													<th>Status</th>
 													<th>Managed By</th>
-													<th>Action</th>
 												</tr>
 											</thead>
 											<tbody>';
-													$others_det = $mysqli->query("SELECT * FROM others WHERE employee_id='$empid' AND attendance_date < '$initialcut' ORDER BY attendance_date DESC");
+													$others_det = $mysqli->query("SELECT * FROM others WHERE employee_id='$empid' AND app_status != 'Pending' AND attendance_date BETWEEN '$initialcut' AND '$endcut' ORDER BY attendance_date DESC");
 													if($others_det->num_rows > 0){
 														while($others = $others_det->fetch_object()){
+															$type = "Additional";
+															if($others->others_paid > $others->others_payable) $type = "Deductable";
+															else $type = "Additional";
 															echo '<tr>';
 															echo '<td>'.$others->attendance_date.'</td>';
-															echo '<td>'.$others->others_paid.'</td>';
-															echo '<td>'.$others->others_payable.'</td>';
+															echo '<td>'.$type.'</td>';
 															echo '<td>'.$others->others_retro.'</td>';
 															echo '<td>'.$others->app_status.'</td>';
 															echo '<td>'.$others->others_approvedby.'</td>';
-															echo '<td>';
-															echo '<a href="#" id="add" class = "add"><button class="btn btn-primary" type="button"><i class="fa fa-check"></i> Add</button></a>&nbsp;';
-															echo '<a href="#" id="delete" class = "delete"><button class="btn btn-warning" type="button"><i class="fa fa-warning"></i> Remove</button></a>';
-															echo '</td>';
 															echo '</tr>';
 														}
 													}

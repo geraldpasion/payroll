@@ -14,7 +14,8 @@
 	}
 
 	if($choice == 'Edit'){
-		echo "<option value=''></option>";
+		echo "<select id = 'particularsel' name = 'particularsel' type='text' class='form-control' required>
+		<option value=''></option>";
 		if($stmt = $mysqli->query("SELECT * FROM emp_earnings WHERE employee_id = '$empid'")){
 			if($stmt->num_rows > 0){
 				while($row = $stmt->fetch_object()){
@@ -29,6 +30,7 @@
 				}
 			}
 		}
+		echo "</select>";
 	}
 	if($choice == 'Earnings'){
 		if($stmt = $mysqli->query("SELECT * FROM emp_earnings WHERE employee_id = '$empid'")){

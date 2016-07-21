@@ -182,16 +182,27 @@
 
 	// COMPUTE LATE
 	if($attend == "inactive") {
-		$mysqli->query("UPDATE attendance SET attendance_late='8' WHERE attendance_id='$attendance_id'");
+		$mysqli->query("UPDATE attendance SET attendance_late='$s_zero' WHERE attendance_id='$attendance_id'");
 	} else if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])){
-		$mysqli->query("UPDATE attendance SET attendance_late='6' WHERE attendance_id='$attendance_id'");
+		$mysqli->query("UPDATE attendance SET attendance_late='$s_zero' WHERE attendance_id='$attendance_id'");
 	}else if($fetch_emp['employee_type'] == "Fixed" || $fetch_emp['employee_type'] == "Shifting"){
 		if(date('H:i', strtotime($timein)) < $shiftArray[0]){
 			if($isNightShift == 0) {
 				$totalLate = "00:00";
-				$mysqli->query("UPDATE attendance SET attendance_late='1' WHERE attendance_id='$attendance_id'");
+				$mysqli->query("UPDATE attendance SET attendance_late='$s_zero' WHERE attendance_id='$attendance_id'");
+			} else {
+				if($from == "index") {
+					$late = date('H:i', strtotime($timein) - strtotime($shiftArray[0]) - strtotime('16:00'));
+				} else {
+					$late = date('H:i', strtotime($timein) - strtotime($shiftArray[0]) - strtotime('03:00'));
+				}
+				$lateArray = array();
+				$lateArray = split(':', $late);
+				$hoursTominutes1 = $lateArray[0]*60;
+				$totalLate = $hoursTominutes1 + $lateArray[1];
+				$mysqli->query("UPDATE attendance SET attendance_late='$totalLate' WHERE attendance_id='$attendance_id'");
 			}
-		}else if(($timein > $shiftArray[0]) || ($isNightShift == 1 && date('H:i', strtotime($timein)) < $shiftArray[0])){
+		}else if($timein > $shiftArray[0]){
 			if($from == "index") {
 				$late = date('H:i', strtotime($timein) - strtotime($shiftArray[0]) - strtotime('16:00'));
 			} else {
@@ -202,15 +213,15 @@
 			$hoursTominutes1 = $lateArray[0]*60;
 			$totalLate = $hoursTominutes1 + $lateArray[1];
 			if($totalLate == "00"){
-				$mysqli->query("UPDATE attendance SET attendance_late='12' WHERE attendance_id='$attendance_id'");
+				$mysqli->query("UPDATE attendance SET attendance_late='$s_zero' WHERE attendance_id='$attendance_id'");
 			}else{
-				$mysqli->query("UPDATE attendance SET attendance_late='5' WHERE attendance_id='$attendance_id'");
+				$mysqli->query("UPDATE attendance SET attendance_late='$totalLate' WHERE attendance_id='$attendance_id'");
 			}
 		}else{
-			$mysqli->query("UPDATE attendance SET attendance_late='14' WHERE attendance_id='$attendance_id'");
+			$mysqli->query("UPDATE attendance SET attendance_late='$s_zero' WHERE attendance_id='$attendance_id'");
 		}
 	}else{//FLEXI
-		$mysqli->query("UPDATE attendance SET attendance_late='13' WHERE attendance_id='$attendance_id'");
+		$mysqli->query("UPDATE attendance SET attendance_late='$s_zero' WHERE attendance_id='$attendance_id'");
 	}
 
 	// COMPUTE UNDERTIME

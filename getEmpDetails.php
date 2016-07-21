@@ -327,9 +327,9 @@
 									echo "<th>Time out</th>";
 									echo "<th>ABS</th>";
 									//echo "<th>REG HRS</th>";
-									echo "<th>LATE (min)</th>";
-									echo "<th>UNDER TIME (min)</th>";
-									echo "<th>OVER BREAK (min)</th>";										
+									echo "<th>LATE</th>";
+									echo "<th>UNDER TIME</th>";
+									echo "<th>OVER BREAK</th>";										
 									//echo "<th>REG OT</th>";
 									echo "<th>Action</th>";
 									echo "</tr>";

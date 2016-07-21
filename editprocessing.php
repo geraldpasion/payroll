@@ -1,7 +1,7 @@
 <script> alert('omggggg');</script>
 <?php
 	include("dbconfig.php");
-	//if(isset($_POST['editsub'])){
+	if(isset($_POST['editsub'])){
 
 		/*$empid = $_POST['empid'];
 		$action = $_POST['actionsel'];
@@ -164,6 +164,6 @@
 			$stmt->execute();
 		 	$stmt->close();
 		}*/
-//	}
+	}
 
 ?>
