@@ -3,6 +3,7 @@ include("dbconfig.php");
 include("payroll_compute2.php");
 $empid = $_REQUEST['empid'];
 $cutoff = $_REQUEST['cutoff'];
+$submit = $_REQUEST['submit'];
 
 $cutarray = array();
 $cutarray = split(" - ", $cutoff);
@@ -240,24 +241,24 @@ $net_pay = sprintf('%.2f',$results->NetPay);
 											<thead>
 												<tr>
 													<th>Date</th>
-													<th>Type</th>
 													<th>Retro</th>
 													<th>Status</th>
+													<th>Approval Date</th>
 													<th>Managed By</th>
 												</tr>
 											</thead>
 											<tbody>';
-													$others_det = $mysqli->query("SELECT * FROM others WHERE employee_id='$empid' AND app_status != 'Pending' AND attendance_date BETWEEN '$initialcut' AND '$endcut' ORDER BY attendance_date DESC");
+													$others_det = $mysqli->query("SELECT * FROM others WHERE employee_id='$empid' AND app_status != 'Pending' AND others_status = 'not paid' AND others_approvaldate <= '$submit' AND others_approvaldate BETWEEN '$initialcut' AND '$endcut' ORDER BY attendance_date");
 													if($others_det->num_rows > 0){
 														while($others = $others_det->fetch_object()){
-															$type = "Additional";
-															if($others->others_paid > $others->others_payable) $type = "Deductable";
-															else $type = "Additional";
+															// $type = "Additional";
+															// if($others->others_paid > $others->others_payable) $type = "Deductable";
+															// else $type = "Additional";
 															echo '<tr>';
 															echo '<td>'.$others->attendance_date.'</td>';
-															echo '<td>'.$type.'</td>';
 															echo '<td>'.$others->others_retro.'</td>';
 															echo '<td>'.$others->app_status.'</td>';
+															echo '<td>'.$others->others_approvaldate.'</td>';
 															echo '<td>'.$others->others_approvedby.'</td>';
 															echo '</tr>';
 														}
@@ -280,7 +281,7 @@ $net_pay = sprintf('%.2f',$results->NetPay);
 			$("#approvedstatus").click(function(){
 				var empid101 = $(this).val();
 				$.ajax({
-		            url: "processingapproval.php?empid="+empid101+"&period="+$("#period").val()+"&absent="+$("#absent").val()+"&reghrs="+$("#reghrs").val()+"&late="+$("#late").val()+"&undertime="+$("#undertime").val()+"&regot="+$("#regot").val()+"&regotnd="+$("#regotnd").val()+"&restot="+$("#restot").val()+"&restot8="+$("#restot8").val()+"&restnd="+$("#restnd").val()+"&restnd8="+$("#restnd8").val()+"&legalot="+$("#legalot").val()+"&legalot8="+$("#legalot8").val()+"&legalnd="+$("#legalnd").val()+"&legalnd8="+$("#legalnd8").val()+"&specialot="+$("#specialot").val()+"&specialot8="+$("#specialot8").val()+"&specialnd="+$("#specialnd").val()+"&specialnd8="+$("#specialnd8").val()+"&legalrestot="+$("#legalrestot").val()+"&legalrestot8="+$("#legalrestot8").val()+"&legalrestnd="+$("#legalrestnd").val()+"&legalrestnd8="+$("#legalrestnd8").val()+"&specialrestot="+$("#specialrestot").val()+"&specialrestot8="+$("#specialrestot8").val()+"&specialrestnd="+$("#specialrestnd").val()+"&specialrestnd8="+$("#specialrestnd8").val(),
+		            url: "processingapproval.php?empid="+empid101",
 		            method: "POST",
 		            success: function(data) {
 		                $("#displaysomething").html(data);

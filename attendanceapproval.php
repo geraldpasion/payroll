@@ -32,11 +32,11 @@ if(isset($_POST['test'])){
 				
 			}
 			.modal-dialog {
-			  width: 1050px;
+			  width: 1047px;
 			}
 
 			.modal-content {
-			  width: 1050px;
+			  width: 1047px;
 			  margin-left: 80px;
 			}
 
@@ -57,16 +57,16 @@ if(isset($_POST['test'])){
 			}
 			#sum{
 				padding-left:25px;
-				width:28%;
+				width:32%;
 			}
 			#sum2{
-				padding:8px;
-				padding-left: 0px;
+				padding-top:5px;
+				padding-bottom:5px;
 				text-align:center;
 			}
 			#sum3{
-				padding-left:50px;
-				width:40%;
+				padding-left:48px;
+				width:46%;
 			}
 		</style>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -926,23 +926,23 @@ $(".modal-body #wew").val( wew );
 									<div class="panel-body">
 										<div class="form-group">
 										<div class="col-sm-2"><b>Employee ID</b></div>
-										<div class="col-sm-1"><input id ="empid" readonly></div>
+										<div class="col-sm-1"><input id ="empid" readonly size="80px"></div>
 										<br>
 										<br>
 										<div class="col-sm-2"><b>Name</b></div>
-										<div class="col-sm-3"><input id="lastname" readonly></div>
+										<div class="col-sm-3"><input id="lastname" readonly size="80px"></div>
 										<br>
 										<br>
 										<div class="col-sm-2"><b>Shift Type</b></div>
-										<div class="col-sm-1"><input id="shifttype" readonly></div>  
+										<div class="col-sm-1"><input id="shifttype" readonly size="80px"></div>  
 										<br>
 										<br>
 										<div class="col-sm-2"><b>Schedule</b></div>
-										<div class="col-sm-1"><input id="schedule" readonly></div>  
+										<div class="col-sm-1"><input id="schedule" readonly size="80px"></div>  
 										<br>
 										<br>
 										<div class="col-sm-2"><b>Restday</b></div>
-										<div class="col-sm-1"><input id="restday" readonly></div>  
+										<div class="col-sm-1"><input id="restday" readonly size="80px"></div>  
 										<br>
 										<br>
 										</div>
@@ -952,7 +952,7 @@ $(".modal-body #wew").val( wew );
 									<div id="summary" class="tab-pane" >
 									<div class="panel-body">
 										<div class="form-group">
-											<table border="0">
+											<table>
 												<tr>
 													<td id="sum"><b>Cut Off Period</b></td>
 													<td id="sum2"><input id="period" style="text-align:center" readonly></td>  

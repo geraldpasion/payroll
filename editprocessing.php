@@ -1,9 +1,9 @@
-<script> alert('omggggg');</script>
+
 <?php
 	include("dbconfig.php");
 	if(isset($_POST['editsub'])){
 
-		/*$empid = $_POST['empid'];
+		$empid = $_POST['empid'];
 		$action = $_POST['actionsel'];
 		$earndeduct = $_POST['earndeduct'];
 		$type = $_POST['type'];
@@ -11,16 +11,16 @@
 		$amount = $_POST['amount'];
 		$particular = $_POST['particularsel'];
 		$selection = $_POST['cutsel'];
-		$initial = date("Y-m-d", strtotime($_POST['daterange2']));
+		
 		$end = $_POST['daterange3'];
 
-		if($end == ""){
-		$end = "0000-00-00";
-		}else{
-			$end = date("Y-m-d", strtotime($_POST['daterange3']));
-		}
-
 		if($action == 'New') {
+			$initial = date("Y-m-d", strtotime($_POST['daterange']));
+			if($end == ""){
+				$end = "0000-00-00";
+			}else{
+				$end = date("Y-m-d", strtotime($_POST['daterange3']));
+			}
 			if($earndeduct == 'Earnings'){
 				if($stmt2 = $mysqli->prepare("INSERT INTO earnings_setting (earnings_name, earnings_max_amount, earnings_type) VALUES ('$particular','$amount','$type')")){
 					$stmt2->execute();
@@ -113,53 +113,55 @@
 				}
 			}
 			header("Location: processing2.php?edited");					
-		}*/
+		}
 
-		/*if($action == 'Edit'){
-			if($earndeduct == 'Earnings'){
-				$attstatus = $mysqli->query("SELECT * FROM total_comp WHERE employee_id = '$empid' AND cutoff='$selection'");
-				if ($attstatus->num_rows > 0) {
-					$row101 = mysqli_fetch_object($attstatus);
-					$comp_id = $row101->comp_id;
-					$cutoffdate = $row101->cutoff;
-					$cutarray = array();
-					$cutarray = split(" - ", $cutoffdate);
-					$keydatefrom = $cutarray[0];
-					$keydatefrom = date("Y-m-d", strtotime($keydatefrom));
-					$keydateto = $cutarray[1];
-					$keydateto = date("Y-m-d", strtotime($keydateto));
+		else if($action == 'Edit'){
+			$initial = date("Y-m-d", strtotime($_POST['daterange1']));
 
-					if(($end != "0000-00-00" && $end >= $keydatefrom) || ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){
-						if($stmt = $mysqli->prepare("UPDATE emp_earnings SET earn_max = '$amount', initial_date = '$initial', end_date = '$end', comp_id = '$comp_id' WHERE employee_id = '$empid' AND earn_name = '$particular' AND earn_type = 'type'")){
+			$attstatus2 = $mysqli->query("SELECT * FROM total_comp WHERE employee_id = '$empid'");
+			if ($attstatus2->num_rows > 0) {
+				$row102 = mysqli_fetch_object($attstatus2);
+				$comp_id = $row102->comp_id;
+				$cutoffdate = $row102->cutoff;
+				$cutarray = array();
+				$cutarray = split(" - ", $cutoffdate);
+				$keydatefrom = $cutarray[0];
+				$keydatefrom = date("Y-m-d", strtotime($keydatefrom));
+				$keydateto = $cutarray[1];
+				$keydateto = date("Y-m-d", strtotime($keydateto));			
+
+				if($earndeduct == 'Earnings'){			
+					if(($end != "" && $end >= $keydatefrom) || ($end == "" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){
+						if($stmt = $mysqli->prepare("UPDATE emp_earnings SET earn_max = '$amount', initial_date = '$initial', end_date = '$end', comp_id = '$comp_id' WHERE employee_id = '$empid' AND earn_name = '$particular' AND earn_type = '$type'")){
+							$stmt->execute();
+						 	$stmt->close();
+						}
+					}
+					else{
+						if($stmt = $mysqli->prepare("UPDATE emp_earnings SET earn_max = '$amount', initial_date = '$initial', end_date = '$end', comp_id = '0' WHERE employee_id = '$empid' AND earn_name = '$particular' AND earn_type = '$type'")){
+							$stmt->execute();
+						 	$stmt->close();
+						}
+					}
+				}
+
+				if($earndeduct == 'Deductions'){				
+					if(($end != "" && $end >= $keydatefrom) || ($end == "" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){
+						if($stmt = $mysqli->prepare("UPDATE emp_deductions SET deduct_max = '$amount', initial_date = '$initial', end_date = '$end', comp_id = '$comp_id' WHERE employee_id = '$empid' AND deduct_name = '$particular' AND deduct_type = '$type'")){
+							$stmt->execute();
+						 	$stmt->close();
+						}
+					}
+					else{
+						if($stmt = $mysqli->prepare("UPDATE emp_deductions SET deduct_max = '$amount', initial_date = '$initial', end_date = '$end', comp_id = '0' WHERE employee_id = '$empid' AND deduct_name = '$particular' AND deduct_type = '$type'")){
 							$stmt->execute();
 						 	$stmt->close();
 						}
 					}
 				}
 			}
-
-			if($earndeduct == 'Deductions'){
-				$attstatus = $mysqli->query("SELECT * FROM total_comp WHERE employee_id = '$empid' AND cutoff='$selection'");
-				if ($attstatus->num_rows > 0) {
-					$row101 = mysqli_fetch_object($attstatus);
-					$comp_id = $row101->comp_id;
-					$cutoffdate = $row101->cutoff;
-					$cutarray = array();
-					$cutarray = split(" - ", $cutoffdate);
-					$keydatefrom = $cutarray[0];
-					$keydatefrom = date("Y-m-d", strtotime($keydatefrom));
-					$keydateto = $cutarray[1];
-					$keydateto = date("Y-m-d", strtotime($keydateto));
-					if(($end != "0000-00-00" && $end >= $keydatefrom) || ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){
-						if($stmt = $mysqli->prepare("UPDATE emp_deductions SET deduct_max = '$amount', initial_date = '$initial', end_date = '$end', comp_id = '$comp_id' WHERE employee_id = '$empid' AND deduct_name = '$particular' AND deduct_type = 'type'")){
-							$stmt->execute();
-						 	$stmt->close();
-						}
-					}
-				}
-			}	
 			header("Location: processing2.php?edited");			
-		}*/
+		}
 		/*if($stmt = $mysqli->prepare("UPDATE total_comp_salary SET  WHERE employee_id = '$empid' ")){
 			$stmt->execute();
 		 	$stmt->close();

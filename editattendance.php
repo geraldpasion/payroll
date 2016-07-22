@@ -29,24 +29,24 @@ $daytype = $_POST['daytype'];
 $status = $_POST['status'];
 $emptype = $_POST['emptype'];
 
-if($emptype == "Flexi") {
-	if($daytype == "Regular" || $daytype == "Special Holiday") {
-		if($attend == "Present") {
-			$absentbool = 0;
-			$status = "timeout";
-		} else if($attend == "Absent") {
-			$absentbool = 1;
-			$status = "inactive";
-		}
-	} else {
-		$absentbool = 0;
-		if($attend == "Present") {
-			$status = "timeout";
-		} else if($attend == "Absent") {
-			$status = "inactive";
-		}
-	}
-} else {
+// if($emptype == "Flexi") {
+// 	if($daytype == "Regular" || $daytype == "Special Holiday") {
+// 		if($attend == "Present") {
+// 			$absentbool = 0;
+// 			$status = "timeout";
+// 		} else if($attend == "Absent") {
+// 			$absentbool = 1;
+// 			$status = "inactive";
+// 		}
+// 	} else {
+// 		$absentbool = 0;
+// 		if($attend == "Present") {
+// 			$status = "timeout";
+// 		} else if($attend == "Absent") {
+// 			$status = "inactive";
+// 		}
+// 	}
+//} else {
 	if($daytype == "Regular") {
 		if($attend == "Present") {
 			$absentbool = 0;
@@ -63,7 +63,7 @@ if($emptype == "Flexi") {
 			$status = "inactive";
 		}
 	}
-}
+//}
 
 if($timein != "") {
 	$len = strlen($timein);

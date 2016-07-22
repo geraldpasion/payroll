@@ -102,7 +102,11 @@
 									if(isRestDay($dateWithDayArray, $restdayArray)) {
 										$mysqli->query("UPDATE attendance SET attendance_daytype='Rest and Legal Holiday' WHERE attendance_id = '$maxes2' AND employee_id = '$username' AND attendance_date BETWEEN '$mindate[0]' AND '$yesterday' AND attendance_status = 'inactive'");	
 									} else {
-										$mysqli->query("UPDATE attendance SET attendance_daytype='Legal Holiday' WHERE attendance_id = '$maxes2' AND employee_id = '$username' AND attendance_date BETWEEN '$mindate[0]' AND '$yesterday' AND attendance_status = 'inactive'");	
+										if($fetch_emp['employee_type'] == "Flexi") {
+											$mysqli->query("UPDATE attendance SET attendance_daytype='Legal Holiday' WHERE attendance_id = '$maxes2' AND employee_id = '$username' AND attendance_date BETWEEN '$mindate[0]' AND '$yesterday' AND attendance_status = 'inactive'");	
+										} else {
+											$mysqli->query("UPDATE attendance SET LH_OT='8.00', attendance_daytype='Legal Holiday' WHERE attendance_id = '$maxes2' AND employee_id = '$username' AND attendance_date BETWEEN '$mindate[0]' AND '$yesterday' AND attendance_status = 'inactive'");	
+										}
 									}
 								} else {
 									if(isRestDay($dateWithDayArray, $restdayArray)) {

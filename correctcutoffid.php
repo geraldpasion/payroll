@@ -6,7 +6,7 @@
 //require 'rb.php';
 include 'functions.php';
 
-compute('2016-06-01 - 2016-07-15');
+compute('2016-07-23 - 2016-07-31');
 
 ?>
 </font>

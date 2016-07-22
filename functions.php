@@ -55,7 +55,7 @@ function get_table($tablename){
 }//end of get_table
 
 //pass cutoff
-function compute($cutoff_field){
+function compute($cutoff_field, $update){
 include 'dbconfig.php';
 include 'payroll_compute.php';
 include 'statutory_benefits_compute.php';
@@ -198,6 +198,8 @@ if ($result->num_rows > 0) {
 
         $insert_statement_val_taxable_earnings="";
 
+//*****************************************************compute OT******************************************
+
 echo "<table border=1>";
 
 
@@ -237,9 +239,20 @@ echo "</table>";
         //for insert statement
         $NetTaxableIncomeWithoutDeductions=$NetTaxableIncome;
 
+       
+
+
+//*****************************************Retro************************************************
+        
+$Total_Retro = retro($employee_id, $HourlyRatePay);
+
+
+
+
+//*****************************************************compute deductions here*************************************
+        //initialize
         $total_deductions = 0;
         $insert_statement_deductions="";
-        //compute deductions here
         foreach ($fields as $field){
             //output only date with fields equivalent to $hours_field array
             if(in_array($field, $deduction_fields)){ // syntax: (a string, array of strings)
@@ -267,12 +280,21 @@ echo "</table>";
         }
 
         echo "Gross Income w/ OT: ".$GrossTaxableIncome.nextline();
-        echo "Total (absent, late, ut): ".$total_deductions.nextline();
+        echo "Deductions (absent, late, ut): ".$total_deductions.nextline();
 
         //SSS, Pagibig, PhilHealth
         //Based on gross income
         
 
+        //*************************other Taxable earnings and deductions*********************/
+        //Note: functions can be found on other_earnings_and_deductions.php
+        $other_earnings=compute_other_earnings($comp_id);
+        echo "Other Taxable Earnings: ".$other_earnings.nextline();
+
+        $other_deductions=compute_other_deductions($comp_id);
+        echo "Other Taxable Deductions: ".$other_deductions.nextline();
+
+        $NetTaxableIncome = $NetTaxableIncome + $other_earnings - $other_deductions;
 
         //get cutoff and taxcode
         $sql_taxcode = "SELECT employee_taxcode, cutoff FROM employee WHERE employee_id=$employee_id";
@@ -286,9 +308,18 @@ echo "</table>";
                 }               
         }//end of get employee rate
 
+        //$withoutStatutory = $NetTaxableIncome;
+
+        $earnings = $GrossTaxableIncome + $other_earnings;
+        $deductions = $total_deductions + $other_deductions;
+
+        $withoutStatutory = $earnings-$deductions;
 
 
-        echo "Net Taxable Income w/o Statutory Benefits (including OT - deductions [absent, late undertime]): ".$NetTaxableIncome.nextline();
+
+
+
+        echo "Net Taxable Income w/o Statutory Benefits (Gross Income w/ OT - Deductions + Other Taxable Earnings - Other Taxable Deductions): ".$withoutStatutory.nextline();
 
         //************************************Statutory Benefits**************************
 
@@ -302,7 +333,7 @@ echo "</table>";
         
         //SSS
         //semi monthly EE/2
-        $sss_val=sss_compute($NetTaxableIncome);
+        $sss_val=sss_compute($withoutStatutory);
         
         if($cutoff=='Semi-monthly'){
              //$sss_val=$sss_val/2;
@@ -313,33 +344,31 @@ echo "</table>";
 
         //Pagibig
         //divided by 2 for semi monthly
-        $pagibig_val=pagibig_compute($NetTaxableIncome);
+        $pagibig_val=pagibig_compute($withoutStatutory);
         echo "PAG-IBIG: ".$pagibig_val.nextline();
         $Statutory_total=$Statutory_total+$pagibig_val;
 
         //PhilHealth
         //divided by 2 for semi monthly
-        $philhealth_val=philhealth_compute($NetTaxableIncome);
+        $philhealth_val=philhealth_compute($withoutStatutory);
         echo "PhilHealth: ".$philhealth_val.nextline();
         $Statutory_total=$Statutory_total+$philhealth_val;
 
         echo nextline();
         //total statutory benefits (add all)    
-        echo "Total Statutory Benefits: ".$Statutory_total.nextline();
+        echo "Total Statutory Benefits: ".$Statutory_total.doubleline();
 
         //add $Statutory_total to $total_deductions
-        $total_deductions=$total_deductions+$Statutory_total;
+        //$total_deductions=$total_deductions+$Statutory_total;
 
+        $NetTaxableIncome = $withoutStatutory - $Statutory_total;
 
-        //*************************other earnings and deductions*********************/
-        //Note: functions can be found on other_earnings_and_deductions.php
-        $other_earnings=compute_other_earnings($comp_id);
+        //echo "w/ Statutory(Net Taxable Income - Total Statutory Benefits): ".$withStatutory.nextline();
 
-        $other_deductions=compute_other_deductions($comp_id);
+        echo nextline()."NetTaxableIncome(Net Income w/o Statutory - Total Statutory Benefits): ".$NetTaxableIncome.nextline();
 
-        $total_other_earnings=$OTearnings+$other_earnings;
-
-        echo "Total Taxable Earnings (OT + others): ".$total_other_earnings.nextline();;
+       // echo "Total Other Taxable Deduction: ".$other_deductions.nextline();
+        //echo "Total Taxable Earnings (others + net income w/o statutory): ".$total_other_earnings.nextline();;
         //echo "Total Taxable Deductions: ".$other_deductions.nextline();;
 
         //do math here
@@ -351,11 +380,11 @@ echo "</table>";
 
 
 
-        echo "Total Taxable Deductions (Absent, Late, UT, Statutory Benefits, Others): ".$total_deductions.nextline();
+       // echo "Total Taxable Deductions (Absent, Late, UT, Statutory Benefits, Others): ".$total_deductions.nextline();
 
         //deduct to NetTaxableIncome;
-        $NetTaxableIncome=$NetTaxableIncome-$total_deductions;
-        echo "NetTaxableIncome: ".$NetTaxableIncome."<br>";
+        //$NetTaxableIncome=$total_other_earnings-$total_deductions;
+        //echo "NetTaxableIncome: ".$NetTaxableIncome."<br>";
         echo "<br>";
 
 
@@ -521,7 +550,7 @@ echo "</table>";
              //TotalTaxableEarnings, TotalTaxableDeduction, TotalStatutoryBenefits, NetTaxableIncome, NetIncomeAfterTax, 
              //TotalNonTaxableIncome, TotalNonTaxableDeduction, NetPay
 
-
+             //tcf - totalcomputation filed
 
              if ($tcf=='CompID')
                 $values=$values."'".$comp_id."'";
@@ -538,9 +567,9 @@ echo "</table>";
              else if ($tcf=='HourlyRate')
                 $values=$values."'".$HourlyRatePay."'";
              else if ($tcf=='TotalTaxableEarnings')
-                $values=$values."'".$GrossTaxableIncome."'";
+                $values=$values."'".$earnings."'";
              else if ($tcf=='TotalTaxableDeduction')
-                $values=$values."'".$total_deductions."'";
+                $values=$values."'".$deductions."'";
              else if ($tcf=='TotalStatutoryBenefits')
                 $values=$values."'".$Statutory_total."'";
              else if ($tcf=='NetTaxableIncome')
@@ -582,7 +611,7 @@ echo "</table>";
          insert_statement($into, $values, 'totalcomputation');
          }
 
-         echo "=============================================================================".nextline();
+         echo nextline()."=============================================================================".nextline();
          echo nextline();
 
          //view_all('total_comp_salary', $comp_id);
@@ -705,6 +734,143 @@ include 'dbconfig.php';
 }//end function
 
 
+function retro($employee_id, $HourlyRatePay){
+
+    include 'dbconfig.php';
+    //include 'payroll_compute.php';
+
+      $table='others';
+
+     $fields=get_fieldnames($table);
+
+     foreach ($fields as $field){
+      //  echo "'".$field."',".nextline();;
+     }
+
+
+$retro_fields = array (
+//'others_id',
+//'employee_id',
+//'attendance_shift',
+//'attendance_restday',
+//'attendance_date',
+//'attendance_timein',
+//'attendance_breakout',
+//'attendance_breakin',
+//'attendance_timeout',
+//'others_paid',
+//'others_payable',
+//'others_retro',
+//'others_reason',
+//'app_status',
+//'others_status',
+//'others_approvedby',
+//'others_approvaldate',
+//'others_remarks',
+//'attendance_remarks',
+'attendance_hours',
+'attendance_absent',
+'attendance_late',
+'attendance_overtime',
+'attendance_undertime',
+//'attendance_overbreak',
+'attendance_nightdiff',
+'REG_OT_ND',
+'RST_OT',
+'RST_OT_GRT8',
+'RST_ND',
+'RST_ND_GRT8',
+'LH_OT',
+'LH_OT_GRT8',
+'LH_ND',
+'LH_ND_GRT8',
+'SH_OT',
+'SH_OT_GRT8',
+'SH_ND',
+'SH_ND_GRT8',
+'RST_LH_OT',
+'RST_LH_OT_GRT8',
+'RST_LH_ND',
+'RST_LH_ND_GRT8',
+'RST_SH_OT',
+'RST_SH_OT_GRT8',
+'RST_SH_ND',
+'RST_SH_ND_GRT8',
+'leave_hrs',
+//'attendance_status',
+//'status',
+//'attendance_daytype',
+    );
+
+
+     //$sql = "SELECT * FROM $table WHERE employee_id=$employee_id";
+     $sql = "SELECT * FROM $table";
+ echo "<table border=1>";
+     $result = $conn->query($sql);
+         if ($result->num_rows > 0) {
+
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                echo "<tr>";
+               
+                foreach ($fields as $field) {
+                
+                //only compute fields to consider
+                if (in_array($field, $retro_fields)) { 
+
+                    //compute value
+                    $funct=strtolower($field);
+
+                    //tweak some fields to match function names at lowercase
+                    if ($funct=='attendance_hours')
+                        $funct='reg_hrs';
+                    else if ($funct=='attendance_absent')
+                        $funct='absent';
+                    else if ($funct=='attendance_late')
+                        $funct='late';
+                     else if ($funct=='attendance_overtime')
+                        $funct='reg_ot';
+                     else if ($funct=='attendance_undertime')
+                        $funct='undertime';
+                     else if ($funct=='attendance_nightdiff')
+                        $funct='reg_nd';
+                   
+                    
+
+                    $rowid=$row[$field];
+                    echo "<td><font color=white>";
+
+                    echo $funct."=";
+
+                    echo $field.": ".$row[$field]."";
+
+                    echo nextline();
+
+                    if($funct=='absent'){
+
+                        $totaltime_per_day=dailyhours($employee_id);
+                        //echo "employee total time per day: ".$totaltime_per_day.nextline();
+                    }
+                    else
+                    $value=$funct($row[$field], $HourlyRatePay);
+                    echo "val: ".$value;
+
+                    echo "</font></td>";
+                }//end if
+                
+
+                }
+            echo nextline();
+
+             echo '</tr>';   
+             }
+          }
+          else
+            echo "no retro".nextline();
+
+
+    echo "</table>";
+}
 
 
 

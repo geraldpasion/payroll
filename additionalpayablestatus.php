@@ -182,6 +182,7 @@
 										echo "<th>End</th>";
 										echo "<th>Reason</th>";
 										echo "<th>Status</th>";
+										echo "<th>Date Approved</th>";
 										echo "<th>Managed by</th>";
 										echo "</tr>";
 										echo "</thead>";
@@ -253,6 +254,7 @@
 											echo "<td>" . $timeout . "</td>";
 											echo "<td>" . $row->others_reason . "</td>";
 											echo "<td>" . $row->app_status . "</td>";
+											echo "<td>" . $row->others_approvaldate . "</td>";
 											echo "<td>" . $row->others_approvedby. "</td>";
 										}
 										echo "</table>";

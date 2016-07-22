@@ -195,46 +195,44 @@ document.frmUser.submit();
 			var info = 'cutoff_id1=' + cutoff_id;
 		   	$("#myModal4").modal("hide");
 			swal({   title: "Are you sure?",   text: "You will not be able to recover this imaginary file!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, delete it!",   closeOnConfirm: false }, function(){   swal("Deleted!", "Your imaginary file has been deleted.", "success");
-			 $.ajax({
-			   type: "POST",
-			   url: "deletecutoff.php",
-			   data: info,
-			   success: function(){
-				 //refresh ajax of dropdown cutoff
-				 $.ajax({
+				$.ajax({
 				   type: "POST",
-				   url: "cutoffrefreshdropdown.php",
-				   success: function(data){
-		 			$(this).parents(".josh").remove();
-				   	$('#leavetype').html(data);
-				 }
-				});
-			 }
-			});
+				   url: "deletecutoff.php",
+				   data: info,
+				   success: function(){
+				   		$(element).parents(".josh").remove();
+					 //refresh ajax of dropdown cutoff
+						 $.ajax({
+						   type: "POST",
+						   url: "cutoffrefreshdropdown.php",
+						   	success: function(data){
+							   	$('#leavetype').html(data);
+							}
+						});
 
-			 $('#success').fadeIn(300).delay(3200).fadeOut(300);
-			 $(window).scrollTop(0);
-			 toastr.options = { 
-				"closeButton": true,
-				"debug": false,
-				"progressBar": true,
-				"preventDuplicates": true,
-				"positionClass": "toast-top-right",
-				"onclick": null,
-				"showDuration": "400",
-				"hideDuration": "1000",
-				"timeOut": "7000",
-				"extendedTimeOut": "1000",
-				"showEasing": "swing",
-				"hideEasing": "linear",
-				"showMethod": "fadeIn",
-				"hideMethod": "fadeOut" // 1.5s
-				}
-				toastr.success('Cutoff successfully Deleted!');
-			
-			 
-			return false;
-			 });
+					}
+				});		
+				$('#success').fadeIn(300).delay(3200).fadeOut(300);
+					 $(window).scrollTop(0);
+					 toastr.options = { 
+						"closeButton": true,
+						"debug": false,
+						"progressBar": true,
+						"preventDuplicates": true,
+						"positionClass": "toast-top-right",
+						"onclick": null,
+						"showDuration": "400",
+						"hideDuration": "1000",
+						"timeOut": "7000",
+						"extendedTimeOut": "1000",
+						"showEasing": "swing",
+						"hideEasing": "linear",
+						"showMethod": "fadeIn",
+						"hideMethod": "fadeOut" // 1.5s
+						}
+						toastr.success('Cutoff successfully Deleted!');
+			 	
+				});
 			});
 			});
 		</script>
@@ -529,23 +527,23 @@ $(document).ready(function(){
     <script src="js/timepicki.js"></script>
     <script type="text/javascript">
 			$("#addCutoff").click(function(){
-			var daterange2 = $("#daterange2").val();
-			var daterange3 = $("#daterange3").val();
-			 $.ajax({
-			   type: "POST",
-			   url: "cutoffexe.php?daterange2=" + daterange2 + "&daterange3=" + daterange3,
-			   success: function(data){
-				eval(data);
-
+				var daterange2 = $("#daterange2").val();
+				var daterange3 = $("#daterange3").val();
 				 $.ajax({
 				   type: "POST",
-				   url: "cutoffrefreshdropdown.php",
+				   url: "cutoffexe.php?daterange2=" + daterange2 + "&daterange3=" + daterange3,
 				   success: function(data){
-				   	$('#leavetype').html(data);
-				 }
+						eval(data);
+
+						$.ajax({
+						   type: "POST",
+						   url: "cutoffrefreshdropdown.php",
+						   success: function(data){
+						   		$('#leavetype').html(data);
+							}
+						});
+					}
 				});
-			 }
-			});
 				showAdded=function(){
 					toastr.options = {
 						"closeButton": true,

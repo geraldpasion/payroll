@@ -311,7 +311,7 @@ function rst_sh_nd($HoursAttended, $HourlyRatePay){
 
 
 //*********************compute deductions
-function absent($HoursAttended, $HourlyRatePay, $employee_id, $comp_id){
+function absent($HoursAttended, $HourlyRatePay, $employee_id, $comp_id, $table_pass){
 include 'dbconfig.php';
 
 //get shift from employee
@@ -349,7 +349,7 @@ $result = $conn->query($sql);
 
       //get value of absent from total_comp, $comp_id is needed
       //hours per day x total days absent = absent total hours
-      $total_absent_hours=total_absent_hours($totaltime_per_day, $comp_id);
+      $total_absent_hours=total_absent_hours($totaltime_per_day, $comp_id, $table_pass);
       echo "total time absent (hours): ".$total_absent_hours.nextline();
 
       //compute absent rate;
@@ -439,12 +439,16 @@ return $total_undertime_deduction;
   
 }
 
-function total_absent_hours($totaltime_per_day, $comp_id){
+function total_absent_hours($totaltime_per_day, $comp_id, $table){
 
   include 'dbconfig.php';
 
-  $table='total_comp';
+  //$table='total_comp';
+if($table=='total_comp')
 $sql = "SELECT absent FROM $table WHERE comp_id=$comp_id";
+else if($table=='others')
+$sql = "SELECT absent FROM $table WHERE employee_id=$comp_id";
+
 $result = $conn->query($sql);
   if ($result->num_rows > 0) {
 

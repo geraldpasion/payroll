@@ -1,6 +1,5 @@
 <?php 
 include("dbconfig.php");
-
 function computeHours($timein, $timeout) { // computes the difference in time
 	$timeinArray = array();
 	$timeinArray = split(":", $timein);
@@ -62,57 +61,53 @@ function computeND($timein, $timeout) { // computes the night differential in a 
 	return sprintf("%.2f", $resArr[0] + $resMin);
 }
 
-$holidayid = $_POST['holiday_id1'];
-$dateRow = $mysqli->query("SELECT * FROM holiday where holiday_id = '$holidayid'")->fetch_array();
-$date = $dateRow['holiday_date'];
-$employeeIDs = array();
+$fromAttendance = $_POST['urlfrom'];
+$id = $_POST['urlid'];
+$datef = $_POST['urldatef'];
+$datet = $_POST['urldatet'];
+$datefArr = split('/', $datef);
+$start = sprintf("%04d", $datefArr[0]) . "-".sprintf("%02d", $datefArr[1]) . "-" . sprintf("%02d", $datefArr[2]);
+$datetArr = split('/', $datet);
+$end = sprintf("%04d", $datetArr[0]) ."-". sprintf("%02d", $datetArr[1]) . "-" . sprintf("%02d", $datetArr[2]);
+//$attendanceid = $_POST['attendanceid'];
+$format = 'Y-m-d';
+$array = array();
+$interval = new DateInterval('P1D');
 
-if($result = $mysqli->query("SELECT * FROM attendance where attendance_date = '$date'")) {
-	if($result->num_rows > 0) {
-		while ($row = $result->fetch_object()) {
-			$type = $row->attendance_daytype;
-			$employeeIDs[] = $row->employee_id;
-			if($type == "Rest and Legal Holiday" || $type == "Rest and Special Holiday") {
-				if($stmt2 = $mysqli->prepare("UPDATE attendance SET attendance_daytype='Rest Day' WHERE attendance_id = '$row->attendance_id'")) {
-					$stmt2->execute();
-					$stmt2->close();
-				}
-			} else {
-				if($stmt2 = $mysqli->prepare("UPDATE attendance SET attendance_daytype='Regular' WHERE attendance_id = '$row->attendance_id'")) {
-					$stmt2->execute();
-					$stmt2->close();
-				}
-			}
-		}
-	}
+$realEnd = new DateTime($end);
+$realEnd->add($interval);
+
+$period = new DatePeriod(new DateTime($start), $interval, $realEnd);
+$datectr = 0;
+foreach($period as $date) { 
+    $array[] = $date->format($format); 
+    $datectr++;
 }
 
-// insert the new record into the database
-if ($stmt = $mysqli->prepare("DELETE FROM holiday WHERE holiday_id = '$holidayid'"))
-{
-	$stmt->execute();
-	$stmt->close();
-}
-// show an error if the query has an error
-else
-{
-	echo "ERROR: Could not prepare SQL statement.";
-}
+$employeeData = $mysqli->query("SELECT * FROM employee WHERE employee_id = '$id'")->fetch_array();
+$username = $employeeData['employee_id'];
+$password = $employeeData['employee_password'];
 
-foreach($employeeIDs as $emp) {
-	$employeeData = $mysqli->query("SELECT * FROM employee WHERE employee_id = '$emp'")->fetch_array();
-	$username = $employeeData['employee_id'];
-	$password = $employeeData['employee_password'];
+$sel_user = "SELECT * from employee where employee_id='$username' AND employee_password='$password' AND employee_status = 'active'";
+$run_user = mysqli_query($mysqli, $sel_user);
+$fetch_emp = mysqli_fetch_array($run_user);
 
-	$sel_user = "SELECT * from employee where employee_id='$username' AND employee_password='$password' AND employee_status = 'active'";
-	$run_user = mysqli_query($mysqli, $sel_user);
-	$fetch_emp = mysqli_fetch_array($run_user);
-
-	$attendanceData = $mysqli->query("SELECT * FROM attendance WHERE employee_id='$emp' AND attendance_date = '$date'")->fetch_array();
+for($j=0; $j<$datectr; $j++) {
+	
+	$currentdate = $array[$j];
+	$attendanceQuery = $mysqli->query("SELECT * FROM attendance WHERE employee_id='$id' AND attendance_date = '$currentdate'");
+	if($attendanceQuery->num_rows > 0) {
+	$attendanceData = $mysqli->query("SELECT * FROM attendance WHERE employee_id='$id' AND attendance_date = '$currentdate'")->fetch_array();
 	$maxes2 = $attendanceData['attendance_id'];
 	$from = "edit";
 	include("updateattendance2.php");
 }
-	header("Location: legalholiday.php");
+	//unset("computeHours");
+	//unset("computeND");
+}
+
+
+// redirec the user
+header("Location: getEmpDetails.php?from=".$fromAttendance."&id=".$id."&datef=".$datef."&datet=".$datet."&edited&".$maxes2);
 
 ?>

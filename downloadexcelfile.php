@@ -50,6 +50,8 @@ $col='A'; //column count
 $row='4';
 foreach ($heads as $key => $value){
 	$cell=$col.$row;
+
+	//place value here
 	$objPHPExcel -> getActiveSheet() -> setCellValue($cell, $value);
 
 	//style each cell
@@ -76,6 +78,19 @@ foreach ($heads as $key => $value){
 	$objPHPExcel->getActiveSheet()->getStyle($cell)->getAlignment()->setWrapText(true); 
 
 	$col++;
+}
+
+
+//values from table here
+$sql = "SELECT * FROM $table WHERE cutoff='$cutoff_field'";
+
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+    }
+ }
 }
 
 

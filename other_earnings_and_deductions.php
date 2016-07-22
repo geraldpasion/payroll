@@ -18,7 +18,7 @@ include 'dbconfig.php';
         else
             $taxable_income=0;
 
-         echo "Other Taxable Earnings: ".$taxable_income.nextline();
+         //echo "Other Taxable Earnings: ".$taxable_income.nextline();
 
         return $taxable_income;
 
@@ -43,7 +43,7 @@ include 'dbconfig.php';
         else
             $taxable_deductions=0;
 
-        echo "Other Taxable Deductions: ".$taxable_deductions.nextline();
+        //echo "Other Taxable Deductions: ".$taxable_deductions.nextline();
 
         return $taxable_deductions;
 

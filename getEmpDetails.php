@@ -317,7 +317,7 @@
 									echo "<tr>";
 									//echo "<th>Name</th>";
 									echo "<th>Date</th>";
-									echo "<th>Type of Day</th>";
+									echo "<th>Type</th>";
 									//echo "<th>Shift Type</th>";
 									echo "<th>Rest Days</th>";
 									echo "<th>Shift Schedule</th>";
@@ -368,22 +368,28 @@
 
 										// checks type of day
 										$typeOfDay = "Regular";
+										$typeOfDay2 = "REG";
 										if($dateRow = $mysqli->query("SELECT * FROM holiday where holiday_date = '$dateWithDayArray[0]'")->fetch_array()) {
 											if($dateRow['holiday_type'] == "Regular" || $dateRow['holiday_type'] == "Legal") {
 												if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])) {
 													$typeOfDay = "Rest & Legal Holiday";
+													$typeOfDay2 = "RST/LH";
 												} else {
 													$typeOfDay = "Legal Holiday";
+													$typeOfDay2 = "LH";
 												}
 											} else {
 												if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])) {
 													$typeOfDay = "Rest & Special Holiday";
+													$typeOfDay2 = "RST/SH";
 												} else {
 													$typeOfDay = "Special Holiday";
+													$typeOfDay2 = "SH";
 												}
 											}
 										} else if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])) {
 											$typeOfDay = "Rest Day";
+											$typeOfDay2 = "RD";
 										}
 
 										if($row->attendance_timein == "") {
@@ -425,7 +431,7 @@
 										echo "<tr>";
 										//echo "<td>" . $row->employee_firstname . " " . $row->employee_lastname . "</td>";
 										echo "<td>" . date("Y-m-d",strtotime($row->attendance_date)) . "</td>";
-										echo "<td>". $typeOfDay . "</td>";
+										echo "<td>". $typeOfDay2 . "</td>";
 										//echo "<td>" . $row->employee_type . "</td>";
 
 										// for printing of rest days
@@ -561,7 +567,15 @@
 						
 						echo "</form>";
 					?>
+					<!--form method = "post" action="updateall.php">
+						<input type="hidden" id = "urlfrom" name = "urlfrom" value="<?php echo $fromAttendance ?>">
+						<input type="hidden" id = "urlid" name = "urlid" value="<?php echo $id ?>">
+						<input type="hidden" id = "urldatef" name = "urldatef" value="<?php echo $datef ?>">
+						<input type="hidden" id = "urldatet" name = "urldatet" value="<?php echo $datet ?>">
+						<button type="update" class="btn btn-primary">Update</button>
+					</form-->
 				</div>
+
 			</div>
 		</div>
     </div>

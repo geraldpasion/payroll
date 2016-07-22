@@ -190,6 +190,10 @@
 								$arrayOTCount = split(':', $OTCount);
 								$OTCountMin = $arrayOTCount[1]/60;
 								$OTCountDec = sprintf("%.2f", $arrayOTCount[0]+$OTCountMin);
+								if($OTCountDec >= 5.00) {
+									$OTCountDec = $OTCountDec - 1.00;
+									$OTCountDec = sprintf("%.2f", $OTCountDec);
+								}
 								if ($stmt = $mysqli->prepare("update overtime set overtime_duration='".$OTCountDec."' where overtime_id = '".$overtimeid."'")){
 								$stmt->execute();
 								$stmt->close();
