@@ -311,7 +311,7 @@ function rst_sh_nd($HoursAttended, $HourlyRatePay){
 
 
 //*********************compute deductions
-function absent($HoursAttended, $HourlyRatePay, $employee_id, $comp_id, $table_pass){
+function absent($HoursAttended, $HourlyRatePay, $employee_id, $comp_id){
 include 'dbconfig.php';
 
 //get shift from employee
@@ -349,7 +349,7 @@ $result = $conn->query($sql);
 
       //get value of absent from total_comp, $comp_id is needed
       //hours per day x total days absent = absent total hours
-      $total_absent_hours=total_absent_hours($totaltime_per_day, $comp_id, $table_pass);
+      $total_absent_hours=total_absent_hours($totaltime_per_day, $comp_id);
       echo "total time absent (hours): ".$total_absent_hours.nextline();
 
       //compute absent rate;
@@ -439,16 +439,12 @@ return $total_undertime_deduction;
   
 }
 
-function total_absent_hours($totaltime_per_day, $comp_id, $table){
+function total_absent_hours($totaltime_per_day, $comp_id){
 
   include 'dbconfig.php';
 
-  //$table='total_comp';
-if($table=='total_comp')
+  $table='total_comp';
 $sql = "SELECT absent FROM $table WHERE comp_id=$comp_id";
-else if($table=='others')
-$sql = "SELECT absent FROM $table WHERE employee_id=$comp_id";
-
 $result = $conn->query($sql);
   if ($result->num_rows > 0) {
 
@@ -494,6 +490,15 @@ function computeHours($timein, $timeout) {
     return $newRegHrsArrayDec;
   }
 
+
+//for adding non-taxable/non-taxable earnings/dedutions DURING processing
+function recompute_others(){
+
+ //check comp_id from emp_earnings where employee_id
+ //if comp_id==0, meaning it hasn't been processed yet. add it to TotalTaxableEarnings at totalcomputation table
+  
+
+}
 
 //load tax table
 

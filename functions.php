@@ -1,5 +1,6 @@
 <?php
 
+
 function get_fieldnames($tablename){
 include 'dbconfig.php';
 
@@ -55,7 +56,7 @@ function get_table($tablename){
 }//end of get_table
 
 //pass cutoff
-function compute($cutoff_field, $update){
+function compute($cutoff_field, $update=0, $comp=0, $emp=0){
 include 'dbconfig.php';
 include 'payroll_compute.php';
 include 'statutory_benefits_compute.php';
@@ -367,24 +368,6 @@ $Total_Retro = retro($employee_id, $HourlyRatePay);
 
         echo nextline()."NetTaxableIncome(Net Income w/o Statutory - Total Statutory Benefits): ".$NetTaxableIncome.nextline();
 
-       // echo "Total Other Taxable Deduction: ".$other_deductions.nextline();
-        //echo "Total Taxable Earnings (others + net income w/o statutory): ".$total_other_earnings.nextline();;
-        //echo "Total Taxable Deductions: ".$other_deductions.nextline();;
-
-        //do math here
-        //$total_others=$other_earnings-$other_deductions;
-        //echo "Total Taxables (earnings - deductions): ".$total_others.nextline();
-
-        //add to $NetTaxableIncome
-        //$NetTaxableIncome=$NetTaxableIncome+$total_others;
-
-
-
-       // echo "Total Taxable Deductions (Absent, Late, UT, Statutory Benefits, Others): ".$total_deductions.nextline();
-
-        //deduct to NetTaxableIncome;
-        //$NetTaxableIncome=$total_other_earnings-$total_deductions;
-        //echo "NetTaxableIncome: ".$NetTaxableIncome."<br>";
         echo "<br>";
 
 
@@ -627,6 +610,9 @@ $conn->close();
 
 
 }//end function compute()
+
+
+
 
 
 //generate next line

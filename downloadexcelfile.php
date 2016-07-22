@@ -43,6 +43,50 @@ $styleArrayHeadOrange = array(
     )
 );
 
+//Top
+$styleArrayTop = array(
+    'font'  => array(
+        'bold'  => true,
+        'color' => array('rgb' => '000000'),
+        'size'  => 8,
+        'name'  => 'Arial',
+        
+     ),
+    'fill' => array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'color' => array('rgb' => 'FFFFFF') //orange FAC090
+    ),
+    /*'alignment' => array(
+            'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+            'vertical' =>  PHPExcel_Style_Alignment::VERTICAL_CENTER
+    )*/
+);
+
+
+//top details
+$col='A';
+$row='1';
+
+
+$value_top = array('Payroll Register - Detailed',
+					'Group - iConnect Global Communications Inc.',
+					'Coverage Period: Apr 24, 2016 - May 08, 2016');
+
+foreach ($value_top as $top){
+$cell=$col.$row;
+$objPHPExcel -> getActiveSheet() -> setCellValue($cell, $top);
+$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleArrayTop);
+
+//$mergeCells = 'A'.$row.':J'.$row;
+//echo $mergeCells;
+
+$mergeCells = 'A'.$row.':J'.$row;
+
+$objPHPExcel->getActiveSheet()->mergeCells($mergeCells);
+$row++;
+}
+
+
 //generate header titles
 $heads=head_titles(); //get table head values
 $orange=orange_heads();
@@ -50,8 +94,6 @@ $col='A'; //column count
 $row='4';
 foreach ($heads as $key => $value){
 	$cell=$col.$row;
-
-	//place value here
 	$objPHPExcel -> getActiveSheet() -> setCellValue($cell, $value);
 
 	//style each cell
@@ -81,17 +123,73 @@ foreach ($heads as $key => $value){
 }
 
 
-//values from table here
-$sql = "SELECT * FROM $table WHERE cutoff='$cutoff_field'";
+//values
 
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
 
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-    }
- }
+$i=2;
+//****************************************second sheet*************************************
+$objWorkSheet = $objPHPExcel->createSheet($i); //Setting index when creating
+
+ //top details
+$col='A';
+$row='1';
+
+    //Write cells
+foreach ($value_top as $top){
+	$cell=$col.$row;
+    $objWorkSheet->setCellValue($cell, $top);
+         
+         $row++;  
+        }
+
+    // Rename sheet*/
+    $objWorkSheet->setTitle("Sheet 2");
+
+
+//headers
+$second_sheet_headers = array(
+	'Row No',
+	'Employee No',
+	'Last Name',
+	'First Name',
+	'Middle Name',
+	'NETPAY'
+	 );
+
+$col='A';
+$row='4';
+$objPHPExcel->setActiveSheetIndex(1); 
+foreach ($second_sheet_headers as $value){
+	$cell=$col.$row;
+	$objPHPExcel -> getActiveSheet() -> setCellValue($cell, $value);
+
+	//style each cell
+
+		$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleArrayHead);
+
+	$count_string=count($value);
+
+	//autosize cells
+	//$objPHPExcel->getActiveSheet()->getColumnDimension($col)->setAutoSize(true);
+	if ($value=='Row No'){
+		$objPHPExcel->getActiveSheet()->getColumnDimension($col)->setWidth('5');
+	}
+	else
+	$objPHPExcel->getActiveSheet()->getColumnDimension($col)->setWidth('20');
+
+	//row height
+	$objPHPExcel->getActiveSheet()->getRowDimension($row)->setRowHeight(-1);
+
+	//wrap text
+	$objPHPExcel->getActiveSheet()->getStyle($cell)->getAlignment()->setWrapText(true); 
+
+	$col++;
+
 }
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
