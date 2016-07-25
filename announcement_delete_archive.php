@@ -15,12 +15,12 @@ if (!$conn) {
 }
 
 // sql to delete a record
-$sql = "UPDATE announcement SET announcement_archive = 'archive' WHERE announcement_id ='$ann_id'";
+$sql = "DELETE FROM announcement WHERE announcement_id='$ann_id'";
 
 if (mysqli_query($conn, $sql)) {
-    header("Location: announcementlist.php");
+    header("Location: archive.php");
 } else {
-    header("Location: announcementlist.php");
+    header("Location: archive.php");
 }
 
 mysqli_close($conn);

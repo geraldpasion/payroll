@@ -2,7 +2,7 @@
 
 	include("dbconfig.php");
 
-	function computeHours($timein, $timeout) {
+	function computeHours($timein, $timeout) { // computes the difference in time
 		$timeinArray = array();
 		$timeinArray = split(":", $timein);
 		$timeinArrayMin = sprintf("%.2f", $timeinArray[1]/60);
@@ -16,7 +16,7 @@
 		return $newRegHrsArrayDec;
 	}
 
-	function computeND($timein, $timeout) {
+	function computeND($timein, $timeout) { // computes the night differential in a given time range
 		$res= "00:00";
 		if($timein == $timeout) {
 			$res = "00:00";
@@ -38,11 +38,6 @@
 			} else if($timein >= "06:00" && $timeout >= "06:00") {
 				if($timeout >= $timein) {
 					$res = "00:00";
-					// if($timein >= "00:00") {
-					// 	$res = date("H:i", strtotime("06:00") - strtotime($timein));	
-					// } else {
-					// 	$res = date("H:i", strtotime("06:00") - strtotime("22:00"));
-					// }
 				} else {
 					$res = date("H:i", strtotime("06:00") - strtotime("22:00"));
 				}
@@ -57,14 +52,13 @@
 		$resArr = array();
 		$resArr = split(":", $res);
 		$resMin = sprintf("%.2f", $resArr[1]/60);
-		// if($res != "00:00") {
-		// 	$resArr[0] = $resArr[0] - 1;	
-		// }
 		return sprintf("%.2f", $resArr[0] + $resMin);
 	}
-
+	
 	$logday = 0;
 	$result = $mysqli->query("SELECT * FROM others WHERE others_id = '$maxes2'")->fetch_array();
+
+
 	$timein = $result['attendance_timein'];
 	$timeout = $result['attendance_timeout'];
 	$breakin = $result['attendance_breakin'];
@@ -80,8 +74,7 @@
 	$shiftArray = array();
 	$shiftArray = split('-', $shifting);
 	$isNightShift = 0;
-	$isAbsent = $result['attendance_absent'];
-	$isAbsentPrevWorkingDay = 0; //ok na lois
+	$attend = $result['attendance_status'];
 	$hasApprovedOT = 0;
 
 	$zero = "0.00";
@@ -95,29 +88,110 @@
 	$ndStart = "22:00"; // night diff sched
 	$ndEnd = "06:00";
 
-	if($shiftArray[0] >= $ndStart) {
-		$isNightShift = 1;
+	// checks type of day given the attendance date
+	$typeOfDay = "reg";
+	if($dateRow = $mysqli->query("SELECT * FROM holiday where holiday_date = '$dateWithDayArray[0]'")->fetch_array()) { // checks if date is holiday
+		if($dateRow['holiday_type'] == "Regular" || $dateRow['holiday_type'] == "Legal") { // if legal holiday
+			if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])) { // if legal holiday AND rest day
+				$typeOfDay = "rstlh";
+				$mysqli->query("UPDATE others SET attendance_daytype='Rest and Legal Holiday' WHERE others_id='$others_id'");	
+			} else { // if legal holiday only
+				$typeOfDay = "lh";
+				$mysqli->query("UPDATE others SET attendance_daytype='Legal Holiday' WHERE others_id='$others_id'");	
+			}
+		} else { //if special holiday
+			if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])) { // if special holiday AND rest day
+				$typeOfDay = "rstsh";
+				$mysqli->query("UPDATE others SET attendance_daytype='Rest and Special Holiday' WHERE others_id='$others_id'");	
+			} else { //if special holiday only
+				$typeOfDay = "sh";
+				$mysqli->query("UPDATE others SET attendance_daytype='Special Holiday' WHERE others_id='$others_id'");	
+			}
+		}
+	} else if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])) { // if rest day but NOT holiday
+		$typeOfDay = "rst";
+		$mysqli->query("UPDATE others SET attendance_daytype='Rest Day' WHERE others_id='$others_id'");	
+	} else { // if NOT rest day and NOT holiday
+		$mysqli->query("UPDATE others SET attendance_daytype='Regular' WHERE others_id='$others_id'");	
 	}
 
+	// UPDATE ATTENDANCE BOOL
+	// attendance boolean indicates if employee is absent
+	// if flexi: if the person did not go to work on rest or legal holiday, it should not be considered as absent
+	// if fixed or shifting: if the person did not go to work on rest, legal, or special holiday, it should also not be considered as absent
+	// absent = 0 means not absent
+	// to check if employee went to work that day, check attendance_status
+	// if attendance_status = inactive, employee did not login therefore they did not go to work that day
+	// if attendance_status = timeout, employee was able to log in and log out therefore employee went to work that day
+
+	if($fetch_emp['employee_type'] == "Flexi") { //for flexi employees
+		if($typeOfDay == "reg" || $typeOfDay == "sh") { // if regular day or special holiday
+			if($attend == "inactive"){ // if did not go to work that day
+				$mysqli->query("UPDATE others SET attendance_absent='1' WHERE others_id='$others_id'");
+			} else { // if went to work on that day
+				$mysqli->query("UPDATE others SET attendance_absent='0' WHERE others_id='$others_id'");
+			}
+		} else { // if not regular and special holiday regardless of attendance
+			$mysqli->query("UPDATE others SET attendance_absent='0' WHERE others_id='$others_id'");
+		}
+	} else { // for fixed or shifting employees
+		if($typeOfDay == "reg" || $typeOfDay == "sh") { // if regular day
+			if($attend == "inactive"){ // if did not go to work that day
+				$mysqli->query("UPDATE others SET attendance_absent='1' WHERE others_id='$others_id'");
+			} else { // if went to work on that day
+				$mysqli->query("UPDATE others SET attendance_absent='0' WHERE others_id='$others_id'");
+			}
+		} else { // if not regular day regardless of attendance
+			$mysqli->query("UPDATE others SET attendance_absent='0' WHERE others_id='$others_id'");
+		}
+	}
+
+	// CHECKS IF NIGHT SHIFT
+	if($shiftArray[0] >= $ndStart) {
+		$isNightShift = 1; // checks if night shift
+	}
+
+	// CHECKS IF EMPLOYEE HAS APPROVED OVERTIME
 	$OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'");
 	if($OT->num_rows > 0) {
-		$hasApprovedOT = 1;
+		$hasApprovedOT = 1; // checks if employee has an approved overtime for that date
 	}
 
+	// CHECKS IF EMPLOYEE WENT TO WORK ON PREVIOUS WORKING(REGULAR) DAY
 	$prevWorkingDay = $mysqli->query("SELECT * FROM attendance WHERE employee_id='$employee_id' AND attendance_date < '$attendance_date' AND attendance_daytype='Regular' ORDER BY attendance_date DESC LIMIT 1");
 	if($prevWorkingDay->num_rows > 0) {
 		while($prevWorkDayResult = $prevWorkingDay->fetch_object()) {
-			$isAbsentPrevWorkingDay = $prevWorkDayResult->attendance_absent;
+			$isAbsentPrevWorkingDay = $prevWorkDayResult->attendance_status; // checks if absent previous regular day
 		}
 	}
 
 	// COMPUTE LATE
-	if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])){
+	if($attend == "inactive") {
+		// if did not go to work that day
 		$mysqli->query("UPDATE others SET attendance_late='$s_zero' WHERE others_id='$others_id'");
-	}else if($fetch_emp['employee_type'] == "Fixed" || $fetch_emp['employee_type'] == "Shifting"){
+	} else if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])){
+		// if rest day
+		$mysqli->query("UPDATE others SET attendance_late='$s_zero' WHERE others_id='$others_id'");
+	}else if($fetch_emp['employee_type'] == "Fixed" || $fetch_emp['employee_type'] == "Shifting"){ // if fixed or shifting
 		if(date('H:i', strtotime($timein)) < $shiftArray[0]){
-			$totalLate = "00:00";
-			$mysqli->query("UPDATE others SET attendance_late='$s_zero' WHERE others_id='$others_id'");
+			if($isNightShift == 0) { 
+				// if timein < shift start and if employee is not night shift
+				$totalLate = 0;
+				$mysqli->query("UPDATE others SET attendance_late='$s_zero' WHERE others_id='$others_id'");
+			} else {
+				// if timein < shift start and if employee is night shift
+				// if($from == "index") {
+				// 	$late = date('H:i', strtotime($timein) - strtotime($shiftArray[0]) - strtotime('16:00'));
+				// } else {
+				// 	$late = date('H:i', strtotime($timein) - strtotime($shiftArray[0]));
+				// }
+				// $lateArray = array();
+				// $lateArray = split(':', $late);
+				// $hoursTominutes1 = $lateArray[0]*60;
+				// $totalLate = $hoursTominutes1 + $lateArray[1];
+				$totalLate = 0;
+				$mysqli->query("UPDATE others SET attendance_late='$totalLate' WHERE others_id='$others_id'");
+			}
 		}else if($timein > $shiftArray[0]){
 			if($from == "index") {
 				$late = date('H:i', strtotime($timein) - strtotime($shiftArray[0]) - strtotime('16:00'));
@@ -141,7 +215,11 @@
 	}
 
 	// COMPUTE UNDERTIME
-	if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])){
+	if($attend == "inactive") {
+		// if did not go to work that day
+		$mysqli->query("UPDATE others SET attendance_undertime='$s_zero' WHERE others_id='$others_id'");
+	} else if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])){
+		// if rest day
 		$mysqli->query("UPDATE others SET attendance_undertime='$s_zero' WHERE others_id='$others_id'");
 	}else if($fetch_emp['employee_type'] == "Fixed" || $fetch_emp['employee_type'] == "Shifting"){
 		if($timeout < $shiftArray[1]){
@@ -194,8 +272,10 @@
 	$totalbreakin = $hoursTominutes2 + $breakinArray[1];
 
 	// COMPUTE OVERBREAK
-
-	if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])) {
+	if($attend == "inactive") { // if did not go to work that day
+		$mysqli->query("UPDATE others SET attendance_overbreak='$s_zero' WHERE others_id='$others_id'");
+	} else if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])) {
+		// if rest day
 		$mysqli->query("UPDATE others SET attendance_overbreak='$s_zero' WHERE others_id='$others_id'");
 		$ob = 0;
 	}else if($fetch_emp['employee_type'] == "Fixed" || $fetch_emp['employee_type'] == "Shifting") {
@@ -224,32 +304,7 @@
 	}
 	
 	// END of compute late, undertime, overtime
-
-	$typeOfDay = "reg";
-	if($dateRow = $mysqli->query("SELECT * FROM holiday where holiday_date = '$dateWithDayArray[0]'")->fetch_array()) {
-		if($dateRow['holiday_type'] == "Regular" || $dateRow['holiday_type'] == "Legal") {
-			if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])) {
-				$typeOfDay = "rstlh";
-				$mysqli->query("UPDATE others SET attendance_daytype='Rest and Legal Holiday' WHERE others_id='$others_id'");	
-			} else {
-				$typeOfDay = "lh";
-				$mysqli->query("UPDATE others SET attendance_daytype='Legal Holiday' WHERE others_id='$others_id'");	
-			}
-		} else {
-			if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])) {
-				$typeOfDay = "rstsh";
-				$mysqli->query("UPDATE others SET attendance_daytype='Rest and Special Holiday' WHERE others_id='$others_id'");	
-			} else {
-				$typeOfDay = "sh";
-				$mysqli->query("UPDATE others SET attendance_daytype='Special Holiday' WHERE others_id='$others_id'");	
-			}
-		}
-	} else if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])) {
-		$typeOfDay = "rst";
-		$mysqli->query("UPDATE others SET attendance_daytype='Rest Day' WHERE others_id='$others_id'");	
-	} else {
-		$mysqli->query("UPDATE others SET attendance_daytype='Regular' WHERE others_id='$others_id'");	
-	}
+	
 
 	$regHours = "0.00";
 	$overtime = "0.00";
@@ -276,25 +331,19 @@
 	$rst_sh_nd = "0.00";
 	$rst_sh_nd_grt8 = "0.00";
 
-	// if($isNightShift == 0) { // not night shift (nd ot for morning shift)
-	// 			include("computeRegOTND.php");
-	// 			$timein = $result['attendance_timein'];
-	// 			$breakin = $result['attendance_breakin'];
-	// 		}
-
 	// compute hours of work (based on day)
 	// only computes columns that should be updated for the type of day
 	// all columns are initialized to zero
 
-	if($fetch_emp['employee_type'] == "Fixed" || $fetch_emp['employee_type'] == "Shifting") {
+	if($fetch_emp['employee_type'] == "Fixed" || $fetch_emp['employee_type'] == "Shifting") { // computation for fixed/shifting
 		if($typeOfDay == "reg") { // if regular day
-			if($isAbsent == 0) { // not absent
+			if($attend == "timeout") { // not absent
 				$regHours = computeHours($timein, $timeout);
-				if($isNightShift == 1) {
+				if($isNightShift == 1) { // if night shift
 					$tempTimeout = $timeout;
 					if($timeout < $timein && $timeout > $shiftArray[1]) $timeout = $shiftArray[1];
 					if($tempTimeout < $timein && $timein < $shiftArray[0]) $timein = $shiftArray[0];
-				} else {
+				} else { // if not night shift
 					$tempTimeout = $timeout;
 					if($timein > $timeout) $timeout = $shiftArray[1];
 					else if($timeout > $timein && $timeout > $shiftArray[1]) $timeout = $shiftArray[1];
@@ -302,11 +351,11 @@
 				}
 				$regHours = computeHours($timein, $timeout);
 				if($timein == $timeout) $regHours = 0.00;
-				if($regHours >= 5.00) {
+				if($regHours >= 5.00) { // if hours > 5, subtract 1 hour for break
 					$regHours = $regHours - 1.00;
 				}
 				if($regHours > 8.00) {
-					$regHours = 8.00;
+					$regHours = 8.00; // if hours > 8, only the 8 hours will be credited 
 				}
 				if($isNightShift == 1) {
 					$nightdiff = computeND($timein, $timeout);
@@ -350,7 +399,7 @@
 				}
 			}
 		} else if($typeOfDay == "rst") { // if rest day only
-			if($isAbsent == 0) { // not absent
+			if($attend == "timeout") { // not absent
 				if($hasApprovedOT == 1) {
 					if($OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'")){
 						if($OT->num_rows > 0){
@@ -363,7 +412,6 @@
 								$overtimeStart = substr($overtimeStart, 0, -3);
 								$overtimeEnd = $OTResult->overtime_end;
 								$overtimeEnd = substr($overtimeEnd, 0, -3);
-								//$overtime = $OTResult->overtime_duration;
 								$regHours = computeHours($overtimeStart, $overtimeEnd);
 								if($regHours >= 5.00) {
 									$regHours = $regHours - 1.00;
@@ -386,6 +434,7 @@
 									if($rst_nd >= 1.00) $rst_nd = $rst_nd - 1.00;
 									else $rst_nd = 0.00;
 
+									$rst_ot = $regHours;
 									if($rst_nd > 7.00) {
 										$rst_ot = $regHours - 7.00;
 										$rst_nd = 7.00;
@@ -393,6 +442,10 @@
 											$rst_ot_grt8 = $rst_ot - 1.00;
 											$rst_ot = 1.00;
 										}
+									}
+									if($rst_ot > 8.00) {
+										$rst_ot_grt8 = $rst_ot - 8.00;
+										$rst_ot = 8.00;
 									}
 								}
 							}
@@ -403,120 +456,181 @@
 				}
 			}
 		} else if($typeOfDay == "lh") { // if legal holiday only
-			if($isAbsent == 0 && $isAbsentPrevWorkingDay == 0) { // not absent
+			if($attend == "timeout" && $isAbsentPrevWorkingDay != "inactive") { // not absent
 				$regHours = computeHours($timein, $timeout);
 				if($regHours >= 5.00) {
 					$regHours = $regHours - 1.00;
 				}
 
-				if($isNightShift == 0) {
-					//$lh_nd_grt8 = computeND($timein, $timeout) - 1.00;
-					$nd = computeND($timein, $timeout);
-					$lh_ot = $regHours;
-					if($nd >= 1.00) {
-						$lh_nd_grt8 = $nd - 1.00;
-						if($lh_nd_grt8 > 7.00) {
-							$lh_ot = $regHours - 7.00;
-							$lh_nd_grt8 = 7.00;
-							if($lh_ot > 1.00) {
-								$lh_ot_grt8 = $lh_ot - 1.00;
-								$lh_ot = 1.00;
-							}
-						}
-					} else {
-						$lh_nd_grt8 = 0.00;
-						if($lh_ot > 8.00) {
-							$lh_ot_grt8 = $lh_ot - 8.00;
-							$lh_ot = 8.00;
+				if($regHours > 8.00) $regHours = 8.00;
+
+				$nd = computeND($timein, $timeout);
+				$lh_ot = $regHours;
+				if($nd >= 1.00) {
+					$lh_nd = $nd - 1.00;
+					if($lh_nd > 7.00) {
+						$lh_ot = $regHours - 7.00;
+						$lh_nd = 7.00;
+						if($lh_ot > 1.00) {
+							$lh_ot = 1.00;
 						}
 					}
-					$regHours = $regHours - $lh_ot_grt8;
-				} else if($isNightShift == 1) {
-					$nd = computeND($timein, $timeout);
-					$lh_ot = $regHours;
-					if($nd >= 1.00) {
-						$lh_nd = $nd - 1.00;
-						if($lh_nd > 7.00) {
-							$lh_ot = $regHours - 7.00;
-							$lh_nd = 7.00;
-							if($lh_ot > 1.00) {
-								$lh_ot_grt8 = $lh_ot - 1.00;
-								$lh_ot = 1.00;
-							}
-						}
-					} else {
-						$lh_nd = 0.00;
-						if($lh_ot > 8.00) {
-							$lh_ot_grt8 = $lh_ot - 8.00;
-							$lh_ot = 8.00;
-						}
-					}
-					$regHours = $regHours - $lh_ot_grt8;
+				} else {
+					$lh_nd = 0.00;
 				}
-			} else if($isAbsent == 1) { // absent; per law there is bonus lh_ot
+
+				if($hasApprovedOT == 1) {
+					if($OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'")){
+						if($OT->num_rows > 0){
+							while($OTResult = $OT->fetch_object()){
+								$overtimeStart = $OTResult->overtime_start;
+								$overtimeStart = substr($overtimeStart, 0, -3);
+								$overtimeEnd = $OTResult->overtime_end;
+								$overtimeEnd = substr($overtimeEnd, 0, -3);
+
+								$totalOT = computeHours($overtimeStart, $overtimeEnd);
+								if($totalOT >= 5.00) {
+									$totalOT = $totalOT - 1.00;
+								}
+								if($isNightShift == 0) {
+									$nd = computeND($overtimeStart, $overtimeEnd);
+									if($nd >= 1.00) {
+										$lh_nd_grt8 = $nd - 1.00;
+									} else {
+										$lh_nd_grt8 = 0.00;
+									}
+									$lh_ot_grt8 = $totalOT - $lh_nd_grt8;
+								} else if($isNightShift == 1) {
+									$lh_ot_grt8 = $totalOT;
+								}
+							}
+						}
+					}
+				}
+			} else if($attend == "inactive") { // absent; per law there is bonus lh_ot
 				$lh_ot = "8.00";
-			} else if($isAbsentPrevWorkingDay == 1) {
-				
+			} else if($isAbsentPrevWorkingDay == "inactive") {
+				if($attend == "timeout") { // not absent
+					$regHours = computeHours($timein, $timeout);
+					if($isNightShift == 1) {
+						$tempTimeout = $timeout;
+						if($timeout < $timein && $timeout > $shiftArray[1]) $timeout = $shiftArray[1];
+						if($tempTimeout < $timein && $timein < $shiftArray[0]) $timein = $shiftArray[0];
+					} else {
+						$tempTimeout = $timeout;
+						if($timein > $timeout) $timeout = $shiftArray[1];
+						else if($timeout > $timein && $timeout > $shiftArray[1]) $timeout = $shiftArray[1];
+						if($tempTimeout > $timein && $timein < $shiftArray[0]) $timein = $shiftArray[0];
+					}
+					$regHours = computeHours($timein, $timeout);
+					if($timein == $timeout) $regHours = 0.00;
+					if($regHours >= 5.00) {
+						$regHours = $regHours - 1.00;
+					}
+					if($regHours > 8.00) {
+						$regHours = 8.00;
+					}
+					if($isNightShift == 1) {
+						$nightdiff = computeND($timein, $timeout);
+						if($nightdiff > 1.00) {
+							$nightdiff = $nightdiff - 1.00;
+						} else {
+							$nightdiff = 0.00;
+						}
+
+						if($nightdiff > 7.00) {
+							$nightdiff = 7.00;
+						}
+					}
+					if($hasApprovedOT == 1) {
+						if($OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'")){
+							if($OT->num_rows > 0){
+								while($OTResult = $OT->fetch_object()){
+									$overtimeStart = $OTResult->overtime_start;
+									$overtimeStart = substr($overtimeStart, 0, -3);
+									$overtimeEnd = $OTResult->overtime_end;
+									$overtimeEnd = substr($overtimeEnd, 0, -3);
+									//$overtime = $OTResult->overtime_duration;
+									$totalOT = computeHours($overtimeStart, $overtimeEnd);
+									if($totalOT >= 5.00) {
+										$totalOT = $totalOT - 1.00;
+									}
+									if($isNightShift == 0) {
+										$nd = computeND($overtimeStart, $overtimeEnd);
+										if($nd >= 1.00) {
+											$reg_ot_nd = $nd - 1.00;
+										} else {
+											$reg_ot_nd = 0.00;
+										}
+										$overtime = $totalOT - $reg_ot_nd;
+									} else if($isNightShift == 1) {
+										$overtime = $totalOT;
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		} else if($typeOfDay == "sh") { // if special holiday only
-			if($isAbsent == 0 && $isAbsentPrevWorkingDay == 0) { // not absent
+			if($attend == "timeout") { // not absent
 				$regHours = computeHours($timein, $timeout);
 				if($regHours >= 5.00) {
 					$regHours = $regHours - 1.00;
 				}
-				if($isNightShift == 0) {
-					//$lh_nd_grt8 = computeND($timein, $timeout) - 1.00;
-					$nd = computeND($timein, $timeout);
-					$sh_ot = $regHours;
-					if($nd >= 1.00) {
-						$sh_nd_grt8 = $nd - 1.00;
-						if($sh_nd_grt8 > 7.00) {
-							$sh_ot = $regHours - 7.00;
-							$sh_nd_grt8 = 7.00;
-							if($sh_ot > 1.00) {
-								$sh_ot_grt8 = $sh_ot - 1.00;
-								$sh_ot = 1.00;
-							}
-						}
-					} else {
-						$sh_nd_grt8 = 0.00;
-						if($sh_ot > 8.00) {
-							$sh_ot_grt8 = $sh_ot - 8.00;
-							$sh_ot = 8.00;
+
+				if($regHours > 8.00) $regHours = 8.00;
+
+				$nd = computeND($timein, $timeout);
+				$sh_ot = $regHours;
+				if($nd >= 1.00) {
+					$sh_nd = $nd - 1.00;
+					if($sh_nd > 7.00) {
+						$sh_ot = $regHours - 7.00;
+						$sh_nd = 7.00;
+						if($sh_ot > 1.00) {
+							$sh_ot = 1.00;
 						}
 					}
-					$regHours = $regHours - $sh_ot_grt8;
-				} else if($isNightShift == 1) {
-					$nd = computeND($timein, $timeout);
-					$sh_ot = $regHours;
-					if($nd >= 1.00) {
-						$sh_nd = $nd - 1.00;
-						if($sh_nd > 7.00) {
-							$sh_ot = $regHours - 7.00;
-							$sh_nd = 7.00;
-							if($sh_ot > 1.00) {
-								$sh_ot_grt8 = $sh_ot - 1.00;
-								$sh_ot = 1.00;
-							}
-						}
-					} else {
-						$sh_nd = 0.00;
-						if($sh_ot > 8.00) {
-							$sh_ot_grt8 = $sh_ot - 8.00;
-							$sh_ot = 8.00;
-						}
-					}
-					$regHours = $regHours - $sh_ot_grt8;
+				} else {
+					$sh_nd = 0.00;
 				}
-			} else if($isAbsentPrevWorkingDay == 1) {
-				
+
+				if($hasApprovedOT == 1) {
+					if($OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'")){
+						if($OT->num_rows > 0){
+							while($OTResult = $OT->fetch_object()){
+								$overtimeStart = $OTResult->overtime_start;
+								$overtimeStart = substr($overtimeStart, 0, -3);
+								$overtimeEnd = $OTResult->overtime_end;
+								$overtimeEnd = substr($overtimeEnd, 0, -3);
+
+								$totalOT = computeHours($overtimeStart, $overtimeEnd);
+								if($totalOT >= 5.00) {
+									$totalOT = $totalOT - 1.00;
+								}
+								if($isNightShift == 0) {
+									$nd = computeND($overtimeStart, $overtimeEnd);
+									if($nd >= 1.00) {
+										$sh_nd_grt8 = $nd - 1.00;
+									} else {
+										$sh_nd_grt8 = 0.00;
+									}
+									$sh_ot_grt8 = $totalOT - $sh_nd_grt8;
+								} else if($isNightShift == 1) {
+									$sh_ot_grt8 = $totalOT;
+								}
+							}
+						}
+					}
+				}
 			}
 		} else if($typeOfDay == "rstlh") { // if rest && legal holiday
 			$rst_lh_ot = 0.00;
 			$rst_lh_ot_grt8 = 0.00;
 			$rst_lh_nd = 0.00;
 			$rst_lh_nd_grt8 = 0.00;
-			if($isAbsent == 0 && $isAbsentPrevWorkingDay == 0) {
+			if($attend == "timeout" && $isAbsentPrevWorkingDay != "inactive") {
 				if($hasApprovedOT == 1) {
 					if($OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'")){
 						if($OT->num_rows > 0){
@@ -531,14 +645,25 @@
 									$regHours = $regHours - 1.00;
 								}
 								if($isNightShift == 0) {
-									$rst_lh_nd_grt8 = computeND($overtimeStart, $overtimeEnd) - 1.00;
+									$nd = computeND($overtimeStart, $overtimeEnd);
+									if($nd >= 1.00) {
+										$rst_lh_nd_grt8 = $nd - 1.00;
+									} else {
+										$rst_lh_nd_grt8 = 0.00;
+									}
 									$rst_lh_ot = $regHours - $rst_lh_nd_grt8;
 									if($rst_lh_ot > 8.0) {
 										$rst_lh_ot_grt8 = $rst_lh_ot - 8.00;
 										$rst_lh_ot = 8.00;
 									}
 								} else if($isNightShift == 1) {
-									$rst_lh_nd = computeND($overtimeStart, $overtimeEnd) - 1.00;
+									$nd = computeND($overtimeStart, $overtimeEnd);
+									if($nd >= 1.00) {
+										$rst_lh_nd = $nd - 1.00;
+									} else {
+										$rst_lh_nd = 0.00;
+									}
+									$rst_lh_ot = $regHours;
 									if($rst_lh_nd > 7.00) {
 										$rst_lh_ot = $regHours - 7.00;
 										$rst_lh_nd = 7.00;
@@ -547,6 +672,10 @@
 											$rst_lh_ot = 1.00;
 										}
 									}
+									if($rst_lh_ot > 8.00) {
+										$rst_lh_ot_grt8 = $rst_lh_ot - 8.00;
+										$rst_lh_ot = 8.00;
+									}
 								}
 							}
 						}
@@ -554,11 +683,65 @@
 					}
 					$regHours = $zero;
 				}
-			} else if($isAbsentPrevWorkingDay == 1) {
-
+			} else if($isAbsentPrevWorkingDay == "inactive") {
+				if($attend == "timeout") { // not absent
+					if($hasApprovedOT == 1) {
+						if($OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'")){
+							if($OT->num_rows > 0){
+								$rst_ot = 0.00;
+								$rst_ot_grt8 = 0.00;
+								$rst_nd = 0.00;
+								$rst_nd_grt8 = 0.00;
+								while($OTResult = $OT->fetch_object()){
+									$overtimeStart = $OTResult->overtime_start;
+									$overtimeStart = substr($overtimeStart, 0, -3);
+									$overtimeEnd = $OTResult->overtime_end;
+									$overtimeEnd = substr($overtimeEnd, 0, -3);
+									$regHours = computeHours($overtimeStart, $overtimeEnd);
+									if($regHours >= 5.00) {
+										$regHours = $regHours - 1.00;
+									}
+									if($isNightShift == 0) {
+										$nd = computeND($overtimeStart, $overtimeEnd);
+										if($nd >= 1.00) {
+											$rst_nd_grt8 = $nd - 1.00;
+										} else {
+											$rst_nd_grt8 = 0.00;
+										}
+										$rst_ot = $regHours - $rst_nd_grt8;
+										if($rst_ot > 8.0) {
+											$rst_ot_grt8 = $rst_ot - 8.00;
+											$rst_ot = 8.00;
+										}
+									} else if($isNightShift == 1) {
+										$rst_nd = computeND($overtimeStart, $overtimeEnd);
+										
+										if($rst_nd >= 1.00) $rst_nd = $rst_nd - 1.00;
+										else $rst_nd = 0.00;
+										$rst_ot = $regHours;
+										if($rst_nd > 7.00) {
+											$rst_ot = $regHours - 7.00;
+											$rst_nd = 7.00;
+											if($rst_ot > 1.00) {
+												$rst_ot_grt8 = $rst_ot - 1.00;
+												$rst_ot = 1.00;
+											}
+										}
+										if($rst_ot > 8.00) {
+											$rst_ot_grt8 = $rst_ot - 8.00;
+											$rst_ot = 8.00;
+										}
+									}
+								}
+							}
+							$overtime = 0.00;
+						}
+						$regHours = $zero;
+					}
+				}
 			}
 		} else if($typeOfDay == "rstsh") { // if rest && special holiday
-			if($isAbsent == 0) {
+			if($attend == "timeout") {
 				if($hasApprovedOT == 1) {
 					if($OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'")){
 						if($OT->num_rows > 0){
@@ -573,14 +756,25 @@
 									$regHours = $regHours - 1.00;
 								}
 								if($isNightShift == 0) {
-									$rst_sh_nd_grt8 = computeND($overtimeStart, $overtimeEnd) - 1.00;
+									$nd = computeND($overtimeStart, $overtimeEnd);
+									if($nd >= 1.00) {
+										$rst_sh_nd_grt8 = $nd - 1.00;
+									} else {
+										$rst_sh_nd_grt8 = 0.00;
+									}
 									$rst_sh_ot = $regHours - $rst_sh_nd_grt8;
 									if($rst_sh_ot > 8.0) {
 										$rst_sh_ot_grt8 = $rst_sh_ot - 8.00;
 										$rst_sh_ot = 8.00;
 									}
 								} else if($isNightShift == 1) {
-									$rst_sh_nd = computeND($overtimeStart, $overtimeEnd) - 1.00;
+									$nd = computeND($overtimeStart, $overtimeEnd);
+									if($nd >= 1.00) {
+										$rst_sh_nd = $nd - 1.00;
+									} else {
+										$rst_sh_nd = 0.00;
+									}
+									$rst_sh_ot = $regHours;
 									if($rst_sh_nd > 7.00) {
 										$rst_sh_ot = $regHours - 7.00;
 										$rst_sh_nd = 7.00;
@@ -589,6 +783,10 @@
 											$rst_sh_ot = 1.00;
 										}
 									}
+									if($rst_sh_ot > 8.00) {
+										$rst_sh_ot_grt8 = $rst_sh_ot - 8.00;
+										$rst_sh_ot = 8.00;
+									}
 								}
 							}
 						}
@@ -596,12 +794,10 @@
 					}
 					$regHours = $zero;
 				}
-			} else if($isAbsentPrevWorkingDay == 1) {
-
 			}
 		}
-	} else { //flexi: reg hours computation only; the rest is zero
-		if($isAbsent == 0) { // not absent
+	} else { //computation for flexi
+		if($attend == "timeout") { // not absent
 			$regHours = computeHours($timein, $timeout);
 			if($timein == $timeout) $regHours = 0.00;
 			if($regHours >= 5.00) {

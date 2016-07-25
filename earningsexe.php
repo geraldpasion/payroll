@@ -1,5 +1,6 @@
 <?php
 include("dbconfig.php");
+include 'functions.php';
 if(isset($_POST['sub'])){
 	$initial = date("Y-m-d", strtotime($_POST['daterange2']));
 	$end = $_POST['daterange3'];
@@ -13,6 +14,9 @@ if(isset($_POST['sub'])){
 	}
 
 	$count = count($_POST['id']);
+
+//assign employee ids to array
+	$empids = $_POST['id'];
 
 	for ($i=0; $i<$count; $i++) {
 
@@ -46,6 +50,10 @@ if(isset($_POST['sub'])){
 					if($stmt = $mysqli->prepare("INSERT INTO emp_earnings (earnings_setting_id, employee_id, earn_name, earn_max, earn_type, initial_date, end_date, comp_id) VALUES ('$earnings_id','" . $_POST["id"][$i] . "', '$earningname', '$amount', '$earnings_type', '$initial', '$end', '$comp_id')")){
 						$stmt->execute();
 					 	$stmt->close();
+
+					 	//put update code here - gerald pasion
+					 	check_update($cutoffdate, $empids);
+
 					}
 				}
 				else{
@@ -54,16 +62,18 @@ if(isset($_POST['sub'])){
 					 	$stmt->close();
 					}
 				}
-			}
+			}//inner if 
 			else{
 				if($stmt = $mysqli->prepare("INSERT INTO emp_earnings (earnings_setting_id, employee_id, earn_name, earn_max, earn_type, initial_date, end_date) VALUES ('$earnings_id','" . $_POST["id"][$i] . "', '$earningname', '$amount', '$earnings_type', '$initial', '$end')")){
 					$stmt->execute();
 				 	$stmt->close();
 				}
-			}
+			}//inner else
 			
-		}
+		}//outer if
 	}
+
+
 
 	header("Location: earnings.php?addEarnings");
 }else{

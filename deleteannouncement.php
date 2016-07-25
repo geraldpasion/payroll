@@ -10,7 +10,7 @@
 		$announcement_id = $_GET['announcement_id'];
 		
 		// delete record from database
-		if ($stmt = $mysqli->prepare("DELETE FROM announcement WHERE announcement_id = '$announcement_id'"))
+		if ($stmt = $mysqli->prepare("UPDATE announcement SET announcement_archive = 'archive' WHERE announcement_id = '$announcement_id'"))
 		{
 			$stmt->bind_param("i",$id);	
 			$stmt->execute();

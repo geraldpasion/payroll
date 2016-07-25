@@ -200,7 +200,7 @@
 
 						<?php
 							include('dbconfig.php');
-							if ($result = $mysqli->query("SELECT * FROM holiday ORDER BY holiday_id")) //get records from db
+							if ($result = $mysqli->query("SELECT * FROM holiday WHERE holiday_archive = 'active' ORDER BY holiday_id")) //get records from db
 							{
 								if ($result->num_rows > 0) //display records if any
 								{

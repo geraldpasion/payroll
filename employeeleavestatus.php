@@ -6,7 +6,7 @@
 			include('employeemenuheader.php');
 			$empid = $_SESSION['logsession'];
 		?>
-		<title>Leave Staus</title>
+		<title>Leave Status</title>
 	</head>
 
 	<body>

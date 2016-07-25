@@ -155,7 +155,7 @@
 				}
 			}
 
-			if ($stmt = $mysqli->prepare("UPDATE attendance SET attendance_timein = '$timein2',  attendance_status ='active', attendance_shift = '$emp_shift', attendance_restday = '$emp_restday' WHERE employee_id = '$username' AND attendance_date = '$date'"))
+			if ($stmt = $mysqli->prepare("UPDATE attendance SET attendance_timein = '$timein2',  attendance_status ='active' WHERE employee_id = '$username' AND attendance_date = '$date'"))
 			{
 				$stmt->execute();
 				$stmt->close();

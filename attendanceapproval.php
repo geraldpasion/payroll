@@ -486,6 +486,7 @@ $(".modal-body #wew").val( wew );
 												$newreghrs = 0;
 												$newlate = 0;
 												$newundertime = 0;
+												$newnightdiff = 0;
 												$newregot = 0;
 												$newrestot = 0;
 												$newrestot8 = 0;
@@ -517,6 +518,7 @@ $(".modal-body #wew").val( wew );
 													$reghrs = $rowx->attendance_hours;
 													$late = $rowx->attendance_late;
 													$undertime = $rowx->attendance_undertime;
+													$nightdiff = $rowx->attendance_nightdiff;
 													$regot = $rowx->attendance_overtime;
 													$restot = $rowx->RST_OT;
 													$restot8 = $rowx->RST_OT_GRT8;
@@ -550,6 +552,7 @@ $(".modal-body #wew").val( wew );
 													$newreghrs = sprintf("%.2f",$newreghrs + $reghrs);
 													$newlate = $newlate + $late;
 													$newundertime = $newundertime + $undertime;
+													$newnightdiff = sprintf("%.2f",$newnightdiff + $nightdiff);
 													$newregot = sprintf("%.2f",$newregot + $regot);
 													$newrestot = sprintf("%.2f",$newrestot + $restot);
 													$newrestot8 = sprintf("%.2f",$newrestot8 + $restot8);
@@ -602,6 +605,10 @@ $(".modal-body #wew").val( wew );
 												}
 											}
 											
+											//REG ND
+											$newregndfloor = floor($newnightdiff);
+											$newregnddecimal = substr((($newnightdiff-$newregndfloor) *100)*60, 0, 2);
+											$newregndConverted = sprintf("%02d", $newregndfloor).':'.sprintf("%02d", $newregnddecimal);
 											
 											//REG OT
 											$newregotfloor = floor($newregot);
@@ -756,6 +763,7 @@ $(".modal-body #wew").val( wew );
 														data-reghrs='".$newreghrsConverted."'
 														data-late='".$result."'
 														data-undertime='".$undertimeresult."'
+														data-nd='".$newregndConverted."'
 														data-regot='".$newregotConverted."'
 														data-restot='".$newrestotConverted."'
 														data-restot8='".$newrestot8Converted."'
@@ -821,6 +829,7 @@ $(".modal-body #wew").val( wew );
 					 var reghrs = $(this).data('reghrs');
 					 var late = $(this).data('late');
 					 var undertime = $(this).data('undertime');
+					 var regnd = $(this).data('nd');
 					 var regot = $(this).data('regot');
 					 var restot = $(this).data('restot');
 					 var restot8 = $(this).data('restot8');
@@ -850,6 +859,7 @@ $(".modal-body #wew").val( wew );
 					 $(".modal-body #reghrs").val( reghrs );
 					 $(".modal-body #late").val( late );
 					 $(".modal-body #undertime").val( undertime );
+					 $(".modal-body #nightdiff").val( regnd );
 					 $(".modal-body #regot").val( regot );
 					 $(".modal-body #restot").val( restot );
 					 $(".modal-body #restot8").val( restot8 );
@@ -917,7 +927,7 @@ $(".modal-body #wew").val( wew );
 								<li class=""><a data-toggle="tab" href="#details">Details</a></li>
 								<li class=""><a data-toggle="tab" href="#overtime">Overtime Details</a></li>
 								<li class=""><a data-toggle="tab" href="#exemption">Exemption</a></li>
-								<li class=""><a data-toggle="tab" href="#retro">Retro</a></li>
+								<!--li class=""><a data-toggle="tab" href="#retro">Retro</a></li-->
 								<!-- <li class=""><a data-toggle="tab" href="#exemption">Exemption</a></li> -->
 
 							</ul>
@@ -956,30 +966,36 @@ $(".modal-body #wew").val( wew );
 												<tr>
 													<td id="sum"><b>Cut Off Period</b></td>
 													<td id="sum2"><input id="period" style="text-align:center" readonly></td>  
-													<td id="sum3"><b>Legal Holiday Restday OT > 8</b> (hh:mm)</td>
-													<td id="sum2"><input id="legalrestot8" style="text-align:center;" readonly></td>  
+													<td id="sum3"><b></b> </td>
+													<td id="sum2"><input id="" style="text-align:center;" readonly></td>  
 												</tr>
 												<tr>
 													<td id="sum"><b>Absent</b> (days)</td>
 													<td id="sum2"><input id="absent" style="text-align:center" readonly></td>  
-													<td id="sum3"><b>Legal Holiday Night Diff</b> (hh:mm)</td>
-													<td id="sum2"><input id="legalnd" style="text-align:center" readonly></td>  
+													<td id="sum3"><b>Legal Holiday Restday OT > 8</b> (hh:mm)</td>
+													<td id="sum2"><input id="legalrestot8" style="text-align:center;" readonly></td>  
 												</tr>
 												<tr>
 													<td id="sum"><b>Regular Hours</b> (hh:mm)</td>
 													<td id="sum2"><input id="reghrs" style="text-align:center" readonly></td>  
-													<td id="sum3"><b>Legal Holiday Night Diff > 8</b> (hh:mm)</td>
-													<td id="sum2"><input id="legalnd8" style="text-align:center" readonly></td>  
+													<td id="sum3"><b>Legal Holiday Night Diff</b> (hh:mm)</td>
+													<td id="sum2"><input id="legalnd" style="text-align:center" readonly></td>  
 												</tr>
 												<tr>
 													<td id="sum"><b>Late</b> (hh:mm)</td>
 													<td id="sum2"><input id="late" style="text-align:center" readonly></td>  
-													<td id="sum3"><b>Legal Holiday Restday Night Diff</b> (hh:mm)</td>
-													<td id="sum2"><input id="legalrestnd" style="text-align:center" readonly></td>  
+													<td id="sum3"><b>Legal Holiday Night Diff > 8</b> (hh:mm)</td>
+													<td id="sum2"><input id="legalnd8" style="text-align:center" readonly></td>  
 												</tr>
 												<tr>
 													<td id="sum"><b>Undertime</b> (hh:mm)</td>
 													<td id="sum2"><input id="undertime" style="text-align:center" readonly></td>  
+													<td id="sum3"><b>Legal Holiday Restday Night Diff</b> (hh:mm)</td>
+													<td id="sum2"><input id="legalrestnd" style="text-align:center" readonly></td> 
+												</tr>
+												<tr>
+													<td id="sum"><b>Night Differential</b> (hh:mm)</td>
+													<td id="sum2"><input id="nightdiff" style="text-align:center" readonly></td>  
 													<td id="sum3"><b>Legal Holiday Restday Night Diff > 8</b> (hh:mm)</td>
 													<td id="sum2"><input id="legalrestnd8" style="text-align:center" readonly></td> 
 												</tr>
@@ -1145,7 +1161,7 @@ $(".modal-body #wew").val( wew );
 			$('#approvedstatus').click(function(){
 				var empid101 = $(this).val();
 				$.ajax({
-		            url: 'attendancedetailsapproval.php?empid='+empid101+'&period='+$('#period').val()+'&absent='+$('#absent').val()+'&reghrs='+$('#reghrs').val()+'&late='+$('#late').val()+'&undertime='+$('#undertime').val()+'&regot='+$('#regot').val()+'&regotnd='+$('#regotnd').val()+'&restot='+$('#restot').val()+'&restot8='+$('#restot8').val()+'&restnd='+$('#restnd').val()+'&restnd8='+$('#restnd8').val()+'&legalot='+$('#legalot').val()+'&legalot8='+$('#legalot8').val()+'&legalnd='+$('#legalnd').val()+'&legalnd8='+$('#legalnd8').val()+'&specialot='+$('#specialot').val()+'&specialot8='+$('#specialot8').val()+'&specialnd='+$('#specialnd').val()+'&specialnd8='+$('#specialnd8').val()+'&legalrestot='+$('#legalrestot').val()+'&legalrestot8='+$('#legalrestot8').val()+'&legalrestnd='+$('#legalrestnd').val()+'&legalrestnd8='+$('#legalrestnd8').val()+'&specialrestot='+$('#specialrestot').val()+'&specialrestot8='+$('#specialrestot8').val()+'&specialrestnd='+$('#specialrestnd').val()+'&specialrestnd8='+$('#specialrestnd8').val()+'&leavehours='+$('#leavehours').val(),
+		            url: 'attendancedetailsapproval.php?empid='+empid101+'&period='+$('#period').val()+'&absent='+$('#absent').val()+'&reghrs='+$('#reghrs').val()+'&late='+$('#late').val()+'&undertime='+$('#undertime').val()+'&nightdiff='+$('#nightdiff').val()+'&regot='+$('#regot').val()+'&regotnd='+$('#regotnd').val()+'&restot='+$('#restot').val()+'&restot8='+$('#restot8').val()+'&restnd='+$('#restnd').val()+'&restnd8='+$('#restnd8').val()+'&legalot='+$('#legalot').val()+'&legalot8='+$('#legalot8').val()+'&legalnd='+$('#legalnd').val()+'&legalnd8='+$('#legalnd8').val()+'&specialot='+$('#specialot').val()+'&specialot8='+$('#specialot8').val()+'&specialnd='+$('#specialnd').val()+'&specialnd8='+$('#specialnd8').val()+'&legalrestot='+$('#legalrestot').val()+'&legalrestot8='+$('#legalrestot8').val()+'&legalrestnd='+$('#legalrestnd').val()+'&legalrestnd8='+$('#legalrestnd8').val()+'&specialrestot='+$('#specialrestot').val()+'&specialrestot8='+$('#specialrestot8').val()+'&specialrestnd='+$('#specialrestnd').val()+'&specialrestnd8='+$('#specialrestnd8').val()+'&leavehours='+$('#leavehours').val(),
 		            method: "POST",
 		            success: function(data) {
 		                $('#displaysomething').html(data);

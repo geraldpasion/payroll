@@ -6,6 +6,7 @@
 				include('supervisormenuheader.php');
 		?>
 	</head>
+	<title>Gallery</title>
 	<body>
 		<div class="row">
 		<div class="col-lg-12">

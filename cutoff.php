@@ -529,12 +529,13 @@ $(document).ready(function(){
 			$("#addCutoff").click(function(){
 				var daterange2 = $("#daterange2").val();
 				var daterange3 = $("#daterange3").val();
+				var element = $(this);
 				 $.ajax({
 				   type: "POST",
 				   url: "cutoffexe.php?daterange2=" + daterange2 + "&daterange3=" + daterange3,
 				   success: function(data){
+				   		//location.reload();
 						eval(data);
-
 						$.ajax({
 						   type: "POST",
 						   url: "cutoffrefreshdropdown.php",
@@ -563,7 +564,7 @@ $(document).ready(function(){
 					}
 					toastr.success("Cut-off successfully added!");
 				}
-				history.replaceState({}, "Title", "cutoff.php");
+				header("Location: cutoff.php?changeCutoff");
 			});
 		</script>
     <script>

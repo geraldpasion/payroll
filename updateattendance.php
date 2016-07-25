@@ -188,7 +188,7 @@
 		if(date('H:i', strtotime($timein)) < $shiftArray[0]){
 			if($isNightShift == 0) { 
 				// if timein < shift start and if employee is not night shift
-				$totalLate = "00:00";
+				$totalLate = 0;
 				$mysqli->query("UPDATE attendance SET attendance_late='$s_zero' WHERE attendance_id='$attendance_id'");
 			} else {
 				// if timein < shift start and if employee is night shift
@@ -201,7 +201,7 @@
 				// $lateArray = split(':', $late);
 				// $hoursTominutes1 = $lateArray[0]*60;
 				// $totalLate = $hoursTominutes1 + $lateArray[1];
-				$totalLate = "00:00";
+				$totalLate = 0;
 				$mysqli->query("UPDATE attendance SET attendance_late='$totalLate' WHERE attendance_id='$attendance_id'");
 			}
 		}else if($timein > $shiftArray[0]){
@@ -446,6 +446,7 @@
 									if($rst_nd >= 1.00) $rst_nd = $rst_nd - 1.00;
 									else $rst_nd = 0.00;
 
+									$rst_ot = $regHours;
 									if($rst_nd > 7.00) {
 										$rst_ot = $regHours - 7.00;
 										$rst_nd = 7.00;
@@ -453,6 +454,10 @@
 											$rst_ot_grt8 = $rst_ot - 1.00;
 											$rst_ot = 1.00;
 										}
+									}
+									if($rst_ot > 8.00) {
+										$rst_ot_grt8 = $rst_ot - 8.00;
+										$rst_ot = 8.00;
 									}
 								}
 							}
@@ -631,54 +636,6 @@
 						}
 					}
 				}
-				// $regHours = computeHours($timein, $timeout);
-				// if($regHours >= 5.00) {
-				// 	$regHours = $regHours - 1.00;
-				// }
-				// if($isNightShift == 0) {
-				// 	//$lh_nd_grt8 = computeND($timein, $timeout) - 1.00;
-				// 	$nd = computeND($timein, $timeout);
-				// 	$sh_ot = $regHours;
-				// 	if($nd >= 1.00) {
-				// 		$sh_nd_grt8 = $nd - 1.00;
-				// 		if($sh_nd_grt8 > 7.00) {
-				// 			$sh_ot = $regHours - 7.00;
-				// 			$sh_nd_grt8 = 7.00;
-				// 			if($sh_ot > 1.00) {
-				// 				$sh_ot_grt8 = $sh_ot - 1.00;
-				// 				$sh_ot = 1.00;
-				// 			}
-				// 		}
-				// 	} else {
-				// 		$sh_nd_grt8 = 0.00;
-				// 		if($sh_ot > 8.00) {
-				// 			$sh_ot_grt8 = $sh_ot - 8.00;
-				// 			$sh_ot = 8.00;
-				// 		}
-				// 	}
-				// 	$regHours = $regHours - $sh_ot_grt8;
-				// } else if($isNightShift == 1) {
-				// 	$nd = computeND($timein, $timeout);
-				// 	$sh_ot = $regHours;
-				// 	if($nd >= 1.00) {
-				// 		$sh_nd = $nd - 1.00;
-				// 		if($sh_nd > 7.00) {
-				// 			$sh_ot = $regHours - 7.00;
-				// 			$sh_nd = 7.00;
-				// 			if($sh_ot > 1.00) {
-				// 				$sh_ot_grt8 = $sh_ot - 1.00;
-				// 				$sh_ot = 1.00;
-				// 			}
-				// 		}
-				// 	} else {
-				// 		$sh_nd = 0.00;
-				// 		if($sh_ot > 8.00) {
-				// 			$sh_ot_grt8 = $sh_ot - 8.00;
-				// 			$sh_ot = 8.00;
-				// 		}
-				// 	}
-				// 	$regHours = $regHours - $sh_ot_grt8;
-				// }
 			}
 		} else if($typeOfDay == "rstlh") { // if rest && legal holiday
 			$rst_lh_ot = 0.00;
@@ -700,14 +657,25 @@
 									$regHours = $regHours - 1.00;
 								}
 								if($isNightShift == 0) {
-									$rst_lh_nd_grt8 = computeND($overtimeStart, $overtimeEnd) - 1.00;
+									$nd = computeND($overtimeStart, $overtimeEnd);
+									if($nd >= 1.00) {
+										$rst_lh_nd_grt8 = $nd - 1.00;
+									} else {
+										$rst_lh_nd_grt8 = 0.00;
+									}
 									$rst_lh_ot = $regHours - $rst_lh_nd_grt8;
 									if($rst_lh_ot > 8.0) {
 										$rst_lh_ot_grt8 = $rst_lh_ot - 8.00;
 										$rst_lh_ot = 8.00;
 									}
 								} else if($isNightShift == 1) {
-									$rst_lh_nd = computeND($overtimeStart, $overtimeEnd) - 1.00;
+									$nd = computeND($overtimeStart, $overtimeEnd);
+									if($nd >= 1.00) {
+										$rst_lh_nd = $nd - 1.00;
+									} else {
+										$rst_lh_nd = 0.00;
+									}
+									$rst_lh_ot = $regHours;
 									if($rst_lh_nd > 7.00) {
 										$rst_lh_ot = $regHours - 7.00;
 										$rst_lh_nd = 7.00;
@@ -715,6 +683,10 @@
 											$rst_lh_ot_grt8 = $rst_lh_ot - 1.00;
 											$rst_lh_ot = 1.00;
 										}
+									}
+									if($rst_lh_ot > 8.00) {
+										$rst_lh_ot_grt8 = $rst_lh_ot - 8.00;
+										$rst_lh_ot = 8.00;
 									}
 								}
 							}
@@ -758,7 +730,7 @@
 										
 										if($rst_nd >= 1.00) $rst_nd = $rst_nd - 1.00;
 										else $rst_nd = 0.00;
-
+										$rst_ot = $regHours;
 										if($rst_nd > 7.00) {
 											$rst_ot = $regHours - 7.00;
 											$rst_nd = 7.00;
@@ -766,6 +738,10 @@
 												$rst_ot_grt8 = $rst_ot - 1.00;
 												$rst_ot = 1.00;
 											}
+										}
+										if($rst_ot > 8.00) {
+											$rst_ot_grt8 = $rst_ot - 8.00;
+											$rst_ot = 8.00;
 										}
 									}
 								}
@@ -792,14 +768,25 @@
 									$regHours = $regHours - 1.00;
 								}
 								if($isNightShift == 0) {
-									$rst_sh_nd_grt8 = computeND($overtimeStart, $overtimeEnd) - 1.00;
+									$nd = computeND($overtimeStart, $overtimeEnd);
+									if($nd >= 1.00) {
+										$rst_sh_nd_grt8 = $nd - 1.00;
+									} else {
+										$rst_sh_nd_grt8 = 0.00;
+									}
 									$rst_sh_ot = $regHours - $rst_sh_nd_grt8;
 									if($rst_sh_ot > 8.0) {
 										$rst_sh_ot_grt8 = $rst_sh_ot - 8.00;
 										$rst_sh_ot = 8.00;
 									}
 								} else if($isNightShift == 1) {
-									$rst_sh_nd = computeND($overtimeStart, $overtimeEnd) - 1.00;
+									$nd = computeND($overtimeStart, $overtimeEnd);
+									if($nd >= 1.00) {
+										$rst_sh_nd = $nd - 1.00;
+									} else {
+										$rst_sh_nd = 0.00;
+									}
+									$rst_sh_ot = $regHours;
 									if($rst_sh_nd > 7.00) {
 										$rst_sh_ot = $regHours - 7.00;
 										$rst_sh_nd = 7.00;
@@ -808,6 +795,10 @@
 											$rst_sh_ot = 1.00;
 										}
 									}
+									if($rst_sh_ot > 8.00) {
+										$rst_sh_ot_grt8 = $rst_sh_ot - 8.00;
+										$rst_sh_ot = 8.00;
+									}
 								}
 							}
 						}
@@ -815,59 +806,7 @@
 					}
 					$regHours = $zero;
 				}
-			}// else if($isAbsentPrevWorkingDay == "inactive") {
-			// 	if($attend == "timeout") { // not absent
-			// 		if($hasApprovedOT == 1) {
-			// 			if($OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'")){
-			// 				if($OT->num_rows > 0){
-			// 					$rst_ot = 0.00;
-			// 					$rst_ot_grt8 = 0.00;
-			// 					$rst_nd = 0.00;
-			// 					$rst_nd_grt8 = 0.00;
-			// 					while($OTResult = $OT->fetch_object()){
-			// 						$overtimeStart = $OTResult->overtime_start;
-			// 						$overtimeStart = substr($overtimeStart, 0, -3);
-			// 						$overtimeEnd = $OTResult->overtime_end;
-			// 						$overtimeEnd = substr($overtimeEnd, 0, -3);
-			// 						$regHours = computeHours($overtimeStart, $overtimeEnd);
-			// 						if($regHours >= 5.00) {
-			// 							$regHours = $regHours - 1.00;
-			// 						}
-			// 						if($isNightShift == 0) {
-			// 							$nd = computeND($overtimeStart, $overtimeEnd);
-			// 							if($nd >= 1.00) {
-			// 								$rst_nd_grt8 = $nd - 1.00;
-			// 							} else {
-			// 								$rst_nd_grt8 = 0.00;
-			// 							}
-			// 							$rst_ot = $regHours - $rst_nd_grt8;
-			// 							if($rst_ot > 8.0) {
-			// 								$rst_ot_grt8 = $rst_ot - 8.00;
-			// 								$rst_ot = 8.00;
-			// 							}
-			// 						} else if($isNightShift == 1) {
-			// 							$rst_nd = computeND($overtimeStart, $overtimeEnd);
-										
-			// 							if($rst_nd >= 1.00) $rst_nd = $rst_nd - 1.00;
-			// 							else $rst_nd = 0.00;
-
-			// 							if($rst_nd > 7.00) {
-			// 								$rst_ot = $regHours - 7.00;
-			// 								$rst_nd = 7.00;
-			// 								if($rst_ot > 1.00) {
-			// 									$rst_ot_grt8 = $rst_ot - 1.00;
-			// 									$rst_ot = 1.00;
-			// 								}
-			// 							}
-			// 						}
-			// 					}
-			// 				}
-			// 				$overtime = 0.00;
-			// 			}
-			// 			$regHours = $zero;
-			// 		}
-			// 	}
-			//}
+			}
 		}
 	} else { //computation for flexi
 		if($attend == "timeout") { // not absent

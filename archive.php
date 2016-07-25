@@ -118,111 +118,7 @@
                                                 <tr style="text-align:center">
                                                     <td>1</td>
                                                     <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPurchasing"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>2</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPurchasing"
-                                                    onMouseOver="this.style.color='blue'"
-                                                    onMouseOut="this.style.color='gray'"
-                                                    > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>3</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPurchasing"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPurchasing"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPurchasing"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPurchasing"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPurchasing"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPurchasing"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPurchasing"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPurchasing"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPurchasing"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
+                                                    <td>Vendor</td>
                                                     <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
                                                 </tr>
                                             </tbody>
@@ -265,9 +161,9 @@
                                         <table class = "footable table table-stripped' data-page-size='8' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
-                                                    <th style="text-align:center" class = "col-md-2">ID</th>
-                                                    <th style="text-align:center">Date</th>
-                                                    <th style="text-align:center" class = "col-md-5">Payee</th>
+                                                    <th style="text-align:center" class = "col-md-2">Name</th>
+                                                    <th style="text-align:center">Max Amount</th>
+                                                    <th style="text-align:center" class = "col-md-5">Type</th>
                                                     <th style="text-align:center" class = "col-md-3">Action</th>
                                                 </tr>
                                             </thead>
@@ -275,114 +171,10 @@
                                                 <tr style="text-align:center">
                                                     <td>1</td>
                                                     <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewCashAdvance"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
+                                                    <td>Vendor</td>
                                                     <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
                                                 </tr>
-                                                <tr style="text-align:center">
-                                                    <td>2</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewCashAdvance"
-                                                    onMouseOver="this.style.color='blue'"
-                                                    onMouseOut="this.style.color='gray'"
-                                                    > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>3</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewCashAdvance"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewCashAdvance"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewCashAdvance"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewCashAdvance"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewCashAdvance"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewCashAdvance"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewCashAdvance"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewCashAdvance"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewCashAdvance"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                            </tbody>
+                                             </tbody>
                                             <tfoot>
                                               <tr>
                                                 <td colspan = "78">
@@ -422,9 +214,9 @@
                                         <table class = "footable table table-stripped' data-page-size='8' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
-                                                    <th style="text-align:center" class = "col-md-2">ID</th>
-                                                    <th style="text-align:center">Date</th>
-                                                    <th style="text-align:center" class = "col-md-5">Name</th>
+                                                    <th style="text-align:center" class = "col-md-2">Name</th>
+                                                    <th style="text-align:center">Max Amount</th>
+                                                    <th style="text-align:center" class = "col-md-5">Type</th>
                                                     <th style="text-align:center" class = "col-md-3">Action</th>
                                                 </tr>
                                             </thead>
@@ -432,114 +224,10 @@
                                                 <tr style="text-align:center">
                                                     <td>1</td>
                                                     <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewLiquidation"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
+                                                    <td>Vendor</td>
                                                     <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
                                                 </tr>
-                                                <tr style="text-align:center">
-                                                    <td>2</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewLiquidation"
-                                                    onMouseOver="this.style.color='blue'"
-                                                    onMouseOut="this.style.color='gray'"
-                                                    > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>3</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewLiquidation"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewLiquidation"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewLiquidation"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewLiquidation"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewLiquidation"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewLiquidation"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewLiquidation"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewLiquidation"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewLiquidation"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                            </tbody>
+                                             </tbody>
                                             <tfoot>
                                               <tr>
                                                 <td colspan = "78">
@@ -576,136 +264,50 @@
                                         <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" style = "margin-left:-2em;">
                                             <h4>Deleted List of Announcements</h4>
                                         </div>
-                                        <table class = "footable table table-stripped' data-page-size='8' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
+                                        <table class = "footable table table-stripped' data-page-size='5' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
-                                                    <th style="text-align:center" class = "col-md-2">ID</th>
-                                                    <th style="text-align:center">Date</th>
-                                                    <th style="text-align:center" class = "col-md-5">Name</th>
-                                                    <th style="text-align:center" class = "col-md-3">Action</th>
+                                                    <th>Date</th>
+                                                    <th class = "col-md-5">Announcement</th>
+                                                    <th class = "col-md-3">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr style="text-align:center">
-                                                    <td>1</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewReimbursement"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>2</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewReimbursement"
-                                                    onMouseOver="this.style.color='blue'"
-                                                    onMouseOut="this.style.color='gray'"
-                                                    > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>3</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewReimbursement"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewReimbursement"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewReimbursement"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewReimbursement"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewReimbursement"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewReimbursement"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewReimbursement"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewReimbursement"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewReimbursement"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                            </tbody>
+
+                                            <?php
+                                            include('dbconfig.php');
+                                            if ($result = $mysqli->query("SELECT * FROM announcement WHERE announcement_archive = 'archive' ORDER BY announcement_date DESC")) //get records from db
+                                            {
+                                                if ($result->num_rows > 0) //display records if any
+                                                {
+                                                    while ($row = mysqli_fetch_object($result)){
+                                                        echo "<tr>";
+                                                            echo "<td class='ann-date'>". date("Y-m-d", strtotime($row->announcement_date)) ."</td>";
+                                                            echo "<td class='announcement-content'>". $row->announcement_details ."</td>";
+                                                            echo "<td>";
+
+                                                            //restore
+                                                            echo "<a href='announcement_restore.php?ann_id=".$row->announcement_id."' class='btn btn-success' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
+
+                                                            //delete
+                                                            echo "<a href='announcement_delete_archive.php?ann_id=".$row->announcement_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure? You want to delete this file?\");'>Delete</a>&nbsp;&nbsp; ";
+
+                                                            "</td>";
+                                                        echo "</tr>";
+                                                    }
+                                                }
+                                            }
+                                        ?>
+                                              </tbody>
                                             <tfoot>
                                               <tr>
                                                 <td colspan = "78">
                                                   <ul class = "pagination pull-right">
                                                     <li class = "footable-page-arrow disabled">
-                                                      <a data-page = "first" href = "#first"><<</a>
+                                                      <a data-page = "first" href = "#first"></a>
                                                     </li>
                                                     <li class = "footable-page-arrow disabled">
-                                                      <a data-page = "prev" href = "#prev"><</a>
+                                                      <a data-page = "prev" href = "#prev"></a>
                                                     </li>
                                                     <li class = "footable-page active">
                                                       <a data-page = "0" href = "#">1</a>
@@ -736,123 +338,46 @@
                                         <table class = "footable table table-stripped' data-page-size='8' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
-                                                    <th style="text-align:center" class = "col-md-2">ID</th>
-                                                    <th style="text-align:center">Date</th>
-                                                    <th style="text-align:center" class = "col-md-5">Payee</th>
-                                                    <th style="text-align:center" class = "col-md-3">Action</th>
+                                                    <th class = "col-md-2">Name</th>
+                                                    <th>Date</th>
+                                                    <th class = "col-md-5">Type</th>
+                                                    <th class = "col-md-3">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr style="text-align:center">
-                                                    <td>1</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPayment"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>2</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPayment"
-                                                    onMouseOver="this.style.color='blue'"
-                                                    onMouseOut="this.style.color='gray'"
-                                                    > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>3</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPayment"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPayment"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPayment"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPayment"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPayment"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPayment"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPayment"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPayment"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                                <tr style="text-align:center">
-                                                    <td>4</td>
-                                                    <td></td>
-                                                    <td><a href = "#.php" data-toggle="modal" data-target = "#myModalViewPayment"
-                                                        onMouseOver="this.style.color='blue'"
-                                                        onMouseOut="this.style.color='gray'"
-                                                        > Vendor </a>
-                                                    </td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
+                                         <?php
+                                            include('dbconfig.php');
+                                            if ($result = $mysqli->query("SELECT * FROM holiday WHERE holiday_archive='archive' ORDER BY holiday_id")) //get records from db
+                                            {
+                                                if ($result->num_rows > 0) //display records if any
+                                                {
+                                                    while ($row = mysqli_fetch_object($result))
+                                                    {
+                                                    
+                                                        echo "<tr class = 'josh'>";
+                                                        echo "<td>".$row->holiday_name."</td>";
+                                                        echo "<td>" . date("Y-m-d",strtotime($row->holiday_date)) . "</td>";
+                                                        
+                                                        $type = $row->holiday_type;
+                                                        if($type == "Special") {
+                                                            echo "<td>Special Holiday</td>";
+                                                        } else {
+                                                            echo "<td>Legal Holiday</td>";
+                                                        }
+
+                                                        //restore
+                                                        echo "<td><a href='holiday_restore.php?holidayid=".$row->holiday_id."' class='btn btn-success' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
+
+                                                        //delete
+                                                        echo "<a href='holiday_delete_archive.php?holidayid=".$row->holiday_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure? You want to delete this file?\");'>Delete</a>&nbsp;&nbsp; ";
+                                                        echo "</td>";
+                                                        echo "</tr>";
+                                                        
+                                                    }
+                                                    echo "</table>";
+                                                }
+                                            }
+                                        ?>
                                             </tbody>
                                             <tfoot>
                                               <tr>
@@ -997,8 +522,6 @@
                     </div>                                
                 </div>
             </div>
-        </div>
-
 		
 	</body>
 	<?php

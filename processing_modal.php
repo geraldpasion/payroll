@@ -35,16 +35,16 @@ if($hourly_rate == "0.00"){
 	$hourly_rate = "0";
 }
 
-$results = $mysqli->query("SELECT * FROM totalcomputation WHERE EmployeeID=$empid AND CutoffID='".$cutoff."'")->fetch_object();
-$comp_id = $results->CompID;
-$taxable_earnings = sprintf('%.2f',$results->TotalTaxableEarnings);
-$nontaxable_earnings = sprintf('%.2f',$results->TotalNonTaxableIncome);
-$taxable_deductions = sprintf('%.2f',$results->TotalTaxableDeduction);
-$nontaxable_deductions = sprintf('%.2f',$results->TotalNonTaxableDeduction);
-$total_statutory_benefits= sprintf('%.2f',$results->TotalStatutoryBenefits);
-$net_income_after_tax = sprintf('%.2f',$results->NetIncomeAfterTax);
-$net_taxable_income = sprintf('%.2f',$results->NetTaxableIncome);
-$net_pay = sprintf('%.2f',$results->NetPay);
+$results = $mysqli->query("SELECT * FROM totalcomputation WHERE EmployeeID=$empid AND CutoffID='".$cutoff."'")->fetch_array();
+$comp_id = $results['CompID'];//$results->CompID;
+$taxable_earnings = sprintf('%.2f',$results['TotalTaxableEarnings']);//->TotalTaxableEarnings);
+$nontaxable_earnings = sprintf('%.2f',$results['TotalNonTaxableIncome']);//->TotalNonTaxableIncome);
+$taxable_deductions = sprintf('%.2f',$results['TotalTaxableDeduction']);//->TotalTaxableDeduction);
+$nontaxable_deductions = sprintf('%.2f',$results['TotalNonTaxableDeduction']);//->TotalNonTaxableDeduction);
+$total_statutory_benefits= sprintf('%.2f',$results['TotalStatutoryBenefits']);//->TotalStatutoryBenefits);
+$net_income_after_tax = sprintf('%.2f',$results['NetIncomeAfterTax']);//->NetIncomeAfterTax);
+$net_taxable_income = sprintf('%.2f',$results['NetTaxableIncome']);//->NetTaxableIncome);
+$net_pay = sprintf('%.2f',$results['NetPay']);//->NetPay);
 
 
 		echo '<div class="modal-header">
@@ -61,7 +61,7 @@ $net_pay = sprintf('%.2f',$results->NetPay);
 								<li class=""><a data-toggle="tab" href="#earnings">Earnings</a></li>
 								<li class=""><a data-toggle="tab" href="#deductions">Deductions</a></li>
 								<li class=""><a data-toggle="tab" href="#leavedetails">Leave Details</a></li>
-								<li class=""><a data-toggle="tab" href="#retro">Retro</a></li>
+								<li class=""><a data-toggle="tab" href="#retro">Others</a></li>
 							</ul>
 							<div class="tab-content">
 								<div id="paysettings" class="tab-pane tab-pane fade active in" >
@@ -276,7 +276,9 @@ $net_pay = sprintf('%.2f',$results->NetPay);
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>';
+
+	/*
 	<script type="text/javascript">
 			$("#approvedstatus").click(function(){
 				var empid101 = $(this).val();
@@ -302,5 +304,7 @@ $net_pay = sprintf('%.2f',$results->NetPay);
 				});
 			});
 		</script>
-		<div id="displaysomething"></div>';
+		<div id="displaysomething"></div>
+
+	*/
 ?>

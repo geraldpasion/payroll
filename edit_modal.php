@@ -31,7 +31,7 @@ $endcut = $cutarray[1];
 					<div class="panel-body">
 						<form method="POST" action = "editprocessing.php"  class="form-horizontal" id="editform">
 						<input type="hidden" value="<?php echo $empid; ?>" name="empid" id="empid"/>
-						<input type="hidden" value="<?php echo $selection;?>" name="cutsel" id="cutsel">
+						<input type="hidden" value="<?php echo $cutoff;?>" name="cutsel" id="cutsel">
 						<div class="form-group">
 							<label class="col-sm-3 control-label">New/Edit</label>
 								<div class="col-sm-4"><select class = "form-control" id = "actionsel" name = "actionsel" onchange="filter_action(this.value)" required="" ><option value = "New">New</option><option value = "Edit">Edit</option></select></div>
@@ -79,7 +79,7 @@ $endcut = $cutarray[1];
 								<tbody>
 									<?php
 										$total_comp_salary = $mysqli->query("SELECT * FROM total_comp_salary WHERE employee_id='$empid' AND cutoff='".$cutoff."'")->fetch_object();
-										$comp_id = $total_comp_salary->comp_id;
+										$comp_id = $total_comp_salary->comp_id;//->comp_id;
 										$emp_earnings = $mysqli->query("SELECT * FROM emp_earnings WHERE employee_id='$empid'");
 										if($emp_earnings->num_rows > 0){
 											while($earn = $emp_earnings->fetch_object()){
@@ -113,7 +113,7 @@ $endcut = $cutarray[1];
 								<tbody>
 									<?php
 										$total_comp_salary = $mysqli->query("SELECT * FROM total_comp_salary WHERE employee_id='$empid' AND cutoff='".$cutoff."'")->fetch_object();
-										$comp_id = $total_comp_salary->comp_id;
+										$comp_id = $total_comp_salary->comp_id;//->comp_id;
 										$emp_deductions = $mysqli->query("SELECT * FROM emp_deductions WHERE employee_id='$empid'");
 										if($emp_deductions->num_rows > 0){
 											while($deduct = $emp_deductions->fetch_object()){

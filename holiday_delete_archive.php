@@ -88,7 +88,7 @@ if($result = $mysqli->query("SELECT * FROM attendance where attendance_date = '$
 }
 
 // insert the new record into the database
-if ($stmt = $mysqli->prepare("UPDATE holiday SET holiday_archive = 'archive' WHERE holiday_id = '$holidayid'"))
+if ($stmt = $mysqli->prepare("DELETE FROM holiday WHERE holiday_id = '$holidayid'"))
 {
 	$stmt->execute();
 	$stmt->close();

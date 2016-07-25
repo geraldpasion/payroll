@@ -568,10 +568,10 @@
 						echo "</form>";
 					?>
 					<!--form method = "post" action="updateall.php">
-						<input type="hidden" id = "urlfrom" name = "urlfrom" value="<?php echo $fromAttendance ?>">
-						<input type="hidden" id = "urlid" name = "urlid" value="<?php echo $id ?>">
-						<input type="hidden" id = "urldatef" name = "urldatef" value="<?php echo $datef ?>">
-						<input type="hidden" id = "urldatet" name = "urldatet" value="<?php echo $datet ?>">
+						<input type="hidden" id = "urlfrom" name = "urlfrom" value="<?php //echo $fromAttendance ?>">
+						<input type="hidden" id = "urlid" name = "urlid" value="<?php //echo $id ?>">
+						<input type="hidden" id = "urldatef" name = "urldatef" value="<?php //echo $datef ?>">
+						<input type="hidden" id = "urldatet" name = "urldatet" value="<?php // echo $datet ?>">
 						<button type="update" class="btn btn-primary">Update</button>
 					</form-->
 				</div>

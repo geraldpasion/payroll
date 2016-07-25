@@ -56,7 +56,7 @@ function get_table($tablename){
 }//end of get_table
 
 //pass cutoff
-function compute($cutoff_field, $update=0, $comp=0, $emp=0){
+function compute($cutoff_field, $update=0, $emp=0, $comp=0){
 include 'dbconfig.php';
 include 'payroll_compute.php';
 include 'statutory_benefits_compute.php';
@@ -131,7 +131,17 @@ else {
 
 
 //select data from total_comp
+if($update==1){
+    //delete from total_comp_salary and totalcomputation table in preparation for updates
+    //Note: $emp is the employee id passed from the optional parameter of this compute() function
+    delete_emp_salary($cutoff_field, $emp);
+
+    $sql = "SELECT * FROM $table WHERE cutoff='$cutoff_field' AND employee_id='$emp' ";
+}
+else{
 $sql = "SELECT * FROM $table WHERE cutoff='$cutoff_field'";
+}
+
 
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
@@ -245,7 +255,7 @@ echo "</table>";
 
 //*****************************************Retro************************************************
         
-$Total_Retro = retro($employee_id, $HourlyRatePay);
+//$Total_Retro = retro($employee_id, $HourlyRatePay);
 
 
 
@@ -859,10 +869,87 @@ $retro_fields = array (
 }
 
 
+function delete_emp_salary($cutoff_field, $emp){
+
+    include 'dbconfig.php';
+
+    $sql = "DELETE FROM total_comp_salary
+WHERE cutoff='$cutoff_field' AND employee_id='$emp'";
+
+if ($conn->query($sql) === TRUE) {
+    echo "Record deleted successfully total_comp_salary".nextline();
+} else {
+    echo "Error deleting record: " . $conn->error;
+}
+
+ $sql = "DELETE FROM totalcomputation
+WHERE CutoffID='$cutoff_field' AND EmployeeID='$emp'";
+
+if ($conn->query($sql) === TRUE) {
+    echo "Record deleted successfully totalcomputation".nextline();
+} else {
+    echo "Error deleting record: " . $conn->error;
+}
+
+ }
 
 
+function check_update($cutoff_field, $empids){
+    //check if total_comp has an existing cutoff, if none. don't compute.
+
+    include 'dbconfig.php';
+     $table='total_comp_salary';
+
+     $fields=get_fieldnames($table);
+
+     //initialize check flag
+     $update_check = 0;
+
+     $sql = "SELECT * FROM $table WHERE cutoff='$cutoff_field'";
+     $result = $conn->query($sql);
+         if ($result->num_rows > 0) {
+
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $update_check=0;
+                break;
+             }
+          }
+          else{
+
+            $update_check=1;
 
 
+            //recompute each employee that got affected with the new earnings/deduction
+            foreach ($empids as $emp)
+                //echo "empidxxxxx: ".$emp.nextline();
+                compute($cutoff_field, $update_check, $emp);
+          }
+
+    //echo "******************************************************".nextline();
+          
+
+}
+
+
+function cutoff_parse($cutoffdate){
+                $cutarray = array();
+                $cutarray = split(" - ", $cutoffdate);
+                $keydatefrom = $cutarray[0];
+                $keydatefrom = date("Y-m-d", strtotime($keydatefrom));
+                $keydateto = $cutarray[1];
+                $keydateto = date("Y-m-d", strtotime($keydateto));
+
+                echo "start: ".$keydateto.nextline();
+                echo "end: ".$keydatefrom.nextline();
+
+                $cutoff_array = array(
+                    $keydateto,
+                    $keydatefrom
+                    );
+
+                return $cutoff_array;
+}
 
 
 

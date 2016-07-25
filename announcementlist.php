@@ -33,7 +33,7 @@
 			var info = 'announcement_id=' + announcement_id;
 			 $.ajax({
 			   type: "GET",
-			   url: "deleteannouncement.php",
+			   url: "announcement_delete.php",
 			   data: info,
 			   success: function(){
 			 }
@@ -122,9 +122,10 @@
                         <form>
                         <input type="text" class="form-control" id="filter"
                                    placeholder="Search in table">
-                        </form>
+                        </form><br>
 
-							<table class="table table-striped table-hover table-responsive table-bordered">
+							<!--table class="table table-striped table-hover table-responsive table-bordered"-->
+							<table class='footable table table-stripped' data-page-size='8' data-filter=#filter>
 								<?php
 									//generate table headers
 									generate_table_header();
@@ -229,7 +230,7 @@ function generate_table_header(){
 
 function generate_table_contents(){
 include('dbconfig.php');
-	if ($result = $mysqli->query("SELECT * FROM announcement ORDER BY announcement_date DESC")) //get records from db
+	if ($result = $mysqli->query("SELECT * FROM announcement WHERE announcement_archive = 'active' ORDER BY announcement_date DESC")) //get records from db
 	{
 		if ($result->num_rows > 0) //display records if any
 		{

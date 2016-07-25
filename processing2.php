@@ -107,9 +107,11 @@
 		</script>
 		<script type="text/javascript">
 			$(document).on("click", ".viewempdialog", function () {
-			 var employeeid = $(this).data('employee-id');			
-			 var cutoffd = $(this).data('cutoffd');
-			 var submitdate = $(this).data('submitdate');
+			document.getElementById('approvedstatus').value = $(this).data('employee-id');
+			document.getElementById('pendingstatus').value = $(this).data('employee-id');
+			var employeeid = $(this).data('employee-id');			
+			var cutoffd = $(this).data('cutoffd');
+			var submitdate = $(this).data('submitdate');
 
 			$.ajax({
 	            url: "processing_modal.php",
@@ -238,6 +240,61 @@
 					
 			});*/
 		</script>
+		<script type="text/javascript">
+			$("#approvedstatus").click(function(){
+				var empid101 = $(this).val();
+				$.ajax({
+		            url: "processingapproval.php?status=approve&empid="+empid101,
+		            method: "POST",
+		            success: function(data) {
+		              //  $("#displaysomething").html(data);
+		                $("#proc_status"+empid101).html("Approved");
+		            }
+		        });
+	        });
+
+	        $("#pendingstatus").click(function(){
+			var empid101 = $("#approvedstatus").val();
+				$.ajax({
+		            url: "processingapproval.php?status=pending&empid="+empid101,
+		            method: "POST",
+		            success: function(data) {
+		              //  $("#displaysomething").html(data);
+		                $("#proc_status"+empid101).html("Pending");
+		            }
+				});
+			});
+		</script>
+		<script type="text/javascript" >//ajax	
+			$(document).ready(function(){
+			$(document).on('submit','#form1', function() {
+				var check = true;
+				$(this).find('td[name=proc_status]').each(function(){
+					if($(this).html() == 'Pending'){
+						swal({  title: "Cannot Submit",   text: "There are entries with pending status",   timer: 3000, type: "warning",   showConfirmButton: false});
+							check = false;
+							return false;
+					}
+				});
+				if(check == true) {
+					
+					var sched = $('#leavetype').val();
+					var dataString = "sched="+sched;
+					/// AJAX Code To Submit Form.
+					$.ajax({
+						type: "POST",
+						//url: "attendanceapprovalexe.php",
+						data: dataString,
+						cache: false,
+						success: function(result){
+							eval(result);
+							}
+					});
+				}
+			return false;
+			});
+			});
+		</script>
 		<script src="js/keypress.js"></script>
 	</head>
 	<body>
@@ -318,7 +375,7 @@
 								{
 									if ($result1->num_rows > 0) //display records if any
 									{
-										echo '<form method="POST" action = "editprocessing.php"  class="form-horizontal" id="form1"><input type="hidden" value="$selection" name="cutsel" id="cutsel">';
+										echo '<form method="POST" action = ""  class="form-horizontal" id="form1"><input type="hidden" value="$selection" name="cutsel" id="cutsel">';
 										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
@@ -355,7 +412,7 @@
 														data-submitdate='".$cutoffsubmitdate."'
 														data-target='#myModal2' class = 'viewempdialog'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</a></td>";
 											echo "<td>" . $row1->employee_department . "</td>";
-											echo "<td>" . $status->process_status . "</td>";
+											echo "<td name='proc_status' id='proc_status".$empid."'>" . $status->process_status . "</td>";
 											echo "<td><a href='#' data-toggle='modal' 
 													data-employee-id='$empid' 												
 													data-cutoffd='".$initialcut." - ".$endcut."'
@@ -371,13 +428,13 @@
 						?>
 						<div class="col-sm-9"></div>								
 						<div class="col-sm-3">
-							<div class="col-md-5"><button id="submit" type="submit" name="subproc" class="btn btn3 btn-w-m btn-primary">Submit</button></div>
-						</div>
-					</form>
+							<button id="subproc" type="submit" name="subproc" class="btn btn3 btn-w-m btn-primary">Submit</button>
+						</div><br><br>
 					</div>
 				</div>
 			</div>
         </div>
+        </form>
 		
 			<?php
 				//include("processing_modal.php");
