@@ -90,7 +90,7 @@
 
 	// checks type of day given the attendance date
 	$typeOfDay = "reg";
-	if($dateRow = $mysqli->query("SELECT * FROM holiday where holiday_date = '$dateWithDayArray[0]'")->fetch_array()) { // checks if date is holiday
+	if($dateRow = $mysqli->query("SELECT * FROM holiday where holiday_date = '$dateWithDayArray[0]' AND holiday_archive != 'archive'")->fetch_array()) { // checks if date is holiday
 		if($dateRow['holiday_type'] == "Regular" || $dateRow['holiday_type'] == "Legal") { // if legal holiday
 			if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])) { // if legal holiday AND rest day
 				$typeOfDay = "rstlh";

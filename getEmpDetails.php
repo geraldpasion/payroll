@@ -369,7 +369,7 @@
 										// checks type of day
 										$typeOfDay = "Regular";
 										$typeOfDay2 = "REG";
-										if($dateRow = $mysqli->query("SELECT * FROM holiday where holiday_date = '$dateWithDayArray[0]'")->fetch_array()) {
+										if($dateRow = $mysqli->query("SELECT * FROM holiday where holiday_date = '$dateWithDayArray[0]' AND holiday_archive != 'archive'")->fetch_array()) {
 											if($dateRow['holiday_type'] == "Regular" || $dateRow['holiday_type'] == "Legal") {
 												if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])) {
 													$typeOfDay = "Rest & Legal Holiday";

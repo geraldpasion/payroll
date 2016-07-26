@@ -55,6 +55,25 @@ function get_table($tablename){
 	<?php
 }//end of get_table
 
+function delete_previous_compute($cutoff_field){
+include 'dbconfig.php';
+
+$table = array('total_comp_salary', 'totalcomputation');
+$field = array('cutoff', 'CutoffID'); 
+
+        for($i=0; $i<2; $i++){
+            $tab = $table[$i];
+            $fie = $field[$i];
+            $sql = "DELETE FROM $tab WHERE $fie='$cutoff_field'";
+            if ($conn->query($sql) === TRUE) {
+                echo "Record deleted successfully ".$tab.nextline();
+            } else {
+                echo "Error deleting record: " . $conn->error.nextline();
+            }
+        }//end for
+
+}
+
 //pass cutoff
 function compute($cutoff_field, $update=0, $emp=0, $comp=0){
 include 'dbconfig.php';
@@ -62,6 +81,10 @@ include 'payroll_compute.php';
 include 'statutory_benefits_compute.php';
 include 'other_earnings_and_deductions.php';
 //require 'rb.php';
+
+//clear first
+delete_previous_compute($cutoff_field);
+
 
 $fields=get_fieldnames('total_comp');
 
@@ -219,8 +242,10 @@ echo "<table border=1>";
             if(in_array($field, $hours_fields)){
                 echo "<tr>";
                     
+                   // echo "<font color=white><td>".floatval($row[$field])."</td></font>";   
                     echo "<td valign=top>";
                 //call functions at functions.php
+
                 $val = $field($row[$field],$HourlyRatePay);
                 echo "<font color=white><b>".$field."</b>: ".$val."</font>";
                 echo "</td>";
@@ -299,13 +324,17 @@ echo "</table>";
 
         //*************************other Taxable earnings and deductions*********************/
         //Note: functions can be found on other_earnings_and_deductions.php
-        $other_earnings=compute_other_earnings($comp_id);
-        echo "Other Taxable Earnings: ".$other_earnings.nextline();
+        $other_earnings=compute_other_earnings($comp_id, $employee_id);
+        echo "Other Taxable Earnings: ".$other_earnings.doubleline();
 
-        $other_deductions=compute_other_deductions($comp_id);
-        echo "Other Taxable Deductions: ".$other_deductions.nextline();
+        $other_deductions=compute_other_deductions($comp_id, $employee_id);
+        echo "Other Taxable Deductions: ".$other_deductions.doubleline();
 
         $NetTaxableIncome = $NetTaxableIncome + $other_earnings - $other_deductions;
+
+
+
+        //*************************************
 
         //get cutoff and taxcode
         $sql_taxcode = "SELECT employee_taxcode, cutoff FROM employee WHERE employee_id=$employee_id";
@@ -419,7 +448,7 @@ echo "</table>";
             $nontaxable_income=0;
 
          echo "Non-Taxable Earnings: ".$nontaxable_income.nextline();
-
+         $net_pay=0;
         $net_pay=$NetIncomeAfterTax+$nontaxable_income;
 
         //***********************add non-taxable deductions
@@ -536,7 +565,7 @@ echo "</table>";
             $values="(";
          foreach ($totalcomputation_fields as $tcf){
 
-            if($tcf!='ID' and $tcf!='DateCreated' and $tcf!='DateModified'){
+            if($tcf!='id' and $tcf!='DateCreated' and $tcf!='DateModified' and $tcf!='process_status'){
              $into=$into.$tcf.", ";
 
              //fields CompID, EmployeeID, CutoffID, BasicSalary, SemiMonthlyRate, DailyRate, HourlyRate, 
@@ -940,12 +969,12 @@ function cutoff_parse($cutoffdate){
                 $keydateto = $cutarray[1];
                 $keydateto = date("Y-m-d", strtotime($keydateto));
 
-                echo "start: ".$keydateto.nextline();
-                echo "end: ".$keydatefrom.nextline();
+                //echo "start: ".$keydateto.nextline();
+               //echo "end: ".$keydatefrom.nextline();
 
                 $cutoff_array = array(
-                    $keydateto,
-                    $keydatefrom
+                    $keydatefrom,
+                    $keydateto
                     );
 
                 return $cutoff_array;

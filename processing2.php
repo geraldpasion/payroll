@@ -107,8 +107,6 @@
 		</script>
 		<script type="text/javascript">
 			$(document).on("click", ".viewempdialog", function () {
-			document.getElementById('approvedstatus').value = $(this).data('employee-id');
-			document.getElementById('pendingstatus').value = $(this).data('employee-id');
 			var employeeid = $(this).data('employee-id');			
 			var cutoffd = $(this).data('cutoffd');
 			var submitdate = $(this).data('submitdate');
@@ -144,7 +142,8 @@
 			$(".delete").click(function(){
 			var element = $(this);
 			var employee_id = element.attr("id");
-			var info = 'employee_id1=' + employee_id;
+			var cutoff = element.attr("cutoff");
+			var info = 'employee_id1=' + employee_id + "&cutoff1=" + cutoff;
 			 $.ajax({
 			   type: "POST",
 			   url: "deactivateemployee.php",
@@ -177,6 +176,37 @@
 			});
 			});
 		</script>
+		<script type="text/javascript" >//ajax	
+			$(document).ready(function(){
+			$(document).on('submit','#form1', function() {
+				var check = true;
+				var cutoffd = document.getElementById('cutoff').value;
+
+				$(this).find('td[name=proc_status]').each(function(){
+					if($(this).html() == 'Pending'){
+						swal({  title: "Cannot Submit",   text: "There are entries with pending status",   timer: 3000, type: "warning",   showConfirmButton: false});
+							check = false;
+							return false;
+					}
+				});
+				if(check == true) {
+					var dataString = "cutoff=" + cutoffd;
+					/// AJAX Code To Submit Form.
+					$.ajax({
+						type: "POST",
+						url: "processingexe.php",
+						data: dataString,
+						cache: false,
+						success: function(result){
+							eval(result);
+							//alert(result);
+						}
+					});
+				}
+			return false;
+			});
+			});
+		</script>
 		
 		<script type="text/javascript">
 			$(document).ready(function(){
@@ -202,12 +232,47 @@
 			history.replaceState({}, "Title", "processing2.php");
 			});
 		</script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+			showEdited2=function(){
+			toastr.options = { 
+				"closeButton": true,
+			  "debug": false,
+			  "progressBar": true,
+			  "preventDuplicates": true,
+			  "positionClass": "toast-top-right",
+			  "onclick": null,
+			  "showDuration": "400",
+			  "hideDuration": "1000",
+			  "timeOut": "7000",
+			  "extendedTimeOut": "1000",
+			  "showEasing": "swing",
+			  "hideEasing": "linear",
+			  "showMethod": "fadeIn",
+			  "hideMethod": "fadeOut" // 1.5s
+				}
+				toastr.success("Processing successfully submitted!");
+			}
+			history.replaceState({}, "Title", "processing2.php");
+			});
+		</script>
 		<?php
 		if(isset($_GET['edited']))
 		{
 			echo '<script type="text/javascript">'
 					, '$(document).ready(function(){'
 					, 'showEdited();'
+					, '});' 
+			   
+			   , '</script>'
+			;	
+		}
+
+		if(isset($_GET['submitted']))
+		{
+			echo '<script type="text/javascript">'
+					, '$(document).ready(function(){'
+					, 'showEdited2();'
 					, '});' 
 			   
 			   , '</script>'
@@ -239,61 +304,6 @@
 						});
 					
 			});*/
-		</script>
-		<script type="text/javascript">
-			$("#approvedstatus").click(function(){
-				var empid101 = $(this).val();
-				$.ajax({
-		            url: "processingapproval.php?status=approve&empid="+empid101,
-		            method: "POST",
-		            success: function(data) {
-		              //  $("#displaysomething").html(data);
-		                $("#proc_status"+empid101).html("Approved");
-		            }
-		        });
-	        });
-
-	        $("#pendingstatus").click(function(){
-			var empid101 = $("#approvedstatus").val();
-				$.ajax({
-		            url: "processingapproval.php?status=pending&empid="+empid101,
-		            method: "POST",
-		            success: function(data) {
-		              //  $("#displaysomething").html(data);
-		                $("#proc_status"+empid101).html("Pending");
-		            }
-				});
-			});
-		</script>
-		<script type="text/javascript" >//ajax	
-			$(document).ready(function(){
-			$(document).on('submit','#form1', function() {
-				var check = true;
-				$(this).find('td[name=proc_status]').each(function(){
-					if($(this).html() == 'Pending'){
-						swal({  title: "Cannot Submit",   text: "There are entries with pending status",   timer: 3000, type: "warning",   showConfirmButton: false});
-							check = false;
-							return false;
-					}
-				});
-				if(check == true) {
-					
-					var sched = $('#leavetype').val();
-					var dataString = "sched="+sched;
-					/// AJAX Code To Submit Form.
-					$.ajax({
-						type: "POST",
-						//url: "attendanceapprovalexe.php",
-						data: dataString,
-						cache: false,
-						success: function(result){
-							eval(result);
-							}
-					});
-				}
-			return false;
-			});
-			});
 		</script>
 		<script src="js/keypress.js"></script>
 	</head>
@@ -375,7 +385,8 @@
 								{
 									if ($result1->num_rows > 0) //display records if any
 									{
-										echo '<form method="POST" action = ""  class="form-horizontal" id="form1"><input type="hidden" value="$selection" name="cutsel" id="cutsel">';
+										echo '<form method="POST" action = "processingexe.php"  class="form-horizontal" id="form1"><input type="hidden" value="$selection" name="cutsel" id="cutsel">';
+										echo '<input type="hidden" value="'.$initialcut . ' - ' . $endcut.'" name="cutoff" id="cutoff">';
 										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
@@ -403,7 +414,7 @@
 											$restdayArray = array();
 											$restdayArray = split('/', $row1->employee_restday);
 
-											$status = $mysqli->query("SELECT process_status FROM total_comp_salary WHERE cutoff = '".$initialcut." - ".$endcut."'")->fetch_object();
+											$status = $mysqli->query("SELECT process_status FROM total_comp_salary WHERE employee_id = '".$empid."' AND cutoff = '".$initialcut." - ".$endcut."'")->fetch_object();
 											echo "<tr class = 'josh'>";
 											echo "<td>" . $row1->employee_id . "</td>";
 											echo "<td><a href='#' data-toggle='modal'
@@ -412,13 +423,13 @@
 														data-submitdate='".$cutoffsubmitdate."'
 														data-target='#myModal2' class = 'viewempdialog'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</a></td>";
 											echo "<td>" . $row1->employee_department . "</td>";
-											echo "<td name='proc_status' id='proc_status".$empid."'>" . $status->process_status . "</td>";
+											echo "<td name='proc_status' id='proc_status".$row1->employee_id."'>" . $status->process_status . "</td>";
 											echo "<td><a href='#' data-toggle='modal' 
 													data-employee-id='$empid' 												
 													data-cutoffd='".$initialcut." - ".$endcut."'
 													data-submitdate='".$cutoffsubmitdate."'
 													data-target='#myModal4' class = 'editempdialog'><button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> Edit</button></a>&nbsp;&nbsp;";
-											echo "<a href='#' id='$empid' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Deactivate</button></button></a>";											
+											echo "<a href='#' id='$empid' cutoff='".$initialcut." - ".$endcut."' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Deactivate</button></button></a>";											
 											echo "</tr>";
 										}									
 										echo "</table>";
@@ -452,7 +463,8 @@
 
 			</div>
 		</div>
-	</div>			
+	</div>
+	<div id="displaysomething"></div>			
 	
 		<script src="js/jquery.min.js"></script>
 		<script src="js/timepicki.js"></script>

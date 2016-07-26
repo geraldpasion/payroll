@@ -67,10 +67,13 @@ $styleArrayTop = array(
 $col='A';
 $row='1';
 
+//get cutoff value
 
 $value_top = array('Payroll Register - Detailed',
 					'Group - iConnect Global Communications Inc.',
 					'Coverage Period: Apr 24, 2016 - May 08, 2016');
+
+
 
 foreach ($value_top as $top){
 $cell=$col.$row;
@@ -123,13 +126,24 @@ foreach ($heads as $key => $value){
 }
 
 
-//values
+
+//*********************************write data here (per cell)*******************************
 
 
-$i=2;
+
+
+
+
+
+
+
+
+
+
+
 //****************************************second sheet*************************************
 $objWorkSheet = $objPHPExcel->createSheet($i); //Setting index when creating
-
+$i=2;
  //top details
 $col='A';
 $row='1';

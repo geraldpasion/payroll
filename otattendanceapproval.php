@@ -13,7 +13,7 @@ include('dbconfig.php');
 					$hour = sprintf("%02d", floor($otdetails_info ->overtime_duration));
 					$min = sprintf("%02d", round(60*($otdetails_info ->overtime_duration - $hour)));
 					$othours = $hour . ":" . $min;
-					
+					$status = $otdetails_info ->overtime_status;
 					$otapproveby = $otdetails_info ->overtime_approvedby;
 					
 					if(date("Y-m-d", strtotime($otdate)) >= $cutoff_initial && date("Y-m-d", strtotime($otdate)) <= $cutoff_end){
@@ -23,6 +23,7 @@ include('dbconfig.php');
 						<td>".$otstart."</td>
 						<td>".$otend."</td>
 						<td>".$othours."</td>
+						<td>".$status."</td>
 						<td>".$otapproveby."</td>
 					</tr>";
 				}else{

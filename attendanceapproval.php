@@ -84,116 +84,6 @@ if(isset($_POST['test'])){
 				$('input[name="daterange2"]').daterangepicker({
 					singleDatePicker: true,
 					showDropdowns: true
-
-Cut Off Period	
-
-2016-05-16 - 2016-07-30
-
-Legal Holiday Restday OT > 8 (hh:mm)	
-
-00:00
-
-Absent (days)	
-
-11
-
-Legal Holiday Night Diff (hh:mm)	
-
-00:00
-
-Regular Hours (hh:mm)	
-
-178:18
-
-Legal Holiday Night Diff > 8 (hh:mm)	
-
-00:00
-
-Late (hh:mm)	
-
-31:25
-
-Legal Holiday Restday Night Diff (hh:mm)	
-
-00:00
-
-Undertime (hh:mm)	
-
-27:07
-
-Legal Holiday Restday Night Diff > 8 (hh:mm)	
-
-00:00
-
-Regular OT (hh:mm)	
-
-13:30
-
-Special Holiday OT (hh:mm)	
-
-24:00
-
-Regular OT Night Diff (hh:mm)	
-
-00:00
-
-Special Holiday OT > 8 (hh:mm)	
-
-00:00
-
-Restday OT (hh:mm)	
-
-11:12
-
-Special Holiday Restday OT (hh:mm)	
-
-00:00
-
-Restday OT > 8 (hh:mm)	
-
-14:48
-
-Special Holiday Restday OT > 8 (hh:mm)	
-
-00:00
-
-Restday Night Diff (hh:mm)	
-
-00:00
-
-Special Holiday Night Diff (hh:mm)	
-
-00:00
-
-Restday Night Diff > 8 (hh:mm)	
-
-00:00
-
-Special Holiday Night Diff > 8 (hh:mm)	
-
-00:00
-
-Legal Holiday OT (hh:mm)	
-
-24:00
-
-Special Holiday Restday Night Diff (hh:mm)	
-
-00:00
-
-Legal Holiday OT > 8 (hh:mm)	
-
-01:48
-
-Special Holiday Restday Night Diff > 8 (hh:mm)	
-
-00:00
-
-Legal Holiday Restday OT (hh:mm)	
-
-00:00
-
-
 				});
 			});
 		</script>
@@ -735,7 +625,7 @@ $(".modal-body #wew").val( wew );
 											//LEAVE HOURS
 											$leaveHoursfloor = floor($totalLeave);
 											$leaveHoursdecimal = substr((($totalLeave-$leaveHoursfloor) *100)*60, 0, 2);
-											$leaveHoursResult = sprintf("%02d", $leaveHoursfloor).':'.sprintf("%02d", $newspecialrestnd8decimal);
+											$leaveHoursResult = sprintf("%02d", $leaveHoursfloor).':'.sprintf("%02d", $leaveHoursdecimal);
 
 											$attstatus = $mysqli->query("SELECT * FROM total_comp WHERE employee_id = '$empid'");
 											if ($attstatus->num_rows > 0) {
@@ -1007,9 +897,9 @@ $(".modal-body #wew").val( wew );
 												</tr>
 												<tr>
 													<td id="sum"><b>Regular OT Night Diff</b> (hh:mm)</td>
-													<td id="sum2"><input id="restnd" style="text-align:center" readonly></td>  
+													<td id="sum2"><input id="regotnd" style="text-align:center" readonly></td>  
 													<td id="sum3"><b>Special Holiday OT > 8</b> (hh:mm)</td>
-													<td id="sum2"><input id="specialnd8" style="text-align:center" readonly></td>  
+													<td id="sum2"><input id="specialot8" style="text-align:center" readonly></td>  
 												</tr>
 												<tr>
 													<td id="sum"><b>Restday OT</b> (hh:mm)</td>
@@ -1090,7 +980,8 @@ $(".modal-body #wew").val( wew );
 													<th>Time From</th>
 													<th>Time To</th>
 													<th>Duration</th>
-													<th>Approved By</th>
+													<th>Status</th>
+													<th>Managed By</th>
 												</tr>
 											</thead>
 											<tbody id="tbodyot">

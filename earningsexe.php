@@ -46,7 +46,7 @@ if(isset($_POST['sub'])){
 					}
 				}*/
 
-				if(($end != "0000-00-00" && $end >= $keydatefrom) || ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){
+				if(($end != "0000-00-00" && (($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)) && ($end >= $keydatefrom || $end <= $keydateto))) || ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){
 					if($stmt = $mysqli->prepare("INSERT INTO emp_earnings (earnings_setting_id, employee_id, earn_name, earn_max, earn_type, initial_date, end_date, comp_id) VALUES ('$earnings_id','" . $_POST["id"][$i] . "', '$earningname', '$amount', '$earnings_type', '$initial', '$end', '$comp_id')")){
 						$stmt->execute();
 					 	$stmt->close();

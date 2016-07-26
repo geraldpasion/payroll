@@ -36,7 +36,7 @@ if(isset($_POST['sub'])){
 				$keydateto = $cutarray[1];
 				$keydateto = date("Y-m-d", strtotime($keydateto));
 
-				if(($end != "0000-00-00" && $end >= $keydatefrom) || ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){
+				if(($end != "0000-00-00" && (($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)) && ($end >= $keydatefrom || $end <= $keydateto))) || ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){
 					if($stmt = $mysqli->prepare("INSERT INTO emp_deductions (deductions_setting_id, employee_id, deduct_name, deduct_max, deduct_type, initial_date, end_date, comp_id) VALUES ('$deduction_id','" . $_POST["id"][$i] . "', '$deductionname', '$amount', '$deduction_type', '$initial', '$end', '$comp_id')")){
 						$stmt->execute();
 					 	$stmt->close();

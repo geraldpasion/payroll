@@ -30,7 +30,7 @@ if ($cutoff = $mysqli->query("SELECT * from cutoff WHERE cutoff_id = '$cutoffid'
 			echo "<br>" . mysqli_error($mysqli);
 		}
 
-		if ($stmt4 = $mysqli->prepare("DELETE FROM total_comp WHERE empcut_initial = '$cutoff_initial' AND empcut_end = '$cutoff_end'"))
+		if ($stmt4 = $mysqli->prepare("DELETE FROM total_comp WHERE cutoff = '".$cutoff_initial.' - '.$cutoff_end."'"))
 		{
 			$stmt4->execute();
 			$stmt4->close();

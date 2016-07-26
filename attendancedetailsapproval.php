@@ -5,6 +5,7 @@ $period = $_REQUEST['period'];
 $absent = $_REQUEST['absent'];
 $late = $_REQUEST['late'];
 $undertime = $_REQUEST['undertime'];
+$regnd =  $_REQUEST['nightdiff'];
 $reghrs = $_REQUEST['reghrs'];
 $regot = $_REQUEST['regot'];
 $regotnd = $_REQUEST['regotnd'];
@@ -41,7 +42,7 @@ if ($attstatus->num_rows > 0) {
 }
 
 if ($attendance_status=='') {
-	if ($stmt = $mysqli->query("INSERT INTO total_comp (`employee_id`,`cutoff`,`absent`,`late`,`undertime`,`reg_hrs`,`reg_ot`,`reg_ot_nd`,`rst_ot`,`rst_ot_grt8`,`rst_nd`,`rst_nd_grt8`,`lh_ot`,`lh_ot_grt8`,`lh_nd`,`lh_nd_grt8`,`sh_ot`,`sh_ot_grt8`,`sh_nd`,`sh_nd_grt8`,`rst_lh_ot`,`rst_lh_ot_grt8`,`rst_lh_nd`,`rst_lh_nd_grt8`,`rst_sh_ot`,`rst_sh_ot_grt8`,`rst_sh_nd`,`rst_sh_nd_grt8`,`leave_hrs`,`attendance_status`) values('$empid','$period','$absent','$late','$undertime','$reghrs','$regot','$regotnd','$restot','$restot8','$restnd','$restnd8','$legalot','$legalot8','$legalnd','$legalnd8','$specialot','$specialot8','$specialnd','$specialnd8','$legalrestot','$legalrestot8','$legalrestnd','$legalrestnd8','$specialrestot','$specialrestot8','$specialrestnd','$specialrestnd8','$leavehours','Approved')"))
+	if ($stmt = $mysqli->query("INSERT INTO total_comp (`employee_id`,`cutoff`,`absent`,`late`,`undertime`,`reg_hrs`,`reg_nd`,`reg_ot`,`reg_ot_nd`,`rst_ot`,`rst_ot_grt8`,`rst_nd`,`rst_nd_grt8`,`lh_ot`,`lh_ot_grt8`,`lh_nd`,`lh_nd_grt8`,`sh_ot`,`sh_ot_grt8`,`sh_nd`,`sh_nd_grt8`,`rst_lh_ot`,`rst_lh_ot_grt8`,`rst_lh_nd`,`rst_lh_nd_grt8`,`rst_sh_ot`,`rst_sh_ot_grt8`,`rst_sh_nd`,`rst_sh_nd_grt8`,`leave_hrs`,`attendance_status`) values('$empid','$period','$absent','$late','$undertime','$reghrs','$regnd','$regot','$regotnd','$restot','$restot8','$restnd','$restnd8','$legalot','$legalot8','$legalnd','$legalnd8','$specialot','$specialot8','$specialnd','$specialnd8','$legalrestot','$legalrestot8','$legalrestnd','$legalrestnd8','$specialrestot','$specialrestot8','$specialrestnd','$specialrestnd8','$leavehours','Approved')"))
 	{
 		echo "<script></script>";
 	// echo"<script>alert('$empid');</script>";
@@ -65,7 +66,14 @@ if ($attendance_status=='') {
 					while($row = $earningsett->fetch_object()){
 						$initial = $row->initial_date;
 						$end = $row->end_date;
-						if(($end != "0000-00-00" && $end >= $keydatefrom) || ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){
+
+
+						/*if(($end != "0000-00-00" && (($initial <= $keydatefrom && $end >= $keydatefrom) || ($initial <= $keydatefrom && $end <= $keydateto) || ($initial >= $keydatefrom && $initial <= $keydateto && $end >= $keydatefrom) || ($initial >= $keydatefrom && $initial <= $keydateto && $end <= $keydateto))) || ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){*/
+						if(($end != "0000-00-00" && (($initial <= $keydateto && $end >= $keydateto && $end >= $keydatefrom) || ($end >= $keydatefrom && $initial <= $keydatefrom && $end <= $keydateto))) 
+							|| ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))) {
+
+
+						/*if(($end != "0000-00-00" && (($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)) && ($end >= $keydatefrom || $end <= $keydateto))) || ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){*/
 							if($stmt = $mysqli->prepare("UPDATE emp_earnings SET comp_id = '$comp_id' WHERE employee_id = '$empid'")){
 								$stmt->execute();
 							 	$stmt->close();
@@ -80,7 +88,7 @@ if ($attendance_status=='') {
 					while($row = $deductionsett->fetch_object()){
 						$initial = $row->initial_date;
 						$end = $row->end_date;
-						if(($end != "0000-00-00" && $end >= $keydatefrom) || ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){
+						if(($end != "0000-00-00" && (($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)) && ($end >= $keydatefrom || $end <= $keydateto))) || ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){
 							if($stmt = $mysqli->prepare("UPDATE emp_deductions SET comp_id = '$comp_id' WHERE employee_id = '$empid'")){
 								$stmt->execute();
 							 	$stmt->close();
@@ -103,6 +111,7 @@ if ($attendance_status=='') {
 		late = '$late',
 		undertime = '$undertime',
 		reg_hrs = '$reghrs',
+		reg_nd = '$regnd',
 		reg_ot = '$regot',
 		reg_ot_nd = '$regotnd',
 		rst_ot = '$restot',
