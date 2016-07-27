@@ -68,10 +68,17 @@ $col='A';
 $row='1';
 
 //get cutoff value
+//$cutoff = $_POST['cutoffdropdown'];
+$start=$_GET['start'];
+$end=$_GET['end'];
+$cutoff=$start." - ".$end;
 
 $value_top = array('Payroll Register - Detailed',
 					'Group - iConnect Global Communications Inc.',
-					'Coverage Period: Apr 24, 2016 - May 08, 2016');
+					'Coverage Period: '.$cutoff,
+					);
+
+//$value_top[]='Coverage Period: '.$start." - ".$end;
 
 
 
@@ -97,6 +104,8 @@ $col='A'; //column count
 $row='4';
 foreach ($heads as $key => $value){
 	$cell=$col.$row;
+
+	//populate a cell
 	$objPHPExcel -> getActiveSheet() -> setCellValue($cell, $value);
 
 	//style each cell
@@ -129,21 +138,179 @@ foreach ($heads as $key => $value){
 
 //*********************************write data here (per cell)*******************************
 
+include 'functions.php';
+include 'dbconfig.php';
+
+//get employee ids from the given cutoff at totalcomputation
+$employeeids = get_employeeids_from_cutoff($cutoff);
+
+
+
+$col='B'; 
+$row='5';
+
+//start looping through employee ids under cutoff
+foreach ($employeeids as $emp_ids){
+
+//employee ID
+$cell=$col.$row;
+//populate a cell
+$objPHPExcel -> getActiveSheet() -> setCellValue($cell, $emp_ids);
+$col++;
+
+//Employee Basic Info
+	$employeeinfo=get_employeeinfo($emp_ids);
+		foreach ($employeeinfo as $key => $value){
+			$cell=$col.$row;
+			//populate a cell
+			$objPHPExcel -> getActiveSheet() -> setCellValue($cell, $value);
+			
+			$col++;
+
+			if($col=='F')
+				$col++;
+		}
 
 
 
 
+//OT and equivalent earnings, get from total_comp and total_comp_salary
 
 
+    //get_ot_and_ernings($cutoff, $emp_ids);
 
+      $table='total_comp_salary';
+
+     $fields=get_fieldnames($table);
+
+     $hours_fields = array(
+							//'reg_hrs',
+							'reg_ot',
+							'reg_nd',
+							'reg_ot_nd',
+							'rst_ot',
+							'rst_ot_grt8',
+							'rst_nd',
+							'rst_nd_grt8',
+							'lh_ot',
+							'lh_ot_grt8',
+							'lh_nd',
+							'lh_nd_grt8',
+							'sh_ot',
+							'sh_ot_grt8',
+							'sh_nd',
+							'sh_nd_grt8',
+							'rst_lh_ot',
+							'rst_lh_ot_grt8',
+							'rst_lh_nd',
+							'rst_lh_nd_grt8',
+							'rst_sh_ot',
+							'rst_sh_ot_grt8',
+							'rst_sh_nd',
+							'rst_sh_nd_grt8',
+							'leave_hrs'
+							    );//24 items
+   
+     $sql = "SELECT * FROM $table WHERE cutoff='$cutoff' AND employee_id=$emp_ids";
+     $result = $conn->query($sql);
+         if ($result->num_rows > 0) {
+                 while($row_query = $result->fetch_assoc()) {
+
+                 	//fetch data both from total_comp and total_comp_salary
+			       		foreach ($fields as $field){
+			            //output only date with fields equivalent to $hours_field array
+			            if(in_array($field, $hours_fields)){
+			            	
+			            	$cell=$col.$row;
+			            	$value = $row_query[$field];
+			            	//$parseval=explode('/', $value);
+			            	$objPHPExcel -> getActiveSheet() -> setCellValue($cell, $value);
+							$col++;
+							//$objPHPExcel -> getActiveSheet() -> setCellValue($cell, $parseval[1]);
+							//$col++;
+			               
+			            }//end if
+       				 }//end foreach
+                 }//end while
+             }//end if outer
+          else{
+          	//$objPHPExcel -> getActiveSheet() -> setCellValue($cell, 'xxx');
+          }
+
+
+//get taxable benefits total
+          $table='totalcomputation';
+     $sql = "SELECT * FROM $table WHERE CutoffID='$cutoff' AND EmployeeID=$emp_ids";
+     $result = $conn->query($sql);
+         if ($result->num_rows > 0) {
+                 while($row_query = $result->fetch_assoc()) {
+                 	
+                 	$cell=$col.$row;
+			        $value=$row_query['OtherTaxableEarnings'];			     
+	            	$objPHPExcel -> getActiveSheet() -> setCellValue($cell, $value);
+					$col++;
+
+
+					//gross taxable income
+					$cell=$col.$row;
+			        $value=$row_query['GrossTaxableIncome'];			     
+	            	$objPHPExcel -> getActiveSheet() -> setCellValue($cell, $value);
+					$col++;
+
+                 }
+             }
+
+
+//absent, late, undertime
+//adjust for a mean time
+             //$col++;
+         $table='total_comp_salary';
+     $sql = "SELECT * FROM $table WHERE cutoff='$cutoff' AND employee_id=$emp_ids";
+     $result = $conn->query($sql);
+         if ($result->num_rows > 0) {
+                 while($row_query = $result->fetch_assoc()) {
+                 	
+                 	//absent hours
+                 	$col++;
+
+                 	//absent
+                 	$cell=$col.$row;
+			        $value=$row_query['absent'];			     
+	            	$objPHPExcel -> getActiveSheet() -> setCellValue($cell, $value);
+					$col++;
+
+					//late hours
+					$col++;
+
+					//late
+					$cell=$col.$row;
+			        $value=$row_query['late'];			     
+	            	$objPHPExcel -> getActiveSheet() -> setCellValue($cell, $value);
+					$col++;
+
+					//undertime hours
+					$col++;
+
+					//undertime
+					$cell=$col.$row;
+			        $value=$row_query['undertime'];			     
+	            	$objPHPExcel -> getActiveSheet() -> setCellValue($cell, $value);
+					$col++;
+
+
+                 }
+             }     
+
+}//end of emp_ids
 
 
 
 
 
 //****************************************second sheet*************************************
-$objWorkSheet = $objPHPExcel->createSheet($i); //Setting index when creating
 $i=2;
+$objWorkSheet = $objPHPExcel->createSheet($i); //Setting index when creating
+
  //top details
 $col='A';
 $row='1';
@@ -201,6 +368,8 @@ foreach ($second_sheet_headers as $value){
 
 }
 
+$objPHPExcel->setActiveSheetIndex(0); 
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -224,31 +393,59 @@ $head_title = array(
 	'Last Name',
 	'First Name',
 	'Middle Name',
-	'Account No',
+	//'Account No',
 	'Pay Rate',
-	'DAYS RENDERED',
+	//'DAYS RENDERED',
 
 	//blue
 	'BASIC PAY',
-	'LH ND',
+	/*'LH ND',
 	'LH ND AMOUNT',
 	'LH OT',
 	'LH OT AMOUNT',
-	'REG ND	REG ND AMOUNT',
+	'REG ND',
+	'REG ND AMOUNT',
 	'RSTLH OT',
 	'RSTLH OT AMOUNT',
 	'OVERTIME TOTAL',
+*/
+	'reg_ot',
+'reg_nd',
+'reg_ot_nd',
+'rst_ot',
+'rst_ot_grt8',
+'rst_nd',
+'rst_nd_grt8',
+'lh_ot',
+'lh_ot_grt8',
+'lh_nd',
+'lh_nd_grt8',
+'sh_ot',
+'sh_ot_grt8',
+'sh_nd',
+'sh_nd_grt8',
+'rst_lh_ot',
+'rst_lh_ot_grt8',
+'rst_lh_nd',
+'rst_lh_nd_grt8',
+'rst_sh_ot',
+'rst_sh_ot_grt8',
+'rst_sh_nd',
+'rst_sh_nd_grt8',
+'leave_hrs',
 
-	'SL ',
+
+
+	/*'SL ',
 	'SL AMOUNT',
 	'SPL ',
 	'SPL AMOUNT',
 	'VL ',
 	'VL AMOUNT',
-	'LEAVE AMOUNT TOTAL',
+	'LEAVE AMOUNT TOTAL',*/
 
 	//blue
-	'ADJ RETRO ABSENT',
+	/*'ADJ RETRO ABSENT',
 	'ADJ RETRO REGND',
 	'ADJUSTMENTS',
 	'SALARY ADJ RETRO LEAVE WITH PAY',
@@ -258,7 +455,7 @@ $head_title = array(
 	'SALARY ADJ RETRO REGND',
 	'SALARY ADJ RETRO REGOT',
 	'SALARY ADJ RETRO SH ND',
-	'SALARY ADJ RETRO SH OT',
+	'SALARY ADJ RETRO SH OT',*/
 	'TAXABLE BENEFITS TOTAL',
 	'GROSS TAXABLE INCOME',
 
@@ -266,6 +463,9 @@ $head_title = array(
 	'ABSENT AMOUNT',
 	'TARDINESS TOTAL',
 	'TARDINESS AMOUNT',
+	'UNDERTIME',
+	'UNDERTIME AMOUNT',
+
 	'SSS EC',
 	'SSS EMPLOYEE SHARE',
 	'SSS EMPLOYER SHARE',

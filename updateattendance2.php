@@ -314,7 +314,9 @@
 						$nightdiff = 7.00;
 					}
 				}
-				if($hasApprovedOT == 1) {
+			}
+
+			if($hasApprovedOT == 1) {
 					if($OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'")){
 						if($OT->num_rows > 0){
 							while($OTResult = $OT->fetch_object()){
@@ -342,9 +344,8 @@
 						}
 					}
 				}
-			}
 		} else if($typeOfDay == "rst") { // if rest day only
-			if($attend == "timeout") { // not absent
+			//if($attend == "timeout") { // not absent
 				if($hasApprovedOT == 1) {
 					if($OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'")){
 						if($OT->num_rows > 0){
@@ -399,29 +400,31 @@
 					}
 					$regHours = $zero;
 				}
-			}
+			//}
 		} else if($typeOfDay == "lh") { // if legal holiday only
-			if($attend == "timeout" && $isAbsentPrevWorkingDay != "inactive") { // not absent
-				$regHours = computeHours($timein, $timeout);
-				if($regHours >= 5.00) {
-					$regHours = $regHours - 1.00;
-				}
-
-				if($regHours > 8.00) $regHours = 8.00;
-
-				$nd = computeND($timein, $timeout);
-				$lh_ot = $regHours;
-				if($nd >= 1.00) {
-					$lh_nd = $nd - 1.00;
-					if($lh_nd > 7.00) {
-						$lh_ot = $regHours - 7.00;
-						$lh_nd = 7.00;
-						if($lh_ot > 1.00) {
-							$lh_ot = 1.00;
-						}
+			if($isAbsentPrevWorkingDay != "inactive") { // not absent
+				if($attend == "timeout") {
+					$regHours = computeHours($timein, $timeout);
+					if($regHours >= 5.00) {
+						$regHours = $regHours - 1.00;
 					}
-				} else {
-					$lh_nd = 0.00;
+
+					if($regHours > 8.00) $regHours = 8.00;
+
+					$nd = computeND($timein, $timeout);
+					$lh_ot = $regHours;
+					if($nd >= 1.00) {
+						$lh_nd = $nd - 1.00;
+						if($lh_nd > 7.00) {
+							$lh_ot = $regHours - 7.00;
+							$lh_nd = 7.00;
+							if($lh_ot > 1.00) {
+								$lh_ot = 1.00;
+							}
+						}
+					} else {
+						$lh_nd = 0.00;
+					}
 				}
 
 				if($hasApprovedOT == 1) {
@@ -487,7 +490,8 @@
 							$nightdiff = 7.00;
 						}
 					}
-					if($hasApprovedOT == 1) {
+				}
+				if($hasApprovedOT == 1) {
 						if($OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'")){
 							if($OT->num_rows > 0){
 								while($OTResult = $OT->fetch_object()){
@@ -515,7 +519,6 @@
 							}
 						}
 					}
-				}
 			}
 		} else if($typeOfDay == "sh") { // if special holiday only
 			if($attend == "timeout") { // not absent
@@ -540,31 +543,30 @@
 				} else {
 					$sh_nd = 0.00;
 				}
+			}
+			if($hasApprovedOT == 1) {
+				if($OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'")){
+					if($OT->num_rows > 0){
+						while($OTResult = $OT->fetch_object()){
+							$overtimeStart = $OTResult->overtime_start;
+							$overtimeStart = substr($overtimeStart, 0, -3);
+							$overtimeEnd = $OTResult->overtime_end;
+							$overtimeEnd = substr($overtimeEnd, 0, -3);
 
-				if($hasApprovedOT == 1) {
-					if($OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'")){
-						if($OT->num_rows > 0){
-							while($OTResult = $OT->fetch_object()){
-								$overtimeStart = $OTResult->overtime_start;
-								$overtimeStart = substr($overtimeStart, 0, -3);
-								$overtimeEnd = $OTResult->overtime_end;
-								$overtimeEnd = substr($overtimeEnd, 0, -3);
-
-								$totalOT = computeHours($overtimeStart, $overtimeEnd);
-								if($totalOT >= 5.00) {
-									$totalOT = $totalOT - 1.00;
+							$totalOT = computeHours($overtimeStart, $overtimeEnd);
+							if($totalOT >= 5.00) {
+								$totalOT = $totalOT - 1.00;
+							}
+							if($isNightShift == 0) {
+								$nd = computeND($overtimeStart, $overtimeEnd);
+								if($nd >= 1.00) {
+									$sh_nd_grt8 = $nd - 1.00;
+								} else {
+									$sh_nd_grt8 = 0.00;
 								}
-								if($isNightShift == 0) {
-									$nd = computeND($overtimeStart, $overtimeEnd);
-									if($nd >= 1.00) {
-										$sh_nd_grt8 = $nd - 1.00;
-									} else {
-										$sh_nd_grt8 = 0.00;
-									}
-									$sh_ot_grt8 = $totalOT - $sh_nd_grt8;
-								} else if($isNightShift == 1) {
-									$sh_ot_grt8 = $totalOT;
-								}
+								$sh_ot_grt8 = $totalOT - $sh_nd_grt8;
+							} else if($isNightShift == 1) {
+								$sh_ot_grt8 = $totalOT;
 							}
 						}
 					}
@@ -575,7 +577,7 @@
 			$rst_lh_ot_grt8 = 0.00;
 			$rst_lh_nd = 0.00;
 			$rst_lh_nd_grt8 = 0.00;
-			if($attend == "timeout" && $isAbsentPrevWorkingDay != "inactive") {
+			if($isAbsentPrevWorkingDay != "inactive") {
 				if($hasApprovedOT == 1) {
 					if($OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'")){
 						if($OT->num_rows > 0){
@@ -629,7 +631,7 @@
 					$regHours = $zero;
 				}
 			} else if($isAbsentPrevWorkingDay == "inactive") {
-				if($attend == "timeout") { // not absent
+				//if($attend == "timeout") { // not absent
 					if($hasApprovedOT == 1) {
 						if($OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'")){
 							if($OT->num_rows > 0){
@@ -683,10 +685,10 @@
 						}
 						$regHours = $zero;
 					}
-				}
+				//}
 			}
 		} else if($typeOfDay == "rstsh") { // if rest && special holiday
-			if($attend == "timeout") {
+			//if($attend == "timeout") {
 				if($hasApprovedOT == 1) {
 					if($OT = $mysqli->query("SELECT * FROM overtime WHERE employee_id = '$employee_id' AND overtime_date = '$attendance_date' AND overtime_status = 'Approved'")){
 						if($OT->num_rows > 0){
@@ -739,7 +741,7 @@
 					}
 					$regHours = $zero;
 				}
-			}
+			//}
 		}
 	} else { //computation for flexi
 		if($attend == "timeout") { // not absent

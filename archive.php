@@ -88,11 +88,10 @@
                                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                     <select class = "form-control" id = "selecttype">
                                         <option></option>
-                                        <option value = "1">Cutoff</option>
-                                        <option value = "2">Earnings</option>
-                                        <option value = "3">Deductions</option>
-                                        <option value = "4">Announcements</option>
-                                        <option value = "5">Holiday</option>
+                                        <option value = "1">Earnings</option>
+                                        <option value = "2">Deductions</option>
+                                        <option value = "3">Announcements</option>
+                                        <option value = "4">Holiday</option>
                                       </select>
                                     <br>
                                 </div>
@@ -100,28 +99,48 @@
 					<BR>
 					<BR>
 					<BR>
-
- 									<div id = "div1" style = "display:none;">
+                                    <div id = "div1" style = "display:none;">
                                         <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" style = "margin-left:-2em;">
-                                            <h4>Deleted List of Cutoff</h4>
+                                            <h4>Deleted List of Earnings</h4>
                                         </div>
                                         <table class = "footable table table-stripped' data-page-size='8' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
-                                                    <th style="text-align:center" class = "col-md-2">ID</th>
-                                                    <th style="text-align:center">Date</th>
-                                                    <th style="text-align:center" class = "col-md-5">Vendor</th>
-                                                    <th style="text-align:center" class = "col-md 3">Action</th>
+                                                    <th>Name</th>
+                                                    <th class = "col-md-2">Max Amount</th>
+                                                    <th class = "col-md-5">Type</th>
+                                                    <th class = "col-md-3">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr style="text-align:center">
-                                                    <td>1</td>
-                                                    <td></td>
-                                                    <td>Vendor</td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                            </tbody>
+                                        <?php
+                                            include('dbconfig.php');
+                                            if ($result = $mysqli->query("SELECT * FROM earnings_archive ORDER BY earnings_id")) //get records from db
+                                            {
+                                                if ($result->num_rows > 0) //display records if any
+                                                {
+                                                    while ($row = mysqli_fetch_object($result))
+                                                    {
+                                                    
+                                                        echo "<tr class = 'josh'>";
+                                                        echo "<td>".$row->earnings_name."</td>";
+                                                        echo "<td>".$row->earnings_max_amount."</td>";
+                                                        echo "<td>".$row->earnings_type."</td>";
+                                                        
+                                                        //restore
+                                                        echo "<td><a href='earnings_restore.php?earnings_id=".$row->earnings_id."' class='btn btn-success' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
+
+                                                        //delete
+                                                        echo "<a href='earnings_delete_archive.php?earnings_id=".$row->earnings_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure? You want to delete this file?\");'>Delete</a>&nbsp;&nbsp; ";
+                                                        echo "</td>";
+                                                        echo "</tr>";
+                                                        
+                                                    }
+                                                    echo "</table>";
+                                                }
+                                            }
+                                        ?>
+                                             </tbody>
                                             <tfoot>
                                               <tr>
                                                 <td colspan = "78">
@@ -156,25 +175,46 @@
 
                                     <div id = "div2" style = "display:none;">
                                         <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" style = "margin-left:-2em;">
-                                            <h4>Deleted List of Earnings</h4>
+                                            <h4>Deleted List of Deductions</h4>
                                         </div>
-                                        <table class = "footable table table-stripped' data-page-size='8' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
+                                        <table class = "footable table table-stripped' data-page-size='5' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
-                                                    <th style="text-align:center" class = "col-md-2">Name</th>
-                                                    <th style="text-align:center">Max Amount</th>
-                                                    <th style="text-align:center" class = "col-md-5">Type</th>
-                                                    <th style="text-align:center" class = "col-md-3">Action</th>
+                                                    <th>Name</th>
+                                                    <th class = "col-md-2">Max Amount</th>
+                                                    <th class = "col-md-5">Type</th>
+                                                    <th class = "col-md-3">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr style="text-align:center">
-                                                    <td>1</td>
-                                                    <td></td>
-                                                    <td>Vendor</td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                             </tbody>
+                                        <?php
+                                            include('dbconfig.php');
+                                            if ($result = $mysqli->query("SELECT * FROM deductions_archive ORDER BY deduction_id")) //get records from db
+                                            {
+                                                if ($result->num_rows > 0) //display records if any
+                                                {
+                                                    while ($row = mysqli_fetch_object($result))
+                                                    {
+                                                    
+                                                        echo "<tr class = 'josh'>";
+                                                        echo "<td>".$row->deduction_name."</td>";
+                                                        echo "<td>".$row->deduction_max_amount."</td>";
+                                                        echo "<td>".$row->deduction_type."</td>";
+                                                        
+                                                        //restore
+                                                        echo "<td><a href='deduction_restore.php?deduction_id=".$row->deduction_id."' class='btn btn-success' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
+
+                                                        //delete
+                                                        echo "<a href='deduction_delete_archive.php?deduction_id=".$row->deduction_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure? You want to delete this file?\");'>Delete</a>&nbsp;&nbsp; ";
+                                                        echo "</td>";
+                                                        echo "</tr>";
+                                                        
+                                                    }
+                                                    echo "</table>";
+                                                }
+                                            }
+                                        ?>
+                                            </tbody>
                                             <tfoot>
                                               <tr>
                                                 <td colspan = "78">
@@ -208,59 +248,6 @@
                                     </div>
 
                                     <div id = "div3" style = "display:none;">
-                                        <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" style = "margin-left:-2em;">
-                                            <h4>Deleted List of Deductions</h4>
-                                        </div>
-                                        <table class = "footable table table-stripped' data-page-size='8' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th style="text-align:center" class = "col-md-2">Name</th>
-                                                    <th style="text-align:center">Max Amount</th>
-                                                    <th style="text-align:center" class = "col-md-5">Type</th>
-                                                    <th style="text-align:center" class = "col-md-3">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr style="text-align:center">
-                                                    <td>1</td>
-                                                    <td></td>
-                                                    <td>Vendor</td>
-                                                    <td><button class='btn btn-success' type='button' data-toggle="modal" data-target="#myModalRestore"><i class='fa fa-warning'></i> Restore</button>&nbsp;&nbsp;<button class='btn btn-warning' type='button' data-toggle="modal" data-target="#myModalDelete"><i class='fa fa-warning'></i> Delete</button></td>
-                                                </tr>
-                                             </tbody>
-                                            <tfoot>
-                                              <tr>
-                                                <td colspan = "78">
-                                                  <ul class = "pagination pull-right">
-                                                    <li class = "footable-page-arrow disabled">
-                                                      <a data-page = "first" href = "#first"><<</a>
-                                                    </li>
-                                                    <li class = "footable-page-arrow disabled">
-                                                      <a data-page = "prev" href = "#prev"><</a>
-                                                    </li>
-                                                    <li class = "footable-page active">
-                                                      <a data-page = "0" href = "#">1</a>
-                                                    </li>
-                                                    <li class = "footable-page">
-                                                      <a data-page = "1" href = "#">2</a>
-                                                    </li>
-                                                    <li class = "footable-page ">
-                                                      <a data-page = "2" href = "#">3</a>
-                                                    </li>
-                                                    <li class = "footable-page-arrow">
-                                                      <a data-page = "next" href = "#next">></a>
-                                                    </li>
-                                                    <li class = "footable-page-arrow">
-                                                      <a data-page = "last" href = "#last">>></a>
-                                                    </li>
-                                                  </ul>
-                                                </td>
-                                              </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-
-                                    <div id = "div4" style = "display:none;">
                                         <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" style = "margin-left:-2em;">
                                             <h4>Deleted List of Announcements</h4>
                                         </div>
@@ -331,7 +318,7 @@
                                         </table>
                                     </div>
 
-                                    <div id = "div5" style = "display:none;">
+                                    <div id = "div4" style = "display:none;">
                                         <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" style = "margin-left:-2em;">
                                             <h4>Deleted List of Holidays</h4>
                                         </div>
@@ -426,7 +413,6 @@
                                                  $('#div2').hide();
                                                  $('#div3').hide();
                                                  $('#div4').hide();
-                                                 $('#div5').hide();
                                              }
                                            else if(i=="2")
                                              {
@@ -435,7 +421,6 @@
                                                  $('#div2').show();
                                                  $('#div3').hide();
                                                  $('#div4').hide();
-                                                 $('#div5').hide();
                                             }
                                             else if(i=="3")
                                              {
@@ -444,7 +429,6 @@
                                                  $('#div2').hide();
                                                  $('#div3').show();
                                                  $('#div4').hide();
-                                                 $('#div5').hide();
                                             }
                                             else if(i=="4")
                                              {
@@ -453,16 +437,6 @@
                                                  $('#div2').hide();
                                                  $('#div3').hide();
                                                  $('#div4').show();
-                                                 $('#div5').hide();
-                                            }
-                                            else if(i=="5")
-                                             {
-                                                 $('#div0').hide();
-                                                 $('#div1').hide();
-                                                 $('#div2').hide();
-                                                 $('#div3').hide();
-                                                 $('#div4').hide();
-                                                 $('#div5').show();
                                             }
                                             });
                                         });

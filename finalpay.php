@@ -4,7 +4,7 @@
 		<?php
 			 include('menuheader.php');
 		?>
-		<title>Registration employee list</title>
+		<title>Final pay employee list</title>
 		<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
 		<script src="js/plugins/toastr/toastr.min.js"></script>
 		<link href="css/animate.css" rel="stylesheet">
@@ -18,7 +18,7 @@
 			<div class="col-lg-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-title">
-						<h5>Registration</h5>
+						<h5>Final Pay</h5>
 						<div class="ibox-tools">
 							<a class="collapse-link">
 								<i class="fa fa-chevron-up"></i>
@@ -38,64 +38,22 @@
 						</div>
 					</div>
 					<div class="ibox-content">
-						<!--div class="form-group">
-							<div class="col-md-3"></div>
-							<form method="POST" action="registration.php">
-								<label class="col-sm-1 control-label">Cutoff List</label>
-								<div class="col-md-4">
-									<select id = "leavetype" class="form-control"  data-default-value="z" name="sched" required="">
-									<?php 
-									// include('dbconfig.php');
-
-									// if ($result1 = $mysqli->query("SELECT * FROM cutoff WHERE cutoff_submission = 'Submitted' AND process_submission = 'Submitted'")) //get records from db
-									// 	{
-									// 		if ($result1->num_rows > 0) //display records if any
-									// 		{
-									// 			if(isset($_POST['test1'])){
-									// 				$selection = $_POST['sched']; 
-									// 				$cutarray = array();
-									// 				$cutarray = split(" - ", $selection);
-									// 				$initialcut = $cutarray[0];
-									// 				$endcut = $cutarray[1];
-									// 				echo '<option value="'.$initialcut." - ".$endcut."\">".date("F d, Y",strtotime($initialcut)).' - ';
-									// 				echo date("F d, Y",strtotime($endcut)).'</option>';
-									// 			}else{
-									// 				//$newDateFilter = ''; 
-									// 				echo '<option value=""> Select Cutoff &nbsp;&nbsp;(Month-Day-Year) </option>';
-									// 			}
-									// 			while ($row1 = mysqli_fetch_object($result1)){
-									// 				$initial = $row1->cutoff_initial;
-									// 				$end = $row1->cutoff_end;
-									// 				$cutoffsubmitdate = $row1->cutoff_submitdate;
-
-									// 				echo '<option value="'.$initial." - ".$end."\">".date("F d, Y",strtotime($initial)).' - ';
-									// 				echo date("F d, Y",strtotime($end)).'</option>';
-									// 			}
-									// 		}
-									// 	}
-									?>
-									</select>
-								</div>
-								<button type="submit" name="test1" class="btn btn-w-m btn-primary">Validate</button>
-							</form>
-						</div>
-						<br><br><br><br-->
 						<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
 					</div>
 					<div class="ibox-content" id = "tableHolderz">
 						<?php
 							include('dbconfig.php');
-							//if(isset($_POST['test1'])){
-									
-								if ($result1 = $mysqli->query("SELECT * FROM cutoff WHERE cutoff_submission = 'Submitted' AND process_submission = 'Submitted'")) //get records from db
+								if ($result1 = $mysqli->query("SELECT total_comp_salary.id, total_comp_salary.comp_id, total_comp_salary.cutoff, employee.employee_id, employee.employee_firstname, employee.employee_middlename, employee.employee_lastname, employee.employee_department FROM total_comp_salary INNER JOIN employee ON employee.employee_id = total_comp_salary.employee_id WHERE total_comp_salary.process_status = 'Final' AND employee.employee_status!='active'")) //get records from db
 								{
 									if ($result1->num_rows > 0) //display records if any
 									{
 										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
+										echo "<th>ID</th>";
+										echo "<th>Employee Name</th>";
+										echo "<th>Department</th>";
 										echo "<th>Cutoff Date Range</th>";
-										echo "<th>Cutoff Submit Date</th>";
 										echo "<th>Action</th>";
 										echo "</tr>";
 										echo "</thead>";
@@ -108,26 +66,29 @@
 										echo "</tfoot>";
 										while ($row1 = mysqli_fetch_object($result1))
 										{
-											$initialcut = date("F d, Y",strtotime($row1->cutoff_initial));
-											$endcut = date("F d, Y",strtotime($row1->cutoff_end));
-											$submitdate = date("F d, Y",strtotime($row1->cutoff_submitdate));
+											$cutarray = split(" - ", $row1->cutoff);
+											$initialcut = date("F d, Y",strtotime($cutarray[0]));
+											$endcut = date("F d, Y",strtotime($cutarray[1]));
+											//$submitdate = date("F d, Y",strtotime($row1->cutoff_submitdate));
 											echo "<tr class = 'josh'>";
+											echo "<td>" . $row1->employee_id . "</td>";
+											echo "<td>" . $row1->employee_firstname . " " . $row1->employee_middlename. " " . $row1->employee_lastname . "</td>";
+											echo "<td>" . $row1->employee_department . "</td>";
 											echo "<td>" . $initialcut . " - " . $endcut . "</td>";
-											echo "<td>" . $submitdate . "</td>";
+											//echo "<td>" . $submitdate . "</td>";
 											//echo "<td><a href='#' data-toggle='modal' 
 											//		data-employee-id='$empid' 												
 											//		data-cutoffd='".$initialcut." - ".$endcut."'
 											//		data-submitdate='".$cutoffsubmitdate."'
 											//		data-target='#myModal4' class = 'editempdialog'><button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> Edit</button></a>&nbsp;&nbsp;";
 											//echo "<a href='#' id='$empid' cutoff='".$initialcut." - ".$endcut."' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Deactivate</button></button></a>";
-											echo "<td><a href='downloadexcelfile.php?start=".$row1->cutoff_initial."&end=".$row1->cutoff_end." '><i class='fa fa-file'></i>&nbsp;&nbsp;Export .xls</a></td>";	
-											//echo "<td><button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-file'></i>&nbsp;&nbsp;Export .xls</button></td>";
+												echo "<td><button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-file'></i>&nbsp;&nbsp;Export</button></td>";
+											
 											echo "</tr>";
 										}									
 										echo "</table>";
 									}
-								}	
-								//}				
+								}			
 						?><br><br>
 					</div>
 				</div>

@@ -17,7 +17,6 @@ return $fields;
 }//end get_fieldnames
 
 
-
 function get_table($tablename){
 	include 'dbconfig.php';
 	?>
@@ -55,6 +54,7 @@ function get_table($tablename){
 	<?php
 }//end of get_table
 
+
 function delete_previous_compute($cutoff_field){
 include 'dbconfig.php';
 
@@ -71,6 +71,17 @@ $field = array('cutoff', 'CutoffID');
                 echo "Error deleting record: " . $conn->error.nextline();
             }
         }//end for
+
+}
+
+
+//for adding additional earnings/deductions after computation of net pay. needs to recompute per affected employee only
+function recompute_other_taxables($empids, $intial, $end){
+
+include 'dbconfig.php';
+
+//$empids must be an array
+
 
 }
 
@@ -278,12 +289,19 @@ echo "</table>";
        
 
 
-//*****************************************Retro************************************************
-        
-//$Total_Retro = retro($employee_id, $HourlyRatePay);
+echo '//*****************************************Retro************************************************'.nextline();
+     
+$Total_Retro = retro_compute($employee_id, $comp_id);
 
+echo "Total Retro: ".$Total_Retro.nextline();
 
+//add to net taxable income without deductions
+$GrossTaxableIncome = $NetTaxableIncomeWithoutDeductions + $Total_Retro;
+$NetTaxableIncome=$GrossTaxableIncome;
 
+echo 'Gross Taxable Income W/ Retro: '.$GrossTaxableIncome.nextline();
+
+echo nextline().'**********************************************************'.doubleline();
 
 //*****************************************************compute deductions here*************************************
         //initialize
@@ -315,7 +333,7 @@ echo "</table>";
             }
         }
 
-        echo "Gross Income w/ OT: ".$GrossTaxableIncome.nextline();
+        echo "Gross Income w/ OT+Retro: ".$GrossTaxableIncome.nextline();
         echo "Deductions (absent, late, ut): ".$total_deductions.nextline();
 
         //SSS, Pagibig, PhilHealth
@@ -332,8 +350,8 @@ echo "</table>";
 
         $NetTaxableIncome = $NetTaxableIncome + $other_earnings - $other_deductions;
 
-
-
+        //$GrossTaxableIncome=$GrossTaxableIncome+$other_earnings;
+       
         //*************************************
 
         //get cutoff and taxcode
@@ -350,11 +368,16 @@ echo "</table>";
 
         //$withoutStatutory = $NetTaxableIncome;
 
+        //GrossTaxableIncome
         $earnings = $GrossTaxableIncome + $other_earnings;
+        //GrossTaxableDeductions
         $deductions = $total_deductions + $other_deductions;
 
+
+        //Gross Income w/o statutory before statutory
         $withoutStatutory = $earnings-$deductions;
 
+        echo "Gross Taxable Income (BasicSalary+OT+Retro+Other Taxable Earnings): ".$earnings.doubleline();
 
 
 
@@ -423,66 +446,29 @@ echo "</table>";
                         $NetIncomeAfterTax=TaxSemiMonthly($Taxcode, $NetTaxableIncome);
                     }
 
+
         echo nextline();
+ 
+       $withholdingtax=$NetTaxableIncome-$NetIncomeAfterTax;
+        echo 'Withholding Tax: '.$withholdingtax.doubleline();
+
+          //*************************other Non-Taxable earnings and deductions*********************/
+        //Note: functions can be found on other_earnings_and_deductions.php
+        $nontaxable_income=compute_other_earnings($comp_id, $employee_id, 1);
+        echo "Other Non-Taxable Earnings: ".$nontaxable_income.doubleline();
+
+        $nontaxable_deductions=compute_other_deductions($comp_id, $employee_id, 1);
+        echo "Other Non-Taxable Deductions: ".$nontaxable_deductions.doubleline();
+
+        $net_pay=0;
+
+        $net_pay=$NetIncomeAfterTax+$nontaxable_income-$nontaxable_deductions;
+       
 
 
-
-
-
-
-        //**************************compute Net pay***********************//
-
-        //***********************add non-taxable income
-        //get comp_id
-        $sql_addearnings="SELECT earn_max FROM emp_earnings WHERE comp_id=$comp_id AND earn_type='Non-Taxable'";
-        //initialize $nonttaxable_income
-        $nontaxable_income=0;
-        $result_addearnings=$conn->query($sql_addearnings);
-        if ($result_addearnings->num_rows > 0) {
-            while($row_addernings = $result_addearnings->fetch_assoc()) {
-                $nontaxable_income=$nontaxable_income+$row_addernings['earn_max'];
-               
-            }//end while
-        }//end if
-        else
-            $nontaxable_income=0;
-
-         echo "Non-Taxable Earnings: ".$nontaxable_income.nextline();
-         $net_pay=0;
-        $net_pay=$NetIncomeAfterTax+$nontaxable_income;
-
-        //***********************add non-taxable deductions
-        //get comp_id
-        $sql_deductions="SELECT deduct_max FROM emp_deductions WHERE comp_id=$comp_id AND deduct_type='Non-Taxable'";
-        $nontaxable_deductions=0;
-        $result_deductions=$conn->query($sql_deductions);
-        if ($result_deductions->num_rows > 0) {
-            while($row_deductions = $result_deductions->fetch_assoc()) {
-                $nontaxable_deductions=$nontaxable_deductions+$row_deductions['deduct_max'];
-               
-            }//end while
-        }//end if
-        else
-            $nontaxable_deductions=0;
-
-        //add Statutory ben to non-taxable deductions
-        //$nontaxable_deductions=$nontaxable_deductions+$Statutory_total;
-
-
-         echo "Non-Taxable Deductions: ".$nontaxable_deductions.nextline();
-
-         $net_pay=$net_pay-$nontaxable_deductions;
-
-         //*********net pay
+         //*********net pay*************************
          echo "Net Pay: ".$net_pay.nextline();
          echo "Round off Net Pay to 2 decimals: ".round($net_pay,2).doubleline();
-
-
-
-
-
-
-
 
 
 
@@ -572,7 +558,7 @@ echo "</table>";
              //TotalTaxableEarnings, TotalTaxableDeduction, TotalStatutoryBenefits, NetTaxableIncome, NetIncomeAfterTax, 
              //TotalNonTaxableIncome, TotalNonTaxableDeduction, NetPay
 
-             //tcf - totalcomputation filed
+             //tcf - totalcomputation fieled
 
              if ($tcf=='CompID')
                 $values=$values."'".$comp_id."'";
@@ -588,14 +574,38 @@ echo "</table>";
                 $values=$values."'".$dailyrate."'";
              else if ($tcf=='HourlyRate')
                 $values=$values."'".$HourlyRatePay."'";
+             else if ($tcf=='RetroTotal')
+                $values=$values."'".$Total_Retro."'";
+
+            //oters
+            else if ($tcf=='OtherTaxableEarnings')
+                $values=$values."'".$other_earnings."'";
+            else if ($tcf=='OtherTaxableDeductions')
+                $values=$values."'".$other_deductions."'";
+
+            //Gross Taxable Income
              else if ($tcf=='TotalTaxableEarnings')
                 $values=$values."'".$earnings."'";
              else if ($tcf=='TotalTaxableDeduction')
                 $values=$values."'".$deductions."'";
+
+            else if ($tcf=='GrossTaxableIncome')
+                $values=$values."'".$earnings."'";
+
+            //statutories
+             else if ($tcf=='SSS')
+                $values=$values."'".$sss_val."'";
+             else if ($tcf=='PAGIBIG')
+                $values=$values."'".$pagibig_val."'";
+             else if ($tcf=='PhilHealth')
+                $values=$values."'".$philhealth_val."'";
+
              else if ($tcf=='TotalStatutoryBenefits')
                 $values=$values."'".$Statutory_total."'";
              else if ($tcf=='NetTaxableIncome')
                 $values=$values."'".$NetTaxableIncome."'";
+             else if ($tcf=='WithholdingTax')
+                $values=$values."'".$withholdingtax."'";
              else if ($tcf=='NetIncomeAfterTax')
                 $values=$values."'".$NetIncomeAfterTax."'";
              else if ($tcf=='TotalNonTaxableIncome')
@@ -730,15 +740,68 @@ function update_statement($id){
     //echo nextline();
 }
 
-function view_all($table, $comp_id){
+function get_employeeids_from_cutoff($cutoff){
+    include 'dbconfig.php';
+     $table='totalcomputation';
+
+     //prepare an array
+     $emp_ids = array();
+
+     $sql = "SELECT * FROM $table WHERE CutoffID='$cutoff'";
+     $result = $conn->query($sql);
+         if ($result->num_rows > 0) {
+                 while($row = $result->fetch_assoc()) {
+                    $emp_ids[]=$row['EmployeeID'];
+                 }
+         }
+
+
+    return $emp_ids; 
+
+}
+
+//get basic info of specific employee and save it in array then return
+function get_employeeinfo($employee_id){
+    include 'dbconfig.php';
+     $table='employee';
+
+     
+     $sql = "SELECT * FROM $table WHERE employee_id=$employee_id";
+     $employeeinfo=array();
+
+     $result = $conn->query($sql);
+         if ($result->num_rows > 0) {
+                 while($row = $result->fetch_assoc()) {
+                    $employeeinfo[]=$row['employee_lastname'];
+                    $employeeinfo[]=$row['employee_firstname'];
+                    $employeeinfo[]=$row['employee_middlename'];
+                    $employeeinfo[]=$row['employee_rate'];
+                      
+                   
+                    break;
+                 }
+         }     
+ return $employeeinfo;
+}
+
+
+
+function view_all($table, $comp_id=0, $cutoff=0, $head=0){
 
 include 'dbconfig.php';
      $table='total_comp_salary';
 
      $fields=get_fieldnames($table);
 
-
+     if($comp_id>0)
      $sql = "SELECT * FROM $table WHERE comp_id=$comp_id";
+     else
+     $sql = "SELECT * FROM $table WHERE cutoff='$cutoff'";
+
+    //prepare a string to return
+    ;
+
+    $first=0;
 
      $result = $conn->query($sql);
          if ($result->num_rows > 0) {
@@ -746,14 +809,19 @@ include 'dbconfig.php';
             // output data of each row
             while($row = $result->fetch_assoc()) {
                 
+                //list of fields
                 foreach ($fields as $field) {
                 $rowid=$row[$field];
-                echo $field.": ".$rowid.nextline();
-                }
+               // echo $field.": ".$rowid.nextline();
+                $viewval[]=$rowid;
+                }//end foreach
+
+                $first++;
              }
           }
 
-    echo "******************************************************".nextline();
+return $viewval;
+    //echo "******************************************************".nextline();
           
 
 }//end function

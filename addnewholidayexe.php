@@ -105,33 +105,33 @@ else
 {
 	echo "ERROR: Could not prepare SQL statement.";
 }
-
+$employeeIDs = array();
 $newtype = $type;
-if($result = $mysqli->query("SELECT * FROM attendance where attendance_date = '$date'")) {
+if($result = $mysqli->query("SELECT * FROM attendance where attendance_date = '$date' AND status='Done'")) {
 	if($result->num_rows > 0) {
 		while ($row = $result->fetch_object()) {
 			$type = $row->attendance_daytype;
 			$employeeIDs[] = $row->employee_id;
 			if($newtype == "Special") {
-				if($type == "Rest Day") {
-					if($stmt2 = $mysqli->prepare("UPDATE attendance SET attendance_daytype='Rest and Special Holiday' WHERE attendance_id = '$row->attendance_id'")) {
+				if($type = "Regular" || $type = "Legal Holiday" || $type == "Special Holiday") {
+					if($stmt2 = $mysqli->prepare("UPDATE attendance SET attendance_daytype='Special Holiday' WHERE attendance_id = '$row->attendance_id'")) {
 						$stmt2->execute();
 						$stmt2->close();
 					}
-				} else {
-					if($stmt2 = $mysqli->prepare("UPDATE attendance SET attendance_daytype='Special Holiday' WHERE attendance_id = '$row->attendance_id'")) {
+				} else if($type = "Rest Day" || $type = "Rest and Legal Holiday" || $type = "Rest and Special Holiday") {
+					if($stmt2 = $mysqli->prepare("UPDATE attendance SET attendance_daytype='Rest and Special Holiday' WHERE attendance_id = '$row->attendance_id'")) {
 						$stmt2->execute();
 						$stmt2->close();
 					}
 				}
 			} else {
-				if($type == "Rest Day") {
-					if($stmt2 = $mysqli->prepare("UPDATE attendance SET attendance_daytype='Rest and Legal Holiday' WHERE attendance_id = '$row->attendance_id'")) {
+				if($type = "Regular" || $type = "Legal Holiday" || $type == "Special Holiday") {
+					if($stmt2 = $mysqli->prepare("UPDATE attendance SET attendance_daytype='Legal Holiday' WHERE attendance_id = '$row->attendance_id'")) {
 						$stmt2->execute();
 						$stmt2->close();
 					}
-				} else {
-					if($stmt2 = $mysqli->prepare("UPDATE attendance SET attendance_daytype='Legal Holiday' WHERE attendance_id = '$row->attendance_id'")) {
+				} else if($type = "Rest Day" || $type = "Rest and Legal Holiday" || $type = "Rest and Special Holiday") {
+					if($stmt2 = $mysqli->prepare("UPDATE attendance SET attendance_daytype='Rest and Legal Holiday' WHERE attendance_id = '$row->attendance_id'")) {
 						$stmt2->execute();
 						$stmt2->close();
 					}
@@ -150,7 +150,7 @@ foreach($employeeIDs as $emp) {
 	$run_user = mysqli_query($mysqli, $sel_user);
 	$fetch_emp = mysqli_fetch_array($run_user);
 
-	$attendanceData = $mysqli->query("SELECT * FROM attendance WHERE employee_id='$emp' AND attendance_date = '$date'")->fetch_array();
+	$attendanceData = $mysqli->query("SELECT * FROM attendance WHERE employee_id='$emp' AND attendance_date = '$date' AND status='Done'")->fetch_array();
 	$maxes2 = $attendanceData['attendance_id'];
 	$from = "edit";
 	include("updateattendance2.php");

@@ -199,7 +199,7 @@ foreach($employeeIDs as $emp) {
 	$run_user = mysqli_query($mysqli, $sel_user);
 	$fetch_emp = mysqli_fetch_array($run_user);
 
-	$attendanceData = $mysqli->query("SELECT * FROM attendance WHERE employee_id='$emp' AND attendance_date = '$date'")->fetch_array();
+	$attendanceData = $mysqli->query("SELECT * FROM attendance WHERE employee_id='$emp' AND attendance_date = '$date' AND status='Done'")->fetch_array();
 	$maxes2 = $attendanceData['attendance_id'];
 	$from = "edit";
 	include("updateattendance2.php");

@@ -1,7 +1,7 @@
 <?php
 
 
-function compute_other_earnings($comp_id, $employee_id=0){
+function compute_other_earnings($comp_id, $employee_id=0, $nontaxable=0){
 
 include 'dbconfig.php';
 
@@ -34,8 +34,10 @@ include 'dbconfig.php';
    // echo "edate: ".$end.doubleline();
 
     //compare date
-    $sql_addearnings="SELECT * FROM emp_earnings WHERE earn_type='Taxable' 
-    AND employee_id='$employee_id'";
+    if($nontaxable==0)
+    $sql_addearnings="SELECT * FROM emp_earnings WHERE earn_type='Taxable' AND employee_id='$employee_id'";
+    else
+     $sql_addearnings="SELECT * FROM emp_earnings WHERE earn_type='Non-Taxable' AND employee_id='$employee_id'";  
 
         //initialize $nonttaxable_income
         $taxable_income=0;
@@ -90,7 +92,7 @@ include 'dbconfig.php';
 
 
 
-function compute_other_deductions($comp_id){
+function compute_other_deductions($comp_id, $employee_id=0, $nontaxable=0){
 
 include 'dbconfig.php';
 
@@ -118,15 +120,20 @@ include 'dbconfig.php';
     $start = $cutoff_array[0];
     $end = $cutoff_array[1];
 
-    //$start = strtotime($start);
-    //$end = strtotime($end);
+    $start = strtotime($start);
+    $end = strtotime($end);
 
     //echo "sdate: ".$start.nextline();
     //echo "edate: ".$end.nextline();
 
 //get comp_id
         //$sql_deductions="SELECT deduct_max FROM emp_deductions WHERE comp_id=$comp_id AND deduct_type='Taxable'";
-        $sql_deductions ="SELECT * FROM emp_deductions WHERE (initial_date>='$start' OR end_date<='$end') AND deduct_type='Taxable' ";
+    if($nontaxable==0)
+        $sql_deductions="SELECT * FROM emp_deductions WHERE deduct_type='Taxable' AND employee_id='$employee_id'";
+    else
+        $sql_deductions="SELECT * FROM emp_deductions WHERE deduct_type='Non-Taxable' AND employee_id='$employee_id'";
+
+        //initialize taxable deductions
         $taxable_deductions=0;
         $result_deductions=$conn->query($sql_deductions);
         if ($result_deductions->num_rows > 0) {
@@ -138,16 +145,23 @@ include 'dbconfig.php';
                 $dbstart = strtotime($row_deductions['initial_date']);
                 $dbend = strtotime($row_deductions['end_date']);
 
-                 echo "taxable_deductions list: ".$row_deductions['deduct_max'].
-                " ".$row_deductions['deduct_type'].
-                " ".$row_deductions['deduct_name'].
-                " ".$row_deductions['initial_date'].
-                " ".$row_deductions['end_date'].nextline();
+                 echo "<u>taxable_deductions list:</u> ".$row_deductions['deduct_max'].
+                " | ".$row_deductions['deduct_type'].
+                " | ".$row_deductions['deduct_name'].
+                " | ".$row_deductions['initial_date'].
+                " | ".$row_deductions['end_date'].nextline();
 
-                if (($start<=$dbstart && $end>=$dbstart) || ($start<=$dbend && $end>=$dbend) || ($start<=$dbend && $end=='0000-00-00') ){
+                $dbstart = strtotime($row_deductions['initial_date']);
+                $dbend = strtotime($row_deductions['end_date']);
+
+                if ($dbend == null){
+                    echo "zeroooooooooooo!".nextline();
+                }
+
+                if (($start<=$dbstart && $end>=$dbstart) || ($start<=$dbend && $end>=$dbend) || ($dbstart<=$start && $dbend==null) ){
 
                     $taxable_deductions=$taxable_deductions+$row_deductions['deduct_max'];
-                 echo "taxable_deductions: ".$row_deductions['deduct_max'].
+                 echo "taxable_deductions include: ".$row_deductions['deduct_max'].
                 " ".$row_deductions['deduct_type'].
                 " ".$row_deductions['deduct_name'].
                 " ".$row_deductions['initial_date'].

@@ -377,7 +377,7 @@ if(isset($_POST['submit'])){
             </div>
             <a href = "#myModal" data-toggle="modal"><medium>Check Status</medium></a>
 			<div class="modal fade" id="myModal" role="dialog">
-    			<div class="modal-dialog">
+    			<div class="modal-dialog modal-sm">
 					<div class="modal-content">
 						<div class="modal-header">
 					<form action='index.php' method='post'>

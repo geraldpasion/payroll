@@ -261,101 +261,100 @@ document.frmUser.submit();
 								<i class="fa fa-times"></i>
 							</a>
 						</div>
-					</div>
+					</div>					
 
-					
-
-						<div class="ibox-content">
-					
+					<div class="ibox-content">					
 						<div class="form-group">
-                        <div class = "col-md-5"></div><a href='#' data-target="#myModal4" data-toggle='modal' ><button class='btn btn-info' name = 'edit' type='button'>New Cut-off</button></a>
-							
-							</div>
-							<div class="form-group">
+	                        <div class = "col-md-5"></div>
+	                        <a href='#' data-target="#myModal4" data-toggle='modal' ><button class='btn btn-info' name = 'edit' type='button'>New Cut-off</button></a>
+						</div>
+						<div class="form-group">
 							<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Schedule List</label>
-								<div class="col-md-4">
-									<select id = "leavetype" class="form-control"  data-default-value="z" name="sched" required="">
-								<?php 
-								include('dbconfig.php');
+							<label class="col-sm-1 control-label">Schedule List</label>
+							<div class="col-md-4">
+								<select id = "leavetype" class="form-control"  data-default-value="z" name="sched" required="">
+									<?php 
+									include('dbconfig.php');
 
-								if ($result1 = $mysqli->query("SELECT * FROM cutoff WHERE cutoff_status = 'Active'")) //get records from db
-									{
-										if ($result1->num_rows > 0) //display records if any
+									if ($result1 = $mysqli->query("SELECT * FROM cutoff WHERE cutoff_status = 'Active'")) //get records from db
 										{
-											echo '<option value=""> Select Cutoff &nbsp;&nbsp;(Month-Day-Year) </option>';
-											while ($row1 = mysqli_fetch_object($result1)){
-												$initial = $row1->cutoff_initial;
-												$end = $row1->cutoff_end;
+											if ($result1->num_rows > 0) //display records if any
+											{
+												echo '<option value=""> Select Cutoff &nbsp;&nbsp;(Month-Day-Year) </option>';
+												while ($row1 = mysqli_fetch_object($result1)){
+													$initial = $row1->cutoff_initial;
+													$end = $row1->cutoff_end;
 
-												echo '<option value="'.$initial." - ".$end."\">".date("F d, Y",strtotime($initial)).' - ';
-												echo date("F d, Y",strtotime($end)).'</option>';
+													echo '<option value="'.$initial." - ".$end."\">".date("F d, Y",strtotime($initial)).' - ';
+													echo date("F d, Y",strtotime($end)).'</option>';
+												}
 											}
 										}
-									}
-								?>
+									?>
 								</select>
-								</div>
-							</div><br><br><br>
-					<br><br><br><br>
-					<div class="ibox-content">
-					<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
+							</div>
+						</div><br><br><br>
+						<br><br><br><br>
+						<div class="ibox-content">
+							<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
 						</div>
 						<div class="ibox-content" id = "tableHolderz">
 
 							<?php
-							include('dbconfig.php');
-								if ($result1 = $mysqli->query("SELECT * FROM employee WHERE employee_status = 'active' ORDER BY employee_id")) //get records from db
-								{
-
-									if ($result1->num_rows > 0) //display records if any
+								include('dbconfig.php');
+									if ($result1 = $mysqli->query("SELECT * FROM employee WHERE employee_status = 'active' ORDER BY employee_id")) //get records from db
 									{
-										echo "<label><input type='checkbox' id='select_all'/>&nbsp;&nbsp;Check/Uncheck All</label>";
-										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
-										echo "<thead>";
-										echo "<tr>";
-										echo "<th style='text-align:center; width:150px;'></th>";
-										echo "<th style='padding-left:100px; width:550px;'>Name</th>";
-										echo "<th>Department</th>";
-										echo "</tr>";
-										echo "</thead>";
-										echo "<tfoot>";                    
-										echo "<tr>";
-										echo "<td colspan='7'>";
-										echo "<ul class='pagination pull-right'></ul>";
-										echo "</td>";
-										echo "</tr>";
-										echo "</tfoot>";
-									
-										while ($row1 = mysqli_fetch_object($result1))
-											
-										{
-											$empid = $row1->employee_id;
 
-											echo "<tr class = 'josh'>";
-											echo "<td align='center'><input type='checkbox'  class='checkbox' name='id[]' value='$empid'></td>";
-											echo "<td style='padding-left:100px;'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</td>";
-											echo "<td>" . $row1->employee_department. "</td>";
+										if ($result1->num_rows > 0) //display records if any
+										{
+											echo "<label><input type='checkbox' id='select_all'/>&nbsp;&nbsp;Check/Uncheck All</label>";
+											echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
+											echo "<thead>";
+											echo "<tr>";
+											echo "<th style='text-align:center; width:150px;'></th>";
+											echo "<th style='padding-left:100px; width:550px;'>Name</th>";
+											echo "<th>Department</th>";
 											echo "</tr>";
-										}
+											echo "</thead>";
+											echo "<tfoot>";                    
+											echo "<tr>";
+											echo "<td colspan='7'>";
+											echo "<ul class='pagination pull-right'></ul>";
+											echo "</td>";
+											echo "</tr>";
+											echo "</tfoot>";
 										
-										echo "</table>";
+											while ($row1 = mysqli_fetch_object($result1))
+												
+											{
+												$empid = $row1->employee_id;
+
+												echo "<tr class = 'josh'>";
+												echo "<td align='center'><input type='checkbox'  class='checkbox' name='id[]' value='$empid'></td>";
+												echo "<td style='padding-left:100px;'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</td>";
+												echo "<td>" . $row1->employee_department. "</td>";
+												echo "</tr>";
+											}
+											
+											echo "</table>";
+										}
 									}
-								}
-							
-						?>
-							<div class="form-group">
 								
-								<div class="col-sm-8"></div>								
-								<div class="col-sm-2">
-								<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button></div>
-								<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary" onClick="setUpdateAction();">Submit</button>
-							</div>
-						</form>
-						</div></div>
-						<br>
+							?>
+								<div class="form-group">								
+									<div class="col-sm-8"></div>								
+									<div class="col-sm-2">
+									<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button></div>
+									<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary" onClick="setUpdateAction();">Submit</button>
+								</div>
+							</form>
 						</div>
-						<br><br>
+					</div>
+				<br>
+				</div>
+			</div>
+		</div>
+		<br><br>
 				
 			
 
@@ -396,16 +395,16 @@ document.frmUser.submit();
 				</ul>
 				<div id="editcutoff" class="tab-pane" >
 						<div class="panel-body">
-							<div class="form-group">
+							<div class="form-group" style= 'max-height:500px; min-height:150px; overflow-y:scroll;'>
 
-							<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
+							<!-- <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table"> -->
 								<?php
 									include('dbconfig.php');
 										if ($result1 = $mysqli->query("SELECT * FROM cutoff")) //get records from db
 										{
 											if ($result1->num_rows > 0) //display records if any
 											{
-												echo "<table style= 'max-height:150px; min-height:150px; overflow-y:scroll;' class='footable table table-stripped' data-page-size='10' data-filter=#filter>";
+												echo "<table  class='table table-stripped' data-filter=#filter>";
 
 												echo "<thead>";
 												echo "<tr>";
@@ -430,7 +429,12 @@ document.frmUser.submit();
 
 													echo "<td>" . $row1->cutoff_initial. "</td>";
 													echo "<td>" . $row1->cutoff_end . "</td>";
-													echo "<td name='cutoff_status'>" . $row1->cutoff_status . "</td>";													
+													if($row1->cutoff_status == 'Inactive'){
+														$c_status = 'Submitted';
+													}
+													else{
+														$c_status = $row1->cutoff_status;													}
+													echo "<td name='cutoff_status'>" . $c_status . "</td>";													
 												
 													echo "<td><a href='#' data-toggle='modal'"; 
 																														

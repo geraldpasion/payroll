@@ -1,35 +1,47 @@
 <?php 
 include('dbconfig.php');
+function convertTime($time) {
+	$cutarray = split(":", $time);
+	$mins = sprintf("%.2f", $cutarray[1]/60);
+	return sprintf("%.2f", $cutarray[0] + $mins);
+}
+
+function convertMins($time) {
+	$cutarray = split(":", $time);
+	$mins = sprintf("%.2f", $cutarray[0]*60);
+	return sprintf("%.2f", $cutarray[1] + $mins);
+}
+
 $empid = $_REQUEST['empid'];
 $period = $_REQUEST['period'];
 $absent = $_REQUEST['absent'];
-$late = $_REQUEST['late'];
-$undertime = $_REQUEST['undertime'];
-$regnd =  $_REQUEST['nightdiff'];
-$reghrs = $_REQUEST['reghrs'];
-$regot = $_REQUEST['regot'];
-$regotnd = $_REQUEST['regotnd'];
-$restot = $_REQUEST['restot'];
-$restot8 = $_REQUEST['restot8'];
-$restnd = $_REQUEST['restnd'];
-$restnd8 = $_REQUEST['restnd8'];
-$legalot = $_REQUEST['legalot'];
-$legalot8 = $_REQUEST['legalot8'];
-$legalnd = $_REQUEST['legalnd'];
-$legalnd8 = $_REQUEST['legalnd8'];
-$specialot = $_REQUEST['specialot'];
-$specialot8 = $_REQUEST['specialot8'];
-$specialnd = $_REQUEST['specialnd'];
-$specialnd8 = $_REQUEST['specialnd8'];
-$legalrestot = $_REQUEST['legalrestot'];
-$legalrestot8 = $_REQUEST['legalrestot8'];
-$legalrestnd = $_REQUEST['legalrestnd'];
-$legalrestnd8 = $_REQUEST['legalrestnd8']; 
-$specialrestot = $_REQUEST['specialrestot'];
-$specialrestot8 = $_REQUEST['specialrestot8'];
-$specialrestnd = $_REQUEST['specialrestnd'];
-$specialrestnd8 = $_REQUEST['specialrestnd8'];
-$leavehours = $_REQUEST['leavehours'];
+$late = convertMins($_REQUEST['late']);
+$undertime = convertMins($_REQUEST['undertime']);
+$regnd =  convertTime($_REQUEST['nightdiff']);
+$reghrs = convertTime($_REQUEST['reghrs']);
+$regot = convertTime($_REQUEST['regot']);
+$regotnd = convertTime($_REQUEST['regotnd']);
+$restot = convertTime($_REQUEST['restot']);
+$restot8 = convertTime($_REQUEST['restot8']);
+$restnd = convertTime($_REQUEST['restnd']);
+$restnd8 = convertTime($_REQUEST['restnd8']);
+$legalot = convertTime($_REQUEST['legalot']);
+$legalot8 = convertTime($_REQUEST['legalot8']);
+$legalnd = convertTime($_REQUEST['legalnd']);
+$legalnd8 = convertTime($_REQUEST['legalnd8']);
+$specialot = convertTime($_REQUEST['specialot']);
+$specialot8 = convertTime($_REQUEST['specialot8']);
+$specialnd = convertTime($_REQUEST['specialnd']);
+$specialnd8 = convertTime($_REQUEST['specialnd8']);
+$legalrestot = convertTime($_REQUEST['legalrestot']);
+$legalrestot8 = convertTime($_REQUEST['legalrestot8']);
+$legalrestnd = convertTime($_REQUEST['legalrestnd']);
+$legalrestnd8 = convertTime($_REQUEST['legalrestnd8']);
+$specialrestot = convertTime($_REQUEST['specialrestot']);
+$specialrestot8 = convertTime($_REQUEST['specialrestot8']);
+$specialrestnd = convertTime($_REQUEST['specialrestnd']);
+$specialrestnd8 = convertTime($_REQUEST['specialrestnd8']);
+$leavehours = convertTime($_REQUEST['leavehours']);
 
 // if(isset($_POST['approved'])){
 // insert the new record into the database
@@ -64,17 +76,17 @@ if ($attendance_status=='') {
 			if ($earningsett = $mysqli->query("SELECT * FROM emp_earnings WHERE employee_id = '$empid'")){
 				if ($earningsett->num_rows > 0) {
 					while($row = $earningsett->fetch_object()){
-						$initial = $row->initial_date;
+						$initial = date("Y-m-d", strtotime($row->initial_date));
 						$end = $row->end_date;
 
 
-						/*if(($end != "0000-00-00" && (($initial <= $keydatefrom && $end >= $keydatefrom) || ($initial <= $keydatefrom && $end <= $keydateto) || ($initial >= $keydatefrom && $initial <= $keydateto && $end >= $keydatefrom) || ($initial >= $keydatefrom && $initial <= $keydateto && $end <= $keydateto))) || ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){*/
+						/*if(($end != "0000-00-00" && (($initial <= $keydatefrom && $end >= $keydatefrom) || ($initial <= $keydatefrom && $end <= $keydateto) || ($initial >= $keydatefrom && $initial <= $keydateto && $end >= $keydatefrom) || ($initial >= $keydatefrom && $initial <= $keydateto && $end <= $keydateto))) || ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){
 						if(($end != "0000-00-00" && (($initial <= $keydateto && $end >= $keydateto && $end >= $keydatefrom) || ($end >= $keydatefrom && $initial <= $keydatefrom && $end <= $keydateto))) 
-							|| ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))) {
+							|| ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))) {*/
 
 
-						/*if(($end != "0000-00-00" && (($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)) && ($end >= $keydatefrom || $end <= $keydateto))) || ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){*/
-							if($stmt = $mysqli->prepare("UPDATE emp_earnings SET comp_id = '$comp_id' WHERE employee_id = '$empid'")){
+						if(($end != "0000-00-00" && (($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)) && ($end >= $keydatefrom || $end <= $keydateto))) || ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){
+							if($stmt = $mysqli->prepare("UPDATE emp_earnings SET comp_id = '$comp_id' WHERE employee_id = '$empid' AND initial_date = '$initial' AND end_date = '$end'")){
 								$stmt->execute();
 							 	$stmt->close();
 							}
@@ -86,10 +98,10 @@ if ($attendance_status=='') {
 			if ($deductionsett = $mysqli->query("SELECT * FROM emp_deductions WHERE employee_id = '$empid'")){
 				if ($deductionsett->num_rows > 0) {
 					while($row = $deductionsett->fetch_object()){
-						$initial = $row->initial_date;
+						$initial = date("Y-m-d", strtotime($row->initial_date));
 						$end = $row->end_date;
 						if(($end != "0000-00-00" && (($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)) && ($end >= $keydatefrom || $end <= $keydateto))) || ($end == "0000-00-00" && ($initial <= $keydatefrom || ($initial >= $keydatefrom && $initial <= $keydateto)))){
-							if($stmt = $mysqli->prepare("UPDATE emp_deductions SET comp_id = '$comp_id' WHERE employee_id = '$empid'")){
+							if($stmt = $mysqli->prepare("UPDATE emp_deductions SET comp_id = '$comp_id' WHERE employee_id = '$empid' AND initial_date = '$initial' AND end_date = '$end'")){
 								$stmt->execute();
 							 	$stmt->close();
 							}

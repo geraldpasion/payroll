@@ -1,6 +1,5 @@
 <?php
 include("dbconfig.php");
-
 // $cutoffsubmit = $_POST['cutoff_submission'];
 $sched = $_POST['sched'];
 $submitdate = date("Y-m-d");
@@ -19,7 +18,7 @@ if ($check = $mysqli->query("SELECT * FROM cutoff WHERE cutoff_submission = 'Sub
 		{
 			$stmt->execute();
 			$stmt->close();
-			echo 'swal({  title: "SUCCESS",   text: "Cutoff Submitted",   timer: 3000, type: "success",   showConfirmButton: false}); $("#myModal4").modal("hide"); $("#daterange2").val(""); $("#daterange3").val("");';                   
+			echo 'swal({title: "SUCCESS",text: "Cutoff Successfully Submitted",timer: 1000, type: "success",showConfirmButton: false}); window.setTimeout(function(){location.reload();}, 1000);';
 		}
 	}
 }

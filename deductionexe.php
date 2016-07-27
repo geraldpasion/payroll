@@ -62,22 +62,32 @@ if(isset($_POST['sub'])){
 	header("Location: deductions.php?addDeductions");
 }else{
 	$name = $_POST['name1'];
-	$deduct_max = $_POST['reason1'];
 	$deducttype = $_POST['deducttype1'];
 
-	// insert the new record into the database
-	if ($stmt = $mysqli->prepare("INSERT INTO deduction_settings (deduction_name, deduction_max_amount, deduction_type) VALUES ('$name', '$deduct_max', '$deducttype')"))
-	{
-		/*$mysqli->query("ALTER TABLE employee ADD COLUMN ".$name." VARCHAR(999) NOT NULL,
-							ADD COLUMN ".$name."_idate DATE NOT NULL,
-							ADD COLUMN ".$name."_edate DATE NOT NULL");*/
-		$stmt->execute();
-		$stmt->close();
-	}
-	// show an error if the query has an error
-	else
-	{
-		echo "ERROR: Could not prepare SQL statement.";
+	$name = ltrim($name," ");
+	$name = rtrim($name," ");
+
+	if($deductionsett = $mysqli->query("SELECT * FROM deduction_settings WHERE deduction_name = '$name'")){
+		if ($deductionsett->num_rows > 0) {
+			echo 'swal({  title: "ERROR",   text: "Deduction Already Exists!",   timer: 3000, type: "warning",   showConfirmButton: false});';
+			return false;
+		}
+		else {
+			// insert the new record into the database
+			if ($stmt = $mysqli->prepare("INSERT INTO deduction_settings (deduction_name, deduction_type) VALUES ('$name', '$deducttype')"))
+			{
+				$stmt->execute();
+				$stmt->close();
+
+				echo 'swal({title: "SUCCESS",text: "Deduction Successfully Added",timer: 1000, type: "success",showConfirmButton: false}); window.setTimeout(function(){location.reload();}, 1000);';
+				//header("Location: earnings.php?added");
+			}
+			// show an error if the query has an error
+			else
+			{
+				echo "ERROR: Could not prepare SQL statement.";
+			}	
+		}
 	}
 }
 ?>

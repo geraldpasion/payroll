@@ -51,8 +51,14 @@ if(isset($_POST['sub'])){
 						$stmt->execute();
 					 	$stmt->close();
 
+					 	$emp_id=$_POST["id"][$i];
 					 	//put update code here - gerald pasion
-					 	check_update($cutoffdate, $empids);
+					 	//check_update($cutoffdate, $empids);
+
+					 	$comp_sal = $mysqli->query("SELECT * FROM total_comp_salary WHERE comp_id = '$comp_id'");
+						if ($comp_sal->num_rows > 0) {
+						 	compute($cutoffdate, 1, $emp_id, $comp_id);
+						 }
 
 					}
 				}
@@ -73,24 +79,27 @@ if(isset($_POST['sub'])){
 		}//outer if
 	}
 
-
-
 	header("Location: earnings.php?addEarnings");
 }else{
 	$name = $_POST['name1'];
-	$max_amount = $_POST['reason1'];
 	$earningtype = $_POST['earningtype1'];
 
-	/*if($earningsett = $mysqli->query("SELECT * FROM earnings_setting WHERE earnings_name = '$name'")){
+	$name = ltrim($name," ");
+	$name = rtrim($name," ");
+	
+	if($earningsett = $mysqli->query("SELECT * FROM earnings_setting WHERE earnings_name = '$name'")){
 		if ($earningsett->num_rows > 0) {
-			header("Location: earnings.php?alreadyexists");
+			echo 'swal({  title: "ERROR",   text: "Earning Already Exists!",   timer: 3000, type: "warning",   showConfirmButton: false});';
+			return false;
 		}
-		else {*/
+		else {
 			// insert the new record into the database
-			if ($stmt = $mysqli->prepare("INSERT INTO earnings_setting (earnings_name, earnings_max_amount, earnings_type) VALUES ('$name', '$max_amount', '$earningtype')"))
+			if ($stmt = $mysqli->prepare("INSERT INTO earnings_setting (earnings_name, earnings_type) VALUES ('$name', '$earningtype')"))
 			{
 				$stmt->execute();
 				$stmt->close();
+
+				echo 'swal({title: "SUCCESS",text: "Earning Successfully Added",timer: 1000, type: "success",showConfirmButton: false}); window.setTimeout(function(){location.reload();}, 1000);';
 				//header("Location: earnings.php?added");
 			}
 			// show an error if the query has an error
@@ -98,8 +107,8 @@ if(isset($_POST['sub'])){
 			{
 				echo "ERROR: Could not prepare SQL statement.";
 			}	
-		/*}
-	}*/
+		}
+	}
 	
 }
 

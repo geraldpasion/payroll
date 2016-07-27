@@ -17,12 +17,13 @@
 			$(".delete").click(function(){
 			var element = $(this);
 			var deduction_id = element.attr("id");
-			var info = 'deduction_id1=' + deduction_id;
+			var info = 'deduction_id1=' + deduction_id + '&type=setting';
 			 $.ajax({
 			   type: "POST",
 			   url: "deletedeductions.php",
 			   data: info,
 			   success: function(){
+			   	window.setTimeout(function(){location.reload();}, 500);
 			 }
 			});
 			  $(this).parents(".josh").remove();
@@ -62,41 +63,23 @@
 			var name = $("#name").val();
 		
 			// Returns successful data submission message when the entered information is stored in database.
-			var dataString = 'reason1='+ reason +'&date1=' + date + '&name1=' + name +'&deducttype1=' + deducttype;
+			var dataString = 'name1=' + name +'&deducttype1=' + deducttype;
 			if(reason==''){
 			$('#warning').fadeIn(700);
 			$('#success').hide();
 			}
 			else{
 			// AJAX Code To Submit Form.
-			$.ajax({
-				type: "POST",
-				url: "deductionexe.php",
-				data: dataString,
-				cache: false,
-				success: function(result){
-				$('#reason').val('');
-				$('#name').val('');
-				//$("#leavetype").val($("#leavetype").data("default-value"));
-				$("#deducttype").val($("#deducttype").data("default-value"));
-				toastr.options = { 
-				"closeButton": true,
-			  "debug": false,
-			  "progressBar": true,
-			  "preventDuplicates": true,
-			  "positionClass": "toast-top-right",
-			  "onclick": null,
-			  "showDuration": "400",
-			  "hideDuration": "1000",
-			  "timeOut": "7000",
-			  "extendedTimeOut": "1000",
-			  "showEasing": "swing",
-			  "hideEasing": "linear",
-			  "showMethod": "fadeIn",
-			  "hideMethod": "fadeOut" // 1.5s
-				}
-				toastr.success('Successfully Added!');
-
+				$.ajax({
+					type: "POST",
+					url: "deductionexe.php",
+					data: dataString,
+					cache: false,
+					success: function(result){
+						$('#name').val('');
+						$("#deducttype").val($("#deducttype").data("default-value"));
+						$("#myModal4").modal("hide");
+						eval(result);
 					}
 				});
 			}
@@ -187,9 +170,9 @@
 					</div>
 					<div class="ibox-content">		
 						<div class="form-group">
-							<div class="col-md-3"></div>
+							<div class="col-md-2"></div>
 							<form method="POST" class="form-horizontal" action="deductionexe.php">
-								<label class="col-sm-1 control-label">Deductions List</label>
+								<label class="col-sm-2 control-label">Deductions List</label>
 								<div class="col-md-4"><select id = "deductionname" class="form-control"  data-default-value="" name="deductionname" required="">
 									<option value="">Select Deductions</option>
 									<?php 
@@ -198,17 +181,11 @@
 									if ($result1 = $mysqli->query("SELECT * FROM deduction_settings")) //get records from db
 									{
 										if ($result1->num_rows > 0) //display records if any
-										{
-										
-										
-											while ($row1 = mysqli_fetch_object($result1))
-										
-											{ 
-												
+										{																			
+											while ($row1 = mysqli_fetch_object($result1))										
+											{ 												
 												echo '<option value="'.$row1->deduction_name.'">'.$row1->deduction_name.'</option>';
-											}
-											
-											
+											}																					
 										}
 									}
 
@@ -216,25 +193,26 @@
 									</SELECT>
 								</div>
 							</div>
-							
 							<br><br>
 							<div class="form-group">
 								<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Initial Date:</label>
+								<label class="col-sm-1 control-label">Deductions Amount</label>
+								<div class="col-md-4"><input type="text" class="form-control" name="amount" placeholder="Enter Amount"/></div>
+							</div>
+							<br><br>
+							<div class="form-group">
+								<div class="col-md-3"></div>
+								<label class="col-sm-1 control-label">Initial Date</label>
 								<div class="col-md-4"><input id = "date" type="text" onpaste="return false" onDrop="return false" class="form-control" name="daterange2" required="" onKeyPress="return noneonly(this, event)" placeholder="click to pick date"/></div>
 							</div>
 							<br><br>
 							<div class="form-group">
 								<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">End Date:</label>
+								<label class="col-sm-1 control-label">End Date</label>
 								<div class="col-md-4"><input id = "date" type="text" onpaste="return false" onDrop="return false" class="form-control" name="daterange3" onKeyPress="return noneonly(this, event)" placeholder="click to pick date (optional)"/></div>
+								<div class="col-sm-1" style="font-size:18px;"><a class="right" data-placement="right" data-toggle="tooltip" href="#" title="If no end date is specified, the deduction will be effective on all cutoffs after the start date."><span class="glyphicon glyphicon-info-sign" ></span></a></div>
 							</div>
-							<br><br>
-							<div class="form-group">
-								<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Deductions Amount:</label>
-								<div class="col-md-4"><input type="text" class="form-control" name="amount" placeholder="Enter Amount"/></div>
-							</div>
+							
 					<!-- <div class="form-group">
 					<div class="col-md-3"></div>
 								<label class="col-sm-1 control-label">Date</label>
@@ -286,112 +264,103 @@
 								}
 							}	
 						?>
-						<div class="form-group">
-							<div class="col-md-3"></div>
-							<div class="col-md-5"><button id="submit" type="submit" name="sub" class="btn btn3 btn-w-m btn-primary">Submit</button></div>
-							<div class="col-md-4"><button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button></div>
+						<div class="form-group">								
+							<div class="col-sm-9"></div>								
+							<div class="col-sm-1">
+							<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button></div>
+							<button id = "sub" type="submit" name="sub" class="btn btn3 btn-w-m btn-primary">Submit</button>
 						</div>
 						</form>
 						</div></div>
 						<br>
 						</div>
 						<br><br>
+	
 	<div class="modal inmodal fade" id="myModal4" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-				<div class="modal-header">
+				<div class="modal-header">				
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 					<i class="fa fa-edit modal-icon"></i>
-					<h4 class="modal-title">Add new Deductions</h4>
-				</div>    
-        		<div class="modal-body">
-					<div class="ibox-content" style="height:400px;">
-						<div class="col-md-6">
-							<h3 class="modal-title">Existing Deductions:</h3>
-							<br>
-							<div class="ibox-content" id = "tableHolderz">
-							<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
-								<?php
-									include('dbconfig.php');
-									if ($result1 = $mysqli->query("SELECT * FROM deduction_settings  ORDER BY deduction_id")) //get records from db
-									{
-										if ($result1->num_rows > 0) //display records if any
-										{
-											echo "<table class='footable table table-stripped' data-page-size='3' data-filter=#filter>";								
-											echo "<thead>";
-											echo "<tr>";
-									
-											echo "<th>Name</th>";
-											echo "<th>Max Amount</th>";
-											echo "<th>Type</th>";
-											echo "</tr>";
-											echo "</thead>";
-											echo "<tfoot>";                    
-											echo "<tr>";
-											echo "<td colspan='7'>";
-											echo "<ul class='pagination pull-right'></ul>";
-											echo "</td>";
-											echo "</tr>";
-											echo "</tfoot>";
-										
-											while ($row1 = mysqli_fetch_object($result1))
-												
-											{
-												$empid = $row1->deduction_id;
-												echo "<tr class = 'josh'>";
-								
+					<h4 class="modal-title">Add New Deductions</h4>
+				</div>
+				<div class="modal-body">
+					<div class="ibox-content">						
+						<div class="tabs-container">
+							<ul id="mytab" class="nav nav-tabs">
+								<li class="active"><a data-toggle="tab" href="#newedit">Deductions</a></li>
+								<li class=""><a data-toggle="tab" href="#deduct">Deductions Summary</a></li>
+							</ul>
+							<div class="tab-content">
+								<div id="newedit" class="tab-pane fade active in" >
+									<div class="panel-body">
+										<form id="myForm" method="post" class="form-horizontal">
+											<label class="col-md-4 control-label"><h2>Input New Deduction</h2></label><br><br><br><br>
+										<div class="form-group">											
+											<label class="col-sm-3 control-label">Particular</label>
+												<div class="col-md-4" id="partinp"><input type="text" onfocus="clearThis(this)" id="name" name="name" class="form-control ename"required="" placeholder="Enter Name"></div>
+												<br><br><br>		
+											<label class="col-sm-3 control-label">Type</label>
+												<div class="col-sm-4"><select id="deducttype" name="deducttype" class="form-control" data-default-value="z" required=""><option selected="true" disabled="disabled" value="">Select type...</option><option value = "Taxable">Taxable</option><option value = "Non-Taxable">Non-Taxable</option></select></div>
+												<br><br><br>									
+										</div>
+										<div class="col-md-3"></div>
+										<button id ="reset" type="reset" class="btn btn-w-m btn-warning">Reset</button>
+										<button type="submit" class="btn btn-w-m btn-primary" id="sub2" name="sub2">Submit</button>		
+										</form>
+									</div>								
+								</div>
 
-												echo "<td><a href='#' data-toggle='modal'			
-												data-target='#myModal2' class = 'viewempdialog'>" . $row1->deduction_name . "</a></td>";
-												echo "<td>" . $row1->deduction_max_amount . "</td>";
-												echo "<td>" . $row1->deduction_type . "</td>";
-											
-											echo "<td><a href='#' data-toggle='modal' 
-														
-														
-														data-target='#myModal4' id='$empid' class = 'delete'><button class='btn btn-warning' name = 'edit' type='button'><i class='fa fa-warning'></i> Delete</button></a>&nbsp;&nbsp;";
-											
-												echo "</tr>";
+								<div style= "max-height:500px; min-height:300px; overflow-y:scroll;" id="deduct" class="tab-pane" >
+									<div class="panel-body">
+											<table class="footable table table-stripped" data-page-size="8" data-filter=#filter>						
+												<thead>
+													<tr>
+														<th>ID</th>
+														<th>Particular</th>
+														<th>Type</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<?php
+														$emp_deductions = $mysqli->query("SELECT * FROM deduction_settings  ORDER BY deduction_id");
+														if($emp_deductions->num_rows > 0){
+															while($deduct = mysqli_fetch_object($emp_deductions)){
+																$deductid = $deduct->deduction_id;
+																echo '<tr>';
+																echo '<td>'.$deduct->deduction_id.'</td>';
+																echo '<td>'.$deduct->deduction_name.'</td>';
+																echo '<td>'.$deduct->deduction_type.'</td>';
+																echo "<td><a href='#' data-toggle='modal' data-target='#myModal4' id='$deductid' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Delete</button></a></td>";
+																echo '</tr>';
+															}
+														}
+													?>
+												</tbody>
+											</table>
+									</div>
+								</div>
 
-											}
-											
-											echo "</table>";
-										}
-									}
-								?>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+								</div>
 							</div>
 						</div>
-
-						<div class="col-md-6 divider">
-							<h3 class="modal-title">Input New Deductions:</h3>
-							<br>
-							<form id="myForm" method="post" class="form-horizontal">
-								<div class="form-group">
-									<label class="col-sm-4 control-label">Name</label>
-									<div class="col-md-7"><input type="text" onfocus="clearThis(this)" id="name" class="form-control ename"required="" placeholder="Enter Name"></div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-4 control-label">Max Amount</label>
-									<div class="col-md-7"><input id = "reason" name = "reason" type="text" class="form-control" required="" placeholder = "Type the max amount here..."></div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-4 control-label">Type</label>
-									<div class="col-md-7"><select id="deducttype" class="form-control" data-default-value="z" required=""><option selected="true" disabled="disabled" value="">Select type...</option><option value = "Taxable">Taxable</option><option value = "Non-Taxable">Non-Taxable</option></select></div>
-								</div>
-								<div class="col-md-4"></div>
-									<button id ="reset" type="reset" class="btn btn-w-m btn-warning">Reset</button>
-									<input type="submit" class="btn btn-w-m btn-primary" value="Submit">
-								</form>
-						</div>
 					</div>
-				</div>
-
-				<div class="modal-footer">
-					<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+    $(function() {
+        $('#name').keyup(function() {
+            if (this.value.match(/[^a-zA-Z0-9 ]/g)) {
+                this.value = this.value.replace(/[^a-zA-Z0-9 ]/g, '');
+            }
+        });
+    });
+</script>
 <script type="text/javascript">
 		$(function() {
 			$('input[name="daterange2"]').daterangepicker({
@@ -407,6 +376,11 @@
 				showDropdowns: true
 			});
 		});
+</script>
+<script>
+	$(document).ready(function(){
+	    $('[data-toggle="tooltip"]').tooltip(); 
+	});
 </script>
 <script src="js/jquery.min.js"></script>
    	   <script src="js/jquery.min.js"></script>

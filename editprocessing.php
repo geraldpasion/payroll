@@ -50,6 +50,7 @@
 								$stmt->execute();
 							 	$stmt->close();
 							}
+							compute($cutoffdate, 1, $empid, $comp_id);
 						}
 						else{
 							if($stmt = $mysqli->prepare("INSERT INTO emp_earnings (earnings_setting_id, employee_id, earn_name, earn_max, earn_type, initial_date, end_date) VALUES ('$earnings_id','$empid', '$particular', '$amount', '$type', '$initial', '$end')")){
@@ -95,6 +96,7 @@
 								$stmt->execute();
 							 	$stmt->close();
 							}
+							compute($cutoffdate, 1, $empid, $comp_id);
 						}
 						else{
 							if($stmt = $mysqli->prepare("INSERT INTO emp_deductions (deductions_setting_id, employee_id, deduct_name, deduct_max, deduct_type, initial_date, end_date) VALUES ('$deduction_id','$empid', '$particular', '$amount', '$type', '$initial', '$end')")){
@@ -162,10 +164,7 @@
 			}
 			header("Location: processing2.php?edited");			
 		}
-		/*if($stmt = $mysqli->prepare("UPDATE total_comp_salary SET  WHERE employee_id = '$empid' ")){
-			$stmt->execute();
-		 	$stmt->close();
-		}*/
+		compute($cutoffdate, 1, $empid, $comp_id);
 	}
 
 ?>

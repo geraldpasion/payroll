@@ -142,35 +142,42 @@
 			$(".delete").click(function(){
 			var element = $(this);
 			var employee_id = element.attr("id");
+			var status = document.getElementById('proc_status' + employee_id).innerText;
 			var cutoff = element.attr("cutoff");
 			var info = 'employee_id1=' + employee_id + "&cutoff1=" + cutoff;
-			 $.ajax({
-			   type: "POST",
-			   url: "deactivateemployee.php",
-			   data: info,
-			   success: function(){
-			 }
-			});
-			  $(this).parents(".josh").remove();
-			 $('#success').fadeIn(300).delay(3200).fadeOut(300);
-			 $(window).scrollTop(0);
-			 toastr.options = { 
-				"closeButton": true,
-			  "debug": false,
-			  "progressBar": true,
-			  "preventDuplicates": true,
-			  "positionClass": "toast-top-right",
-			  "onclick": null,
-			  "showDuration": "400",
-			  "hideDuration": "1000",
-			  "timeOut": "7000",
-			  "extendedTimeOut": "1000",
-			  "showEasing": "swing",
-			  "hideEasing": "linear",
-			  "showMethod": "fadeIn",
-			  "hideMethod": "fadeOut" // 1.5s
+
+			if(status == "Approved") {
+				$.ajax({
+				   type: "POST",
+				   url: "deactivateemployee.php",
+				   data: info,
+				   success: function(){
+				 }
+				});
+				  $(this).parents(".josh").remove();
+				 $('#success').fadeIn(300).delay(3200).fadeOut(300);
+				 $(window).scrollTop(0);
+				 toastr.options = { 
+					"closeButton": true,
+				  "debug": false,
+				  "progressBar": true,
+				  "preventDuplicates": true,
+				  "positionClass": "toast-top-right",
+				  "onclick": null,
+				  "showDuration": "400",
+				  "hideDuration": "1000",
+				  "timeOut": "7000",
+				  "extendedTimeOut": "1000",
+				  "showEasing": "swing",
+				  "hideEasing": "linear",
+				  "showMethod": "fadeIn",
+				  "hideMethod": "fadeOut" // 1.5s
+					}
+					toastr.success('Employee successfully deactivated!');
+				} else {
+					swal({  title: "Cannot Submit",   text: "Employee still has pending status",   timer: 3000, type: "warning",   showConfirmButton: false});
 				}
-				toastr.success('Employee successfully deactivated!');
+						 
 			 
 			return false;
 			});
@@ -198,8 +205,16 @@
 						data: dataString,
 						cache: false,
 						success: function(result){
-							eval(result);
+							//eval(result);
 							//alert(result);
+							swal({
+								title: "SUCCESS",
+								text: "Processing Submitted",
+								timer: 1000, 
+								type: "success",
+								showConfirmButton: false
+							});
+							window.setTimeout(function(){location.reload();}, 1000);
 						}
 					});
 				}
@@ -341,7 +356,7 @@
 									<?php 
 									include('dbconfig.php');
 
-									if ($result1 = $mysqli->query("SELECT * FROM cutoff WHERE cutoff_submission = 'Submitted'")) //get records from db
+									if ($result1 = $mysqli->query("SELECT * FROM cutoff WHERE cutoff_submission = 'Submitted' AND process_submission != 'Submitted'")) //get records from db
 										{
 											if ($result1->num_rows > 0) //display records if any
 											{
@@ -428,7 +443,7 @@
 													data-employee-id='$empid' 												
 													data-cutoffd='".$initialcut." - ".$endcut."'
 													data-submitdate='".$cutoffsubmitdate."'
-													data-target='#myModal4' class = 'editempdialog'><button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> Edit</button></a>&nbsp;&nbsp;";
+													data-target='#myModal4' class = 'editempdialog'><button class='btn btn-info' name = 'edit' id='edit' type='button'><i class='fa fa-paste'></i> Edit</button></a>&nbsp;&nbsp;";
 											echo "<a href='#' id='$empid' cutoff='".$initialcut." - ".$endcut."' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Deactivate</button></button></a>";											
 											echo "</tr>";
 										}									
@@ -464,7 +479,18 @@
 			</div>
 		</div>
 	</div>
-	<div id="displaysomething"></div>			
+	<div id="displaysomething"></div>		
+
+	<script>
+		$( "#edit" ).click(function() {
+			$("#actionsel").val("New");
+			$("#type").val("");
+			$("#amount").val("");
+			$("#tonew").val("");
+			$("#earndeduct").val("");
+			$("#partinp").replaceWith("<div class='col-md-4' id='partinp'><input id = 'particularsel' name = 'particularsel' onkeyup='' type='text' class='form-control' required></div>");				
+		});
+	</script>	
 	
 		<script src="js/jquery.min.js"></script>
 		<script src="js/timepicki.js"></script>

@@ -20,8 +20,6 @@ foreach($employeeIDs as $empid) {
 	$mysqli->query("UPDATE totalcomputation SET process_status='Submitted' WHERE CutoffID = '$cutoff' AND EmployeeID='$empid'");
 }
 
-$mysqli->query("UPDATE cutoff SET process_submission='Submitted' WHERE CutoffID = '$cutoff' AND EmployeeID='$empid'");
-
-echo 'swal({title: "SUCCESS",text: "Cutoff Submitted",timer: 3000, type: "success",showConfirmButton: false, function(isConfirm){if(isConfirm){location.reload();}}});';
+$mysqli->query("UPDATE cutoff SET process_submission='Submitted' WHERE cutoff_initial = '$initial' AND cutoff_end = '$end' AND cutoff_submission='Submitted'");
 
 ?>

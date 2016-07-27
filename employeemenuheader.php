@@ -154,8 +154,8 @@ $employee_id = $_SESSION['logsession'];
 					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'images3.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="images3.php"><i class="fa fa-image"></i><span class="nav-label">Gallery</span></a>
 					</li>
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'payslip.php'){echo 'active'; }else { echo ''; } ?>">
-						<a href="payslip.php"><i class="fa fa-file"></i><span class="nav-label">Payslip</span></a>
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'payslipemp.php'){echo 'active'; }else { echo ''; } ?>">
+						<a href="payslipemp.php"><i class="fa fa-file"></i><span class="nav-label">Payslip</span></a>
 					</li>
 					
 				</ul>

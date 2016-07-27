@@ -490,6 +490,51 @@ function computeHours($timein, $timeout) {
     return $newRegHrsArrayDec;
   }
 
+//compute total retro
+function retro_compute($employee_id, $comp_id){
+  include 'dbconfig.php';
+ 
+$sql = "SELECT * FROM others WHERE employee_id=$employee_id AND others_status='not paid' AND comp_id=0 AND app_status='Approved'";
+$result = $conn->query($sql);
+  if ($result->num_rows > 0) {
+
+    //initialize retro
+    $retro_total=0;
+
+     // output data of each row
+    while($row = $result->fetch_assoc()) {
+      $retro_value=$row['others_retro'];
+      $retro_total=$retro_total+$retro_value;
+      echo "Retro: ".$retro_value.nextline();
+    }
+
+    //update retro
+/*    $sql = "UPDATE others SET others_status='paid', comp_id=$comp_id WHERE employee_id=$employee_id AND others_status='not paid' AND comp_id=0 AND app_status='Approved'";
+
+          if ($conn->query($sql) === TRUE) {
+              echo "Record updated successfully";
+          } else {
+              echo "Error updating record: " . $conn->error;
+          }
+
+    //reset for testing purposes
+    /*($sql = "UPDATE others SET others_status='not paid', comp_id=0";
+
+          if ($conn->query($sql) === TRUE) {
+              echo "Record updated successfully";
+          } else {
+              echo "Error updating record: " . $conn->error;
+          }
+    */
+    return $retro_total;
+  }
+  else{
+    return 0;
+  }
+
+
+}//end retro
+
 
 //for adding non-taxable/non-taxable earnings/dedutions DURING processing
 function recompute_others(){
