@@ -5,6 +5,7 @@ $overtimeid = $_POST['otid1'];
 $remarks = $_POST['remarks'];
 $approvedby = $_SESSION['fname'] . " " . $_SESSION['lname'];
 $from = $_POST['from'];
+$date_today = date("Y-m-d");
 
 if(isset($_POST['approved'])){
 	// insert the new record into the database
@@ -21,7 +22,7 @@ if(isset($_POST['approved'])){
 	$run_user = mysqli_query($mysqli, $sel_user);
 	$fetch_emp = mysqli_fetch_array($run_user);
 
-	if ($stmt = $mysqli->prepare("UPDATE overtime SET overtime_status = 'Approved', overtime_remarks = '$remarks', overtime_approvedby = '$approvedby' WHERE overtime_id = '$overtimeid'"))
+	if ($stmt = $mysqli->prepare("UPDATE overtime SET overtime_status = 'Approved', overtime_remarks = '$remarks', overtime_approvedby = '$approvedby', overtime_approvaldate = '$date_today' WHERE overtime_id = '$overtimeid'"))
 	{
 		$stmt->execute();
 		$stmt->close();
@@ -66,7 +67,7 @@ if(isset($_POST['approved'])){
 	}
 } else {
 	// insert the new record into the database
-	if ($stmt = $mysqli->prepare("UPDATE overtime SET overtime_status = 'Disapproved', overtime_remarks = '$remarks', overtime_approvedby = '$approvedby' WHERE overtime_id = '$overtimeid'"))
+	if ($stmt = $mysqli->prepare("UPDATE overtime SET overtime_status = 'Disapproved', overtime_remarks = '$remarks', overtime_approvedby = '$approvedby', overtime_approvaldate = '$date_today' WHERE overtime_id = '$overtimeid'"))
 	{
 		$stmt->execute();
 		$stmt->close();

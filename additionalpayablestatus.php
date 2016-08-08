@@ -183,6 +183,7 @@
 										echo "<th>Reason</th>";
 										echo "<th>Status</th>";
 										echo "<th>Date Approved</th>";
+										echo "<th>Other Status</th>";
 										echo "<th>Managed by</th>";
 										echo "</tr>";
 										echo "</thead>";
@@ -227,9 +228,9 @@
 														data-end='$timeout'
 														data-reason='$row->others_reason'
 														data-remarks='$row->others_remarks'
-														data-paid='$row->others_paid'
-														data-payable='$row->others_payable'
-														data-retro='$row->others_retro'
+														data-paid='"."PHP ".@number_format($row->others_paid,2)."'
+														data-payable='"."PHP ".@number_format($row->others_payable,2)."'
+														data-retro='"."PHP ".@number_format($row->others_retro,2)."'
 														class = 'viewempdialog'>". $row->employee_firstname . " " . $row->employee_lastname . "</a></td>";
 												echo "<td>" . date("Y-m-d",strtotime($row->attendance_date)) . "</td>";
 											} else { // for level 1 and 2, since i don't need to display the name, i used the date as link for the modal
@@ -243,9 +244,9 @@
 														data-end='$timeout'
 														data-reason='$row->others_reason'
 														data-remarks='$row->others_remarks'
-														data-paid='$row->others_paid'
-														data-payable='$row->others_payable'
-														data-retro='$row->others_retro'
+														data-paid='"."PHP ".@number_format($row->others_paid,2)."'
+														data-payable='"."PHP ".@number_format($row->others_payable,2)."'
+														data-retro='"."PHP ".@number_format($row->others_retro,2)."'
 														class = 'viewempdialog'>". date("Y-m-d",strtotime($row->attendance_date)) . "</a></td>";
 											}
 											echo "<td>" . $row->attendance_daytype . "</td>";
@@ -255,6 +256,7 @@
 											echo "<td>" . $row->others_reason . "</td>";
 											echo "<td>" . $row->app_status . "</td>";
 											echo "<td>" . $row->others_approvaldate . "</td>";
+											echo "<td>" . $row->others_status . "</td>";
 											echo "<td>" . $row->others_approvedby. "</td>";
 										}
 										echo "</table>";

@@ -225,26 +225,39 @@
 		
 		<script type="text/javascript">
 			$(document).ready(function(){
-			showEdited=function(){
-			toastr.options = { 
-				"closeButton": true,
-			  "debug": false,
-			  "progressBar": true,
-			  "preventDuplicates": true,
-			  "positionClass": "toast-top-right",
-			  "onclick": null,
-			  "showDuration": "400",
-			  "hideDuration": "1000",
-			  "timeOut": "7000",
-			  "extendedTimeOut": "1000",
-			  "showEasing": "swing",
-			  "hideEasing": "linear",
-			  "showMethod": "fadeIn",
-			  "hideMethod": "fadeOut" // 1.5s
-				}
-				toastr.success("Employee successfully edited!");
+			showEdited=function(cutoff){
+			
+			//history.replaceState({}, "Title", "processing2.php");
+			var info = "cutoff="+cutoff+"&test1";
+			$.ajax({
+				   type: "POST",
+				   url: "processing2.php",
+				   data: info,
+				   success: function(){
+				   		$("#leavetype").val( cutoff );
+
+				   		toastr.options = { 
+							"closeButton": true,
+						  "debug": false,
+						  "progressBar": true,
+						  "preventDuplicates": true,
+						  "positionClass": "toast-top-right",
+						  "onclick": null,
+						  "showDuration": "400",
+						  "hideDuration": "1000",
+						  "timeOut": "7000",
+						  "extendedTimeOut": "1000",
+						  "showEasing": "swing",
+						  "hideEasing": "linear",
+						  "showMethod": "fadeIn",
+						  "hideMethod": "fadeOut" // 1.5s
+						}
+						toastr.success("Employee successfully edited!");
+					}
+				});
+
 			}
-			history.replaceState({}, "Title", "processing2.php");
+
 			});
 		</script>
 		<script type="text/javascript">
@@ -269,14 +282,16 @@
 				toastr.success("Processing successfully submitted!");
 			}
 			history.replaceState({}, "Title", "processing2.php");
+
 			});
 		</script>
 		<?php
 		if(isset($_GET['edited']))
 		{
+			$cutoff = $_GET['cutoff'];
 			echo '<script type="text/javascript">'
 					, '$(document).ready(function(){'
-					, 'showEdited();'
+					, 'showEdited("'.$cutoff.'");'
 					, '});' 
 			   
 			   , '</script>'
@@ -349,7 +364,7 @@
 					<div class="ibox-content">
 						<div class="form-group">
 							<div class="col-md-3"></div>
-							<form method="POST" action="processing2.php">
+							<form method="POST" action="processing2.php" id="formcut">
 								<label class="col-sm-1 control-label">Cut Off</label>
 								<div class="col-md-4">
 									<select id = "leavetype" class="form-control"  data-default-value="z" name="sched" required="">
@@ -385,7 +400,7 @@
 									?>
 									</select>
 								</div>
-								<button type="submit" name="test1" class="btn btn-w-m btn-primary">Validate</button>
+								<button type="submit" name="test1" id="test1" class="btn btn-w-m btn-primary">Validate</button>
 							</form>
 						</div>
 						<br><br><br><br>
@@ -408,6 +423,8 @@
 										echo "<th>ID</th>";
 										echo "<th>Name</th>";
 										echo "<th>Department</th>";
+										echo "<th>Shift Type</th>";
+										echo "<th>Payment Schedule</th>";
 										echo "<th>Status</th>";
 										echo "<th>Action</th>";
 										echo "</tr>";
@@ -438,6 +455,8 @@
 														data-submitdate='".$cutoffsubmitdate."'
 														data-target='#myModal2' class = 'viewempdialog'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</a></td>";
 											echo "<td>" . $row1->employee_department . "</td>";
+											echo "<td>" . $row1->employee_type . "</td>";
+											echo "<td>" . $row1->cutoff . "</td>";
 											echo "<td name='proc_status' id='proc_status".$row1->employee_id."'>" . $status->process_status . "</td>";
 											echo "<td><a href='#' data-toggle='modal' 
 													data-employee-id='$empid' 												
@@ -481,6 +500,15 @@
 	</div>
 	<div id="displaysomething"></div>		
 
+	<script type="text/javascript">
+    $(function() {
+        $('#particularsel').keyup(function() {
+            if (this.value.match(/[^a-zA-Z0-9 ]/g)) {
+                this.value = this.value.replace(/[^a-zA-Z0-9 ]/g, '');
+            }
+        });
+    });
+</script>
 	<script>
 		$( "#edit" ).click(function() {
 			$("#actionsel").val("New");
@@ -488,7 +516,8 @@
 			$("#amount").val("");
 			$("#tonew").val("");
 			$("#earndeduct").val("");
-			$("#partinp").replaceWith("<div class='col-md-4' id='partinp'><input id = 'particularsel' name = 'particularsel' onkeyup='' type='text' class='form-control' required></div>");				
+			$("#partinp").replaceWith("<div class='col-md-4' id='partinp'><select id = 'particularsel' name = 'particularsel' type='text' class='form-control' required></select></div>");
+			$("#particularsel").load("filter.php?choice=New");
 		});
 	</script>	
 	

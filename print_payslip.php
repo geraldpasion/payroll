@@ -1,6 +1,13 @@
 <?php
 require "fpdf/fpdf.php";
 include('dbconfig.php');
+
+
+//put code here to input payslip password before executing the code
+
+
+
+//code start here
 $employeeid = $_GET['id'];
 $compid = $_GET['compid'];
 $initial = $_GET['initial'];
@@ -174,7 +181,7 @@ $pdf->SetTextColor(239,185,100);
 $pdf->Cell(0,9, "PAYROLL DETAILS (All amounts in PHP)", 0,1, 'L');
 
 $pdf->SetTextColor(0,0,0);  // black text
-$pdf->SetFont("Arial", "B", "8");
+$pdf->SetFont("Arial", "BI", "8");
 $pdf->SetLineWidth(0);
 $pdf->setFillColor(255,255,255); 
 
@@ -188,6 +195,7 @@ if($result['cutoff'] == "Monthly") {
 $temp = sprintf("%.2f",$basicpay);
 $pdf->Cell(30,5, number_format((float)$temp,2),1,1,'R',1);
 
+$pdf->SetFont("Arial", "B", "8");
 $pdf->setFillColor(255,255,255); 
 $pdf->Cell(70,5, "Add: Other Income ",1,0,'l');
 $pdf->Cell(45,5, "Hour(s) ",1,0,'l');
@@ -203,7 +211,7 @@ foreach($hours as $hour) {
 		$pdf->Cell(70,5, "        ".$hourTitles[$ctr],1,0,'l');
 		$pdf->Cell(45,5, "",1,0,'l');
 		$temp = sprintf("%.2f",$totalCompSalary[$hour]);
-		$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'l');
+		$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'R');
 		$pdf->Cell(30,5, "",1,1,'R');
 		$totalOtherIncome += $totalCompSalary[$hour];
 	}
@@ -226,13 +234,13 @@ $pdf->SetFont("Arial", "", "8");
 $temp = sprintf("%.2f",$totalComputation['RetroTotal']);
 $pdf->Cell(70,5, "        ADJ Retro",1,0,'l');
 $pdf->Cell(45,5, "",1,0,'l');
-$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'l');
+$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'R');
 $pdf->Cell(30,5, "",1,1,'R');
 
 $temp = sprintf("%.2f",$totalComputation['OtherTaxableEarnings']);
 $pdf->Cell(70,5, "        Taxable Earnings",1,0,'l');
 $pdf->Cell(45,5, "",1,0,'l');
-$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'l');
+$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'R');
 $pdf->Cell(30,5, "",1,1,'R');
 
 $pdf->setFillColor(239,185,100); 
@@ -254,22 +262,29 @@ $totalTaxableDeductions = $totalCompSalary['absent'];
 $temp = sprintf("%.2f",$totalCompSalary['absent']);
 $pdf->Cell(70,5, "        Absences",1,0,'l');
 $pdf->Cell(45,5, "",1,0,'l');
-$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'l');
+$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'R');
 $pdf->Cell(30,5, "",1,1,'R');
 
 $totalTaxableDeductions += $totalCompSalary['late'];
 $temp = sprintf("%.2f",$totalCompSalary['late']);
 $pdf->Cell(70,5, "        Tardiness",1,0,'l');
 $pdf->Cell(45,5, "",1,0,'l');
-$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'l');
+$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'R');
 $pdf->Cell(30,5, "",1,1,'R');
 
 $totalTaxableDeductions += $totalCompSalary['undertime'];
 $temp = sprintf("%.2f",$totalCompSalary['undertime']);
 $pdf->Cell(70,5, "        Undertime",1,0,'l');
 $pdf->Cell(45,5, "",1,0,'l');
-$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'l');
-$temp = sprintf("%.2f",$totalTaxableDeductions);
+$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'R');
+$pdf->Cell(30,5, "",1,1,'R');
+
+$temp = sprintf("%.2f",$totalComputation['TotalTaxableDeduction'] - $totalTaxableDeductions);
+$pdf->Cell(70,5, "        Taxable Deductions",1,0,'l');
+$pdf->Cell(45,5, "",1,0,'l');
+$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'R');
+
+$temp = sprintf("%.2f",$totalComputation['TotalTaxableDeduction']);
 $pdf->Cell(30,5, "(".number_format((float)$temp,2).")",1,1,'R');
 
 $pdf->SetFont("Arial", "BI", "8");
@@ -289,19 +304,19 @@ $pdf->SetFont("Arial", "", "8");
 $temp =  sprintf("%.2f",$totalComputation['SSS']);
 $pdf->Cell(70,5, "        SSS Premium",1,0,'l');
 $pdf->Cell(45,5, "",1,0,'l');
-$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'l');
+$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'R');
 $pdf->Cell(30,5, "",1,1,'R');
 
 $temp =  sprintf("%.2f",$totalComputation['PAGIBIG']);
 $pdf->Cell(70,5, "        HDMF Premium",1,0,'l');
 $pdf->Cell(45,5, "",1,0,'l');
-$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'l');
+$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'R');
 $pdf->Cell(30,5, "",1,1,'R');
 
 $temp =  sprintf("%.2f",$totalComputation['PhilHealth']);
 $pdf->Cell(70,5, "        Philhealth Premium",1,0,'l');
 $pdf->Cell(45,5, "",1,0,'l');
-$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'l');
+$pdf->Cell(45,5, number_format((float)$temp,2),1,0,'R');
 $temp =  sprintf("%.2f",$totalComputation['TotalStatutoryBenefits']);
 $pdf->Cell(30,5, "(" . number_format((float)$temp,2) . ")",1,1,'R');
 
@@ -311,25 +326,33 @@ $temp = sprintf("%.2f",$totalComputation['NetTaxableIncome']);
 $pdf->Cell(160,5, "Net Taxable Income",1,0,'L',1);
 $pdf->Cell(30,5, number_format((float)$temp,2),1,1,'R',1);
 
+$pdf->SetFont("Arial", "B", "8");
+$pdf->setFillColor(255,255,255);
 $temp = sprintf("%.2f", $totalComputation['WithholdingTax']);
-$pdf->Cell(160,5, "        Less: Withholding Tax",1,0,'L',1);
+$pdf->Cell(160,5, "Less: Withholding Tax",1,0,'L',1);
+$pdf->SetFont("Arial", "", "8");
 $pdf->Cell(30,5, "(".number_format((float)$temp,2) .")",1,1,'R',1);
 
-$pdf->SetFont("Arial", "B", "8");
-
+$pdf->SetFont("Arial", "BI", "8");
+$pdf->setFillColor(239,185,100);
 $temp = sprintf("%.2f",$totalComputation['NetIncomeAfterTax']);
 $pdf->Cell(160,5, "Net Income After Tax",1,0,'L',1);
 $pdf->Cell(30,5, number_format((float)$temp,2),1,1,'R',1);
 
-$pdf->SetFont("Arial", "BI", "8");
+$pdf->SetFont("Arial", "B", "8");
+$pdf->setFillColor(255,255,255);
 $temp = sprintf("%.2f",$totalComputation['TotalNonTaxableIncome']);
 $pdf->Cell(160,5, "Total Non-Taxable Income",1,0,'L',1);
+$pdf->SetFont("Arial", "", "8");
 $pdf->Cell(30,5, number_format((float)$temp,2),1,1,'R',1);
 
+$pdf->SetFont("Arial", "B", "8");
 $temp = sprintf("%.2f",$totalComputation['TotalNonTaxableDeduction']);
 $pdf->Cell(160,5, "Total Non-Taxable Deductions",1,0,'L',1);
+$pdf->SetFont("Arial", "", "8");
 $pdf->Cell(30,5, "(" .number_format((float)$temp,2).")",1,1,'R',1);
 
+$pdf->setFillColor(239,185,100);
 $pdf->SetFont("Arial", "BU", "8");
 $temp = sprintf("%.2f",$totalComputation['NetPay']);
 $pdf->Cell(160,5, "NET PAY",1,0,'L',1);

@@ -66,16 +66,30 @@ include 'dbconfig.php';
                 if ($dbend == null){
                     echo "zeroooooooooooo!".nextline();
                 }
+                //dbstart = start date of earnings
+                //start = start date of cutoff
 
+                if (($start<=$dbstart && $end>=$dbstart) || ($start<=$dbend && $end>=$dbend) || ($dbstart<=$start && $dbend==null) || ($dbstart>=$start && $dbstart<=$end && $dbend==null) || ($dbstart<=$start && $dbend>=$end)){
 
-                if (($start<=$dbstart && $end>=$dbstart) || ($start<=$dbend && $end>=$dbend) || ($dbstart<=$start && $dbend==null) ){
-
+                //include to computation
                 $taxable_income=$taxable_income+$row_addearnings['earn_max'];
                 echo "taxable_income include: ".$row_addearnings['earn_max'].
                 " ".$row_addearnings['earn_type'].
                 " ".$row_addearnings['earn_name'].
                 " ".$row_addearnings['initial_date'].
                 " ".$row_addearnings['end_date'].doubleline();
+
+                $earn_type = $row_addearnings['earn_type'];
+               
+                $earn_max = $row_addearnings['earn_max'];
+                 $earn_name = $row_addearnings['earn_name'];
+
+                $into="(comp_id, meta_key, meta_value, meta_optional, meta_type)";
+                $values="('$comp_id', '$earn_type', '$earn_max', '$earn_name', 'earning')";
+
+                echo "into: ".$into.nextline();
+                echo "values: ".$values.nextline();
+                insert_statement_others($into, $values, 'totalcomputation_meta');
                }
             }//end while
         }//end if
@@ -158,7 +172,8 @@ include 'dbconfig.php';
                     echo "zeroooooooooooo!".nextline();
                 }
 
-                if (($start<=$dbstart && $end>=$dbstart) || ($start<=$dbend && $end>=$dbend) || ($dbstart<=$start && $dbend==null) ){
+
+                if (($start<=$dbstart && $end>=$dbstart) || ($start<=$dbend && $end>=$dbend) || ($dbstart<=$start && $dbend==null) || ($dbstart>=$start && $dbstart<=$end && $dbend==null) || ($dbstart<=$start && $dbend>=$end)){
 
                     $taxable_deductions=$taxable_deductions+$row_deductions['deduct_max'];
                  echo "taxable_deductions include: ".$row_deductions['deduct_max'].
@@ -166,6 +181,20 @@ include 'dbconfig.php';
                 " ".$row_deductions['deduct_name'].
                 " ".$row_deductions['initial_date'].
                 " ".$row_deductions['end_date'].nextline();
+
+                $deduct_type=$row_deductions['deduct_type'];
+                $deduct_max = $row_deductions['deduct_max'];
+                 $deduct_name = $row_deductions['deduct_name'];
+
+                $into="(comp_id, meta_key, meta_value, meta_optional, meta_type)";
+                $values="('$comp_id', '$deduct_type', '$deduct_max', '$deduct_name', 'deduction')";
+
+                echo "into: ".$into.nextline();
+                echo "values: ".$values.nextline();
+                insert_statement_others($into, $values, 'totalcomputation_meta');
+               
+
+                
                }
             }//end while
         }//end if
@@ -177,5 +206,26 @@ include 'dbconfig.php';
         return $taxable_deductions;
 
 }//end compute_other_deductions
+
+
+function insert_statement_others($fields, $values, $table){
+    include 'dbconfig.php';
+
+    //check if comp_id already existing
+    
+
+    $sql="INSERT INTO $table $fields VALUES $values";
+
+    echo $sql;
+
+    echo nextline().nextline();;
+
+    if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+    } 
+    else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
 
 ?>

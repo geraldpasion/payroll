@@ -54,7 +54,7 @@
 							<div style="margin-left:-125px" class="col-md-3"></div>
 							<form method="POST" action="payslip.php">
 								<label class="col-sm-1 control-label">Cutoff List</label>
-								<div class="col-md-4">
+								<div class="col-md-4" style="padding-bottom:10px;">
 									<select id = "sched" class="form-control"  data-default-value="z" name="sched" required="">
 									<?php 
 									include('dbconfig.php');
@@ -88,7 +88,8 @@
 									?>
 									</select>
 								</div>
-								<button type="submit" name="test1" class="btn btn-w-m btn-primary">Validate</button>&nbsp;&nbsp;
+								<div class="col-md-5 col-sm-12">
+								&nbsp;&nbsp;<button type="submit" name="test1" class="btn btn-w-m btn-primary">Validate</button>&nbsp;&nbsp;
 								<?php 
 								if(isset($_POST['test1'])){
 									$initialcut2 = strtotime($initialcut)*1000;
@@ -97,6 +98,7 @@
 								} else {
 									echo'<button type="button" class="btn btn-w-m btn-primary"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;Export All</button>';
 								} ?>
+								</div>
 							</form>
 						</div>
 						<br><br><br><br>
@@ -141,7 +143,7 @@
 											//		data-submitdate='".$cutoffsubmitdate."'
 											//		data-target='#myModal4' class = 'editempdialog'><button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> Edit</button></a>&nbsp;&nbsp;";
 											//echo "<a href='#' id='$empid' cutoff='".$initialcut." - ".$endcut."' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Deactivate</button></button></a>";
-												echo "<td><a href = 'print_payslip.php?initial=".$initialcut."&end=".$endcut."&id=".$empid."&compid=".$compid."'><button class='btn btn-info' name = 'export' type='button'><i class='fa fa-file'></i>&nbsp;&nbsp;Export</button></a></td>";
+												echo "<td><a href = 'print_payslip.php?initial=".$initialcut."&end=".$endcut."&id=".$empid."&compid=".$compid." target="_blank"'><button class='btn btn-info' name = 'export' type='button'><i class='fa fa-file'></i>&nbsp;&nbsp;View/Download</button></a></td>";
 											
 											echo "</tr>";
 										}									

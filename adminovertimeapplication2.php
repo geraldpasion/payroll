@@ -43,59 +43,75 @@
 		</script>
 		<link href="css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 		<!-- Clock picker -->
-		<script src="js/plugins/clockpicker/clockpicker.js"></script>
-		<script type="text/javascript" >//ajax
-			$(document).ready(function(){
-			$(document).on('submit','#myForm', function() {
-			var reason = $("#reason").val();
-			var end = $("#timeto").val();
-			var start = $("#timefrom").val();
-			var date = $("#date").val();
-			var empid = $("#empid").val();
-			var name = $("#name").val();
+		<script src="js/plugins/clockpicker/clockpicker.js"></script>	
 
-			// Returns successful data submission message when the entered information is stored in database.
-			var dataString = 'reason1='+ reason + '&end1=' + end + '&start1=' + start + '&date1=' + date + '&empid1=' + empid + '&name1=' + name;
-			if(reason==''){
-			$('#warning').fadeIn(700);
-			$('#success').hide();
-			}
-			else{
-			// AJAX Code To Submit Form.
-			$.ajax({
-				type: "POST",
-				url: "adminovertimeapplicationexe.php",
-				data: dataString,
-				cache: false,
-				success: function(result){
-				$('#reason').val('');
-				$('#date').val('');
-				$('#timefrom').val('');
-				$('#timeto').val('');
-				toastr.options = { 
-				"closeButton": true,
-			  "debug": false,
-			  "progressBar": true,
-			  "preventDuplicates": true,
-			  "positionClass": "toast-top-right",
-			  "onclick": null,
-			  "showDuration": "400",
-			  "hideDuration": "1000",
-			  "timeOut": "7000",
-			  "extendedTimeOut": "1000",
-			  "showEasing": "swing",
-			  "hideEasing": "linear",
-			  "showMethod": "fadeIn",
-			  "hideMethod": "fadeOut" // 1.5s
+		<script type="text/javascript">
+		$(document).ready(function(){
+			disabled=function(){
+				 toastr.options = { 
+					"closeButton": true,
+				  "debug": false,
+				  "progressBar": true,
+				  "preventDuplicates": true,
+				  "positionClass": "toast-top-right",
+				  "onclick": null,
+				  "showDuration": "400",
+				  "hideDuration": "1000",
+				  "timeOut": "7000",
+				  "extendedTimeOut": "1000",
+				  "showEasing": "swing",
+				  "hideEasing": "linear",
+				  "showMethod": "fadeIn",
+				  "hideMethod": "fadeOut" // 1.5s
 				}
-				toastr.success('Successfully applied for overtime	!');
-					}
-				});
+				toastr.error('Already applied overtime on that date!');
 			}
-			return false;
-			});
-			});
-		</script>	
+			history.replaceState({}, "Title", "adminovertimeapplication2.php");				
+		});
+		$(document).ready(function(){
+			applied=function(){
+				 toastr.options = { 
+					"closeButton": true,
+				  "debug": false,
+				  "progressBar": true,
+				  "preventDuplicates": true,
+				  "positionClass": "toast-top-right",
+				  "onclick": null,
+				  "showDuration": "400",
+				  "hideDuration": "1000",
+				  "timeOut": "7000",
+				  "extendedTimeOut": "1000",
+				  "showEasing": "swing",
+				  "hideEasing": "linear",
+				  "showMethod": "fadeIn",
+				  "hideMethod": "fadeOut" // 1.5s
+				}
+				toastr.success('Successfully applied for overtime!');
+			}
+			history.replaceState({}, "Title", "adminovertimeapplication2.php");				
+		});
+		</script>
+
+		<?php
+		if(isset($_GET['disabled']))
+		{
+			echo '<script type="text/javascript">'
+					, '$(document).ready(function(){'	
+					, 'disabled();'
+					, '});' 
+			   , '</script>'
+			;	
+		}
+		if(isset($_GET['applied']))
+		{
+			echo '<script type="text/javascript">'
+					, '$(document).ready(function(){'	
+					, 'applied();'
+					, '});' 
+			   , '</script>'
+			;	
+		}
+		?>
 	
 	</head>
 
@@ -124,12 +140,12 @@
 						</div>
 					</div>
 					<div class="ibox-content">
-						<form id = "myForm" method = "post"  class="form-horizontal">
+						<form id = "myForm" method = "post"  class="form-horizontal" action = "adminovertimeapplicationexe.php">
 													<div class="form-group">
 								<input type="hidden" id = "empid" name = "empid" class="form-control" value = " <?php echo $_SESSION['logsession'] ?>">
 								<div class="col-md-3"></div>
 								<label class="col-sm-1 control-label">Employee Name</label>
-								<div class="col-md-4"><input type="text" onfocus="clearThis(this)" id="name" onpaste="return false" onDrop="return false" class="form-control ename"></div>
+								<div class="col-md-4"><input type="text" onfocus="clearThis(this)" id="name" name="name" onpaste="return false" onDrop="return false" class="form-control ename" onKeyPress="return lettersonly(this, event)"></div>
 							</div>
 							<div class="form-group"><div class="col-md-3"></div>
 								<label class="col-sm-1 control-label">Date</label>
@@ -139,7 +155,7 @@
 								<label class="col-sm-1 control-label">Time from</label>
 								<div class="col-md-4">
 									<div class="input-group clockpicker" data-autoclose="true">
-										<input type="text" id = "timefrom" onpaste="return false" onDrop="return false" class="form-control timepicker1" required="" onKeyPress="return noneonly(this, event)">
+										<input type="text" id = "timefrom" name="timefrom" onpaste="return false" onDrop="return false" class="form-control timepicker1" required="" onKeyPress="return noneonly(this, event)">
 										<span class="input-group-addon">
 											<span class="fa fa-clock-o"></span>
 										</span>
@@ -150,7 +166,7 @@
 								<label class="col-sm-1 control-label">Time to</label>
 								<div class="col-md-4">
 									<div class="input-group clockpicker" data-autoclose="true">
-										<input id = "timeto" type="text" onpaste="return false" onDrop="return false" class="form-control timepicker1" required="" onKeyPress="return noneonly(this, event)" >
+										<input id = "timeto" name="timeto" type="text" onpaste="return false" onDrop="return false" class="form-control timepicker1" required="" onKeyPress="return noneonly(this, event)" >
 										<span class="input-group-addon">
 											<span class="fa fa-clock-o"></span>
 										</span>
@@ -162,7 +178,7 @@
 								<div class="col-md-4"><input id = "reason"  onpaste="return false" onDrop="return false" name = "reason" type="text" class="form-control" required="" placeholder = "Type your reason here..."></div>
 							</div>
 							<div class="col-md-4"></div>
-								<button id ="submit" type="submit" class="btn btn-w-m btn-primary">Submit</button>
+								<button id ="submit2" name="submit2" type="submit" class="btn btn-w-m btn-primary">Submit</button>
 							</form>
 					</div>
 				</div>

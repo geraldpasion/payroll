@@ -508,17 +508,8 @@ $result = $conn->query($sql);
       echo "Retro: ".$retro_value.nextline();
     }
 
-    //update retro
-/*    $sql = "UPDATE others SET others_status='paid', comp_id=$comp_id WHERE employee_id=$employee_id AND others_status='not paid' AND comp_id=0 AND app_status='Approved'";
-
-          if ($conn->query($sql) === TRUE) {
-              echo "Record updated successfully";
-          } else {
-              echo "Error updating record: " . $conn->error;
-          }
-
     //reset for testing purposes
-    /*($sql = "UPDATE others SET others_status='not paid', comp_id=0";
+    /*$sql = "UPDATE others SET others_status='not paid', comp_id=0";
 
           if ($conn->query($sql) === TRUE) {
               echo "Record updated successfully";
@@ -535,6 +526,20 @@ $result = $conn->query($sql);
 
 }//end retro
 
+function update_retro($comp_id, $employee_id){
+
+  include 'dbconfig.php';
+
+   //update retro //do this after processing
+    $sql = "UPDATE others SET others_status='paid', comp_id=$comp_id WHERE employee_id=$employee_id AND others_status='not paid' AND comp_id=0 AND app_status='Approved'";
+
+          if ($conn->query($sql) === TRUE) {
+              echo "Record updated successfully";
+          } else {
+              echo "Error updating record: " . $conn->error;
+          }
+
+}
 
 //for adding non-taxable/non-taxable earnings/dedutions DURING processing
 function recompute_others(){

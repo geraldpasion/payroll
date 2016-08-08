@@ -60,6 +60,7 @@ else{
 			$hired = date('Y-m-d',strtotime($hired));
 			$timestamp = date('Y-m-d H:i:s');
 
+			//insert dates automatically to the attendance table in the database
 			$mysqli->query("CREATE EVENT hris_event2
 					ON SCHEDULE AT CURRENT_TIMESTAMP
 					DO

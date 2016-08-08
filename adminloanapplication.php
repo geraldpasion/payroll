@@ -122,7 +122,7 @@
 						<form id = "myForm" method = "POST" class="form-horizontal">
 							<div class="form-group">
 								<label class="col-sm-4 control-label">Employee Name</label>
-								<div class="col-md-4"><input type="text" onfocus="clearThis(this)" id="empid" onpaste="return false" onDrop="return false"  class="form-control ename"></div>
+								<div class="col-md-4"><input type="text" onfocus="clearThis(this)" id="empid" onpaste="return false" onDrop="return false"  class="form-control ename" onKeyPress="return lettersonly(this, event)"></div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-4 control-label">Date</label>

@@ -312,8 +312,9 @@ document.frmUser.submit();
 											echo "<thead>";
 											echo "<tr>";
 											echo "<th style='text-align:center; width:150px;'></th>";
-											echo "<th style='padding-left:100px; width:550px;'>Name</th>";
+											echo "<th style='padding-left:100px; width:400px;'>Name</th>";
 											echo "<th>Department</th>";
+											echo "<th>Payment Schedule</th>";
 											echo "</tr>";
 											echo "</thead>";
 											echo "<tfoot>";                    
@@ -331,8 +332,9 @@ document.frmUser.submit();
 
 												echo "<tr class = 'josh'>";
 												echo "<td align='center'><input type='checkbox'  class='checkbox' name='id[]' value='$empid'></td>";
-												echo "<td style='padding-left:100px;'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</td>";
+												echo "<td style='padding-left:100px'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</td>";
 												echo "<td>" . $row1->employee_department. "</td>";
+												echo "<td>" . $row1->cutoff. "</td>";
 												echo "</tr>";
 											}
 											
@@ -533,10 +535,11 @@ $(document).ready(function(){
 			$("#addCutoff").click(function(){
 				var daterange2 = $("#daterange2").val();
 				var daterange3 = $("#daterange3").val();
+				var paymentsched = $("#paymentsched").val();
 				var element = $(this);
 				 $.ajax({
 				   type: "POST",
-				   url: "cutoffexe.php?daterange2=" + daterange2 + "&daterange3=" + daterange3,
+				   url: "cutoffexe.php?daterange2=" + daterange2 + "&daterange3=" + daterange3 + "&paymentsched" + paymentsched,
 				   success: function(data){
 				   		//location.reload();
 						eval(data);

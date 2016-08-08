@@ -227,7 +227,7 @@ $(".modal-body #wew").val( wew );
 					if($(this).html() == 'Pending'){
 						swal({  title: "Cannot Submit",   text: "There are pending attendance status",   timer: 3000, type: "warning",   showConfirmButton: false});
 							check = false;
-							return false;
+						//	return false;
 					}
 				});
 				if(check == true) {
@@ -235,6 +235,18 @@ $(".modal-body #wew").val( wew );
 					var sched = $('#leavetype').val();
 					var dataString = "sched="+sched;
 					/// AJAX Code To Submit Form.
+
+					//compute first
+					/*$.ajax({
+					   type: "POST",
+					   url: "loadingbar.html",
+					   data: dataString,
+					   cache: false,
+						success: function(result){
+							eval(result);
+							}
+					});*/
+
 					$.ajax({
 						type: "POST",
 						url: "attendanceapprovalexe.php",
@@ -244,11 +256,7 @@ $(".modal-body #wew").val( wew );
 							eval(result);
 							}
 					});
-					 $.ajax({
-					   type: "POST",
-					   url: "perf_func.php",
-					   data: dataString
-					});
+					 
 				}
 			return false;
 			});
@@ -338,6 +346,7 @@ $(".modal-body #wew").val( wew );
 										echo "<th>ID</th>";
 										echo "<th>Name</th>";
 										echo "<th>Department</th>";
+										echo "<th>Shift Type</th>";
 										echo "<th>Status</th>";
 										echo "</tr>";
 										echo "</thead>";
@@ -682,6 +691,7 @@ $(".modal-body #wew").val( wew );
 
 											data-target='#myModal2' class = 'viewempdialog'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</a></td>";
 											echo "<td>" . $row1->employee_department . "</td>";
+											echo "<td>" . $row1->employee_type . "</td>";
 											echo "<td id='attendance_status" . $row1->employee_id . "' name='attendance_status'>" . $attendance_status . "</td>";											
 											echo "</tr>";
 										}	

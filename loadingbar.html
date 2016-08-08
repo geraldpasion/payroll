@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Example of Bootstrap 3 Progress Bar</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<style type="text/css">
+    .bs-example{
+    	margin: 20px;
+    }
+</style>
+</head> 
+<body>
+<!--div class="bs-example">
+    <div class="progress progress-striped">
+        <div class="progress-bar progress-bar-info" style="width: 20%">
+            <span class="sr-only">20% Used</span>
+        </div>
+    </div>
+    <div class="progress progress-striped">
+        <div class="progress-bar progress-bar-success active" style="width:40%">
+            <span class="sr-only">40% Used</span>
+        </div>
+    </div>
+    <div class="progress progress-striped">
+        <div class="progress-bar progress-bar-warning" style="width: 80%">
+            <span class="sr-only">80% Used</span>
+        </div>
+    </div>
+    <div class="progress progress-striped">
+        <div class="progress-bar progress-bar-danger" style="width: 90%">
+            <span class="sr-only">90% Used</span>
+        </div>
+    </div>
+	<hr>
+    <div class="progress progress-striped">
+		<div class="progress-bar progress-bar-info" style="width: 20%">
+            Disk Space: 80% free
+		</div>
+	</div>
+	<div class="progress progress-striped">
+		<div class="progress-bar progress-bar-success" style="width: 40%">
+			Enough Disk Space: 60% free
+		</div>
+	</div>
+	<div class="progress progress-striped">
+		<div class="progress-bar progress-bar-warning" style="width: 80%">
+			Low Disk Space: 80% full
+		</div>
+	</div>
+	<div class="progress progress-striped">
+		<div class="progress-bar progress-bar-danger" style="width: 90%">
+            Not Enough Disk Space: 90% full
+		</div>
+	</div>
+</div-->
+<div class="container">
+  <h1>Please Wait Modal Example</h1>
+  <p>Click button to run demo..</p>
+  <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">Submit</a>
+</div>
+  
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="myModalLabel">Please Wait</h4>
+      </div>
+      <div class="modal-body center-block">
+        <div class="progress progress-striped">
+          <div class="progress-bar bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+    $('#myModal').on('shown.bs.modal', function () {
+ 
+    var progress = setInterval(function() {
+    var $bar = $('.bar');
+
+    if ($bar.width()==500) {
+      
+        // complete
+      
+        clearInterval(progress);
+        $('.progress').removeClass('active');
+        $('#myModal').modal('hide');
+        $bar.width(0);
+        
+    } else {
+      
+        // perform processing logic here
+      
+        $bar.width($bar.width()+50);
+    }
+    
+    $bar.text($bar.width()/5 + "%");
+    }, 800);
+  
+  
+})
+</script>
+</body>
+</html>                                		

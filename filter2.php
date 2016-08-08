@@ -1,6 +1,7 @@
 <?php
 	include('dbconfig.php');
 //	if (isset($_GET['particularsel1'])) {
+		$elem=$_POST['elem'];
 		$elem2=$_POST['elem2'];
 		$elem3=$_POST['elem3'];
 		$elem4=$_POST['elem4'];

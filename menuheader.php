@@ -104,13 +104,12 @@ $employee_id = $_SESSION['logsession'];
 						<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'legalholiday.php'){echo 'active'; }else { echo ''; } ?>"><a href="legalholiday.php">Holiday list</a></li>
 						</ul>
 					</li> -->
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'attendance.php' OR basename($_SERVER['SCRIPT_NAME']) == 'logedit.php' OR basename($_SERVER['SCRIPT_NAME']) == 'logedittracker.php' OR basename($_SERVER['SCRIPT_NAME']) == 'autoupdate.php' OR basename($_SERVER['SCRIPT_NAME']) == 'additionalpayable.php' OR basename($_SERVER['SCRIPT_NAME']) == 'additionalpayablerequests.php' OR basename($_SERVER['SCRIPT_NAME']) == 'additionalpayablestatus.php'){echo 'active'; }else { echo ''; } ?>">
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'attendance.php' OR basename($_SERVER['SCRIPT_NAME']) == 'logedit.php' OR basename($_SERVER['SCRIPT_NAME']) == 'logedittracker.php' OR basename($_SERVER['SCRIPT_NAME']) == 'additionalpayable.php' OR basename($_SERVER['SCRIPT_NAME']) == 'additionalpayablerequests.php' OR basename($_SERVER['SCRIPT_NAME']) == 'additionalpayablestatus.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="#"><i class="fa fa-clock-o"></i><span class="nav-label">Time Keeping</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'attendance.php'){echo 'active'; }else { echo ''; } ?>"><a href="attendance.php">Attendance</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'logedit.php'){echo 'active'; }else { echo ''; } ?>"><a href="logedit.php">Log edit requests</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'logedittracker.php'){echo 'active'; }else { echo ''; } ?>"><a href="logedittracker.php">Log edit status</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'autoupdate.php'){echo 'active'; }else { echo ''; } ?>"><a href="autoupdate.php">Auto Update</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'additionalpayable.php'){echo 'active'; }else { echo ''; } ?>"><a href="additionalpayable.php">Others application</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'additionalpayablerequests.php'){echo 'active'; }else { echo ''; } ?>"><a href="additionalpayablerequests.php">Others pending</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'additionalpayablestatus.php'){echo 'active'; }else { echo ''; } ?>"><a href="additionalpayablestatus.php">Others status</a></li>
@@ -193,7 +192,7 @@ $employee_id = $_SESSION['logsession'];
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'finalpay.php'){echo 'active'; }else { echo ''; } ?>"><a href="finalpay.php">Final Pay</a></li>
 						</ul>
 					</li>
-										<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'payrollfactor.php' OR basename($_SERVER['SCRIPT_NAME']) == 'governmenttables.php' OR basename($_SERVER['SCRIPT_NAME']) == 'earnings.php' OR basename($_SERVER['SCRIPT_NAME']) == 'deductions.php' OR basename($_SERVER['SCRIPT_NAME']) == 'processing.php') {echo 'active'; }else { echo ''; } ?>">
+										<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'payrollfactor.php' OR basename($_SERVER['SCRIPT_NAME']) == 'governmenttables.php' OR basename($_SERVER['SCRIPT_NAME']) == 'earnings.php' OR basename($_SERVER['SCRIPT_NAME']) == 'deductions.php' OR basename($_SERVER['SCRIPT_NAME']) == 'processing.php' OR basename($_SERVER['SCRIPT_NAME']) == 'autoupdate.php') {echo 'active'; }else { echo ''; } ?>">
 						<a href="payroll.php"><i class="fa fa-gears"></i><span class="nav-label">Payroll Setting</span> <span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'payrollfactor.php'){echo 'active'; }else { echo ''; } ?>"><a href="payrollfactor.php">Payroll Factor Settings</a></li>
@@ -202,6 +201,7 @@ $employee_id = $_SESSION['logsession'];
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'governmenttables.php'){echo 'active'; }else { echo ''; } ?>"><a href="governmenttables.php">Benefits Settings</a></li>
 								<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'earnings.php'){echo 'active'; }else { echo ''; } ?>"><a href="earnings.php">Earnings Settings</a></li>
 										<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'deductions.php'){echo 'active'; }else { echo ''; } ?>"><a href="deductions.php">Deductions Settings</a></li>
+										<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'autoupdate.php'){echo 'active'; }else { echo ''; } ?>"><a href="autoupdate.php">System Calendar Update</a></li>
 						</ul>
 					</li>
 					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'archive.php'){echo 'active'; }else { echo ''; } ?>">

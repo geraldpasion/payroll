@@ -58,8 +58,8 @@ function get_table($tablename){
 function delete_previous_compute($cutoff_field){
 include 'dbconfig.php';
 
-$table = array('total_comp_salary', 'totalcomputation');
-$field = array('cutoff', 'CutoffID'); 
+$table = array('total_comp_salary', 'totalcomputation', 'total_hours');
+$field = array('cutoff', 'CutoffID', 'cutoff'); 
 
         for($i=0; $i<2; $i++){
             $tab = $table[$i];
@@ -85,8 +85,46 @@ include 'dbconfig.php';
 
 }
 
+function create_total_hours_table($cutoff){
+//duplicate total_comp table
+include 'dbconfig.php';
+
+    //Clear table first with the same cutoff
+    delete_statement('total_hours',0,$cutoff);
+
+    $sql="INSERT INTO total_hours SELECT * FROM total_comp WHERE cutoff='$cutoff'";
+
+    echo $sql;
+
+    echo nextline().nextline();;
+
+    if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully total_hours".doubleline();
+    } 
+    else {
+    echo "Error total_hours: " . $sql . "<br>" . $conn->error;
+    }
+    echo "<br>";
+
+}//end create_total_hours_table
+
 //pass cutoff
-function compute($cutoff_field, $update=0, $emp=0, $comp=0){
+function compute($cutoff_field, $update, $emp, $comp){
+
+
+echo '<div class="loader" style="
+   .loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(\'images/page-loader.gif\') 50% 50% no-repeat rgb(249,249,249);
+}">';
+
+$start_time = microtime(TRUE);
+
 include 'dbconfig.php';
 include 'payroll_compute.php';
 include 'statutory_benefits_compute.php';
@@ -94,20 +132,25 @@ include 'other_earnings_and_deductions.php';
 //require 'rb.php';
 
 //clear first
-delete_previous_compute($cutoff_field);
+//delete_previous_compute($cutoff_field);
+//duplicate total_comp to total_hours, then compute using total_hours
+//instead of total_comp. total_comp can be deleted so we need another table that doesn't.
+//total_hours will be used to compute or recompute the process
 
+create_total_hours_table($cutoff_field);
 
-$fields=get_fieldnames('total_comp');
+$fields=get_fieldnames('total_hours');
 
 foreach ($fields as $field){
    //echo $field.nextline();
 }
 
-$table='total_comp';
+$table='total_hours';
 
-//get field names of total_comp
+//get field names of total_comp //total_hours na
 $fields=get_fieldnames($table);
 
+                            //total_hours na
 //prepare fields to fetch at total_comp and process it with formulas under payroll_compute.php
 $hours_fields = array(
 //'reg_hrs',
@@ -165,16 +208,21 @@ else {
 
 
 //select data from total_comp
+$table='total_hours';
 if($update==1){
     //delete from total_comp_salary and totalcomputation table in preparation for updates
     //Note: $emp is the employee id passed from the optional parameter of this compute() function
     delete_emp_salary($cutoff_field, $emp);
 
-    $sql = "SELECT * FROM $table WHERE cutoff='$cutoff_field' AND employee_id='$emp' ";
+$sql = "SELECT * FROM $table WHERE cutoff='$cutoff_field' AND employee_id='$emp' LIMIT 1";
 }
 else{
+    //clear first
+delete_previous_compute($cutoff_field);
 $sql = "SELECT * FROM $table WHERE cutoff='$cutoff_field'";
 }
+
+
 
 
 $result = $conn->query($sql);
@@ -341,6 +389,10 @@ echo nextline().'**********************************************************'.dou
         
 
         //*************************other Taxable earnings and deductions*********************/
+
+         //clear to recompute meta //this affects sss, pagibig and philhealth
+                        delete_statement('totalcomputation_meta', $comp_id);
+
         //Note: functions can be found on other_earnings_and_deductions.php
         $other_earnings=compute_other_earnings($comp_id, $employee_id);
         echo "Other Taxable Earnings: ".$other_earnings.doubleline();
@@ -373,6 +425,12 @@ echo nextline().'**********************************************************'.dou
         //GrossTaxableDeductions
         $deductions = $total_deductions + $other_deductions;
 
+        /*
+            Note: total_deductions = absent + late + undertime
+                  other_deductions = other taxable deductions
+                  deductions = 
+        */
+
 
         //Gross Income w/o statutory before statutory
         $withoutStatutory = $earnings-$deductions;
@@ -396,24 +454,74 @@ echo nextline().'**********************************************************'.dou
         
         //SSS
         //semi monthly EE/2
-        $sss_val=sss_compute($withoutStatutory);
+
+        $sss_details=sss_compute($withoutStatutory);
         
         if($cutoff=='Semi-monthly'){
              //$sss_val=$sss_val/2;
         }
+
+        /*
+                    Range_Of_Compensation_From //1
+                    Range_Of_Compensation_To //2
+                    Monthly_Salary_Credit //3
+                    Social_Security_ER //4
+                    Social_Security_EE //5
+                    Social_Security_Total //6
+                    ECER //7
+                    Total_Contribution_ER //8
+                    Total_Contribution_EE //9
+                    Total_Contribution_Total //10
+                    SEVMOFW //11
+        */
+        $sss_range_from=$sss_details[1];
+        $sss_range_to=$sss_details[2];
+        $sss_monthly_salary_credit=$sss_details[3];
+        $sss_ER=$sss_details[4];   
+
+        $sss_val=$sss_details[5]; //important value for computation
+
+        $sss_total=$sss_details[6];
+        $sss_ECER=$sss_details[7];
+        $sss_contribution_ER=$sss_details[8];
+        $sss_contribution_EE=$sss_details[9];
+        $sss_contribution_total=$sss_details[10];
+        $sss_SEVMOFW =$sss_details[11];           
+
         echo "SSS (".$cutoff."): ".$sss_val.nextline();
         $Statutory_total=$Statutory_total+$sss_val;
 
 
         //Pagibig
         //divided by 2 for semi monthly
-        $pagibig_val=pagibig_compute($withoutStatutory);
+        $pagibig_details=pagibig_compute($withoutStatutory);
+
+        $pagibig_compensation=$pagibig_details[1];
+        $pagibig_compensation_from=$pagibig_details[2];
+        $pagibig_employer=$pagibig_details[3];
+
+        $pagibig_val=$pagibig_details[4]; //include in computation. pagibig employee share
+
         echo "PAG-IBIG: ".$pagibig_val.nextline();
+
+        //add to statutory total
         $Statutory_total=$Statutory_total+$pagibig_val;
+
 
         //PhilHealth
         //divided by 2 for semi monthly
-        $philhealth_val=philhealth_compute($withoutStatutory);
+        $philhealth_details=philhealth_compute($withoutStatutory);
+
+        //philhealth details
+        $philhealth_braket=$philhealth_details[1];
+        $philhealth_salary_range_from=$philhealth_details[2];
+        $philhealth_salary_range_to=$philhealth_details[3];
+        $philhealth_salary_base=$philhealth_details[4];
+        $philhealth_total_monthly_conribution=$philhealth_details[5];
+        $philhealth_employer_share=$philhealth_details[6];
+       
+        $philhealth_val=$philhealth_details[7]; //important
+
         echo "PhilHealth: ".$philhealth_val.nextline();
         $Statutory_total=$Statutory_total+$philhealth_val;
 
@@ -437,20 +545,50 @@ echo nextline().'**********************************************************'.dou
         //***********compute Net Income After Tax
         echo "/***********compute Net Income After Tax*****************/".doubleline();
        
-
+        $GrossCheck=0;
 
         if ($cutoff=='Monthly'){
-                        $NetIncomeAfterTax=TaxMonthly($Taxcode, $NetTaxableIncome);
+                        
+                        $TaxDetails=TaxMonthly($Taxcode, $NetTaxableIncome);
+                       $NetIncomeAfterTax=$TaxDetails[7];
+                      
                     }
                     else if($cutoff=='Semi-monthly'){
-                        $NetIncomeAfterTax=TaxSemiMonthly($Taxcode, $NetTaxableIncome);
+                 
+                        //$NetIncomeAfterTax=TaxSemiMonthly($Taxcode, $NetTaxableIncome);
+                      $TaxDetails=TaxSemiMonthly($Taxcode, $NetTaxableIncome);
+                      $NetIncomeAfterTax=$TaxDetails[7];
                     }
 
 
         echo nextline();
- 
-       $withholdingtax=$NetTaxableIncome-$NetIncomeAfterTax;
-        echo 'Withholding Tax: '.$withholdingtax.doubleline();
+
+        //asign tax details values
+         /*
+          TaxDetails[]
+          0. Level
+          1. GrossCheck
+          2. FixedAmount
+          3. PercentOver
+          4. Difference
+          5. PercentedDifferenceGross
+          6. total_tax
+          7. NetIncomeAfterTax
+        */
+        $Level=$TaxDetails[0];
+        $GrossCheck=$TaxDetails[1];
+        $FixedAmount=$TaxDetails[2];
+        $PercentOver=$TaxDetails[3];
+        $Difference=$TaxDetails[4];
+        $PercentedDifferenceGross=$TaxDetails[5];
+        $WithholdingTax=$TaxDetails[6];
+        //$NetIncomeAfterTax=$TaxDetails[7];
+
+        //echo 'GrossCheckxxxx: '.$GrossCheck.nextline();
+        //echo 'FX: '.$FixedAmount.nextline();
+
+       //$withholdingtax=$NetTaxableIncome-$NetIncomeAfterTax;
+        echo 'Withholding Tax: '.$WithholdingTax.doubleline();
 
           //*************************other Non-Taxable earnings and deductions*********************/
         //Note: functions can be found on other_earnings_and_deductions.php
@@ -587,27 +725,123 @@ echo nextline().'**********************************************************'.dou
              else if ($tcf=='TotalTaxableEarnings')
                 $values=$values."'".$earnings."'";
              else if ($tcf=='TotalTaxableDeduction')
-                $values=$values."'".$deductions."'";
+                $values=$values."'".$deductions."'"; //absent+late+ut + other taxable deductions
 
             else if ($tcf=='GrossTaxableIncome')
                 $values=$values."'".$earnings."'";
 
             //statutories
-             else if ($tcf=='SSS')
+            //sss 
+             else if ($tcf=='SSS'){
                 $values=$values."'".$sss_val."'";
-             else if ($tcf=='PAGIBIG')
+
+                //clear to recompute meta //this also affects pagibig and philhealth
+                       // delete_statement('totalcomputation_meta', $comp_id); 
+
+                //generate sss meta
+
+                        //initialize string for into and values
+                        $sss_into="(comp_id, meta_key, meta_value, meta_type)";
+                        
+                        //get sss_contribution field names
+                        $sss_fields=get_fieldnames('sss_contribution');    
+                        //get_lastestid('totalcomputation');
+                        $i=0;
+                        foreach ($sss_fields as $sf){
+                            $sss_values="(";
+                            $sss_values=$sss_values."'".$comp_id."', "."'".$sf."', "."'".$sss_details[$i]."', 'sss')";
+                            $i++;
+
+                        echo "sss into: ".$sss_into.nextline();
+                        echo "sss values: ".$sss_values.nextline();
+                         
+                        insert_statement($sss_into, $sss_values, 'totalcomputation_meta');
+                        }
+                        echo doubleline(); 
+
+
+                }
+                
+
+             else if ($tcf=='PAGIBIG'){
                 $values=$values."'".$pagibig_val."'";
-             else if ($tcf=='PhilHealth')
-                $values=$values."'".$philhealth_val."'";
+
+               //initialize string for into and values
+                        $pagibig_into="(comp_id, meta_key, meta_value)";
+                        
+                        //get sss_contribution field names
+                        $pagibig_fields=get_fieldnames('pagibig');    
+                        //get_lastestid('totalcomputation');
+                        $i=0;
+                        foreach ($pagibig_fields as $pf){
+                            $pagibig_values="(";
+                            $pagibig_values=$pagibig_values."'".$comp_id."', "."'".$pf."', "."'".$pagibig_details[$i]."')";
+                            $i++;
+
+                        echo "pagibig into: ".$pagibig_into.nextline();
+                        echo "pagibig values: ".$pagibig_values.nextline();
+                         
+                        insert_statement($pagibig_into, $pagibig_values, 'totalcomputation_meta');
+                        }
+                        echo doubleline(); 
+                    
+            }
+
+
+             else if ($tcf=='PhilHealth'){
+                $i=0;
+                $values=$values."'".$philhealth_val."'";         
+
+                //generate sss meta
+
+                        //initialize string for into and values
+                        $ph_into="(comp_id, meta_key, meta_value, meta_type)";
+                        
+                        //get sss_contribution field names
+                        $ph_fields=get_fieldnames('philhealth_contribution');    
+                        //get_lastestid('totalcomputation');
+                        $i=0;
+                        foreach ($ph_fields as $phf){
+                            $ph_values="(";
+                            $ph_values=$ph_values."'".$comp_id."', "."'".$phf."', "."'".$philhealth_details[$i]."', 'philhealth')";
+                            $i++;
+
+                        echo "ph into: ".$ph_into.nextline();
+                        echo "ph values: ".$ph_values.nextline();
+                         
+                        insert_statement($ph_into, $ph_values, 'totalcomputation_meta');
+                        }
+                        echo doubleline(); 
+
+
+
+
+                }
+
+
 
              else if ($tcf=='TotalStatutoryBenefits')
                 $values=$values."'".$Statutory_total."'";
+
              else if ($tcf=='NetTaxableIncome')
                 $values=$values."'".$NetTaxableIncome."'";
+
+            //taxes
+             else if ($tcf=='GrossCheck')
+                $values=$values."'".$GrossCheck."'";
+             else if ($tcf=='FixedAmount')
+                $values=$values."'".$FixedAmount."'";
+             else if ($tcf=='PercentOver')
+                $values=$values."'".$PercentOver."'";
+             else if ($tcf=='Difference')
+                $values=$values."'".$Difference."'";
+             else if ($tcf=='PercentedDifferenceGross')
+                $values=$values."'".$PercentedDifferenceGross."'";
              else if ($tcf=='WithholdingTax')
-                $values=$values."'".$withholdingtax."'";
+                $values=$values."'".$WithholdingTax."'";
              else if ($tcf=='NetIncomeAfterTax')
                 $values=$values."'".$NetIncomeAfterTax."'";
+
              else if ($tcf=='TotalNonTaxableIncome')
                 $values=$values."'".$nontaxable_income."'";
              else if ($tcf=='TotalNonTaxableDeduction')
@@ -655,8 +889,17 @@ else {
 
 
 
-$conn->close();
+//compute time page loads
+$end_time = microtime(TRUE);
+ 
+$time_taken = $end_time - $start_time;
+ 
+$time_taken = round($time_taken,5);
+ 
+echo 'Page generated in '.$time_taken.' seconds.';
 
+
+echo '</div>';
 
 }//end function compute()
 
@@ -760,6 +1003,25 @@ function get_employeeids_from_cutoff($cutoff){
 
 }
 
+function get_compids_from_cutoff($cutoff){
+    include 'dbconfig.php';
+     $table='totalcomputation';
+
+     //prepare an array
+     $comp_ids = array();
+
+     $sql = "SELECT * FROM $table WHERE CutoffID='$cutoff'";
+     $result = $conn->query($sql);
+         if ($result->num_rows > 0) {
+                 while($row = $result->fetch_assoc()) {
+                    $comp_ids[]=$row['CompID'];
+                 }
+         }
+
+
+    return $comp_ids; 
+
+}
 //get basic info of specific employee and save it in array then return
 function get_employeeinfo($employee_id){
     include 'dbconfig.php';
@@ -776,6 +1038,7 @@ function get_employeeinfo($employee_id){
                     $employeeinfo[]=$row['employee_firstname'];
                     $employeeinfo[]=$row['employee_middlename'];
                     $employeeinfo[]=$row['employee_rate'];
+                    $employeeinfo[]=$row['cutoff'];
                       
                    
                     break;
@@ -990,6 +1253,25 @@ if ($conn->query($sql) === TRUE) {
 
  }
 
+function delete_statement($table, $comp_id=0, $cutoff=""){
+
+     include 'dbconfig.php';
+
+     if($comp_id>0){
+            $sql = "DELETE FROM $table WHERE comp_id=$comp_id";
+            $ch="hello";
+        }
+    else{
+    $sql = "DELETE FROM $table WHERE cutoff='$cutoff'";
+        $ch="world";
+    }
+
+if ($conn->query($sql) === TRUE) {
+    echo "Record deleted successfully $table $comp_id $cutoff $ch".nextline();
+} else {
+    echo "Error deleting record: " . $conn->error;
+}
+}
 
 function check_update($cutoff_field, $empids){
     //check if total_comp has an existing cutoff, if none. don't compute.
@@ -1048,9 +1330,25 @@ function cutoff_parse($cutoffdate){
                 return $cutoff_array;
 }
 
+function get_lastestid($table){
+    include 'dbconfig.php';
+echo 'xxxxxxxxxxxxxxxxxx'.nextline();
+     $sql = "SELECT id FROM $table ORDER BY id DESC";
+     $result = $conn->query($sql);
+         if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $lastid=$row['id'];
+                echo "Last id of ".$table.": ".$lastid.nextline();
+                return $lastid;
+            }
+
+        }
+        else
+            echo "wala".nextline();
 
 
-
+}
 
 //**********************Wilma**************************//
 

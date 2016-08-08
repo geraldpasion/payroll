@@ -1,6 +1,7 @@
 
 <?php
 	include("dbconfig.php");
+	include 'functions.php';
 	if(isset($_POST['editsub'])){
 
 		$empid = $_POST['empid'];
@@ -10,6 +11,7 @@
 		//$recurrence = $_POST['recurrence'];
 		$amount = $_POST['amount'];
 		$particular = $_POST['particularsel'];
+		$particular = trim($particular, " ");
 		$selection = $_POST['cutsel'];
 		
 		$end = $_POST['daterange3'];
@@ -50,6 +52,7 @@
 								$stmt->execute();
 							 	$stmt->close();
 							}
+							header("Location: processing2.php?edited&cutoff=" . $cutoffdate);		
 							compute($cutoffdate, 1, $empid, $comp_id);
 						}
 						else{
@@ -64,7 +67,8 @@
 							$stmt->execute();
 						 	$stmt->close();
 						}
-					}				
+					}	
+					header("Location: processing2.php?edited&cutoff=" . $cutoffdate);					
 				}
 			}
 			if($earndeduct == 'Deductions'){
@@ -96,6 +100,7 @@
 								$stmt->execute();
 							 	$stmt->close();
 							}
+							header("Location: processing2.php?edited&cutoff=" . $cutoffdate);	
 							compute($cutoffdate, 1, $empid, $comp_id);
 						}
 						else{
@@ -111,10 +116,9 @@
 						 	$stmt->close();
 						}
 					}
-					
+					header("Location: processing2.php?edited&cutoff=" . $cutoffdate);		
 				}
-			}
-			header("Location: processing2.php?edited");					
+			}			
 		}
 
 		else if($action == 'Edit'){
@@ -162,9 +166,9 @@
 					}
 				}
 			}
-			header("Location: processing2.php?edited");			
+			header("Location: processing2.php?edited&cutoff=" . $cutoffdate);			
+			compute($cutoffdate, 1, $empid, $comp_id);
 		}
-		compute($cutoffdate, 1, $empid, $comp_id);
 	}
 
 ?>

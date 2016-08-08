@@ -1,5 +1,6 @@
 <?php
 include("dbconfig.php");
+include 'functions.php';
 if(isset($_POST['sub'])){
 	//$deduction = $_POST['deduction'];
 	$initial = date("Y-m-d", strtotime($_POST['daterange2']));
@@ -40,6 +41,15 @@ if(isset($_POST['sub'])){
 					if($stmt = $mysqli->prepare("INSERT INTO emp_deductions (deductions_setting_id, employee_id, deduct_name, deduct_max, deduct_type, initial_date, end_date, comp_id) VALUES ('$deduction_id','" . $_POST["id"][$i] . "', '$deductionname', '$amount', '$deduction_type', '$initial', '$end', '$comp_id')")){
 						$stmt->execute();
 					 	$stmt->close();
+
+					 	$emp_id=$_POST["id"][$i];
+					 	//put update code here - gerald pasion
+					 	//check_update($cutoffdate, $empids);
+					 	header("Location: deductions.php?addDeductions");
+					 	$comp_sal = $mysqli->query("SELECT * FROM total_comp_salary WHERE comp_id = '$comp_id'");
+						if ($comp_sal->num_rows > 0) {
+						 	compute($cutoffdate, 1, $emp_id, $comp_id);
+						 }
 					}
 				}
 				else{
@@ -55,17 +65,16 @@ if(isset($_POST['sub'])){
 				 	$stmt->close();
 				}
 			}
-			
+			header("Location: deductions.php?addDeductions");
 		}
 	}
 
-	header("Location: deductions.php?addDeductions");
+	
 }else{
 	$name = $_POST['name1'];
 	$deducttype = $_POST['deducttype1'];
 
-	$name = ltrim($name," ");
-	$name = rtrim($name," ");
+	$name = trim($name," ");
 
 	if($deductionsett = $mysqli->query("SELECT * FROM deduction_settings WHERE deduction_name = '$name'")){
 		if ($deductionsett->num_rows > 0) {

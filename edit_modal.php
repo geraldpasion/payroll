@@ -126,7 +126,25 @@ $endcut = $cutarray[1];
 								<div class="col-sm-4"><select class = "form-control" id = "recurrence" name = "recurrence" required="" ><option value = ""></option><option value = "Once">Once</option><option value = "Multiple">Multiple</option></select></div>
 								<br><br><br> -->
 							<label class="col-sm-3 control-label">Particular</label>
-								<div class="col-md-4" id="partinp"><input id = "particularsel" name = "particularsel" onkeyup="" type="text" class="form-control" required></div>
+								<div class="col-md-4" id="partinp"><select id = 'particularsel' name = 'particularsel' type='text' class='form-control' required>
+									<option value=''></option>
+									<?php
+									if($stmt = $mysqli->query("SELECT * FROM earnings_setting")){
+										if($stmt->num_rows > 0){
+											while($row = $stmt->fetch_object()){
+												echo "<option>" . $row->earnings_name . "</option>";
+											}
+										}
+									}
+									if($stmt = $mysqli->query("SELECT * FROM deduction_settings")){
+										if($stmt->num_rows > 0){
+											while($row = $stmt->fetch_object()){
+												echo "<option>" . $row->deduction_name . "</option>";
+											}
+										}
+									}
+									?>
+								</select></div>
 								<!-- <div class="col-md-4" id="partsel" style="display:none;"><select id = "particularsel" name = "particularsel" onchange="" type="text" class="form-control" required></select></div> -->
 								<br><br><br>								
 							<label class="col-sm-3 control-label">Amount</label>
@@ -254,7 +272,15 @@ $endcut = $cutarray[1];
 				});
 			});
 		</script>
-
+<script type="text/javascript">
+    $(function() {
+        $('#particularsel').keyup(function() {
+            if (this.value.match(/[^a-zA-Z0-9 ]/g)) {
+                this.value = this.value.replace(/[^a-zA-Z0-9 ]/g, '');
+            }
+        });
+    });
+</script>
 
 <script>
 	function filter_action(elem){
@@ -273,7 +299,8 @@ $endcut = $cutarray[1];
 			$("#type").val("");
 			$("#amount").val("");
 			$("#earndeduct").val("");
-			$("#partinp").replaceWith("<div class='col-md-4' id='partinp'><input id = 'particularsel' name = 'particularsel' onkeyup='' type='text' class='form-control' required></div>");
+			$("#partinp").replaceWith("<div class='col-md-4' id='partinp'><select id = 'particularsel' name = 'particularsel' type='text' class='form-control' required></select></div>");
+			$("#particularsel").load("filter.php?choice=" + elem);
 			$("#frmedit").replaceWith("<div class='col-md-4' id='frmnew'><input type='date' id = 'fromdate' class='form-control' name='daterange' value='<?php echo $initialcut; ?>' readonly></div>");
 			$("#toedit").replaceWith("<div class='col-md-4' id='tonew'><input type='date' id = 'todate' onpaste='return false' onDrop='return false' class='form-control' name='daterange3' placeholder='click to pick date (optional)'></div>");
 			$("#tonew").val("");
@@ -282,18 +309,14 @@ $endcut = $cutarray[1];
 	function filter_ed(elem2){
 		var elem = $("#actionsel").val();
 		var empid = <?php echo $empid; ?>;
-		if(elem == 'Edit'){
-			$("#particularsel").load("filter.php?choice=" + elem2 + "&empid=" + empid);
-
-		}
+			$("#particularsel").load("filter.php?choice=" + elem2 + "&empid=" + empid + "&elem=" + elem);
 	}
 	function filter_type(elem3){
 		var elem = $("#actionsel").val();
 		var elem2 = $("#earndeduct").val();
 		var empid = <?php echo $empid; ?>;
-		if(elem == 'Edit' || (elem == 'Edit' && elem2 == 'Earnings') || (elem == 'Edit' && elem2 == 'Deductions')){
-			$("#particularsel").load("filter.php?choice=" + elem3 + "&empid=" + empid + "&elem2=" + elem2);
-		}
+		$("#particularsel").load("filter.php?choice=" + elem3 + "&empid=" + empid + "&elem2=" + elem2 + "&elem=" + elem);
+		
 	}
 	function filter_part(elem4){
 		var elem = $("#actionsel").val();
@@ -302,7 +325,7 @@ $endcut = $cutarray[1];
 		var elem4 = $("#particularsel").val();
 		var empid = <?php echo $empid; ?>;
 		
-		var info = "elem4=" + elem4 + "&empid=" + empid + "&elem2=" + elem2 + "&elem3=" + elem3 + "&particularsel";
+		var info = "elem4=" + elem4 + "&empid=" + empid + "&elem2=" + elem2 + "&elem3=" + elem3 + "&elem=" + elem + "&particularsel";
              $.ajax({
 
                     url: "filter2.php",

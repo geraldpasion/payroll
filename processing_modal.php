@@ -32,6 +32,18 @@ echo '<style>
 			padding-left:48px;
 			width:46%;
 		}
+      table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after{
+        content: " \25B4 "
+      }
+      a.edit{
+        color: #000;
+      }
+
+      .btn-activate{
+
+        display:none;
+
+	}
 	</style>';
 
 $empid = $_REQUEST['empid'];
@@ -75,6 +87,7 @@ $nontaxable_earnings = sprintf('%.2f',$results['TotalNonTaxableIncome']);//->Tot
 $taxable_deductions = sprintf('%.2f',$results['TotalTaxableDeduction']);//->TotalTaxableDeduction);
 $nontaxable_deductions = sprintf('%.2f',$results['TotalNonTaxableDeduction']);//->TotalNonTaxableDeduction);
 $total_statutory_benefits= sprintf('%.2f',$results['TotalStatutoryBenefits']);//->TotalStatutoryBenefits);
+$income_tax=sprintf('%.2f',$results['WithholdingTax']);//->WithholdingTax);
 $net_income_after_tax = sprintf('%.2f',$results['NetIncomeAfterTax']);//->NetIncomeAfterTax);
 $net_taxable_income = sprintf('%.2f',$results['NetTaxableIncome']);//->NetTaxableIncome);
 $net_pay = sprintf('%.2f',$results['NetPay']);//->NetPay);
@@ -102,14 +115,14 @@ $net_pay = sprintf('%.2f',$results['NetPay']);//->NetPay);
 									<div class="panel-body">
 										<div class="form-group"></div>
 											<label class="col-sm-3 control-label">Basic Pay:</label>
-											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" readonly = "readonly" required="" value="'.$monthly_rate.'"></div>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($monthly_rate, 2).'"></div>
 										<div class="form-group"></div>
 											<label class="col-sm-3">Employment Status:</label>
 											<div class="col-sm-3"><input type="text" id = "password"  name = "password" readonly = "readonly" required="" value="'.$empstatus.'"></div>
 											<br>
 										<div class="form-group"></div>
 											<label class="col-sm-3 control-label">Semi-Monthly Rate:</label>
-											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return doubleonly(this, event)" readonly = "readonly" required="" value="'.$semi_rate.'"></div>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return doubleonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($semi_rate,2).'"></div>
 										<div class="form-group"></div>
 											<label class="col-sm-3 control-label">Tax Code:</label>
 											<div class="col-sm-3"><input type = "text" id = "password" name = "password" readonly = "readonly" required="" value="'.$taxcode.'"></div>
@@ -117,14 +130,14 @@ $net_pay = sprintf('%.2f',$results['NetPay']);//->NetPay);
 											<br>
 										<div class="form-group"></div>
 											<label class="col-sm-3 control-label">Daily Rate:</label>
-											<div class="col-sm-3"><input type = "text" id = "password" name = "password" readonly = "readonly" required="" value="'.$d_rate.'"></div>
+											<div class="col-sm-3"><input type = "text" id = "password" name = "password" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($d_rate,2).'"></div>
 										<div class="form-group"></div>
 											<label class="col-sm-3 control-label">Cut Off:</label>
 											<div class="col-sm-3"><input type="text" id = "cutoff1" name="cutoff1" readonly = "readonly" readonly = "readonly" required="" value="'.$cutoff.'"></div>
 											<br>
 										<div class="form-group"></div>	
 											<label class="col-sm-3 control-label">Hourly Rate:</label>
-											<div class="col-sm-3"><input type="text" id = "password"  name = "password" readonly = "readonly" required="" value="'.$h_rate.'"></div>
+											<div class="col-sm-3"><input type="text" id = "password"  name = "password" readonly = "readonly" style="text-align:right" required="" value="'.'PHP '.@number_format($h_rate,2).'"></div>
 										<div class="form-group"></div>	
 											<label class="col-sm-3 control-label">Payment Schedule:</label>
 											<div class="col-sm-3"><input type="text" id = "password"  name = "password" readonly = "readonly" required="" value="'.$paytype.'"></div>
@@ -134,40 +147,44 @@ $net_pay = sprintf('%.2f',$results['NetPay']);//->NetPay);
 								//summary section
 								//$taxable_earnings=
 
-							echo   '<div id="summary" class="tab-pane" >
+							echo   '<div id="summary" class="tab-pane">
 									<div class="panel-body">
 										<div class="form-group"></div>
-											<label class="col-sm-3 control-label">Total Taxable Earnings</label>
-											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" readonly = "readonly" required="" value="'.$taxable_earnings.'"></div>
+											<label class="col-sm-3 control-label" style="text-align:right"></label>
+											<label class="col-sm-4 control-label">Total Taxable Earnings</label>
+											<div class="col-sm-2"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($taxable_earnings,2).'"></div><br>
 										<div class="form-group"></div>
-											<label class="col-sm-3">Net Income After Tax</label>
-											<div class="col-sm-3"><input type="text" id = "password"  name = "password" readonly = "readonly"  value="'.$net_income_after_tax.'"></div>
-											<br>
+											<label class="col-sm-3 control-label" style="text-align:right"></label>
+											<label class="col-sm-4 control-label">Total Taxable Deduction</label>
+											<div class="col-sm-2"><input type="text" id = "password" name = "password" onKeyPress="return doubleonly(this, event)"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($taxable_deductions,2).'"></div><br>
 										<div class="form-group"></div>
-											<label class="col-sm-3 control-label">Total Taxable Deduction</label>
-											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return doubleonly(this, event)" readonly = "readonly" required="" value="'.$taxable_deductions.'"></div>
+											<label class="col-sm-3 control-label" style="text-align:right"></label>
+											<label class="col-sm-4 control-label">Total Statutory Benefits</label>
+											<div class="col-sm-2"><input type = "text" id = "password" name = "password"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($total_statutory_benefits,2).'"></div><br>
 										<div class="form-group"></div>
-											<label class="col-sm-3 control-label">Total Non-Taxable Income</label>
-											<div class="col-sm-3"><input type = "text" id = "password" name = "password" readonly = "readonly" required="" value="'.$nontaxable_earnings.'"></div>
+											<label class="col-sm-3 control-label" style="text-align:right"></label>
+											<label class="col-sm-4 control-label">Net Taxable Income</label>
+											<div class="col-sm-2"><input type = "text" id = "password" name = "password"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($net_taxable_income,2).'"></div><br>
 										<div class="form-group"></div>
-											<br>
-											<br>
-										
+										<label class="col-sm-3 control-label" style="text-align:right"></label>	
+											<label class="col-sm-4 control-label">Income Tax</label>
+											<div class="col-sm-2"><input type="text" id = "password"  name = "password"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($income_tax,2).'"></div><br>
 										<div class="form-group"></div>
-											<label class="col-sm-3 control-label">Total Statutory Benefits</label>
-											<div class="col-sm-3"><input type = "text" id = "password" name = "password" readonly = "readonly" required="" value="'.$total_statutory_benefits.'"></div>
+										<label class="col-sm-3 control-label" style="text-align:right"></label>
+											<label class="col-sm-4">Net Income After Tax</label>
+											<div class="col-sm-2"><input type="text" id = "password"  name = "password"  style="text-align:right" readonly = "readonly"  value="'.'PHP '.@number_format($net_income_after_tax,2).'"></div><br>
 										<div class="form-group"></div>
-											<label class="col-sm-3 control-label">Total Non-Taxable Deduction</label>
-											<div class="col-sm-3"><input type = "text" id = "password" name = "password" readonly = "readonly" required="" value="'.$nontaxable_deductions.'"></div>
+										<label class="col-sm-3 control-label" style="text-align:right"></label>
+											<label class="col-sm-4 control-label">Total Non-Taxable Income</label>
+											<div class="col-sm-2"><input type = "text" id = "password" name = "password"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($nontaxable_earnings,2).'"></div><br>
 										<div class="form-group"></div>
-											<br>
-											<br>
-										<div class="form-group"></div>	
-											<label class="col-sm-3 control-label">Net Taxable Income</label>
-											<div class="col-sm-3"><input type="text" id = "password"  name = "password" readonly = "readonly" required="" value="'.$net_taxable_income.'"></div>
-										<div class="form-group"></div>
-											<label class="col-sm-3 control-label">Net Pay</label>
-											<div class="col-sm-3"><input type="text" id = "password" name="password" readonly = "readonly" readonly = "readonly" required="" value="'.$net_pay.'"></div>
+										<label class="col-sm-3 control-label" style="text-align:right"></label>
+											<label class="col-sm-4 control-label">Total Non-Taxable Deduction</label>
+											<div class="col-sm-2"><input type = "text" id = "password" name = "password"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($nontaxable_deductions,2).'"></div><br>
+											<div class="form-group"></div>
+											<label class="col-sm-3 control-label" style="text-align:right"></label>
+											<label class="col-sm-4 control-label">Net Pay</label>
+											<div class="col-sm-2"><input type = "text" id = "password" name = "password"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($net_pay,2).'"></div><br>
 									</div>
 								</div>';
 
@@ -236,113 +253,102 @@ $net_pay = sprintf('%.2f',$results['NetPay']);//->NetPay);
 
 								echo '<div id="details" class="tab-pane" >
 									<div class="panel-body">
-										<div class="form-group">
-											<table>
-												<tr>
-													<td id="sum"><b>Cut Off Period</b></td>
-													<td id="sum2">'.$cutoff.'</td>  
-													<td id="sum3"><b></b> </td>
-													<td id="sum2"></td>  
-												</tr>
-												<tr>
-													<td id="sum"><b>Absent</b></td>
-													<td id="sum2">'.$absentAmt.'</td>  
-													<td id="sum3"><b>Legal Holiday Restday OT > 8</b></td>
-													<td id="sum2">'.$legalrestot8Amt.'</td>  
-												</tr>
-												<tr>';
-													//<td id="sum"><b>Regular Hours</b></td>
-													//<td id="sum2">'.$reghrsAmt.'</td>  
-													echo '
-													<td id="sum"><b>Leave</b></td>
-													<td id="sum2">'.$leavehoursAmt.'</td> 
-													<td id="sum3"><b>Legal Holiday Night Diff</b></td>
-													<td id="sum2">'.$legalndAmt.'</td>  
-												</tr>
-												<tr>
-													<td id="sum"><b>Late</b></td>
-													<td id="sum2">'.$lateAmt.'</td>  
-													<td id="sum3"><b>Legal Holiday Night Diff > 8</b></td>
-													<td id="sum2">'.$legalnd8Amt.'</td>  
-												</tr>
-												<tr>
-													<td id="sum"><b>Undertime</b></td>
-													<td id="sum2">'.$undertimeAmt.'</td>  
-													<td id="sum3"><b>Legal Holiday Restday Night Diff</b></td>
-													<td id="sum2">'.$legalrestndAmt.'</td> 
-												</tr>
-												<tr>
-													<td id="sum"><b>Night Differential</b></td>
-													<td id="sum2">'.$nightdiffAmt.'</td>  
-													<td id="sum3"><b>Legal Holiday Restday Night Diff > 8</b></td>
-													<td id="sum2">'.$legalrestnd8Amt.'</td> 
-												</tr>
-												<tr>
-													<td id="sum"><b>Regular OT</b></td>
-													<td id="sum2">'.$regotAmt.'</td>  
-													<td id="sum3"><b>Special Holiday OT</b></td>
-													<td id="sum2">'.$specialotAmt.'</td>  
-												</tr>
-												<tr>
-													<td id="sum"><b>Regular OT Night Diff</b></td>
-													<td id="sum2">'.$regotndAmt.'</td>  
-													<td id="sum3"><b>Special Holiday OT > 8</b></td>
-													<td id="sum2">'.$specialot8Amt.'</td>  
-												</tr>
-												<tr>
-													<td id="sum"><b>Restday OT</b></td>
-													<td id="sum2">'.$restotAmt.'</td>  
-													<td id="sum3"><b>Special Holiday Restday OT</b></td>
-													<td id="sum2">'.$specialrestotAmt.'</td>  
-												</tr>
-												<tr>
-													<td id="sum"><b>Restday OT > 8</b></td>
-													<td id="sum2">'.$restot8Amt.'</td>  
-													<td id="sum3"><b>Special Holiday Restday OT > 8</b></td>
-													<td id="sum2">'.$specialrestot8Amt.'</td>  
-												</tr>
-												<tr>
-													<td id="sum"><b>Restday Night Diff</b></td>
-													<td id="sum2">'.$restndAmt.'</td>  
-													<td id="sum3"><b>Special Holiday Night Diff</b></td>
-													<td id="sum2">'.$specialndAmt.'</td>  
-												</tr>
-												<tr>
-													<td id="sum"><b>Restday Night Diff > 8</b></td>
-													<td id="sum2">'.$restnd8Amt.'</td>  
-													<td id="sum3"><b>Special Holiday Night Diff > 8</b></td>
-													<td id="sum2">'.$specialnd8Amt.'</td>  
-												</tr>
-												<tr>
-													<td id="sum"><b>Legal Holiday OT</b></td>
-													<td id="sum2">'.$legalotAmt.'</td>  
-													<td id="sum3"><b>Special Holiday Restday Night Diff</b></td>
-													<td id="sum2">'.$specialrestndAmt.'</td>  
-												</tr>
-												<tr>
-													<td id="sum"><b>Legal Holiday OT > 8</b></td>
-													<td id="sum2">'.$legalot8Amt.'</td>  
-													<td id="sum3"><b>Special Holiday Restday Night Diff > 8</b></td>
-													<td id="sum2">'.$specialrestnd8Amt.'</td>  
-												</tr>
-												<tr>
-													<td id="sum"><b>Legal Holiday Restday OT</b></td>
-													<td id="sum2">'.$legalrestotAmt.'</td>
-													<td id="sum3"><b></b></td>
-													<td id="sum2"></td>';
-													//<td id="sum3"><b>Leave Hours Total</b></td>
-													//<td id="sum2">'.$leavehoursAmt.'</td> 
-													echo'
-												</tr>
-											</table>	
-										</div>
+										<div class="form-group"></div>
+											<label class="col-sm-3 control-label">Cut Off Period:</label>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($cutoff, 2).'"></div>
+										<br>
+										<div class="form-group"></div>
+											<label class="col-sm-3 control-label">Absent:</label>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($absentAmt, 2).'"></div>
+										<div class="form-group"></div>
+											<label class="col-sm-4 control-label">Legal Holiday Restday OT > 8:</label>
+											<div><input class="col-sm-2" type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($legalrestot8Amt, 2).'"></div><br>
+										<div class="form-group"></div>
+											<label class="col-sm-3 control-label">Leave:</label>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($leavehoursAmt, 2).'"></div>
+										<div class="form-group"></div>
+											<label class="col-sm-4 control-label">Legal Holiday Night Diff:</label>
+											<div><input class="col-sm-2" type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($legalndAmt, 2).'"></div><br>
+										<div class="form-group"></div>
+											<label class="col-sm-3 control-label">Late:</label>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($lateAmt, 2).'"></div>
+										<div class="form-group"></div>
+											<label class="col-sm-4 control-label">Legal Holiday Night Diff > 8:</label>
+											<div><input class="col-sm-2" type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($legalnd8Amt, 2).'"></div><br>
+										<div class="form-group"></div>
+											<label class="col-sm-3 control-label">Undertime:</label>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($undertimeAmt, 2).'"></div>
+										<div class="form-group"></div>
+											<label class="col-sm-4 control-label">Legal Holiday Restday Night Diff:</label>
+											<div><input class="col-sm-2" type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($legalrestndAmt, 2).'"></div><br>
+										<div class="form-group"></div>
+											<label class="col-sm-3 control-label">Night Differential:</label>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($nightdiffAmt, 2).'"></div>
+										<div class="form-group"></div>
+											<label class="col-sm-4 control-label">Legal Holiday Restday Night Diff > 8:</label>
+											<div><input class="col-sm-2" type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($legalrestnd8Amt, 2).'"></div><br>
+										<div class="form-group"></div>
+											<label class="col-sm-3 control-label">Regular OT:</label>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($regotAmt, 2).'"></div>
+										<div class="form-group"></div>
+											<label class="col-sm-4 control-label">Special Holiday OT:</label>
+											<div><input class="col-sm-2" type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($specialotAmt, 2).'"></div><br>
+										<div class="form-group"></div>
+											<label class="col-sm-3 control-label">Regular OT Night Diff:</label>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($regotndAmt, 2).'"></div>
+										<div class="form-group"></div>
+											<label class="col-sm-4 control-label">Special Holiday OT > 8:</label>
+											<div><input class="col-sm-2" type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($specialot8Amt, 2).'"></div><br>
+										<div class="form-group"></div>
+											<label class="col-sm-3 control-label">Restday OT:</label>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($restotAmt, 2).'"></div>
+										<div class="form-group"></div>
+											<label class="col-sm-4 control-label">Special Holiday Restday OT:</label>
+											<div><input class="col-sm-2" type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($specialrestotAmt, 2).'"></div><br>
+										<div class="form-group"></div>
+											<label class="col-sm-3 control-label">Restday OT > 8:</label>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($restot8Amt, 2).'"></div>
+										<div class="form-group"></div>
+											<label class="col-sm-4 control-label">Special Holiday Restday OT > 8:</label>
+											<div><input class="col-sm-2" type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($specialrestot8Amt, 2).'"></div><br>
+										<div class="form-group"></div>
+											<label class="col-sm-3 control-label">Restday Night Diff:</label>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($restndAmt, 2).'"></div>
+										<div class="form-group"></div>
+											<label class="col-sm-4 control-label">Special Holiday Night Diff:</label>
+											<div><input class="col-sm-2" type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($specialndAmt, 2).'"></div><br>
+										<div class="form-group"></div>
+											<label class="col-sm-3 control-label">Restday Night Diff > 8:</label>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($restnd8Amt, 2).'"></div>
+										<div class="form-group"></div>
+											<label class="col-sm-4 control-label">Special Holiday Night Diff > 8:</label>
+											<div><input class="col-sm-2" type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($specialnd8Amt, 2).'"></div><br>
+										<div class="form-group"></div>
+											<label class="col-sm-3 control-label">Legal Holiday OT:</label>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($legalotAmt, 2).'"></div>
+										<div class="form-group"></div>
+											<label class="col-sm-4 control-label">Special Holiday Restday Night Diff:</label>
+											<div><input class="col-sm-2" type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($specialrestndAmt, 2).'"></div><br>
+										<div class="form-group"></div>
+											<label class="col-sm-3 control-label">Legal Holiday OT > 8:</label>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($legalot8Amt, 2).'"></div>
+										<div class="form-group"></div>
+											<label class="col-sm-4 control-label">Special Holiday Restday Night Diff > 8:</label>
+											<div><input class="col-sm-2" type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($specialrestnd8Amt, 2).'"></div><br>
+										<div class="form-group"></div>
+											<label class="col-sm-3 control-label">Legal Holiday Restday OT:</label>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($legalrestotAmt, 2).'"></div>
+										<div class="form-group"></div>
+											<label class="col-sm-4 control-label">Leave Hours Total:</label>
+											<div><input class="col-sm-2" class="col-sm-2" type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)"  style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($leavehoursAmt, 2).'"></div><br>
+
 									</div>
 								</div>
 
 
 								<div style= "max-height:500px; min-height:100px; overflow-y:scroll;" id="earnings" class="tab-pane" >
 									<div class="panel-body">
-										<table class="footable table table-stripped" data-page-size="8" data-filter=#filter>						
+										<table class="footable table table-stripped sortable" data-page-size="8" data-filter=#filter>						
 											<thead>
 												<tr>
 													<th>From</th>
@@ -373,7 +379,7 @@ $net_pay = sprintf('%.2f',$results['NetPay']);//->NetPay);
 
 								<div style= "max-height:500px; min-height:100px; overflow-y:scroll;" id="deductions" class="tab-pane" >
 									<div class="panel-body">
-										<table class="footable table table-stripped" data-page-size="8" data-filter=#filter>						
+										<table class="footable table table-stripped sortable" data-page-size="8" data-filter=#filter>						
 											<thead>
 												<tr>
 													<th>From</th>
@@ -458,7 +464,7 @@ $net_pay = sprintf('%.2f',$results['NetPay']);//->NetPay);
 															// else $type = "Additional";
 															echo '<tr>';
 															echo '<td>'.$others->attendance_date.'</td>';
-															echo '<td>'.$others->others_retro.'</td>';
+															echo '<td>'."PHP ".@number_format($others->others_retro, 2).'</td>';
 															echo '<td>'.$others->app_status.'</td>';
 															echo '<td>'.$others->others_approvaldate.'</td>';
 															echo '<td>'.$others->others_approvedby.'</td>';

@@ -51,7 +51,7 @@
 			<div class="col-lg-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-title">
-						<h5>Schedule Auto Update</h5>
+						<h5>System Calendar Update</h5>
 						<div class="ibox-tools">
 							<a class="collapse-link">
 								<i class="fa fa-chevron-up"></i>
@@ -72,7 +72,7 @@
 					</div>
 					<div class="ibox-content">
 						<form method = "POST" action="autoupdate.php" class="form-horizontal">
-							<div class="form-group">
+							<div class="form-group"><br>
 								<label class="col-sm-4 control-label">Execute every</label>
 								<div class="col-md-2">
 									<input type="number" name="editnum" id="editnum" class="form-control" min="1" required/>

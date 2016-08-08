@@ -578,7 +578,7 @@
 								<br>
 							<div class="form-group"></div>
 								<label class="col-sm-3 control-label">Designation</label>
-								<div class="col-sm-3"><input type = "text" id = "employeetype" name = "employeetype" readonly = "readonly" required="" ></div>
+								<div class="col-sm-3"><input type = "text" id = "jobtitle" name = "jobtitle" readonly = "readonly" required="" ></div>
 							<!-- <div class="form-group"></div> -->
 								<label class="col-sm-3 control-label">Philhealth No.</label>
 								<div class="col-sm-3"><input type="text" id = "philhealth"  name = "philhealth" readonly = "readonly" data-mask="999-999-999" required=""></div>

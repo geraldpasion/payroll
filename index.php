@@ -3,6 +3,14 @@
 
 <head>
 
+
+	<meta charset="utf-8" />
+    <title> </title>
+    <script type="text/javascript" src="js/lib/jquery-1.9.1.js"></script>
+
+
+
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
