@@ -445,9 +445,10 @@
 											$shiftend = date("g : i : A",strtotime($shiftend));
 											$restdayArray = array();
 											$restdayArray = split('/', $row1->employee_restday);
-
-											$status = $mysqli->query("SELECT process_status FROM total_comp_salary WHERE employee_id = '".$empid."' AND cutoff = '".$initialcut." - ".$endcut."'")->fetch_object();
+																					//total_comp_salary
+											$status = $mysqli->query("SELECT * FROM total_comp_salary WHERE employee_id = '".$empid."' AND cutoff = '".$initialcut." - ".$endcut."'")->fetch_object();
 											echo "<tr class = 'josh'>";
+
 											echo "<td>" . $row1->employee_id . "</td>";
 											echo "<td><a href='#' data-toggle='modal'
 														data-employee-id='$empid'										

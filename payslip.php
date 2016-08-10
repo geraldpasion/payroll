@@ -12,6 +12,30 @@
 		<link href="css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 		<script src="js/plugins/clockpicker/clockpicker.js"></script>
 		<script src="js/keypress.js"></script>
+
+		<script type="text/javascript">
+			function runfunc(){
+			swal({   
+				title: "Veiw Your Payslip",   
+				text: "Password:",   
+				type: "input",   
+				showCancelButton: true,   
+				closeOnConfirm: false,   
+				animation: "slide-from-top",   
+				inputPlaceholder: "Write something" }, 
+
+				function(inputValue){   
+					if (inputValue === false) 
+						return false;      
+					if (inputValue === "") {     
+						swal.showInputError("You need to write something!");     
+						return false   
+					}      
+						swal("Nice!", "You wrote: " + inputValue, "success"); 
+					});
+			}//end function
+
+		</script>
 	</head>
 	<script>		
 		//ajax calling export_attendance.php
@@ -143,7 +167,14 @@
 											//		data-submitdate='".$cutoffsubmitdate."'
 											//		data-target='#myModal4' class = 'editempdialog'><button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> Edit</button></a>&nbsp;&nbsp;";
 											//echo "<a href='#' id='$empid' cutoff='".$initialcut." - ".$endcut."' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Deactivate</button></button></a>";
-												echo "<td><a href = 'print_payslip.php?initial=".$initialcut."&end=".$endcut."&id=".$empid."&compid=".$compid." target="_blank"'><button class='btn btn-info' name = 'export' type='button'><i class='fa fa-file'></i>&nbsp;&nbsp;View/Download</button></a></td>";
+												echo "<td>
+														<a id='export' class='btn btn-info' href='print_payslip.php?initial=".$initialcut."&end=".$endcut."&id=".$empid."&compid=".$compid."' target='_blank'>";
+														//<button class='btn btn-info' name = 'export' id='export' type='button'>
+														//	<i class='fa fa-file'></i>&nbsp;&nbsp;View/Download
+														//	</button>
+														echo "View/Download";
+											echo 		"</a>
+													  </td>";
 											
 											echo "</tr>";
 										}									
@@ -160,6 +191,8 @@
 		<?php
 			include('menufooter.php');
 		?>
+
+
 	</body>
 
 </html>

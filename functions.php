@@ -111,18 +111,6 @@ include 'dbconfig.php';
 //pass cutoff
 function compute($cutoff_field, $update, $emp, $comp){
 
-
-echo '<div class="loader" style="
-   .loader {
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    background: url(\'images/page-loader.gif\') 50% 50% no-repeat rgb(249,249,249);
-}">';
-
 $start_time = microtime(TRUE);
 
 include 'dbconfig.php';
@@ -138,6 +126,8 @@ include 'other_earnings_and_deductions.php';
 //total_hours will be used to compute or recompute the process
 
 create_total_hours_table($cutoff_field);
+
+//echo 'swal("Test")';
 
 $fields=get_fieldnames('total_hours');
 
@@ -339,7 +329,7 @@ echo "</table>";
 
 echo '//*****************************************Retro************************************************'.nextline();
      
-$Total_Retro = retro_compute($employee_id, $comp_id);
+$Total_Retro = retro_compute($employee_id, $comp_id, $cutoff_field);
 
 echo "Total Retro: ".$Total_Retro.nextline();
 
@@ -898,9 +888,9 @@ $time_taken = round($time_taken,5);
  
 echo 'Page generated in '.$time_taken.' seconds.';
 
-
 echo '</div>';
 
+return $time_taken;
 }//end function compute()
 
 
@@ -1347,6 +1337,27 @@ echo 'xxxxxxxxxxxxxxxxxx'.nextline();
         else
             echo "wala".nextline();
 
+
+}
+
+
+function count_employees_within_cutoff($cutoff){
+    include 'dbconfig.php';
+    $count=0;
+     $sql = "SELECT * FROM total_comp WHERE cutoff='$cutoff'";
+     $result = $conn->query($sql);
+         if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $count++;
+            }
+
+        }
+       // else
+           //echo "wala".nextline();
+
+//echo "count: ".$count;
+return $count;
 
 }
 

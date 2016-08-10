@@ -2,11 +2,6 @@
 require "fpdf/fpdf.php";
 include('dbconfig.php');
 
-
-//put code here to input payslip password before executing the code
-
-
-
 //code start here
 $employeeid = $_GET['id'];
 $compid = $_GET['compid'];
@@ -359,4 +354,6 @@ $pdf->Cell(160,5, "NET PAY",1,0,'L',1);
 $pdf->Cell(30,5, number_format((float)$temp,2),1,1,'R',1);
 
 $pdf->Output();
+
 ?>
+

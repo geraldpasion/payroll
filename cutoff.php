@@ -268,9 +268,9 @@ document.frmUser.submit();
 	                        <div class = "col-md-5"></div>
 	                        <a href='#' data-target="#myModal4" data-toggle='modal' ><button class='btn btn-info' name = 'edit' type='button'>New Cut-off</button></a>
 						</div>
+						<!--Schedule List-->
 						<div class="form-group">
-							<div class="col-md-3"></div>
-							<label class="col-sm-1 control-label">Schedule List</label>
+							<label class="col-sm-2 control-label" style="text-align:right;valign:center;">Schedule List</label>
 							<div class="col-md-4">
 								<select id = "leavetype" class="form-control"  data-default-value="z" name="sched" required="">
 									<?php 
@@ -293,16 +293,26 @@ document.frmUser.submit();
 									?>
 								</select>
 							</div>
-						</div><br><br><br>
+						</div>
+						<!--Payment Schedule-->
+						<div class="form-group">
+							<label class="col-sm-2 control-label" style="text-align:right">Payment Schedule</label>
+							<div class="col-md-4">
+								<select class="form-control" name="paymentsched" id="paymentsched" onchange="filter(this.value)" required>
+                              			<option>Select Payment Schedule..</option>
+                                		<option value="Monthly">Monthly</option>
+                                		<option value="Semi-monthly">Semi-monthly</option>
+                              	</select>
+							</div>
 						<br><br><br><br>
 						<div class="ibox-content">
 							<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
 						</div>
 						<div class="ibox-content" id = "tableHolderz">
-
+							<div id="divMonthly" style="display:none;">
 							<?php
 								include('dbconfig.php');
-									if ($result1 = $mysqli->query("SELECT * FROM employee WHERE employee_status = 'active' ORDER BY employee_id")) //get records from db
+									if ($result1 = $mysqli->query("SELECT * FROM employee WHERE employee_status = 'active' and cutoff = 'Monthly' ORDER BY employee_id")) //get records from db
 									{
 
 										if ($result1->num_rows > 0) //display records if any
@@ -350,6 +360,82 @@ document.frmUser.submit();
 									<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary" onClick="setUpdateAction();">Submit</button>
 								</div>
 							</form>
+						</div>
+						<div id="divSMonthly" style="display:none;">
+							<?php
+								include('dbconfig.php');
+									if ($result1 = $mysqli->query("SELECT * FROM employee WHERE employee_status = 'active' and cutoff = 'Semi-monthly' ORDER BY employee_id")) //get records from db
+									{
+
+										if ($result1->num_rows > 0) //display records if any
+										{
+											echo "<label><input type='checkbox' id='select_all1'/>&nbsp;&nbsp;Check/Uncheck All</label>";
+											echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
+											echo "<thead>";
+											echo "<tr>";
+											echo "<th style='text-align:center; width:150px;'></th>";
+											echo "<th style='padding-left:100px; width:400px;'>Name</th>";
+											echo "<th>Department</th>";
+											echo "<th>Payment Schedule</th>";
+											echo "</tr>";
+											echo "</thead>";
+											echo "<tfoot>";                    
+											echo "<tr>";
+											echo "<td colspan='7'>";
+											echo "<ul class='pagination pull-right'></ul>";
+											echo "</td>";
+											echo "</tr>";
+											echo "</tfoot>";
+										
+											while ($row1 = mysqli_fetch_object($result1))
+												
+											{
+												$empid = $row1->employee_id;
+
+												echo "<tr class = 'josh'>";
+												echo "<td align='center'><input type='checkbox'  class='checkbox1' name='id[]' value='$empid'></td>";
+												echo "<td style='padding-left:100px'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</td>";
+												echo "<td>" . $row1->employee_department. "</td>";
+												echo "<td>" . $row1->cutoff. "</td>";
+												echo "</tr>";
+											}
+											
+											echo "</table>";
+										}
+									}
+								
+							?>
+								<div class="form-group">								
+									<div class="col-sm-8"></div>								
+									<div class="col-sm-2">
+									<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button></div>
+									<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary" onClick="setUpdateAction();">Submit</button>
+								</div>
+							</form>
+						</div>
+						<script type="text/javascript">
+                            $(function () {
+                                $('#divMonthly').hide();
+                                $('#divSMonthly').hide();
+                                $('#paymentsched').bind('change', function(event) {
+                                	var i= $('#paymentsched').val();
+                                           
+                                	if(i=="Monthly") {
+                                    	$('#divMonthly').show();
+                                    	$('#divSMonthly').hide();
+
+                                	}
+                                	else if(i=="Semi-monthly") {
+                                    	$('#divMonthly').hide();
+                                    	$('#divSMonthly').show();
+                                	}
+                                	else {
+                                    	$('#divMonthly').hide();
+                                    	$('#divSMonthly').hide();
+                               	 	}
+                                });
+                            });
+                        </script>
 						</div>
 					</div>
 				<br>
@@ -496,12 +582,30 @@ $(document).ready(function(){
             });
         }
     });
+    $('#select_all1').on('click',function(){
+        if(this.checked){
+            $('.checkbox1').each(function(){
+                this.checked = true;
+            });
+        }else{
+             $('.checkbox1').each(function(){
+                this.checked = false;
+            });
+        }
+    });
     
     $('.checkbox').on('click',function(){
         if($('.checkbox:checked').length == $('.checkbox').length){
             $('#select_all').prop('checked',true);
         }else{
             $('#select_all').prop('checked',false);
+        }
+    });
+    $('.checkbox1').on('click',function(){
+        if($('.checkbox1:checked').length == $('.checkbox1').length){
+            $('#select_all1').prop('checked',true);
+        }else{
+            $('#select_all1').prop('checked',false);
         }
     });
 });
@@ -535,11 +639,11 @@ $(document).ready(function(){
 			$("#addCutoff").click(function(){
 				var daterange2 = $("#daterange2").val();
 				var daterange3 = $("#daterange3").val();
-				var paymentsched = $("#paymentsched").val();
+				var paysched = $("#paymentsched").val();
 				var element = $(this);
 				 $.ajax({
 				   type: "POST",
-				   url: "cutoffexe.php?daterange2=" + daterange2 + "&daterange3=" + daterange3 + "&paymentsched" + paymentsched,
+				   url: "cutoffexe.php?daterange2=" + daterange2 + "&daterange3=" + daterange3 + "&paysched" + paymentsched,
 				   success: function(data){
 				   		//location.reload();
 						eval(data);

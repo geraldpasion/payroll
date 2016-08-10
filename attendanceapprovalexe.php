@@ -1,6 +1,5 @@
 <?php
 include("dbconfig.php");
-include 'functions.php';
 
 // $cutoffsubmit = $_POST['cutoff_submission'];
 $sched = $_POST['sched'];
@@ -18,12 +17,9 @@ if ($check = $mysqli->query("SELECT * FROM cutoff WHERE cutoff_submission = 'Sub
 
 		if ($stmt = $mysqli->prepare("UPDATE cutoff SET cutoff_status = 'Inactive', cutoff_submission = 'Submitted', cutoff_submitdate='$submitdate' WHERE cutoff_initial = '$schedArray[0]' AND cutoff_end = '$schedArray[1]'"))
 		{
-
-			compute($sched,0,0,0);
-			echo 'swal({title: "SUCCESS",text: "Cutoff Successfully Submitted",timer: 1000, type: "success",showConfirmButton: false}); ';
 			$stmt->execute();
 			$stmt->close();
-			
+			echo 'swal({title: "SUCCESS",text: "Cutoff Successfully Submitted",timer: 1000, type: "success",showConfirmButton: false}); ';
 			//curlphp();
 		}
 	}

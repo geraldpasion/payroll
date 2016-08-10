@@ -491,7 +491,7 @@ function computeHours($timein, $timeout) {
   }
 
 //compute total retro
-function retro_compute($employee_id, $comp_id){
+function retro_compute($employee_id, $comp_id, $cutoff){
   include 'dbconfig.php';
  
 $sql = "SELECT * FROM others WHERE employee_id=$employee_id AND others_status='not paid' AND comp_id=0 AND app_status='Approved'";
@@ -501,11 +501,34 @@ $result = $conn->query($sql);
     //initialize retro
     $retro_total=0;
 
+          //get cutoff details
+          $cutoff_array=cutoff_parse($cutoff);
+
+          echo "start: ".$cutoff_array[0].nextline();
+          echo "end: ".$cutoff_array[1].nextline();
+          $start = $cutoff_array[0];
+          $end = $cutoff_array[1];
+
+          //convert to time value to compute 
+          $start = strtotime($start);
+          $end = strtotime($end);
+
      // output data of each row
     while($row = $result->fetch_assoc()) {
-      $retro_value=$row['others_retro'];
-      $retro_total=$retro_total+$retro_value;
-      echo "Retro: ".$retro_value.nextline();
+    
+    //get approval date of retro from 'others' table 'others_approvaldate'      
+      $retro_approvaldate = $row['others_approvaldate'];
+      $retro_approvaldate = strtotime($retro_approvaldate);
+
+       $retro_value=$row['others_retro'];
+       echo "Retro: ".$retro_value." ".$row['others_approvaldate'].nextline();
+
+      //compare if approval date is within cutoff
+              if($start<=$retro_approvaldate and $end>=$retro_approvaldate){
+                //$retro_value=$row['others_retro'];
+                $retro_total=$retro_total+$retro_value;
+                echo "Retro Included: ".$retro_value.nextline();
+              }//end if
     }
 
     //reset for testing purposes

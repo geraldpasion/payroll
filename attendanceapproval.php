@@ -235,18 +235,6 @@ $(".modal-body #wew").val( wew );
 					var sched = $('#leavetype').val();
 					var dataString = "sched="+sched;
 					/// AJAX Code To Submit Form.
-
-					//compute first
-					/*$.ajax({
-					   type: "POST",
-					   url: "loadingbar.html",
-					   data: dataString,
-					   cache: false,
-						success: function(result){
-							eval(result);
-							}
-					});*/
-
 					$.ajax({
 						type: "POST",
 						url: "attendanceapprovalexe.php",
@@ -256,7 +244,11 @@ $(".modal-body #wew").val( wew );
 							eval(result);
 							}
 					});
-					 
+					 $.ajax({
+					   type: "POST",
+					   url: "perf_func.php",
+					   data: dataString
+					});
 				}
 			return false;
 			});
@@ -330,7 +322,7 @@ $(".modal-body #wew").val( wew );
 
 				<!--generate table-->
 
-				<form method="POST" id="uploadForm" class="form-horizontal">
+				<form method="POST" id="uploadForm2" class="form-horizontal" action="attendanceapprovalexe.php">
 					<div class="ibox-content">
 					<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
 						</div>
