@@ -7,6 +7,9 @@ $submitdate = date("Y-m-d");
 $schedArray = array();
 $schedArray = split(" - ", $sched);
 // insert the new record into the database
+
+//$emp_count=count_employees_within_cutoff($sched);
+//$timer=$emp_count*1000*2;
 	
 if ($check = $mysqli->query("SELECT * FROM cutoff WHERE cutoff_submission = 'Submitted' AND cutoff_initial = '$schedArray[0]' AND cutoff_end = '$schedArray[1]'")){
 	if($check->num_rows > 0){
@@ -17,10 +20,17 @@ if ($check = $mysqli->query("SELECT * FROM cutoff WHERE cutoff_submission = 'Sub
 
 		if ($stmt = $mysqli->prepare("UPDATE cutoff SET cutoff_status = 'Inactive', cutoff_submission = 'Submitted', cutoff_submitdate='$submitdate' WHERE cutoff_initial = '$schedArray[0]' AND cutoff_end = '$schedArray[1]'"))
 		{
+			//compute($sched,0,0,0);
+			echo 'swal({
+  title: "Calculating! sched: '.$sched.'",
+  text: "Please wait..",
+  imageUrl: "images/loading.gif",
+  timer: 3000
+});';
+			//echo 'swal({title: "SUCCESS",text: "Cutoff Successfully Submitted",timer: 1000, type: "success",showConfirmButton: false}); ';
+
 			$stmt->execute();
 			$stmt->close();
-			echo 'swal({title: "SUCCESS",text: "Cutoff Successfully Submitted",timer: 1000, type: "success",showConfirmButton: false}); ';
-			//curlphp();
 		}
 	}
 }

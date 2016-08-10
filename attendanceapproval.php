@@ -1,6 +1,13 @@
 <?php
+
+$selection=null;
+
 if(isset($_POST['test'])){
 	$selection = $_POST['selection'];
+
+	if($selection==null){
+		$selection='0';
+	}
 
 	$cutarray = array();
 	$cutarray = split(" - ", $selection);
@@ -315,6 +322,17 @@ $(".modal-body #wew").val( wew );
 								</SELECT>
 							</div>
 							<button type="submit" name="test" class="btn btn-w-m btn-primary">Validate</button>
+							<?php
+							//hidden textbox
+							echo "<input type='text' name='cutoffsched' value='".$selection."' hidden>";
+							?>
+							<!--p>
+							<?php 
+
+								//echo "selection vlaue: ".$selection;
+
+							?>
+						</p-->
 						</form>
 							</div>
 						<br><br><br><br>
@@ -322,12 +340,17 @@ $(".modal-body #wew").val( wew );
 
 				<!--generate table-->
 
-				<form method="POST" id="uploadForm2" class="form-horizontal" action="attendanceapprovalexe.php">
+				<form method="POST" id="uploadForm" class="form-horizontal" action="perf_func.php">
 					<div class="ibox-content">
 					<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
 						</div>
 						<div class="ibox-content" id = "tableHolderz">
 							<?php
+
+
+							//hidden textbox
+							echo "<input type='text' name='cutoffsched' value='".$selection."' hidden>";
+
 							include('dbconfig.php');
 							if(isset($_POST['test'])){
 							if ($cut = $mysqli->query("SELECT * FROM emp_cutoff WHERE empcut_initial='$initialcut' AND empcut_end = '$endcut'")){
