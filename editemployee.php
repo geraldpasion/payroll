@@ -23,6 +23,7 @@ $paymentSched = $_POST['cutoff'];
 $tin = $_POST['tin'];
 $sss = $_POST['sss'];
 $shift = $_POST['shift'];
+$empstat = $_POST['employeestatus'];
 $shift = str_replace(' ', '', $shift);
 $shift = substr_replace($shift, '', 5, 1);
 $shift = date("H:i", strtotime($shift));
@@ -48,7 +49,7 @@ $team = $_POST['team'];
 
 
 // insert the new record into the database
-		if ($stmt = $mysqli->prepare("UPDATE employee SET employee_lastname = '$lastname', employee_firstname = '$firstname', employee_middlename = '$middlename', employee_gender = '$gender', employee_birthday = '$birthday', employee_marital = '$marital', employee_address = '$address', employee_city = '$city', employee_zip = '$zip', employee_email = '$email', employee_cellnum = '$mobile', employee_type = '$type', employee_jobtitle = '$jobtitle', employee_department = '$department', employee_rate = '$rate', employee_taxcode = '$taxcode', employee_sss = '$sss', employee_philhealth = '$philhealth', employee_pagibig = '$hdmf', employee_tin = '$tin', employee_shift = '$shift', employee_datehired = '$datehired', employee_restday = '$restday',employee_password = '$password', employee_level = '$level', employee_team = '$team', cutoff = '$paymentSched' WHERE employee_id = '$employeeid'")){	
+		if ($stmt = $mysqli->prepare("UPDATE employee SET employee_lastname = '$lastname', employee_firstname = '$firstname', employee_middlename = '$middlename', employee_gender = '$gender', employee_birthday = '$birthday', employee_marital = '$marital', employee_address = '$address', employee_city = '$city', employee_zip = '$zip', employee_email = '$email', employee_cellnum = '$mobile', employee_type = '$type', employee_jobtitle = '$jobtitle', employee_department = '$department', employee_empstatus = '$empstat', employee_taxcode = '$taxcode', employee_sss = '$sss', employee_philhealth = '$philhealth', employee_pagibig = '$hdmf', employee_tin = '$tin', employee_shift = '$shift', employee_datehired = '$datehired', employee_restday = '$restday',employee_password = '$password', employee_level = '$level', employee_team = '$team', cutoff = '$paymentSched' WHERE employee_id = '$employeeid'")){	
 			$stmt->execute();
 			$stmt->close();
 				if(!isset($_POST['picture'])){

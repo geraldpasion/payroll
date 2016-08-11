@@ -47,7 +47,8 @@ echo '<style>
 	</style>';
 
 $empid = $_REQUEST['empid'];
-$cutoff = $_REQUEST['cutoff'];
+$cutoff =$_REQUEST['cutoff'];
+
 $submit = $_REQUEST['submit'];
 
 $cutarray = array();
@@ -255,7 +256,7 @@ $net_pay = sprintf('%.2f',$results['NetPay']);//->NetPay);
 									<div class="panel-body">
 										<div class="form-group"></div>
 											<label class="col-sm-3 control-label">Cut Off Period:</label>
-											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.'PHP '.@number_format($cutoff, 2).'"></div>
+											<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" style="text-align:right" readonly = "readonly" required="" value="'.$cutoff.'"></div>
 										<br>
 										<div class="form-group"></div>
 											<label class="col-sm-3 control-label">Absent:</label>

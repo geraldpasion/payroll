@@ -108,6 +108,7 @@
 			 var philhealth = $(this).data('philhealth');
 			 var pagibig = $(this).data('pagibig');
 			 var tin = $(this).data('tin');
+			 var cutoff = $(this).data('cutoff');
 			 var shift = $(this).data('shift');
 			 var shift2 = $(this).data('shift2');
 			 var datehired = $(this).data('datehired');
@@ -148,6 +149,7 @@
 			 $(".modal-body #philhealth").val( philhealth );	
 			 $(".modal-body #pagibig").val( pagibig );	
 			 $(".modal-body #tin").val( tin );	
+			 $(".modal-body #cutoff").val( cutoff );
 			 $(".modal-body #shift").val( shift );	
 			 $(".modal-body #shift2").val( shift2 );	
 			 $(".modal-body #datehired").val( datehired );	
@@ -191,6 +193,7 @@
 			 var philhealth = $(this).data('philhealth');
 			 var pagibig = $(this).data('pagibig');
 			 var tin = $(this).data('tin');
+			 var cutoff = $(this).data('cutoff');
 			 var shift = $(this).data('shift');
 			 var datehired = $(this).data('datehired');
 			 var restday = $(this).data('restday');
@@ -224,6 +227,7 @@
 			 $(".modal-body #philhealth").val( philhealth );	
 			 $(".modal-body #pagibig").val( pagibig );	
 			 $(".modal-body #tin").val( tin );	
+			 $(".modal-body #cutoff").val( cutoff );
 			 $(".modal-body #shift").val( shift );	
 			 $(".modal-body #datehired").val( datehired );	
 			 $(".modal-body #restday").val( restday );		
@@ -415,7 +419,8 @@
 														data-sss='$row1->employee_sss' 
 														data-philhealth='$row1->employee_philhealth' 
 														data-pagibig='$row1->employee_pagibig' 
-														data-tin='$row1->employee_tin' 
+														data-tin='$row1->employee_tin'
+														data-cutoff='$row1->cutoff' 
 														data-shift='".$shiftstart." - ".$shiftend."' 
 														data-datehired='$row1->employee_datehired' 
 														data-restday='$row1->employee_restday' 
@@ -448,6 +453,7 @@
 													data-philhealth='$row1->employee_philhealth' 
 													data-pagibig='$row1->employee_pagibig' 
 													data-tin='$row1->employee_tin' 
+													data-cutoff='$row1->cutoff'
 													data-shift='$shiftstart' 
 													data-shift2='$shiftend' 
 													data-datehired='$row1->employee_datehired' 
@@ -645,7 +651,10 @@
 								<div class="col-sm-3"><input type="text" id = "tin" name = "tin" readonly = "readonly" onKeyPress="return lettersonly(this, event)" required=""></div>
 							<!-- <div class="form-group"></div> -->
 								<label class="col-sm-3">Other Leave</label>
-								<div class="col-sm-3"><input type="text" id = "oLeave"  name = "oLeave" readonly = "readonly" required=""></div>	
+								<div class="col-sm-3"><input type="text" id = "oLeave"  name = "oLeave" readonly = "readonly" required=""></div><br>
+							<div class="form-group"></div>
+								<label class="col-sm-3 control-label">Payment Schedule</label>
+								<div class="col-sm-3"><input type="text" id = "cutoff" name = "cutoff" readonly = "readonly" onKeyPress="return lettersonly(this, event)" required=""></div>	
 									</div>
 								</div>
 							</ul>
@@ -946,7 +955,9 @@
 								<label class="col-sm-2 control-label">Department</label>
 								<div class="col-md-4"><input type="text" id = "department" onpaste="return false" onDrop="return false" class="form-control" name = "department" required=""></div>
 								<label class="col-sm-2 control-label">Employment Status</label>
-								<div class="col-md-4"><select class = "form-control" name = "employeestatus" id = "employeestatus" value = "Select" required=""><option value = "Project">Project</option><option value = "Contractual">Contractual</option><option value = "Provisionary">Provisionary</option><option value = "Regular">Regular</option><option value = "Student Training">Student Training</option></select></div>
+								<div class="col-md-4">
+									<select class = "form-control" name = "employeestatus" id = "employeestatus" value = "Select" required=""><option value = "Project">Project</option><option value = "Contractual">Contractual</option><option value = "Provisionary">Provisionary</option><option value = "Regular">Regular</option><option value = "Student Training">Student Training</option></select>
+								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Taxcode</label>
@@ -964,7 +975,9 @@
 								<label class="col-sm-2 control-label">HDMF</label>
 								<div class="col-md-4"><input type="text" id = "pagibig" onpaste="return false" onDrop="return false" class="form-control" name = "pagibig" data-mask="9999-9999-9999" required=""></div>
 								<label class="col-md-2 control-label">Payment Schedule</label>
-								<div class="col-md-4"><select class = "form-control" id = "cutoff" name="cutoff" value = "Select" required=""><option value = "Monthly">Monthly</option><option value = "Semi-monthly">Semi-monthly</option><option value = "Weekly">Weekly</option><option value = "Daily">Daily</option></select></div>
+								<div class="col-md-4"><select class = "form-control" id = "cutoff" name="cutoff" value = "Select" required=""><option value = "Monthly">Monthly</option><option value = "Semi-monthly">Semi-monthly</option><option value = "Weekly">Weekly</option><option value = "Daily">Daily</option>
+									</select>
+								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Basic Pay</label>

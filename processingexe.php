@@ -18,6 +18,8 @@ foreach($employeeIDs as $empid) {
 	$mysqli->query("UPDATE total_comp SET process_status='Submitted' WHERE cutoff = '$cutoff' AND employee_id='$empid'");
 	$mysqli->query("UPDATE total_comp_salary SET process_status='Submitted' WHERE cutoff = '$cutoff' AND employee_id='$empid'");
 	$mysqli->query("UPDATE totalcomputation SET process_status='Submitted' WHERE CutoffID = '$cutoff' AND EmployeeID='$empid'");
+
+	//update retro here
 }
 
 $mysqli->query("UPDATE cutoff SET process_submission='Submitted' WHERE cutoff_initial = '$initial' AND cutoff_end = '$end' AND cutoff_submission='Submitted'");

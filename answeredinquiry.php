@@ -103,7 +103,7 @@
 									echo "<tr>";
 									echo "<th>Name</th>";
 									echo "<th >Date</th>";
-									echo "<th>Answer</th>";
+									echo "<th>Question</th>";
 									echo "<th>Answered by</th>";
 									echo "<th>Action</th>";
 									echo "</tr>";

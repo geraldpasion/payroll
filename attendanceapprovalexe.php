@@ -20,17 +20,23 @@ if ($check = $mysqli->query("SELECT * FROM cutoff WHERE cutoff_submission = 'Sub
 
 		if ($stmt = $mysqli->prepare("UPDATE cutoff SET cutoff_status = 'Inactive', cutoff_submission = 'Submitted', cutoff_submitdate='$submitdate' WHERE cutoff_initial = '$schedArray[0]' AND cutoff_end = '$schedArray[1]'"))
 		{
-			//compute($sched,0,0,0);
-			echo 'swal({
-  title: "Calculating! sched: '.$sched.'",
-  text: "Please wait..",
-  imageUrl: "images/loading.gif",
-  timer: 3000
-});';
+			
+			echo 
+			'var uri = "'.$sched.'";
+			var res = encodeURIComponent(uri);
+			window.location = "perf_func.php?cutoff="+res;';
+
+
+				/*echo '<script>
+						window.location = "processing2.php";
+						</script>';
+//echo "<input type='text' name='cutoffsched' value='".$sched."'>";
+//header("Location: perf_func.php");*/
+
 			//echo 'swal({title: "SUCCESS",text: "Cutoff Successfully Submitted",timer: 1000, type: "success",showConfirmButton: false}); ';
 
-			$stmt->execute();
-			$stmt->close();
+			//$stmt->execute();
+			//$stmt->close();
 		}
 	}
 }

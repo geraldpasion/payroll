@@ -114,7 +114,7 @@ toastr.options = {
 							</div>
 							<div class="form-group"><div class="col-md-3"></div>
 								<label class="col-sm-1 control-label">Questions</label>
-								<div class="col-md-4"><textarea id = "question" name = "question" class = "form-control" required= "" placeholder = "Input your questions here."></textarea></div>
+								<div class="col-md-4"><input type="text" id = "question" name = "question" class = "form-control" required= "" placeholder = "Input your questions here." style="height:100px;"></div>
 							</div>
 							<div class="form-group">
 								<div class="col-md-4"></div>

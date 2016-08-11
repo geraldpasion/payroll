@@ -256,7 +256,7 @@
 											echo "<td>" . $row->others_reason . "</td>";
 											echo "<td>" . $row->app_status . "</td>";
 											echo "<td>" . $row->others_approvaldate . "</td>";
-											echo "<td>" . $row->others_status . "</td>";
+											echo "<td>" . ucwords(strtolower(trim($row->others_status))) . "</td>";
 											echo "<td>" . $row->others_approvedby. "</td>";
 										}
 										echo "</table>";

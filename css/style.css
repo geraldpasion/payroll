@@ -1703,6 +1703,7 @@ a.DTTT_button:hover:not(.DTTT_disabled) {
   padding: 15px 20px;
   margin-bottom: 10px;
   margin-top: 10px;
+  height:200px;
 }
 .widget.style1 h2 {
   font-size: 30px;

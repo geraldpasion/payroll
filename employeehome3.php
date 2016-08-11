@@ -268,12 +268,12 @@
                                             }      
                                                     if($co==1){
                                                     echo '<div class="item active">
-                                                            <img alt="image" class="img-responsive" src="'.$im1.'">
+                                                            <img alt="image" style="height:200px;" class="img-responsive" src="'.$im1.'">
                                                           </div>';
                                                     }
                                                     else{
                                                     echo  '<div class="item">
-                                                            <img alt="image" class="img-responsive" src="'.$im1.'">
+                                                            <img alt="image" style="height:200px;" class="img-responsive" src="'.$im1.'">
                                                           </div>'; 
                                                     }            
                                 }

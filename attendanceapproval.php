@@ -251,11 +251,7 @@ $(".modal-body #wew").val( wew );
 							eval(result);
 							}
 					});
-					 $.ajax({
-					   type: "POST",
-					   url: "perf_func.php",
-					   data: dataString
-					});
+					 
 				}
 			return false;
 			});
@@ -340,7 +336,7 @@ $(".modal-body #wew").val( wew );
 
 				<!--generate table-->
 
-				<form method="POST" id="uploadForm" class="form-horizontal" action="perf_func.php">
+				<form method="POST" id="uploadForm" class="form-horizontal">
 					<div class="ibox-content">
 					<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
 						</div>

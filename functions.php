@@ -109,7 +109,7 @@ include 'dbconfig.php';
 }//end create_total_hours_table
 
 //pass cutoff
-function compute($cutoff_field, $update, $emp, $comp){
+function compute($cutoff_field, $update, $emp, $comp=null){
 
 $start_time = microtime(TRUE);
 
@@ -283,7 +283,7 @@ if ($result->num_rows > 0) {
 
 //*****************************************************compute OT******************************************
 
-echo "<table border=1>";
+echo "<table>";
 
 
         foreach ($fields as $field){
@@ -296,7 +296,7 @@ echo "<table border=1>";
                 //call functions at functions.php
 
                 $val = $field($row[$field],$HourlyRatePay);
-                echo "<font color=white><b>".$field."</b>: ".$val."</font>";
+                echo "<font color=black><b>".$field."</b>: ".$val."</font>";
                 echo "</td>";
 
                 //insert statement string
@@ -305,7 +305,7 @@ echo "<table border=1>";
 
                 echo "<td valign=top>";
                 $NetTaxableIncome = $NetTaxableIncome + $val;
-                echo "<font color=white><b>".$field."</b>: ".$row[$field]."</font>";
+                echo "<font color=black><b>".$field."</b>: ".$row[$field]."</font>";
                 echo "</td>";
 
                 echo "</tr>";
@@ -1184,7 +1184,7 @@ $retro_fields = array (
                     
 
                     $rowid=$row[$field];
-                    echo "<td><font color=white>";
+                    echo "<td><font color=black>";
 
                     echo $funct."=";
 
