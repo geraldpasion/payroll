@@ -531,15 +531,16 @@ $result = $conn->query($sql);
               }//end if
     }
 
-    //reset for testing purposes
-    /*$sql = "UPDATE others SET others_status='not paid', comp_id=0";
+    //update retro comp_id to indicate that it has been included on that cutoof
+    //$sql = "UPDATE others SET others_status='not paid', comp_id=0";
+    $sql = "UPDATE others SET comp_id=$comp_id WHERE employee_id=$employee_id AND others_status='not paid' AND comp_id=0 AND app_status='Approved'";
 
           if ($conn->query($sql) === TRUE) {
               echo "Record updated successfully";
           } else {
               echo "Error updating record: " . $conn->error;
           }
-    */
+    
     return $retro_total;
   }
   else{
@@ -553,15 +554,52 @@ function update_retro($comp_id, $employee_id){
 
   include 'dbconfig.php';
 
-   //update retro //do this after processing
-    $sql = "UPDATE others SET others_status='paid', comp_id=$comp_id WHERE employee_id=$employee_id AND others_status='not paid' AND comp_id=0 AND app_status='Approved'";
+   //upon submitting at processing.php, if comp_id matches the retro, update others_status to 'paid'
+    $sql = "UPDATE others SET others_status='paid' WHERE comp_id=$comp_id AND employee_id=$employee_id AND others_status='not paid' AND app_status='Approved'";
 
           if ($conn->query($sql) === TRUE) {
-              echo "Record updated successfully";
+             // echo "Record updated successfully";
+            //echo 'swal("hello");';
           } else {
-              echo "Error updating record: " . $conn->error;
+            //echo 'swal("world");';
+              //echo "Error updating record: " . $conn->error;
           }
 
+}
+
+//on deletion of cutoff, restore retro 'others_status' to 'not_paid'
+function on_cutoff_delete($cutoff){
+  include 'dbconfig.php';
+
+  //list down comp_ids on the specific cutoff
+  $compIDs = list_comp_ids($cutoff);
+
+  foreach($compIDs as $comp_id){
+    $sql = "UPDATE others SET others_status='not paid', comp_id=0 WHERE comp_id='$comp_id'";
+     if ($conn->query($sql) === TRUE) {
+            
+          } else {
+            
+          }
+  }//end
+
+
+}
+
+//retur a list of comp_ids on a given cutoff
+function list_comp_ids($cutoff){
+include 'dbconfig.php';
+
+$compIDs = array();
+$sql = "SELECT CompID FROM totalcomputation WHERE CutoffID='$cutoff'";
+$result = $conn->query($sql);
+  if ($result->num_rows > 0) {
+       while($row = $result->fetch_assoc()) {
+          $compIDs[] = $row['CompID'];
+       }
+  }//end if
+
+return $compIDs;
 }
 
 //for adding non-taxable/non-taxable earnings/dedutions DURING processing

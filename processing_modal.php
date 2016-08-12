@@ -349,7 +349,7 @@ $net_pay = sprintf('%.2f',$results['NetPay']);//->NetPay);
 
 								<div style= "max-height:500px; min-height:100px; overflow-y:scroll;" id="earnings" class="tab-pane" >
 									<div class="panel-body">
-										<table class="footable table table-stripped sortable" data-page-size="8" data-filter=#filter>						
+										<table class="footable table table-stripped" data-page-size="20" data-filter=#filter>						
 											<thead>
 												<tr>
 													<th>From</th>

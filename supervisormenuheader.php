@@ -160,8 +160,8 @@ $team = $_SESSION['employee_team'];
 					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'images2.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="images2.php?"><i class="fa fa-image"></i><span class="nav-label">Gallery</span></a>
 					</li>
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'payslip.php'){echo 'active'; }else { echo ''; } ?>">
-						<a href="payslip.php"><i class="fa fa-file"></i><span class="nav-label">Payslip</span></a>
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'supervisorpayslip.php'){echo 'active'; }else { echo ''; } ?>">
+						<a href="supervisorpayslip.php"><i class="fa fa-file"></i><span class="nav-label">Payslip</span></a>
 					</li>
 				</ul>
 			</div>

@@ -111,6 +111,7 @@ include 'dbconfig.php';
 //pass cutoff
 function compute($cutoff_field, $update, $emp, $comp=null){
 
+
 $start_time = microtime(TRUE);
 
 include 'dbconfig.php';
@@ -241,13 +242,14 @@ if ($result->num_rows > 0) {
         $insert_statement_val=$insert_statement_val."'".$cutoff_total_comp."', ";
 
         //get BaseSalary from employee table, field employee rate
-        $sql_basesalary = "SELECT employee_rate, cutoff FROM employee WHERE employee_id=$employee_id";
+        $sql_basesalary = "SELECT employee_rate, cutoff, employee_type FROM employee WHERE employee_id=$employee_id";
         $result_basesalary =  $conn->query($sql_basesalary);
         if ($result_basesalary->num_rows > 0) {
                 while($row_basesalary = $result_basesalary->fetch_assoc()) {
                     
                     $BaseSalary = $row_basesalary['employee_rate'];
                     $getcutoff=$row_basesalary['cutoff'];
+                    $employee_type=$row['employee_type'];
 
                     echo "cutoff (Monthly/Semi): ".$getcutoff.nextline();
 
@@ -259,6 +261,8 @@ if ($result->num_rows > 0) {
                     }
                     else
                         echo 'BaseSalary: '.$BaseSalary.'<br>';
+
+                    echo 'Employee Type: '.$employee_type.'<br>';
                 }               
         }//end of get employee rate
 
@@ -283,8 +287,22 @@ if ($result->num_rows > 0) {
 
 //*****************************************************compute OT******************************************
 
-echo "<table>";
+//overwrite default hours_fields and deduction_fields if employee is flexi
+//list fields that can only be considered
 
+if($employee_type=='Flexible'){
+                
+$hours_fields=array(
+    'reg_hrs',
+    'sh_ot'
+    );
+
+$deduction_fields=array(
+    'undertime'
+    );
+}//end if
+
+echo "<table>";
 
         foreach ($fields as $field){
             //output only date with fields equivalent to $hours_field array
@@ -346,7 +364,11 @@ echo nextline().'**********************************************************'.dou
         $total_deductions = 0;
         $insert_statement_deductions="";
         foreach ($fields as $field){
-            //output only date with fields equivalent to $hours_field array
+            
+            //overwrite deduction_fields when employee type is flexi
+
+
+
             if(in_array($field, $deduction_fields)){ // syntax: (a string, array of strings)
                     
                 //call functions at functions.php
