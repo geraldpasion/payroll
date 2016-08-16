@@ -63,7 +63,7 @@
 			});
 			});*/
 
-		function deleteRecord(ann_id) {
+		function deleteRecord() {
 		swal({
 		title: "Are you sure?",
 		text: "The action you are about to do cannot be undone!",
@@ -72,20 +72,7 @@
 		confirmButtonColor: "#dd6b55",
 		confirmButtonText: "Yes, delete it!",
 		closeOnConfirm: false
-		}, function() {
-		var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				if(xmlhttp.responseText == "success") {
-					swal("Deleted!","Record is deleted successfully!","success");
-				} else {
-					swal("Error!","Error deleting data!","error");
-				}
-            }
-        }
-        xmlhttp.open("GET", "announcement_delete.php?ann_id=" + ann_id, true);
-        xmlhttp.send();
-	});
+		}, function(isConfirm){   if (isConfirm) {     swal("Deleted!", "Your imaginary file has been deleted.", "success");   } else {     swal("Cancelled", "Your imaginary file is safe :)", "error");   } });
 }
 		</script>
 
@@ -280,8 +267,8 @@ include('dbconfig.php');
 										</a>&nbsp;&nbsp";
 
 					//delete
-					echo "<a href='announcement_delete.php?ann_id=".$row->announcement_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure?\");'>Delete</a>&nbsp;&nbsp; ";
-
+					//echo "<a href='announcement_delete.php?ann_id=".$row->announcement_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure?\");'>Delete</a>&nbsp;&nbsp; ";
+					echo "<a href='#' class='btn btn-danger' onclick='deleteRecord()'>Delete</a>&nbsp;&nbsp; ";
 					"</td>";
 				echo "</tr>";
 			}

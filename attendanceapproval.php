@@ -509,6 +509,10 @@ $(".modal-body #wew").val( wew );
 											if($emp_type == "Flexi" OR $emp_type == 'Flexible') { //flexi !!
 												//required = (reg+sh)* 8
 												// ut = req - reg; if (reg > req) ut = 0
+												//compute lunch time then minus it
+												//total lunch time = required regular DAYS + Special holidays
+												//*note: Days, not hours!
+
 												$required = ($regdays + $specialholidays) * 8.00;
 												if($newreghrs >= $required) {
 													$newundertime = 0.00;
