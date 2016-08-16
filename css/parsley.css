@@ -13,7 +13,10 @@ textarea.parsley-error {
   background-color: #F2DEDE;
   border: 1px solid #EED3D7;
 }
+.teams{
+margin-top: 100px;
 
+}
 .parsley-errors-list {
   margin: 2px 0 3px;
   padding: 0;

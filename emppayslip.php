@@ -118,9 +118,9 @@
 								if(isset($_POST['test1'])){
 									$initialcut2 = strtotime($initialcut)*1000;
 									$endcut2 = strtotime($endcut)*1000;
-									echo'<button type="button" onClick="exportAll('.$initialcut2.','.$endcut2.')" class="btn btn-w-m btn-primary"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;Export All</button>';
+									echo'<!--button type="button" onClick="exportAll('.$initialcut2.','.$endcut2.')" class="btn btn-w-m btn-primary disabled"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;Export All</button-->';
 								} else {
-									echo'<button type="button" class="btn btn-w-m btn-primary"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;Export All</button>';
+									echo'<!--button type="button" class="btn btn-w-m btn-primary"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;Export All</button-->';
 								} ?>
 								</div>
 							</form>
@@ -188,13 +188,15 @@
               			<div class="modal-dialog modal-sm">
                 			<div class="modal-content" style="max-width:920px;">
                 				<div class="modal-header">
-                    			<form id = "uploadForm" method="post" action="" class="form-horizontal">
+                    			<form id = "uploadForm" method="post" action="payslipexe.php" class="form-horizontal">
                     				<button type="button" class="close" data-dismiss="modal">&times;</button>
                     				<i class="glyphicon glyphicon-question-sign modal-icon"></i>
                     				<h4 class="modal-title">Payslip Password Confirmation</h4>
                   				</div><!--/.modal-header-->
                   				<div class="modal-body">
                     				<div class="alert alert-warning">
+                      					<p>Enter your username:</p><br>
+                      					<input type="text" class="form-control" id="empnum" name="empnumber" placeholder="Enter username"><br>
                       					<p>Enter your payslip password:</p><br>
                       					<input type="password" class="form-control" id="paypw" name="payslippassword" placeholder="Enter password">
                     				</div>

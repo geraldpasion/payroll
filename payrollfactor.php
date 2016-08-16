@@ -112,6 +112,14 @@
 							<div class="form-group">
 								<label class="col-sm-4 control-label">Payroll Factor Type</label>
 								<div class="col-md-4"><select id = "leavetype" class = "form-control" name="leavetype" data-default-value="z" required=""><option selected="true" disabled="disabled" value = "z">Select type...</option><option value = "261">261 - Total Number of days/year</option><option value = "313">313 - Total Number of days/year</option><option value = "365">365 - Total Number of days/year</option><option value = "392.5">392.5 - Total Number of days/year</option></select></div>
+							</div><br><br>
+							<div class="form-group">
+								<?php
+								$payroll_factor = $mysqli->query("SELECT * FROM payrollfactor")->fetch_object();
+								$factor = $payroll_factor->factor;
+								echo '<label class="col-sm-4 control-label">Payroll Factor Value:</label>
+								<input type="text" class="col-md-4" style="border:none" readonly="" value='.$factor.'>';
+								?>
 							</div>
 							
 							<div class="hr-line-dashed"></div>

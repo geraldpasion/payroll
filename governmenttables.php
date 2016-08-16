@@ -15,7 +15,25 @@
 			});
 		</script>
 	</head>
+<style>
 
+
+
+td,th,tbody{
+  
+    text-align: center;
+    padding: 8px;
+}
+tr:hover{background-color:#f5f5f5}
+thead{
+	text-align: left;
+
+}
+.thead{
+
+	text-align: left;	
+}
+</style>
 	<body>
 		    <div class="row">
 
@@ -46,9 +64,9 @@
 				<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
 				<table class="table">
 											<thead>
-											<tr>
+											<tr id="thead">
 												<th>Table</th>
-												<th></th>
+												
 												
 											</tr>
 											</thead>

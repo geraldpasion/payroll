@@ -34,7 +34,7 @@ if($check_user>0){
 		$_SESSION['employee_level'] = $result['employee_level'];
 		
 		header("location: employeehome.php");
-	}else if($result['employee_level'] == '3'){
+	}else if($result['employee_level'] == '3'){//  level 4
 		session_start();
 		if(isset($_SESSION['logsession']))
 	{
@@ -48,7 +48,8 @@ if($check_user>0){
 		$_SESSION['employee_level'] = $result['employee_level'];
 		
 		header("location: employeehome3.php");
-	}else if($result['employee_level'] == '2'){
+
+	}else if($result['employee_level'] == '2'){// level 2
 			session_start();
 		
 		if(isset($_SESSION['logsession']))

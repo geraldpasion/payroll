@@ -7,7 +7,7 @@ function TaxMonthly($TaxCode, $NetTaxableIncome, $return_grosscheck=0, $return_f
                        'Level2' => array(
                                         'GrossCheck' => 0,
                                         'FixedTaxAmount' => 0,
-                                        'PercentOVer' => 5
+                                        'PercentOver' => 5
                                    ),
                        'Level3' => array(
                                         'GrossCheck' => 883,
@@ -46,7 +46,7 @@ function TaxMonthly($TaxCode, $NetTaxableIncome, $return_grosscheck=0, $return_f
                        'Level2' => array(
                                         'GrossCheck' => 4167,
                                         'FixedTaxAmount' => 0,
-                                        'PercentOVer' => 5
+                                        'PercentOver' => 5
                                    ),
                        'Level3' => array(
                                         'GrossCheck' => 5000,
@@ -85,7 +85,7 @@ function TaxMonthly($TaxCode, $NetTaxableIncome, $return_grosscheck=0, $return_f
                        'Level2' => array(
                                         'GrossCheck' => 6250,
                                         'FixedTaxAmount' => 0,
-                                        'PercentOVer' => 5
+                                        'PercentOver' => 5
                                    ),
                        'Level3' => array(
                                         'GrossCheck' => 7083,
@@ -126,7 +126,7 @@ function TaxMonthly($TaxCode, $NetTaxableIncome, $return_grosscheck=0, $return_f
                        'Level2' => array(
                                         'GrossCheck' => 8333,
                                         'FixedTaxAmount' => 0,
-                                        'PercentOVer' => 5
+                                        'PercentOver' => 5
                                    ),
                        'Level3' => array(
                                         'GrossCheck' => 9167,
@@ -167,7 +167,7 @@ function TaxMonthly($TaxCode, $NetTaxableIncome, $return_grosscheck=0, $return_f
                        'Level2' => array(
                                         'GrossCheck' => 10417,
                                         'FixedTaxAmount' => 0,
-                                        'PercentOVer' => 5
+                                        'PercentOver' => 5
                                    ),
                        'Level3' => array(
                                         'GrossCheck' => 11250,
@@ -208,7 +208,7 @@ function TaxMonthly($TaxCode, $NetTaxableIncome, $return_grosscheck=0, $return_f
                        'Level2' => array(
                                         'GrossCheck' => 12500,
                                         'FixedTaxAmount' => 0,
-                                        'PercentOVer' => 5
+                                        'PercentOver' => 5
                                    ),
                        'Level3' => array(
                                         'GrossCheck' => 13333,

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
+  <head>
             <?php
             include('menuheader.php');
             include('dbsettings.php');
@@ -208,34 +208,48 @@ else if (isset($_REQUEST['manageqn'])) {
 }
 ?>
 
-	</head>
+  </head>
+<style>
+.add,.edit{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
 
-	<body>
-		<div class="row"> 
-			<div class="col-lg-12">
-				<div class="ibox float-e-margins">
-					<div class="ibox-title">
-					<h5>Manage Tests</h5>
-						<div class="ibox-tools">
-							<a class="collapse-link">
-								<i class="fa fa-chevron-up"></i>
-							</a>
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-								<i class="fa fa-wrench"></i>
-							</a>
-							<ul class="dropdown-menu dropdown-user">
-								<li><a href="#">Config option 1</a>
-								</li>
-								<li><a href="#">Config option 2</a>
-								</li>
-							</ul>
-							<a class="close-link">
-								<i class="fa fa-times"></i>
-							</a>
-						</div>
-					</div>
-					<div class="ibox-content">
-						<form name="testmng" id="formko" action="addedittest.php" method="post">
+td,th,.add{
+  
+    text-align: left;
+    padding: 8px;
+}
+tr:hover{background-color:#f5f5f5}
+
+</style>
+  <body>
+    <div class="row"> 
+      <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+          <div class="ibox-title">
+          <h5>Manage Tests</h5>
+            <div class="ibox-tools">
+              <a class="collapse-link">
+                <i class="fa fa-chevron-up"></i>
+              </a>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="fa fa-wrench"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-user">
+                <li><a href="#">Config option 1</a>
+                </li>
+                <li><a href="#">Config option 2</a>
+                </li>
+              </ul>
+              <a class="close-link">
+                <i class="fa fa-times"></i>
+              </a>
+            </div>
+          </div>
+          <div class="ibox-content">
+            <form name="testmng" id="formko" action="addedittest.php" method="post">
 <?php
     //navigation for Add option
     if (isset($_REQUEST['add'])) {
@@ -269,7 +283,7 @@ else if (isset($_REQUEST['manageqn'])) {
         /*         * ************************ Step 3 - Case 1 ************************ */
         //Form for the new Test
 ?>
-                    <table cellpadding="30" cellspacing="40" align = "center"style="text-align:left;" >
+                    <table class='add'>
 
                         <tr>
                             <td>Test Name</td>
@@ -312,7 +326,7 @@ else if (isset($_REQUEST['manageqn'])) {
 
             //editing components
 ?>
-                    <table cellpadding="40" cellspacing="40" align = "center" style="text-align:left;margin-left:15em" >
+                    <table class="edit" >
                         <tr>
                         </tr>
                         <tr>
@@ -364,8 +378,8 @@ else if (isset($_REQUEST['manageqn'])) {
                     echo    "<th>Test Name</th>";
                     echo    "<th>Test Description</th>";
                     echo    "<th>Test Secret Code</th>";
-                    echo    "<th>Edit</th>";
                     echo    "<th>Questions</th>";
+                    echo    "<th>Edit</th>";
                     echo "</thead>";
                     echo    " </tr>";
 ?>
@@ -381,8 +395,9 @@ while($result1=mysqli_fetch_object($result))
                     echo "<td>" . $result1->tcode . "</td>";
                     
 
-                    echo "<td><a href='addedittest.php?edit=".$result1->testname."'><button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> Edit</button></td></a>";
+                   
                     echo "<td><a href='prepqn.php?id=".$testid."'><button class='btn btn-success' name = 'edit' type='button'><i class='fa fa-plus'></i> Add</button></td></a>";
+                     echo "<td><a href='addedittest.php?edit=".$result1->testname."'><button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> Edit</button></td></a>";
                     echo "<td><a href='#' id='$testid' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Delete</button></td></a>";
                     
 
@@ -414,16 +429,16 @@ while($result1=mysqli_fetch_object($result))
 
             </form>
 
-			  </div>
+        </div>
 
                 </div>
-                                                            <?php
+   
+          </div>
+                </div>
+
+
+ <?php
       include('menufooter.php');
     ?>
-				  </div>
-                </div>
-
-
-
-	</body>
+  </body>
 </html>

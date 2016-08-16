@@ -55,10 +55,10 @@
 						$comment = $_POST['comment'];
 						$aljustine=chr(92);
 						$comment1=str_replace($aljustine,$aljustine.$aljustine,$comment);
-
+						$commentNI=$_SESSION['fname'] . " " . $_SESSION['lname'];
 						$comment2=str_replace("'","\'",$comment1);
 						$comment2=trim($comment2);
-						mysqli_query($con,"INSERT INTO comment1 SET com='$comment2', pid=".$_POST['id']);
+						mysqli_query($con,"INSERT INTO comment1 SET com='$comment2', commentNI='$commentNI', pid=".$_POST['id']);
 						//$come = "Location: comment.php?id=".$_GET['id'];
 						//header($come);
 						$comment = $_POST['comment'];
@@ -79,8 +79,9 @@
 									{
 									$id=$rows['id'];
 									$comment=$rows['com'];
+									$commentko=$rows['commentNi'];
 									$dellink="<a href=\"delete.php??&id=" . $id . "&id2=".$id2."\">Delete</a>";
-										echo $comment . '<br / >'. $dellink . '<br/>'. '<br/>';
+										echo "<text style='font-weight: bold;'>".$commentko."</text><br/>".$comment . '<br / >'. $dellink . '<br/>'. '<br/>';
 									}
 
 								
@@ -109,9 +110,9 @@
 						<form action="comment.php?id=<?php echo $_GET['id'];?>" method="POST">
 
 	
-										<textarea value="comment" name="comment" style="height:50px" required></textarea>
-										<input type="hidden" name="id" value="<?php echo $_GET['id'];?>"></input>
-										<input type="submit" value="Comment" name="submit" class="btn btn-primary">
+										<textarea value="comment" name="comment" style="width:30%" required></textarea><br><br>
+									<input type="submit" style="margin-left:200px" value="Comment" name="submit" class="btn btn-primary">
+									<input type="hidden" name="id" value="<?php echo $_GET['id'];?>"></input>
 
 						</form>
 
@@ -123,12 +124,11 @@
 			<div class="col-sm-1">
 			</div>
 		
-				<button onclick="window.location.href='commentprev.php?id=<?php echo $_GET['id']; ?>'" class="fa fa-chevron-left <?php if ($minzzx == $id2){echo 'hidden';}else{echo '';} ?>" style="font-size:25px"></button>
+				<button onclick="window.location.href='commentprev.php?id=<?php echo $_GET['id']; ?>'" class="fa fa-chevron-left <?php if ($minzzx == $id2){echo 'hidden';}else{echo '';} ?>" style="position:absolute;top:-250px; left:60px; opacity:0.8; color:black; padding:15px; font-size:'20px'; border-radius:10px; border:none;"></button>
 				</div>
 		
-				<div class="col-md-6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button onclick="window.location.href='commentnext.php?id=<?php echo $_GET['id']; ?>'" class="fa fa-chevron-right <?php if ($idzz == $id2){echo 'hidden';}else{echo '';} ?>" style="font-size:25px"></button>
-				
+				<div class="col-md-6">
+				<button onclick="window.location.href='commentnext.php?id=<?php echo $_GET['id']; ?>'" class="fa fa-chevron-right <?php if ($idzz == $id2){echo 'hidden';}else{echo '';} ?>" style="position:absolute;top:-250px; left:160px; opacity:0.8; color:black; font-size:'20px'; padding:15px; border-radius:10px; border:none;  "></button>
 				
 			</div>
 	</div>

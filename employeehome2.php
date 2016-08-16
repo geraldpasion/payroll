@@ -195,6 +195,7 @@
 					</a>
 				</div>
 			<div class="col-lg-4">
+                <a href="announcementlist2.php">
 		                       <div class="widget red-bg p-lg text-center">
                         <div class="m-b-md">
                             <i class="fa fa-bell fa-4x"></i>
@@ -205,6 +206,7 @@
                             <div style="word-wrap:break-word;"><label><?PHP if($result9['announcement_details']==""){echo"";} else {echo $result9['announcement_details'];} ?> </label></div>
                         </div>
                     </div>
+                </a>
 			</div>
 
 			</div>

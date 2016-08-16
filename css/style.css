@@ -3775,6 +3775,7 @@ table.table-mail tr td {
 }
 .white-bg {
   background-color: #ffffff;
+  /*background-color: RGB(254,214,137);*/
 }
 .navy-bg {
   background-color: #1ab394;
@@ -3792,12 +3793,22 @@ table.table-mail tr td {
   background-color: #f8ac59;
   color: #ffffff;
 }
+.yellow-bg1 {
+  background-color: #f8ac59;
+}
 .red-bg {
   background-color: #ed5565;
   color: #ffffff;
 }
 .black-bg {
   background-color: #262626;
+}
+/*TEXT COLOR*/
+.color1{
+  color: RGB(255,127,39);
+}
+.color1a{
+  color: RGB(255,102,50);
 }
 .panel-primary {
   border-color: #1ab394;

@@ -1,0 +1,6 @@
+$TaxValues = [TaxCode][Level]([GrossCheck]/[FixedTaxAmount]/[PercentOver]
+
+table: witholding_tax
+fields:
+$TaxCode = Status
+$Level = Withholding_tax[1-8]

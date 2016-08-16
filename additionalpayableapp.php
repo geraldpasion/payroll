@@ -1,7 +1,8 @@
 <?php
 include("dbconfig.php");
+include 'payroll_compute.php';
 
-function HourlyRate($BaseSalary, $PayrollFactor){
+/*function HourlyRate($BaseSalary, $PayrollFactor){
 	$HourlyRatePay=$BaseSalary*12/$PayrollFactor/8;
 	return $HourlyRatePay;
 }
@@ -134,7 +135,7 @@ function rst_sh_nd($HoursAttended, $HourlyRatePay){
 function rst_sh_nd_grt8($HoursAttended, $HourlyRatePay){
 	$RDSHNDOTPay = reg_hrs($HoursAttended, $HourlyRatePay) * 2.145; //150% SH, 110% ND
 	return $RDSHNDOTPay;
-}
+}*/
 
 // post data from the form in additionalpayable.php 
 $end = $_POST['end1'];

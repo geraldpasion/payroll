@@ -74,7 +74,7 @@
             $total_pages = ceil($total_records/$per_page);
 
             for($num=1;$num<=$total_pages;$num++) {
-            	echo "<a href='images.php?page=$num'> $num </a>";
+            	echo "<a class='pagi' href='images.php?page=$num'> $num </a>";
 			}
 			echo'	</section>';
 

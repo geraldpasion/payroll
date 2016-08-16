@@ -118,9 +118,9 @@
 								if(isset($_POST['test1'])){
 									$initialcut2 = strtotime($initialcut)*1000;
 									$endcut2 = strtotime($endcut)*1000;
-									echo'<button type="button" onClick="exportAll('.$initialcut2.','.$endcut2.')" class="btn btn-w-m btn-primary"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;Export All</button>';
+									echo'<button type="button" onClick="exportAll('.$initialcut2.','.$endcut2.')" class="btn btn-w-m btn-primary disabled"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;Export All</button>';
 								} else {
-									echo'<button type="button" class="btn btn-w-m btn-primary"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;Export All</button>';
+									echo'<button type="button" class="btn btn-w-m btn-primary disabled"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;Export All</button>';
 								} ?>
 								</div>
 							</form>

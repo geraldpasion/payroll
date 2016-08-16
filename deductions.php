@@ -11,7 +11,11 @@
 				margin-left:-10.7em;
 			}
 		</style>
-	
+	<script>
+		function myFunction() {
+				document.getElementById("resetForm").reset();
+			}
+	</script>
 	<script type="text/javascript">//ajax
 			$(function() {
 			$(".delete").click(function(){
@@ -171,7 +175,7 @@
 					<div class="ibox-content">		
 						<div class="form-group">
 							<div class="col-md-2"></div>
-							<form method="POST" class="form-horizontal" action="deductionexe.php">
+							<form method="POST" id="resetForm" class="form-horizontal" action="deductionexe.php">
 								<label class="col-sm-2 control-label">Deductions List</label>
 								<div class="col-md-4"><select id = "deductionname" class="form-control"  data-default-value="" name="deductionname" required="">
 									<option value="">Select Deductions</option>
@@ -352,7 +356,7 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
+<script type="text/javascript">
     $(function() {
         $('#name').keyup(function() {
             if (this.value.match(/[^a-zA-Z0-9 ]/g)) {
@@ -360,6 +364,28 @@
             }
         });
     });
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+    $('#select_all').on('click',function(){
+        if(this.checked){
+            $('.checkbox').each(function(){
+                this.checked = true;
+            });
+        }else{
+             $('.checkbox').each(function(){
+                this.checked = false;
+            });
+        }
+    });
+    $('.checkbox').on('click',function(){
+        if($('.checkbox:checked').length == $('.checkbox').length){
+            $('#select_all').prop('checked',true);
+        }else{
+            $('#select_all').prop('checked',false);
+        }
+    });
+   });
 </script>
 <script type="text/javascript">
 		$(function() {

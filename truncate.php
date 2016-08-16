@@ -9,7 +9,8 @@ $tables=array(
 	'total_comp', 
 	'total_hours', 
 	'total_comp_salary',
-	'others'
+	'others',
+	'cutoff'
 	);
 
 foreach($tables as $tab){

@@ -111,6 +111,7 @@
 		<script>		
 			//ajax calling export_attendance.php
 			function exportDet(id, datef, datet) {
+				var empid = id;
 				var datef = new Date(datef);
 				var datef = datef.getFullYear() + '/' + (datef.getMonth() + 1) + '/' + datef.getDate(); 
 				

@@ -42,31 +42,33 @@
 
 
 
-<body class="white-bg">
+<body class="yellow-bg1">
 
         <div class="row">
             <div class="col-md-12">
-                <div class="ibox-content">
-					<div class="col-md-12">
+                <div class="ibox-content yellow-bg1">
+					<div class="col-md-12 yellow-bg1">
 
 
 
 <div class="panel panel-default">
 <div class="container">
  
-  <h1>ICONNECT Global Communications<small> Application form</small></h1>
+  <h1 class="color1" style="text-align:center">iCONNECT Global Communications</h1>
 </div>
   <div class="ibox-content">
 
 
 								
 									<form id = "myForm" action="add_emp.php" method="post" class="form-horizontal">
+										<p style="text-align:center;font-size:25px;"> APPLICATION FORM</p>
 								<br><br><br>
+								
 									<div class="form-group">
 										<label class="col-md-2 control-label">Position applied for</label>
 										<div class="col-md-4"><input type="text" id = "position" class="form-control" name = "position" onpaste="return false" required = "" onDrop="return false"   required="" onKeyPress="return lettersonly(this, event)"></div></div>
 									<div class="form-group">
-									<h2>Personal Information<h2>
+									<h2 class="color1a">Personal Information<h2>
 									</div>
 									<div class="form-group">
 										<label class="col-md-2 control-label">Last name</label>
@@ -93,7 +95,7 @@
 
 									 <div class="hr-line-dashed"></div>
 									<div class="form-group">
-									<h2>Contact Information<h2>
+									<h2 class="color1a">Contact Information<h2>
 									</div>
 									<div class="form-group">
 										<label class="col-md-2 control-label">Present Home Address</label>
@@ -124,7 +126,7 @@
 									
 									 <div class="hr-line-dashed"></div>
 									<div class="form-group">
-									<h2>Employee Information<h2>
+									<h2 class="color1a">Employee Information<h2>
 									</div>
 									
 									<div class="form-group">
@@ -159,7 +161,7 @@
 
 									 <div class="hr-line-dashed"></div>
 							<div class="form-group">
-									<h2>Family Information<h2>
+									<h2 class="color1a">Family Information<h2>
 									</div>
 									
 
@@ -188,7 +190,7 @@
 
 									 <div class="hr-line-dashed"></div>
 									<div class="form-group">
-									<h2>Name Of Children/s<h2></div>
+									<h2 class="color1a">Name Of Children/s<h2></div>
 									<div class="form-group">
 										<label class="col-md-2 control-label">Children's Name</label>
 										<div class="col-md-4"><input type="text" id = "info_n_children" class="form-control" name = "info_n_children" onpaste="return false" onDrop="return false"  onKeyPress="return lettersonly(this, event)"></div>
@@ -213,7 +215,7 @@
 
 
 									 <div class="hr-line-dashed"></div>
-									<div class="form-group"><h2>Name Of Sibling/s<h2></div>
+									<div class="form-group"><h2 class="color1a">Name Of Sibling/s<h2></div>
 									<div class="form-group">
 										<label class="col-md-2 control-label">Sibling's Name</label>
 										<div class="col-md-4"><input type="text" id = "info_n_siblings" class="form-control" name = "info_n_siblings" onpaste="return false" onDrop="return false"  onKeyPress="return lettersonly(this, event)"></div>
@@ -239,7 +241,7 @@
 
 
 									 <div class="hr-line-dashed"></div>
-									<div class="form-group"><h2>In Case Of Emergency<h2></div>
+									<div class="form-group"><h2 class="color1a">In Case Of Emergency<h2></div>
 									<div class="form-group">
 										<label class="col-md-2 control-label">Contact Person</label>
 										<div class="col-md-4"><input id ="info_cont_person" type="text" nationality = "emptype" class="form-control" name = "info_cont_person" onpaste="return false" onDrop="return false" required="" onKeyPress="return lettersonly(this, event)"></div>
@@ -252,7 +254,7 @@
 
 
 										 <div class="hr-line-dashed"></div>
-									<div class="form-group"><h2>Educational Attainment<h2></div>
+									<div class="form-group"><h2 class="color1a">Educational Attainment<h2></div>
 									<div class="form-group">
 										<label class="col-md-2 control-label">Post Graduate Diploma</label>
 										<div class="col-md-4"><select class = "form-control" id = "info_post" name="info_post" data-default-value="z" ><option selected="true" value = "blank" >Select Post Graduate Diploma...</option><option value = "Graduate">Graduate</option><option value = "Undergraduate">Undergraduate</option></select></div>
@@ -326,7 +328,7 @@
 
 
 										 <div class="hr-line-dashed"></div>
-										 <div class="form-group"><h2>High School<h2></div>
+										 <div class="form-group"><h2 class="color1a">High School<h2></div>
 				
 									<div class="form-group">
 										<label class="col-md-2 control-label">School</label>
@@ -338,7 +340,7 @@
 
 
 										 <div class="hr-line-dashed"></div>
-									<div class="form-group"><h2>Elementary<h2></div>
+									<div class="form-group"><h2 class="color1a">Elementary<h2></div>
 				
 									<div class="form-group">
 										<label class="col-md-2 control-label">School</label>
@@ -350,7 +352,7 @@
 
 
 										 <div class="hr-line-dashed"></div>
-										<div class="form-group"><h2>Employment History(Start with most recent job)<h2></div>
+										<div class="form-group"><h2 class="color1a">Employment History(Start with most recent job)<h2></div>
 									
 
 								
@@ -452,7 +454,7 @@
 
 
 											 <div class="hr-line-dashed"></div>
-											<div class="form-group"><h2>Other Qualification<h2></div>
+											<div class="form-group"><h2 class="color1a">Other Qualification<h2></div>
 									
 
 								
@@ -481,7 +483,7 @@
 
 
 											 <div class="hr-line-dashed"></div>
-											<div class="form-group"><h2>Training/Seminars Attended<h2></div>
+											<div class="form-group"><h2 class="color1a">Training/Seminars Attended<h2></div>
 									
 
 								
@@ -539,7 +541,7 @@
 
 
 										 <div class="hr-line-dashed"></div>
-											<div class="form-group"><h2>Character References<h2></div>
+											<div class="form-group"><h2 class="color1a">Character References<h2></div>
 									
 
 								

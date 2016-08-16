@@ -321,7 +321,7 @@
 							</div>	
 							<div class="form-group">
 								<div class="col-md-1"></div>
-								<label class="col-sm-3 control-label">Payable:</label>
+								<label class="col-sm-3 control-label">Due:</label>
 								<div class="col-md-8"><input type="text" id = "payable" class="zx" name = "payable" readonly = "" onKeyPress="return lettersonly(this, event)"></div>
 							</div>	
 							<div class="form-group">

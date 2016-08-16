@@ -297,7 +297,7 @@
 										</div>
 										<div class="form-group">
 											<label class="col-md-2 control-label">Access level</label>
-											<div class="col-md-4"><select class = "form-control" id = "access" name = "access" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select access level...</option><option value = "1">1</option><option value = "2">2</option><option value = "3">3</option></select></div>
+											<div class="col-md-4"><select class = "form-control" id = "access" name = "access" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select access level...</option><option value = "1">1</option><option value = "2">2</option><option value = "3">3</option><option value = "4">4</option></select></div>
 											<label class="col-md-2 control-label">Password</label>
 											<div class="col-md-4"> <input type="text" id = "password" name="password" onpaste="return false" onDrop="return false" class="form-control" required=""></div>
 										</div>';
@@ -419,7 +419,7 @@
 										</div>
 										<div class="form-group">
 											<label class="col-md-2 control-label">Access level</label>
-											<div class="col-md-4"><select class = "form-control" id = "access" name = "access" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select access level...</option><option value = "1">1</option><option value = "2">2</option><option value = "3">3</option></select></div>
+											<div class="col-md-4"><select class = "form-control" id = "access" name = "access" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select access level...</option><option value = "1">1</option><option value = "2">2</option><option value = "3">3</option><option value = "4">4</option></select></div>
 											<label class="col-md-2 control-label">Password</label>
 											<div class="col-md-4"> <input type="text" id = "password" name="password" onpaste="return false" onDrop="return false" class="form-control" required=""></div>
 										</div>';

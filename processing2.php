@@ -138,7 +138,7 @@
 			}
 		?>
 		<script type="text/javascript">//ajax
-			$(function() {
+			/*$(function() {
 			$(".delete").click(function(){
 			var element = $(this);
 			var employee_id = element.attr("id");
@@ -181,7 +181,7 @@
 			 
 			return false;
 			});
-			});
+			});*/
 		</script>
 		<script type="text/javascript" >//ajax	
 			$(document).ready(function(){
@@ -463,7 +463,7 @@
 													data-cutoffd='".$initialcut." - ".$endcut."'
 													data-submitdate='".$cutoffsubmitdate."'
 													data-target='#myModal4' class = 'editempdialog'><button class='btn btn-info' name = 'edit' id='edit' type='button'><i class='fa fa-paste'></i> Edit</button></a>&nbsp;&nbsp;";
-											echo "<a href='#' id='$empid' cutoff='".$initialcut." - ".$endcut."' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Deactivate</button></button></a>";											
+											echo "<a href='finalpay.php' id='$empid' cutoff='".$initialcut." - ".$endcut."' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> For Final Pay</button></button></a>";											
 											echo "</tr>";
 										}									
 										echo "</table>";

@@ -52,7 +52,7 @@
 		}
 		function alertFunction3()
 		{
-			swal({  title: "You need to time in!",   text: "",   timer: 3000, type: "error",   showConfirmButton: false}, 
+			swal({  title: "Please check your status!",   text: "",   timer: 3000, type: "error",   showConfirmButton: false}, 
 			function(zz){  
 			 window.location.href='index.php';
 		});  
@@ -108,7 +108,7 @@
 		}
 		function alertFunction11()
 		{
-			swal({  title: "You are already timed in!",   text: "",   timer: 3000, type: "error",   showConfirmButton: false}, 
+			swal({  title: "Please check your status!",   text: "",   timer: 3000, type: "error",   showConfirmButton: false}, 
 			function(zz){  
 			 window.location.href='index.php';
 		});  
@@ -311,7 +311,7 @@
 		<script type="text/javascript">
 			function alertFunction2()
 		{
-			swal({  title: "Wrong username or password!",   text: "",   timer: 3000, type: "error",   showConfirmButton: false}, 
+			swal({  title: "Please check your status!",   text: "",   timer: 3000, type: "error",   showConfirmButton: false}, 
 			function(zz){  
 			history.replaceState({}, "Title", "login.php");
 		});  
@@ -387,11 +387,12 @@ if(isset($_POST['submit'])){
 				        <center><h1 class="modal-title">Check Status</h1></center>
 				      </div>
 						<div class="modal-body">
-							<h3 style="text-align:center">Enter your Username.</h3>
+							<h3 style="text-align:center">Enter your username:</h3><br>
 							<input type = "text" class = "form-control" placeholder = "Username" name = "username" required = "" onKeyPress="return numbersonly(this, event)">
 						</div>
-							<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+							<div class="col-sm-3"></div>
 							<button type="submit" name="submit" class="btn btn-primary">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 							
 					</table>
 					</form>

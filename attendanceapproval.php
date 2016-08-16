@@ -392,6 +392,7 @@ $(".modal-body #wew").val( wew );
 
 											if($attRes = $mysqli->query("SELECT * FROM attendance INNER JOIN emp_cutoff ON attendance.employee_id = emp_cutoff.employee_id WHERE attendance.attendance_date BETWEEN '$initialcut' AND '$endcut' AND emp_cutoff.employee_id='$emp_id'")){
 
+												//initialize
 												$newabsent = 0;
 												$newreghrs = 0;
 												$newlate = 0;
@@ -422,6 +423,7 @@ $(".modal-body #wew").val( wew );
 												$regdays = 0;
 												$specialholidays = 0;
 
+												//compute and save result to total_comp
 												while($rowx = $attRes->fetch_object()){
 
 													$absent = $rowx->attendance_absent;
@@ -486,7 +488,7 @@ $(".modal-body #wew").val( wew );
 													$newspecialrestnd = sprintf("%.2f",$newspecialrestnd + $specialrestnd);
 													$newspecialrestnd8 = sprintf("%.2f", $newspecialrestnd8 + $specialrestnd8);
 
-												}
+												}//end while
 											}
 
 											// leave hours count
@@ -504,7 +506,7 @@ $(".modal-body #wew").val( wew );
 											$newreghrsdecimal = substr((($newreghrs-$newreghrsfloor) *100)*60, 0, 2);
 											$newreghrsConverted = sprintf("%02d", $newreghrsfloor).':'.sprintf("%02d", $newreghrsdecimal);
 
-											if($emp_type == "Flexi") { //flexi !!
+											if($emp_type == "Flexi" OR $emp_type == 'Flexible') { //flexi !!
 												//required = (reg+sh)* 8
 												// ut = req - reg; if (reg > req) ut = 0
 												$required = ($regdays + $specialholidays) * 8.00;
@@ -513,6 +515,39 @@ $(".modal-body #wew").val( wew );
 												} else {
 													$newundertime = $required - $newreghrs;
 												}
+
+												//zero values except reg hours and special holiday
+												$newabsent = 0;
+												//$newreghrs = 0;
+												$newlate = 0;
+												//$newundertime = 0;
+												$newnightdiff = 0;
+												$newregot = 0;
+												$newrestot = 0;
+												$newrestot8 = 0;
+												$newlegalot = 0;
+												$newlegalot8 = 0;
+												$newlegalrestot = 0;
+												$newlegalrestot8 = 0;
+												//$newspecialot = 0;
+												$newspecialot8 = 0;
+												$newspecialrestot = 0;
+												$newspecialrestot8 = 0;
+												$newregotnd = 0;
+												$newrestnd = 0;
+												$newrestnd8 = 0;
+												$newlegalnd = 0; 	
+												$newlegalnd8 = 0;
+												$newspecialnd = 0;
+												$newspecialnd8 = 0;
+												$newlegalrestnd = 0;
+												$newlegalrestnd8 = 0;
+												$newspecialrestnd = 0;
+												$newspecialrestnd8 = 0;
+												//$regdays = 0;
+												//$specialholidays = 0;
+
+												//echo '<script>window.location = "www.google.com";</script>';
 											}
 											
 											//REG ND
@@ -654,6 +689,13 @@ $(".modal-body #wew").val( wew );
 											}else{
 												$attendance_status='Pending';
 											}
+
+
+											//this is to zero special ot before sending it to database
+											/*if ($emp_type == 'Flexi' OR $emp_type == 'Flexible'){
+												$newspecialrestotConverted = 0;
+											}*/
+											
 
 											echo "<tr class = 'josh'>";
 											echo "<td>" . $row1->employee_id . "</td>";

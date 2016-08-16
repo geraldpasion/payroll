@@ -26,7 +26,7 @@
 		
 
 		<script type="text/javascript">//ajax
-			$(function() {
+		/*	$(function() {
 			$(".delete").click(function(){
 			var element = $(this);
 			var announcement_id = element.attr("id");
@@ -61,7 +61,32 @@
 			 
 			return false;
 			});
-			});
+			});*/
+
+		function deleteRecord(ann_id) {
+		swal({
+		title: "Are you sure?",
+		text: "The action you are about to do cannot be undone!",
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#dd6b55",
+		confirmButtonText: "Yes, delete it!",
+		closeOnConfirm: false
+		}, function() {
+		var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				if(xmlhttp.responseText == "success") {
+					swal("Deleted!","Record is deleted successfully!","success");
+				} else {
+					swal("Error!","Error deleting data!","error");
+				}
+            }
+        }
+        xmlhttp.open("GET", "announcement_delete.php?ann_id=" + ann_id, true);
+        xmlhttp.send();
+	});
+}
 		</script>
 
 		<style>

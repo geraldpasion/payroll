@@ -113,18 +113,22 @@ $endcut = $cutarray[1];
 						<input type="hidden" value="<?php echo $empid; ?>" name="empid" id="empid"/>
 						<input type="hidden" value="<?php echo $cutoff;?>" name="cutsel" id="cutsel">
 						<div class="form-group">
+							<div class="col-sm-3"></div>
 							<label class="col-sm-3 control-label">New/Edit</label>
 								<div class="col-sm-4"><select class = "form-control" id = "actionsel" name = "actionsel" onchange="filter_action(this.value)" required="" ><option value = "New">New</option><option value = "Edit">Edit</option></select></div>
 								<br><br><br>
+							<div class="col-sm-3"></div>
 							<label class="col-sm-3 control-label">Earnings/Deductions</label>
 								<div class="col-sm-4"><select class = "form-control" id = "earndeduct" name = "earndeduct" onchange="filter_ed(this.value)" required="" ><option value = ""></option><option value = "Earnings">Earnings</option><option value = "Deductions">Deductions</option></select></div>
 								<br><br><br>
+							<div class="col-sm-3"></div>
 							<label class="col-sm-3 control-label">Type</label>
 								<div class="col-sm-4"><select class = "form-control" id = "type" name = "type" onchange="filter_type(this.value)" required="" ><option value = ""></option><option value = "Taxable">Taxable</option><option value = "Non-Taxable">Non-Taxable</option></select></div>
 								<br><br><br>
 							<!-- <label class="col-sm-3 control-label">Recurrence</label>
 								<div class="col-sm-4"><select class = "form-control" id = "recurrence" name = "recurrence" required="" ><option value = ""></option><option value = "Once">Once</option><option value = "Multiple">Multiple</option></select></div>
 								<br><br><br> -->
+							<div class="col-sm-3"></div>
 							<label class="col-sm-3 control-label">Particular</label>
 								<div class="col-md-4" id="partinp"><select id = 'particularsel' name = 'particularsel' type='text' class='form-control' required>
 									<option value=''></option>
@@ -147,15 +151,25 @@ $endcut = $cutarray[1];
 								</select></div>
 								<!-- <div class="col-md-4" id="partsel" style="display:none;"><select id = "particularsel" name = "particularsel" onchange="" type="text" class="form-control" required></select></div> -->
 								<br><br><br>								
+							<div class="col-sm-3"></div>
 							<label class="col-sm-3 control-label">Amount</label>
 								<div class="col-md-4"><input id = "amount" name = "amount" type="text" class="form-control" onkeyup="filter_amount(this.value)" placeholder="Enter Amount" onKeyPress="return numbersonly(this, event)" required></div>
 								<br><br><br>
+							<div class="col-sm-3"></div>
 							<label class="col-sm-3 control-label">From</label>
 								<div class="col-md-4" id="frmnew"><input type="date" id = "fromdate" class="form-control" name="daterange" value="<?php echo $initialcut; ?>" readonly></div>
 								<!-- <div class="col-md-4" id="frmedit" style="display:none;"><input type="text" id = "fromdate" onpaste="return false" onDrop="return false" class="form-control" name="daterange2" required=""></div> -->
 							<br><br><br>
+								<div class="col-sm-3"></div>
 								<label class="col-sm-3 control-label">To</label>
-								<div class="col-md-4" id="tonew"><input type="date" id = "todate" onpaste="return false" onDrop="return false" class="form-control" name="daterange3" placeholder="click to pick date (optional)"></div>
+								<div class="col-md-4" id="tonew"><input type="date" id = "todate" onpaste="return false" onDrop="return false" class="form-control" name="daterange3" placeholder="click to pick date (optional)">
+								<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+								<script src="js/dcalendar.picker.js"></script>
+								<script>
+									$('#demo').dcalendarpicker();
+									$('#calendar-demo').dcalendar(); //creates the calendar
+								</script>
+								</div>
 								<!-- <div class="col-sm-1" style="font-size:18px;"><a class="right" data-placement="right" data-toggle="tooltip" href="#" title="If no end date is specified, the earning/deduction will be effective on all cutoffs after the start date."><span class="glyphicon glyphicon-info-sign" ></span></a></div> -->
 								<!-- <div class="col-md-4" id="toedit" style="display:none;"><input type="text" id = "todate" onpaste="return false" onDrop="return false" class="form-control" name="daterange3"></div> -->
 						</div>
@@ -343,6 +357,7 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip(); 
 });
 </script>
+
 		
 	
 

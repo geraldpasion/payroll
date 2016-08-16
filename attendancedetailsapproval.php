@@ -54,7 +54,8 @@ if ($attstatus->num_rows > 0) {
 }
 
 if ($attendance_status=='') {
-	if ($stmt = $mysqli->query("INSERT INTO total_comp (`employee_id`,`cutoff`,`absent`,`late`,`undertime`,`reg_hrs`,`reg_nd`,`reg_ot`,`reg_ot_nd`,`rst_ot`,`rst_ot_grt8`,`rst_nd`,`rst_nd_grt8`,`lh_ot`,`lh_ot_grt8`,`lh_nd`,`lh_nd_grt8`,`sh_ot`,`sh_ot_grt8`,`sh_nd`,`sh_nd_grt8`,`rst_lh_ot`,`rst_lh_ot_grt8`,`rst_lh_nd`,`rst_lh_nd_grt8`,`rst_sh_ot`,`rst_sh_ot_grt8`,`rst_sh_nd`,`rst_sh_nd_grt8`,`leave_hrs`,`attendance_status`) values('$empid','$period','$absent','$late','$undertime','$reghrs','$regnd','$regot','$regotnd','$restot','$restot8','$restnd','$restnd8','$legalot','$legalot8','$legalnd','$legalnd8','$specialot','$specialot8','$specialnd','$specialnd8','$legalrestot','$legalrestot8','$legalrestnd','$legalrestnd8','$specialrestot','$specialrestot8','$specialrestnd','$specialrestnd8','$leavehours','Approved')"))
+	if ($stmt = $mysqli->query("INSERT INTO total_comp (`employee_id`,`cutoff`,`absent`,`late`,`undertime`,`reg_hrs`,`reg_nd`,`reg_ot`,`reg_ot_nd`,`rst_ot`,`rst_ot_grt8`,`rst_nd`,`rst_nd_grt8`,`lh_ot`,`lh_ot_grt8`,`lh_nd`,`lh_nd_grt8`,`sh_ot`,`sh_ot_grt8`,`sh_nd`,`sh_nd_grt8`,`rst_lh_ot`,`rst_lh_ot_grt8`,`rst_lh_nd`,`rst_lh_nd_grt8`,`rst_sh_ot`,`rst_sh_ot_grt8`,`rst_sh_nd`,`rst_sh_nd_grt8`,`leave_hrs`,`attendance_status`) 
+		values('$empid','$period','$absent','$late','$undertime','$reghrs','$regnd','$regot','$regotnd','$restot','$restot8','$restnd','$restnd8','$legalot','$legalot8','$legalnd','$legalnd8','$specialot','$specialot8','$specialnd','$specialnd8','$legalrestot','$legalrestot8','$legalrestnd','$legalrestnd8','$specialrestot','$specialrestot8','$specialrestnd','$specialrestnd8','$leavehours','Approved')"))
 	{
 		echo "<script></script>";
 	// echo"<script>alert('$empid');</script>";

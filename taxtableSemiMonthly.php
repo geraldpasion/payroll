@@ -7,7 +7,7 @@ function TaxSemiMonthly($TaxCode, $NetTaxableIncome, $return_grosscheck=0){
                        'Level2' => array(
                                         'GrossCheck' => 0,
                                         'FixedTaxAmount' => 0,
-                                        'PercentOVer' => 5
+                                        'PercentOver' => 5
                                    ),
                        'Level3' => array(
                                         'GrossCheck' => 417,
@@ -46,7 +46,7 @@ function TaxSemiMonthly($TaxCode, $NetTaxableIncome, $return_grosscheck=0){
                        'Level2' => array(
                                         'GrossCheck' => 2083,
                                         'FixedTaxAmount' => 0,
-                                        'PercentOVer' => 5
+                                        'PercentOver' => 5
                                    ),
                        'Level3' => array(
                                         'GrossCheck' => 2500,
@@ -85,7 +85,7 @@ function TaxSemiMonthly($TaxCode, $NetTaxableIncome, $return_grosscheck=0){
                        'Level2' => array(
                                         'GrossCheck' => 3125,
                                         'FixedTaxAmount' => 0,
-                                        'PercentOVer' => 5
+                                        'PercentOver' => 5
                                    ),
                        'Level3' => array(
                                         'GrossCheck' => 3542,
@@ -124,7 +124,7 @@ function TaxSemiMonthly($TaxCode, $NetTaxableIncome, $return_grosscheck=0){
                        'Level2' => array(
                                         'GrossCheck' => 4167,
                                         'FixedTaxAmount' => 0,
-                                        'PercentOVer' => 5
+                                        'PercentOver' => 5
                                    ),
                        'Level3' => array(
                                         'GrossCheck' => 4583,
@@ -163,7 +163,7 @@ function TaxSemiMonthly($TaxCode, $NetTaxableIncome, $return_grosscheck=0){
                        'Level2' => array(
                                         'GrossCheck' => 5208,
                                         'FixedTaxAmount' => 0,
-                                        'PercentOVer' => 5
+                                        'PercentOver' => 5
                                    ),
                        'Level3' => array(
                                         'GrossCheck' => 5625,
@@ -202,7 +202,7 @@ function TaxSemiMonthly($TaxCode, $NetTaxableIncome, $return_grosscheck=0){
                        'Level2' => array(
                                         'GrossCheck' => 6250,
                                         'FixedTaxAmount' => 0,
-                                        'PercentOVer' => 5
+                                        'PercentOver' => 5
                                    ),
                        'Level3' => array(
                                         'GrossCheck' => 6667,

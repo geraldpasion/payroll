@@ -298,7 +298,7 @@
 							<div class="form-group">
 								<div class="col-md-1"></div>
 								<label class="col-sm-3 control-label">Reason:</label>
-								<div class="col-md-6"><input type="text" id = "overtimereason" class="zx" name = "firstname" required="" onKeyPress="return lettersonly(this, event)" size = "80"></div>
+								<div class="col-md-6"><input type="text" id = "overtimereason" class="zx" name = "firstname" required="" onKeyPress="return lettersonly(this, event)"></div>
 							</div>
 							<div class="form-group">
 								<div class="col-md-1"></div>

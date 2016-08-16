@@ -144,7 +144,7 @@ $fields=get_fieldnames($table);
                             //total_hours na
 //prepare fields to fetch at total_comp and process it with formulas under payroll_compute.php
 $hours_fields = array(
-//'reg_hrs',
+'reg_hrs',
 'reg_ot',
 'reg_nd',
 'reg_ot_nd',
@@ -242,14 +242,14 @@ if ($result->num_rows > 0) {
         $insert_statement_val=$insert_statement_val."'".$cutoff_total_comp."', ";
 
         //get BaseSalary from employee table, field employee rate
-        $sql_basesalary = "SELECT employee_rate, cutoff, employee_type FROM employee WHERE employee_id=$employee_id";
+        $sql_basesalary = "SELECT * FROM employee WHERE employee_id=$employee_id";
         $result_basesalary =  $conn->query($sql_basesalary);
         if ($result_basesalary->num_rows > 0) {
                 while($row_basesalary = $result_basesalary->fetch_assoc()) {
                     
                     $BaseSalary = $row_basesalary['employee_rate'];
                     $getcutoff=$row_basesalary['cutoff'];
-                    $employee_type=$row['employee_type'];
+                    $employee_type=$row_basesalary['employee_type'];
 
                     echo "cutoff (Monthly/Semi): ".$getcutoff.nextline();
 
@@ -290,9 +290,9 @@ if ($result->num_rows > 0) {
 //overwrite default hours_fields and deduction_fields if employee is flexi
 //list fields that can only be considered
 
-if($employee_type=='Flexible'){
+//if($employee_type=='Flexible'){
                 
-$hours_fields=array(
+/*$hours_fields=array(
     'reg_hrs',
     'sh_ot'
     );
@@ -300,7 +300,7 @@ $hours_fields=array(
 $deduction_fields=array(
     'undertime'
     );
-}//end if
+}//end if*/
 
 echo "<table>";
 
@@ -311,9 +311,24 @@ echo "<table>";
                     
                    // echo "<font color=white><td>".floatval($row[$field])."</td></font>";   
                     echo "<td valign=top>";
-                //call functions at functions.php
 
-                $val = $field($row[$field],$HourlyRatePay);
+                //call functions at payroll_compute.php
+                if($employee_type=='Flexi' OR $employee_type=='Flexible'){
+                    $val=0;
+
+                    //if felix, consider only regular hours
+                    if ($field=='reg_hrs')
+                        $val = $field($row[$field],$HourlyRatePay);
+
+                }
+                else{ //don't include reg_hrs if not flexi. make it zero
+                    if($field != 'reg_hrs')
+                        $val = $field($row[$field],$HourlyRatePay);
+                    else
+                        $val=0;
+                }
+
+
                 echo "<font color=black><b>".$field."</b>: ".$val."</font>";
                 echo "</td>";
 
@@ -664,7 +679,7 @@ echo nextline().'**********************************************************'.dou
          $i=0;
          foreach ($fields_salary as $field){
            
-            if ($field!='id' and $field!='reg_hrs' and $field!='process_status'){
+            if ($field!='id' and $field!='process_status'){
                  $i++;
              $into_fields=$into_fields.$field.", ";
 
@@ -940,15 +955,15 @@ function insert_statement($fields, $values, $table){
 
     $sql="INSERT INTO $table $fields VALUES $values";
 
-    echo $sql;
+    echo "sql: ".$sql;
 
     echo nextline().nextline();;
 
     if ($conn->query($sql) === TRUE) {
-    echo "New record created successfully";
+    echo "New record created successfully<br><br>";
     } 
     else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "Error: " . $sql . "<br><br>" . $conn->error;
     }
 }
 
