@@ -268,7 +268,7 @@
 						<form id = "uploadForm" method="POST" action = "applicantstatus.php"  class="form-horizontal">
 							<div class="form-group">
 								<div class = "form-group">
-										<div class= "col-sm-1"></div><label class="col-sm-2 control-label">Status</label><div class = "col-md-8"><select class = "form-control" id = "status" value = "Select" name ="status" required="" onchange="changetextbox();" data-default-value="z"><option selected="true" disabled="disabled" value = "z">Select status...</option>  <option value = "For interview">For interview</option><option value = "No show">No show</option><option value = "Hired">Hired</option></select>
+										<div class= "col-sm-1"></div><label class="col-sm-2 control-label" required>Status</label><div class = "col-md-8"><select class = "form-control" id = "status" value = "Select" name ="status" onchange="changetextbox();" data-default-value="z" required><option selected="true" disabled="disabled" value = "z">Select status...</option>  <option value = "For interview">For interview</option><option value = "No show">No show</option><option value = "Hired">Hired</option></select>
 									</div>
 								</div>
 								<div class = "form-group">
@@ -300,7 +300,7 @@
 					</div>
 				</div>	
 				<div class="modal-footer">
-					<button class='btn btn-primary' type='submit' name = "approved"><i class='fa fa-check'></i> Submit</button></a>
+					<button class='btn btn-primary' type='submit' name = "approved">Submit</button></a>
 					<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
 					</form>
 				</div>				
