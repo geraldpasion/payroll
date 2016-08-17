@@ -63,7 +63,7 @@ if(isset($_GET['daterange2']) and $_GET['daterange2'] != '' and isset($_GET['dat
 			return false;
 		}
 		else{
-		$mysqli->query("INSERT INTO cutoff (cutoff_id, cutoff_initial, cutoff_end, cutoff_status, cutoff_submission) VALUES ('','$initial','$end','Active','')");
+		$mysqli->query("INSERT INTO cutoff (cutoff_id, cutoff_initial, cutoff_end, cutoff_status, cutoff_submission, cutoff_sched_submission) VALUES ('','$initial','$end','Active','','Submitted')");
 		echo 'swal({  title: "Saved",   text: "Cutoff Saved",   timer: 3000, type: "success",   showConfirmButton: false}); $("#myModal4").modal("hide"); $("#daterange2").val(""); $("#daterange3").val("");';
 			// return false;
 		}

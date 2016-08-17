@@ -18,7 +18,11 @@
 		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">		
 				
 		<script src="js/keypress.js"></script>
-
+		<script>
+		function myFunction() {
+			document.getElementById("frmUser").reset();
+		}
+		</script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				showEdited=function(){
@@ -70,7 +74,7 @@
 		?>
 	</head>
 	<body>
-		<form name="frmUser" method="post" action="editrestdayexe.php">
+		<form name="frmUser" id="frmUser" method="post" action="editrestdayexe.php">
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="ibox float-e-margins">
@@ -104,7 +108,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Rest Day 1</label>
+								<label class="col-sm-2 control-label" style="margin-top:5px;">Rest Day 1</label>
 								<div class="col-md-4">
 									<select id = "restday1" class="form-control" name="rest1" required="">
 										<option value="Saturday" selected>Saturday</option>
@@ -120,7 +124,7 @@
 
 							<div class="form-group">
 							<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Rest Day 2</label>
+								<label class="col-sm-2 control-label" style="margin-top:5px;">Rest Day 2</label>
 								<div class="col-md-4">
 									<select id = "restday2" class="form-control" name="rest2" required="">
 										<option value="Saturday">Saturday</option>
@@ -136,7 +140,7 @@
 
 							<div class="form-group">
 							<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Date Range</label>
+								<label class="col-sm-2 control-label" style="margin-top:5px;">Date Range</label>
 								<div class="col-md-4"><select id = 'hasdate' name = 'hasdate' onchange="change(this);" class = 'form-control' data-default-value='without' required=''>
 									<option value = 'without' selected>Without Date Range (tomorrow onwards)</option>
 									<option value = 'with'>With Specified Date Range</option>
@@ -145,7 +149,7 @@
 
 							<div class="form-group">
 							<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Date</label>
+								<label class="col-sm-2 control-label" style="margin-top:5px;">Date</label>
 								<div class="col-md-4"><input id = "date" type="text" disabled class="form-control" name="daterange" required="" onKeyPress="return noneonly(this, event)"/></div>
 							</div>
 
@@ -197,10 +201,8 @@
 							
 						?>
 							<div class="form-group">
-								
-								<div class="col-sm-8"></div>								
-								<div class="col-sm-2">
-								<!--button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button--></div>
+								<div class="col-md-8"></div>
+								<button type="button" onClick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary">Submit</button>
 							</div>
 						</form>

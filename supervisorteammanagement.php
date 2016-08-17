@@ -10,7 +10,7 @@ document.frmUser.submit();
 		<?php
 			 include('menuheader.php');
 		?>
-		<title>Team Management</title>
+		<title>Team management</title>
 		<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
 		<script src="js/plugins/toastr/toastr.min.js"></script>
 		<link href="css/animate.css" rel="stylesheet">
@@ -18,11 +18,6 @@ document.frmUser.submit();
 		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">		
 				
 		<script src="js/keypress.js"></script>
-		<script>
-		function myFunction() {
-			document.getElementById("frmUser").reset();
-		}
-		</script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				 showEdited=function(){
@@ -62,12 +57,12 @@ document.frmUser.submit();
 		?>
 	</head>
 	<body>
-		<form name="frmUser" id="frmUser" method="post" action="">
+		<form name="frmUser" method="post" action="">
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-title">
-						<h5>Team Management</h5>
+						<h5>Team management</h5>
 						<div class="ibox-tools">
 							<a class="collapse-link">
 								<i class="fa fa-chevron-up"></i>
@@ -90,11 +85,11 @@ document.frmUser.submit();
 					
 
 						<div class="ibox-content">	
-						                        <div class = "col-md-5"></div><a href='#' data-target="#myModal4" data-toggle='modal' ><button class='btn btn-primary' name = 'edit' type='button'>New Team</button></a><br><br><br>
+						                        <div class = "col-md-5"></div><a href='#' data-target="#myModal4" data-toggle='modal' ><button class='btn btn-primary' name = 'edit' type='button'>New Team</button></a>
 							<div class="form-group">
 							
 							<div class="col-md-3"></div>
-								<label class="control-label col-sm-1" style="margin-top:5px;">Team</label>
+								<label class="col-sm-1 control-label">Team</label>
 																<div class="col-md-4"><select id = "teamname" class="form-control"  data-default-value="z" name="teamname" required="">
 								<?php 
 								include('dbconfig.php');
@@ -175,9 +170,9 @@ document.frmUser.submit();
 							
 						?>
 							<div class="form-group">
-								<div class="col-md-8"></div>
-								<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary" onClick="setUpdateAction();">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<button type="button" onClick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
+								<div class="col-md-3"></div>
+								<div class="col-md-5"><button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary" onClick="setUpdateAction();">Submit</button></div>
+								<div class="col-md-4"><button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button></div>
 							</div>
 						</form>
 						<br><br><br>
@@ -198,7 +193,7 @@ document.frmUser.submit();
 
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 					<i class="fa fa-edit modal-icon"></i>
-					<h4 class="modal-title">Add New Team</h4>
+					<h4 class="modal-title">Add new team</h4>
 				</div>    
         	<div class="modal-body">
 					<div class="ibox-content">

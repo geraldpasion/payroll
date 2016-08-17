@@ -30,14 +30,19 @@
 			}
 		</style>
 	</style>
-<script type="text/javascript">
+	<script type="text/javascript">
 		$(function() {
 			$('input[id="daterange"]').daterangepicker({
 				singleDatePicker: true,
 				showDropdowns: true
 			});
 		});
-		</script>
+	</script>
+	<script>
+		function myFunction() {
+				document.getElementById("myForm").reset();
+			}
+	</script>
 </head>
 
 
@@ -634,10 +639,10 @@
 										<div class="col-md-8">
 										</div>
 									<div class="col-md-2">
-									<button id ="submit" type="submit" name="submit" class="btn btn1 btn-w-m btn-primary">Submit</button>
+										<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
 									</div>
 									<div class="col-md-1">
-										<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
+										<button id ="submit" type="submit" name="submit" class="btn btn1 btn-w-m btn-primary">Submit</button>
 										</form></form>
 								
             </div>

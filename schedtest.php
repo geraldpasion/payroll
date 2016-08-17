@@ -10,7 +10,7 @@
 		<?php
 			 include('menuheader.php');
 		?>
-		<title>Employee list</title>
+		<title>Employee List</title>
 		<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
 		<script src="js/plugins/toastr/toastr.min.js"></script>
 		<link href="css/animate.css" rel="stylesheet">
@@ -18,6 +18,11 @@
 		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">		
 				
 		<script src="js/keypress.js"></script>
+		<script>
+		function myFunction() {
+			document.getElementById("frmUser").reset();
+		}
+		</script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				 showEdited=function(){
@@ -119,12 +124,12 @@
 		?>
 	</head>
 	<body>
-		<form name="frmUser" method="post" action="schedtestexe.php">
+		<form name="frmUser" id="frmUser" method="post" action="schedtestexe.php">
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-title">
-						<h5>Employee list</h5>
+						<h5>Employee List</h5>
 						<div class="ibox-tools">
 							<a class="collapse-link">
 								<i class="fa fa-chevron-up"></i>
@@ -155,7 +160,7 @@
 							
 							<div class="form-group">
 							<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Schedule List</label>
+								<label class="col-sm-2 control-label" style="margin-top:5px;">Schedule List</label>
 								<div class="col-md-4"><select id = "leavetype" class="form-control"  data-default-value="z" name="sched" required="">
 								<?php 
 								include('dbconfig.php');
@@ -178,7 +183,7 @@
 							</div><br><br><br>
 					<div class="form-group">
 					<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Date</label>
+								<label class="col-sm-2 control-label" style="margin-top:5px;">Date</label>
 								<div class="col-md-4"><input id = "date" type="text"  class="form-control" name="daterange" required="" onKeyPress="return noneonly(this, event)"/></div>
 					</div>
 					<br><br><br><br>
@@ -232,10 +237,11 @@
 							
 						?>
 							<div class="form-group">
-								<div class="col-md-3"></div>
-								<div class="col-md-5"><button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary">Submit</button></div>
-								<div class="col-md-4"><button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button></div>
+								<div class="col-md-8"></div>
+								<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary">Submit</button>
 							</div>
+							
 						</form>
 						</div></div>
 						<br>
@@ -256,7 +262,7 @@
 
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 					<i class="fa fa-edit modal-icon"></i>
-					<h4 class="modal-title">Add new shift</h4>
+					<h4 class="modal-title">Add New Shift</h4>
 				</div>    
         		<div class="modal-body">
 					<div class="ibox-content">

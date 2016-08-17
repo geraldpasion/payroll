@@ -8,7 +8,7 @@
 	    //if($fromAttendance == 2) {				// this part is removed since supervisor(level 2) is now prevented-
 	    //	include('supervisormenuheader.php'); 	// -access of all employees attendance records
 	    //} else if($fromAttendance == 1) {
-	    	include('menuheader.php');
+	    	include('supervisormenuheader.php');
 	     	$fromAttendance = 1; // remove this if supervisor is allowed to view attendance of all
 	 	// }
 
@@ -255,9 +255,9 @@
 							<div style="margin-left:-125px" class="col-md-3"></div>
 							<?php 
 								//if($fromAttendance == 1)  // for level 3 users
-									echo'<form method="POST" action="attendance.php">'; 
+									//echo'<form method="POST" action="attendance.php">'; 
 								//else // for level 2 users
-								//	echo'<form method="POST" action="attendance2.php">'; 
+									echo'<form method="POST" action="attendance2.php">'; 
 							?>
 								<table>
 									<tr>
@@ -277,7 +277,7 @@
 											$datet1 = strtotime($keydateto1)*1000;
 										?>
 										<td style="padding:10px;"><button type="submit" name="test" class="btn btn-w-m btn-primary">Validate</button></td>
-										<td style="padding:10px;"><button type="button" name="export" class="btn btn-w-m btn-primary" onclick="<?php echo 'exportDet('.$id.','.$datef1.','.$datet1.')'; ?>">Export This Attendance</button></td>
+										<!--td style="padding:10px;"><button type="button" name="export" class="btn btn-w-m btn-primary" onclick="<?php //echo 'exportDet('.$id.','.$datef1.','.$datet1.')'; ?>">Export This Attendance</button></td-->
 									</tr>
 								</table>
 							</form>
@@ -296,7 +296,7 @@
 							$keydatefrom = $cutarray[0];
 							$keydateto = $cutarray[1];
 						}
-						if(isset($_POST['keydate'])){
+						if(isset($_POST['keydate1'])){
 							$keydate1 = $_POST['keydate1'];
 
 							$cutarray = array();
@@ -306,21 +306,27 @@
 						}
 						include('dbconfig.php');
 						//if($fromAttendance == 1) 
-							echo '<form name="frmUser" method="post" action="attendance.php">';
+							echo '<form name="frmUser" method="post" action="attendance2.php">';
 						//else echo '<form name="frmUser" method="post" action="attendance2.php">';
 							echo "<input type='hidden' id='datefilter' name='datefilter' value='". $newDateFilter ."'>";
 							$keydate = "WHERE attendance_date BETWEEN '$datef' AND '$datet' AND attendance.employee_id = '".$id."' AND (attendance.status = 'Done' OR attendance.attendance_status = 'active' OR attendance.attendance_status = 'outforbreak' OR attendance.attendance_status = 'infrombreak') AND employee.employee_type = 'Fixed'";
 							$keydate1 = "WHERE attendance_date BETWEEN '$datef' AND '$datet' AND attendance.employee_id = '".$id."' AND (attendance.status = 'Done' OR attendance.attendance_status = 'active' OR attendance.attendance_status = 'outforbreak' OR attendance.attendance_status = 'infrombreak') AND employee.employee_type = 'Flexible'";
 							$employeeData = $mysqli->query("SELECT * FROM employee WHERE employee_id = '$id'")->fetch_array();
-							echo "<h4><label class='control-label' style='float:left;text-transform:uppercase;padding-top:10px;'>&nbsp;" . $employeeData['employee_firstname'] . " " . $employeeData['employee_lastname'] . " (" . $employeeData['employee_type'] . ")". "</label></h4>";
+							$etype = $employeeData['employee_type'];
+							echo "<h4><label class='control-label' style='float:left;text-transform:uppercase;padding-top:10px;'>&nbsp;" . $employeeData['employee_firstname'] . " " . $employeeData['employee_lastname'] . " (" . $etype . ")". "</label></h4>";
 							echo "<button type='submit' name='list' id='list' class='btn btn-success' style='float:right;'><span class='glyphicon glyphicon-circle-arrow-left'>&nbsp;</span><span>Employee List</span></button>";
 							echo "<input type='text' class='form-control input-sm m-b-xs' id='filter' placeholder='Search in table'>";
 
 							if ($result = $mysqli->query("SELECT * FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id $keydate ORDER BY attendance_date")) //get records from db
 							{
-								if ($result->num_rows > 0) //display records if any
-								{	
 
+								if ($result->num_rows > 0) //display records if any
+								{
+									//if($etype = 'Flexible'){
+
+									//if ($result2 = $mysqli->query("SELECT employee_id FROM employee WHERE employee_type = 'Flexible'")) //get records from employees = flexible
+									//{
+										//if($result2->num_rows>0){
 									echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";			
 									echo "<thead>";
 									echo "<tr>";
@@ -486,7 +492,8 @@
 										}
 
 										//start lois
-											
+										
+										//absent	
 										if($row->attendance_absent == "") { //absent lois
 											echo "<td></td>";
 										} else {
@@ -502,6 +509,7 @@
 											echo "<td>" . $regHrs . "</td>";
 										}*/
 
+										//late
 										if($row->attendance_late == "") { //late lois
 											echo "<td>00:00</td>";
 										} else {
@@ -510,6 +518,8 @@
 											$late = $hour . ":" . $min;
 											echo "<td>" .  $late . "</td>";
 										}
+
+										//undertime
 										if($row->attendance_undertime == "") { //undertime 
 											echo "<td>00:00</td>";
 										} else {
@@ -519,6 +529,7 @@
 											echo "<td>" . $undertime . "</td>";
 										}
 
+										//overbreak
 										if($row->attendance_overbreak == "") { //overbreak
 											echo "<td>00:00</td>";
 										} else {
@@ -569,13 +580,20 @@
 										echo "</tr>";
 									}
 									echo "</table>";
-								}
-							}
+								//}//end result check flexi
+								//}//end query for flexi
+								}// end result check
+							}//fixed
 							if ($result = $mysqli->query("SELECT * FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id $keydate1 ORDER BY attendance_date")) //get records from db
 							{
-								if ($result->num_rows > 0) //display records if any
-								{	
 
+								if ($result->num_rows > 0) //display records if any
+								{
+									//if($etype = 'Flexible'){
+
+									//if ($result2 = $mysqli->query("SELECT employee_id FROM employee WHERE employee_type = 'Flexible'")) //get records from employees = flexible
+									//{
+										//if($result2->num_rows>0){
 									echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";			
 									echo "<thead>";
 									echo "<tr>";
@@ -741,7 +759,8 @@
 										}
 
 										//start lois
-											
+										
+										//absent	
 										/*if($row->attendance_absent == "") { //absent lois
 											echo "<td></td>";
 										} else {
@@ -757,7 +776,8 @@
 											echo "<td>" . $regHrs . "</td>";
 										}
 
-										/*if($row->attendance_late == "") { //late lois
+										/*late
+										if($row->attendance_late == "") { //late lois
 											echo "<td>00:00</td>";
 										} else {
 											$hour = sprintf("%02d", floor($row->attendance_late/60));
@@ -765,6 +785,8 @@
 											$late = $hour . ":" . $min;
 											echo "<td>" .  $late . "</td>";
 										}*/
+
+										//undertime
 										if($row->attendance_undertime == "") { //undertime 
 											echo "<td>00:00</td>";
 										} else {
@@ -774,6 +796,7 @@
 											echo "<td>" . $undertime . "</td>";
 										}
 
+										//overbreak
 										/*if($row->attendance_overbreak == "") { //overbreak
 											echo "<td>00:00</td>";
 										} else {
@@ -824,8 +847,10 @@
 										echo "</tr>";
 									}
 									echo "</table>";
-								}
-							}
+								//}//end result check flexi
+								//}//end query for flexi
+								}// end result check
+							}//flexi
 						echo "<input type='hidden' value='".$datef."' name='datef'>";
 						echo "<input type='hidden' value='".$datet."' name='datet'>";
 						

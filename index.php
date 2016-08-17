@@ -390,9 +390,10 @@ if(isset($_POST['submit'])){
 							<h3 style="text-align:center">Enter your username:</h3><br>
 							<input type = "text" class = "form-control" placeholder = "Username" name = "username" required = "" onKeyPress="return numbersonly(this, event)">
 						</div>
-							<div class="col-sm-3"></div>
+							<div class="col-sm-2"></div>
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<button type="submit" name="submit" class="btn btn-primary">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
-							<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+							
 							
 					</table>
 					</form>

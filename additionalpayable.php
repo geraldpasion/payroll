@@ -21,6 +21,11 @@
 				margin-left:-10.7em;
 			}
 		</style>
+		<script>
+		function myFunction() {
+			document.getElementById("myForm").reset();
+		}
+		</script>
 		<script type="text/javascript">
 		$(function() {
 			$('input[name="daterange"]').daterangepicker({
@@ -247,9 +252,12 @@
 								<div class="form-group">
 								<label class="col-sm-4 control-label">Reason</label>
 								<div class="col-md-4"><input id = "reason"  onpaste="return false" onDrop="return false" name = "reason" type="text" class="form-control" required="" placeholder = "Type your reason here..."></div>
+							</div><br><br>
+							<div class="form-group">
+							<div class="col-md-8"></div>
+								<button id ="submit" type="submit" class="btn btn-w-m btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<button type="button" onClick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
 							</div>
-							<div class="col-md-4"></div>
-								<button id ="submit" type="submit" class="btn btn-w-m btn-primary">Submit</button>
 							</form>
 					</div>
 				</div>

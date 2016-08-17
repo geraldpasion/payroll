@@ -118,6 +118,7 @@ include 'dbconfig.php';
 include 'payroll_compute.php';
 include 'statutory_benefits_compute.php';
 include 'other_earnings_and_deductions.php';
+include 'testtable.php';
 //require 'rb.php';
 
 //clear first
@@ -337,7 +338,11 @@ echo "<table>";
 
 
                 echo "<td valign=top>";
-                $NetTaxableIncome = $NetTaxableIncome + $val;
+                if($employee_type=='Flexi' OR $employee_type=='Flexible'){
+                    $NetTaxableIncome=$BaseSalary;
+                }
+                else
+                 $NetTaxableIncome = $NetTaxableIncome + $val;
                 echo "<font color=black><b>".$field."</b>: ".$row[$field]."</font>";
                 echo "</td>";
 
@@ -574,7 +579,7 @@ echo nextline().'**********************************************************'.dou
        
         $GrossCheck=0;
 
-        if ($cutoff=='Monthly'){
+        /*if ($cutoff=='Monthly'){
                         
                         $TaxDetails=TaxMonthly($Taxcode, $NetTaxableIncome);
                        $NetIncomeAfterTax=$TaxDetails[7];
@@ -585,7 +590,11 @@ echo nextline().'**********************************************************'.dou
                         //$NetIncomeAfterTax=TaxSemiMonthly($Taxcode, $NetTaxableIncome);
                       $TaxDetails=TaxSemiMonthly($Taxcode, $NetTaxableIncome);
                       $NetIncomeAfterTax=$TaxDetails[7];
-                    }
+                    }*/
+
+        //optimized code. tax values are pulled out from database, tables: taxtable, taxtable_meta
+           $TaxDetails=TaxMonthly($Taxcode, $NetTaxableIncome, $cutoff);
+                       $NetIncomeAfterTax=$TaxDetails[7];          
 
 
         echo nextline();

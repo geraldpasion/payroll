@@ -25,6 +25,7 @@
 		<link href="css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 		<!-- Clock picker -->
 		<script src="js/plugins/clockpicker/clockpicker.js"></script>
+		
 		<script type="text/javascript">
 			$(function() {
 				$('input[name="daterange"]').daterangepicker({
@@ -160,14 +161,14 @@
 										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
-										echo "<th>Name</th>";
-										echo "<th>Date</th>";
-										echo "<th>Attendance</th>";
-										echo "<th>Time in</th>";
-										echo "<th>Out for break</th>";
-										echo "<th>In from break</th>";
-										echo "<th>Time out</th>";
-										echo "<th>Action</th>";
+										echo "<th style='text-align:center'>Name</th>";
+										echo "<th style='text-align:center'>Date</th>";
+										echo "<th style='text-align:center'>Attendance</th>";
+										echo "<th style='text-align:center'>Time in</th>";
+										echo "<th style='text-align:center'>Out for break</th>";
+										echo "<th style='text-align:center'>In from break</th>";
+										echo "<th style='text-align:center'>Time out</th>";
+										echo "<th style='text-align:center'>Action</th>";
 										echo "</tr>";
 										echo "</thead>";
 										echo "<tfoot>";                    
@@ -180,26 +181,26 @@
 										while ($row = $result->fetch_object())
 										{
 											echo "<tr class = 'josh'>";
-											echo "<td>" . $row->employee_firstname . " " . $row->employee_lastname . "</td>";
-											echo "<td>" . date("Y-m-d",strtotime($row->logedit_date)) . "</td>";
+											echo "<td style='text-align:center'>" . $row->employee_firstname . " " . $row->employee_lastname . "</td>";
+											echo "<td style='text-align:center'>" . date("Y-m-d",strtotime($row->logedit_date)) . "</td>";
 											if($row->attendance_status == "timeout") $attRecord = "Present";
 											else if($row->attendance_status == "inactive") $attRecord = "Absent";
-											echo "<td>" . $attRecord . "</td>";
+											echo "<td style='text-align:center'>" . $attRecord . "</td>";
 
 											if($row->logedit_timein == "") echo "<td></td>";
-											else echo "<td>" . date("g:i A",strtotime($row->logedit_timein)) . "</td>";	
+											else echo "<td style='text-align:center'>" . date("g:i A",strtotime($row->logedit_timein)) . "</td>";	
 
 											if($row->logedit_breakout == "") echo "<td></td>";
-											else echo "<td>" . date("g:i A",strtotime($row->logedit_breakout)). "</td>";
+											else echo "<td style='text-align:center'>" . date("g:i A",strtotime($row->logedit_breakout)). "</td>";
 
 											if($row->logedit_breakin == "") echo "<td></td>";
-											else echo "<td>" . date("g:i A",strtotime($row->logedit_breakin)) . "</td>";
+											else echo "<td style='text-align:center'>" . date("g:i A",strtotime($row->logedit_breakin)) . "</td>";
 											
 											if($row->logedit_timeout == "") echo "<td></td>";
-											else echo "<td>" . date("g:i A",strtotime($row->logedit_timeout)) . "</td>";
+											else echo "<td style='text-align:center'>" . date("g:i A",strtotime($row->logedit_timeout)) . "</td>";
 
 											if($empLevel == '2' && $row->employee_id == $employeeidsession) {
-												echo "<td><button class='btn btn-success' name = 'edit' type='button' disabled><i class='fa fa-paste'></i> Approve</button>&nbsp;&nbsp;";
+												echo "<td style='text-align:center'><button class='btn btn-success' name = 'edit' type='button' disabled><i class='fa fa-paste'></i> Approve</button>&nbsp;&nbsp;";
 											
 												echo "<button class='btn btn-danger' type='button' disabled><i class='fa fa-warning'></i> Disapprove</button>";
 											} else {

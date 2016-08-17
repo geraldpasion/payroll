@@ -293,7 +293,7 @@ $(".modal-body #wew").val( wew );
 									<select id = "leavetype" class="form-control"  data-default-value="z" name="selection" required="">
 								<?php 
 								include('dbconfig.php');
-								if ($result1 = $mysqli->query("SELECT * FROM cutoff WHERE cutoff_status = 'Active'")) //get records from db
+								if ($result1 = $mysqli->query("SELECT * FROM cutoff WHERE cutoff_status = 'Active' AND cutoff_sched_submission='Submitted'")) //get records from db
 									{
 										if ($result1->num_rows > 0) //display records if any
 										{
@@ -518,6 +518,7 @@ $(".modal-body #wew").val( wew );
 													$newundertime = 0.00;
 												} else {
 													$newundertime = $required - $newreghrs;
+													$newundertime = $newundertime * 60; //convert to mins
 												}
 
 												//zero values except reg hours and special holiday

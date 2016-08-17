@@ -336,6 +336,8 @@
 			});*/
 		</script>
 		<script src="js/keypress.js"></script>
+
+
 	</head>
 	<body>
 		<div class="row">
@@ -533,6 +535,15 @@
 		<?php
 			include('menufooter.php');
 		?>
+
+
+		
+		<script>
+			jQuery(function(){
+			   jQuery('#test1').click();
+			});
+		</script>
+
 	</body>
 
 </html>

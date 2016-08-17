@@ -164,7 +164,7 @@
 							$employeeData = $mysqli->query("SELECT * FROM employee WHERE employee_id = '$empid'")->fetch_array();
 							echo "<h4><label class='control-label' style='text-align:left;text-transform:uppercase;'>&nbsp;&nbsp;" . $employeeData['employee_firstname'] . " " . $employeeData['employee_lastname'] . "</h4></label>";
 							echo '<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">';
-								if ($result = $mysqli->query("SELECT * FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id WHERE employee.employee_id = $empid AND (attendance.status = 'Done' OR attendance.attendance_status = 'active' OR attendance.attendance_status = 'outforbreak' OR attendance.attendance_status = 'infrombreak') ORDER BY attendance_date")) //get records from db
+								if ($result = $mysqli->query("SELECT * FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id WHERE employee.employee_id = $empid AND employee.employee_type = 'Fixed' AND (attendance.status = 'Done' OR attendance.attendance_status = 'active' OR attendance.attendance_status = 'outforbreak' OR attendance.attendance_status = 'infrombreak') ORDER BY attendance_date")) //get records from db
 								{
 									if ($result->num_rows > 0) //display records if any
 									{
@@ -185,6 +185,7 @@
 										//echo "<th>REG HRS</th>";
 										echo "<th>LATE (min)</th>";
 										echo "<th>UNDER TIME (min)</th>";
+										echo "<th>OVER BREAK</th>";
 										//echo "<th>REG OT</th>";
 										echo "<th>Action</th>";
 										echo "</tr>";
@@ -354,6 +355,15 @@
 												echo "<td>" . $undertime . "</td>";
 											}
 
+											//overbreak
+											if($row->attendance_overbreak == "") { //overbreak
+											echo "<td>00:00</td>";
+											} else {
+											$hour = sprintf("%02d", floor($row->attendance_overbreak/60));
+											$min = sprintf("%02d", $row->attendance_overbreak % 60);
+											$overbreak = $hour . ":" . $min;
+											echo "<td>" . $overbreak . "</td>";
+											}
 											// if($row->attendance_overtime == "") { //reg ot
 											// 	echo "<td>0.00</td>";
 											// } else {
@@ -385,7 +395,227 @@
 										echo "</table>";
 									}
 								}
-							
+								if ($result = $mysqli->query("SELECT * FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id WHERE employee.employee_id = $empid AND employee.employee_type = 'Flexible' AND (attendance.status = 'Done' OR attendance.attendance_status = 'active' OR attendance.attendance_status = 'outforbreak' OR attendance.attendance_status = 'infrombreak') ORDER BY attendance_date")) //get records from db
+								{
+									if ($result->num_rows > 0) //display records if any
+									{
+										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
+										echo "<thead>";
+										echo "<tr>";
+										//echo "<th>Name</th>";
+										echo "<th>Date</th>";
+										echo "<th>Type of Day</th>";
+										echo "<th>Rest Days</th>";
+										echo "<th>Shift</th>";
+										echo "<th>Schedule</th>";
+										echo "<th>Time in</th>";
+										echo "<th>Out from break</th>";
+										echo "<th>In from break</th>";
+										echo "<th>Time out</th>";
+										//echo "<th>ABS</th>";
+										echo "<th>REG HRS</th>";
+										//echo "<th>LATE (min)</th>";
+										echo "<th>UNDER TIME (min)</th>";
+										//echo "<th>REG OT</th>";
+										echo "<th>Action</th>";
+										echo "</tr>";
+										echo "</thead>";
+										echo "<tfoot>";                    
+										echo "<tr>";
+										echo "<td colspan='78'>";
+										echo "<ul class='pagination pull-right'></ul>";
+										echo "</td>";
+										echo "</tr>";
+										echo "</tfoot>";
+										while ($row = $result->fetch_object())
+										{
+											$timein = $row->attendance_timein;
+											$timeout = $row->attendance_timeout;
+											$breakin = $row->attendance_breakin;
+											$breakout = $row->attendance_breakout;
+
+											$attendance_date = $row->attendance_date;
+											$employee_id = $row->employee_id;
+											$attendance_id = $row->attendance_id;
+											$restday = $row->attendance_restday;
+											$restdayArray = array();
+											$restdayArray = split('/', $restday);
+											$shifting = $row->attendance_shift;
+											$shiftArray = array();
+											$shiftArray = split('-', $shifting);
+
+											$zero = "0.00";
+											$s_zero = "0";
+											
+											$dateWithDay = date('Y-m-d:l', strtotime($attendance_date));
+											$dateWithDayArray = array();
+											$dateWithDayArray = split(':', $dateWithDay);
+
+											$typeOfDay = "Regular";
+											if($dateRow = $mysqli->query("SELECT * FROM holiday where holiday_date = '$dateWithDayArray[0]' AND holiday_archive != 'archive'")->fetch_array()) {
+												if($dateRow['holiday_type'] == "Regular" || $dateRow['holiday_type'] == "Legal") {
+													if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])) {
+														$typeOfDay = "Rest & Legal Holiday";
+													} else {
+														$typeOfDay = "Legal Holiday";
+													}
+												} else {
+													if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])) {
+														$typeOfDay = "Rest & Special Holiday";
+													} else {
+														$typeOfDay = "Special Holiday";
+													}
+												}
+											} else if(($restdayArray[0] == $dateWithDayArray[1]) || ($restdayArray[1] == $dateWithDayArray[1])) {
+												$typeOfDay = "Rest Day";
+											}
+
+											if($row->attendance_timein == "") {
+												$timeindisplay = "";
+											} else {
+												$timeindisplay = date("g : i : A",strtotime($row->attendance_timein));
+												if(strlen($timeindisplay) < 12){
+													$timeindisplay = '0'.$timeindisplay; 
+												}	
+											}
+												
+											if($row->attendance_breakout == "") {
+												$breakoutdisplay = "";
+											} else {
+												$breakoutdisplay = date("g : i : A",strtotime($row->attendance_breakout));
+												if(strlen($breakoutdisplay) < 12){
+													$breakoutdisplay = '0'.$breakoutdisplay; 
+												}
+											}
+											
+											if($row->attendance_breakin == "") {
+												$breakindisplay = "";
+											} else {
+												$breakindisplay = date("g : i : A",strtotime($row->attendance_breakin));
+												if(strlen($breakindisplay) < 12){
+													$breakindisplay = '0'.$breakindisplay; 
+												}
+											}
+
+											if($row->attendance_timeout == "") {
+												$timeoutdisplay = "";
+											} else {
+												$timeoutdisplay = date("g : i : A",strtotime($row->attendance_timeout));
+												if(strlen($timeoutdisplay) < 12){
+													$timeoutdisplay = '0'.$timeoutdisplay;
+												}
+											}
+										
+											echo "<tr>";
+											//echo "<td>" . $row->employee_firstname . " " . $row->employee_lastname . "</td>";
+											echo "<td>" . date("Y-m-d",strtotime($row->attendance_date)) . "</td>";
+											echo "<td>" . $typeOfDay . "</td>";
+											echo "<td>";
+												if($restdayArray[0] == "Monday") echo "Mon/";
+												else if($restdayArray[0] == "Tuesday") echo "Tue/";
+												else if($restdayArray[0] == "Wednesday") echo "Wed/";
+												else if($restdayArray[0] == "Thursday") echo "Thu/";
+												else if($restdayArray[0] == "Friday") echo "Fri/";
+												else if($restdayArray[0] == "Saturday") echo "Sat/";
+												else if($restdayArray[0] == "Sunday") echo "Sun/";
+
+												if($restdayArray[1] == "Monday") echo "Mon</td>";
+												else if($restdayArray[1] == "Tuesday") echo "Tue</td>";
+												else if($restdayArray[1] == "Wednesday") echo "Wed</td>";
+												else if($restdayArray[1] == "Thursday") echo "Thu</td>";
+												else if($restdayArray[1] == "Friday") echo "Fri</td>";
+												else if($restdayArray[1] == "Saturday") echo "Sat</td>";
+												else if($restdayArray[1] == "Sunday") echo "Sun</td>";
+											echo "<td>" . $row->employee_type . "</td>";
+											echo "<td>" . $row->attendance_shift . "</td>";
+											if($row->attendance_timein == ""){
+											echo "<td></td>";
+											}else{
+											echo "<td>" . date("g:i A",strtotime($row->attendance_timein)) . "</td>";	
+											}
+											if($row->attendance_breakout == ""){
+											echo "<td></td>";
+											}else{
+											echo "<td>" . date("g:i A",strtotime($row->attendance_breakout)). "</td>";
+											}
+
+											if($row->attendance_breakin == ""){
+											echo "<td></td>";
+											}else{
+											echo "<td>" . date("g:i A",strtotime($row->attendance_breakin)) . "</td>";
+											}
+
+											if($row->attendance_timeout == ""){
+											echo "<td></td>";
+											}else{
+											echo "<td>" . date("g:i A",strtotime($row->attendance_timeout)) . "</td>";
+											}
+											//START LOIS
+											
+											/*if($row->attendance_absent == "") { //absent lois
+												echo "<td></td>";
+											} else {
+												echo "<td>" . $row->attendance_absent . "</td>";
+											}*/
+
+											 if($row->attendance_hours == "") { //reg hrs lois
+											 	echo "<td>00:00</td>";
+											 } else {
+											 	$hour = sprintf("%02d", floor($row->attendance_hours));
+											 	$min = sprintf("%02d", round(60*($row->attendance_hours - $hour)));
+												$regHrs = $hour . ":" . $min;
+											 	echo "<td>" . $regHrs . "</td>";
+											 }
+
+											/*if($row->attendance_late == "") { //late lois
+												echo "<td>00:00</td>";
+											} else {
+												$hour = sprintf("%02d", floor($row->attendance_late/60));
+												$min = sprintf("%02d", $row->attendance_late % 60);
+												$late = $hour . ":" . $min;
+												echo "<td>" .  $late . "</td>";
+											}*/
+
+											if($row->attendance_undertime == "") { //undertime 
+												echo "<td>00:00</td>";
+											} else {
+												$hour = sprintf("%02d", floor($row->attendance_undertime/60));
+												$min = sprintf("%02d", $row->attendance_undertime % 60);
+												$undertime = $hour . ":" . $min;
+												echo "<td>" . $undertime . "</td>";
+											}
+
+											// if($row->attendance_overtime == "") { //reg ot
+											// 	echo "<td>0.00</td>";
+											// } else {
+											// 	echo "<td>" . $row->attendance_overtime . "</td>";
+											// }
+											
+											//END LOIS
+											if($row->attendance_status == "timeout") $attRecord = "Present";
+											else if($row->attendance_status == "inactive") $attRecord = "Absent";
+											$empType = $employeeData['employee_type'];
+											echo "<td><a href='#' data-toggle='modal' data-target='#myModal4' class = 'showmodal' 											
+														data-id='$row->attendance_id' 
+														data-date='$row->attendance_date'
+														data-emp='$empType'
+														data-attend='$attRecord'
+														data-absentbool='$row->attendance_absent' 
+														data-timein='$timeindisplay'
+														data-breakout='$breakoutdisplay'
+														data-breakin='$breakindisplay'
+														data-timeout='$timeoutdisplay'
+														data-status='$row->attendance_status'
+														data-daytype='$row->attendance_daytype'
+														data-remarks='$row->attendance_remarks'
+														
+											
+											><button class='btn btn-info' type='button'><i class='fa fa-paste'></i> Edit</button></a></td>";
+											echo "</tr>";
+										}
+										echo "</table>";
+									}
+								}
 						?>
 
 					</div>

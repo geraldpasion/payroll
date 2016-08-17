@@ -4,7 +4,7 @@
 		<?php
 			 include('menuheader.php');
 		?>
-		<title>Employee list</title>
+		<title>Employee List</title>
 		<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
 		<script src="js/plugins/toastr/toastr.min.js"></script>
 		<link href="css/animate.css" rel="stylesheet">
@@ -340,7 +340,7 @@
 			<div class="col-lg-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-title">
-						<h5>Employee list</h5>
+						<h5>Employee List</h5>
 						<div class="ibox-tools">
 							<a class="collapse-link">
 								<i class="fa fa-chevron-up"></i>
@@ -372,10 +372,12 @@
 										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
-										echo "<th>ID</th>";
-										echo "<th>Name</th>";
-										echo "<th>Department</th>";
-										echo "<th>Action</th>";
+										echo "<th style='text-align:center;'>ID</th>";
+										echo "<th style='text-align:center;'>Name</th>";
+										echo "<th style='text-align:center;'>Department</th>";
+										echo "<th style='text-align:center;'>Team</th>";
+										echo "<th style='text-align:center;'>Access Level</th>";
+										echo "<th style='text-align:center;'>Action</th>";
 										echo "</tr>";
 										echo "</thead>";
 										echo "<tfoot>";                    
@@ -397,8 +399,10 @@
 											$restdayArray = array();
 											$restdayArray = split('/', $row1->employee_restday);
 											echo "<tr class = 'josh'>";
-											echo "<td>" . $row1->employee_id . "</td>";
-											echo "<td><a href='#' data-toggle='modal'
+											//employee id
+											echo "<td style='text-align:center;'>" . $row1->employee_id . "</td>";
+											//name
+											echo "<td style='text-align:center;'><a href='#' data-toggle='modal'
 														data-employee-id='$empid' 
 														data-lastname='$row1->employee_lastname' 
 														data-firstname='$row1->employee_firstname' 
@@ -430,8 +434,14 @@
 													data-team='$row1->employee_team'  
 
 											data-target='#myModal2' class = 'viewempdialog'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</a></td>";
-											echo "<td>" . $row1->employee_department . "</td>";
-											echo "<td><a href='#' data-toggle='modal' 
+											//department
+											echo "<td style='text-align:center;'>" . $row1->employee_department . "</td>";
+											//team
+											echo "<td style='text-align:center;'>" . $row1->employee_team . "</td>";
+											//access level
+											echo "<td style='text-align:center;'>" . $row1->employee_level . "</td>";
+											//edit
+											echo "<td style='text-align:center;'><a href='#' data-toggle='modal' 
 													data-employee-id='$empid' 
 													data-lastname='$row1->employee_lastname' 
 													data-firstname='$row1->employee_firstname' 
@@ -467,6 +477,7 @@
 													
 													
 													data-target='#myModal4' class = 'editempdialog'><button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> Edit</button></a>&nbsp;&nbsp;";
+											//deactivate and print
 											echo "<a href='#' id='$empid' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Deactivate</button></button></a>
 											<a href = 'employeedocument.php?id=$empid'><button class='btn btn-success' type='button'><i class='fa fa-print'></i> Print</button></a>";
 											
@@ -885,7 +896,7 @@
 				?>
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 					<i class="fa fa-edit modal-icon"></i>
-					<h4 class="modal-title">Edit information</h4>
+					<h4 class="modal-title">Edit Information</h4>
 				</div>
 				<div class="modal-body">
 					<div class="ibox-content">
@@ -902,9 +913,13 @@
 					<form id = "uploadForm" method="POST" action = "editemployee.php" enctype="multipart/form-data" class="form-horizontal">
 
 						<div class="form-group">
+								<div class="col-md-4"></div>
+								<div class="col-md-4">
 								<img class="responsive" name = "targetLayer" id="output"  width="150px" height="150px" id="img1">   
 								<input onchange="loadFile(event, this.id, this.value)"  type="file" id="picture" name="picture" accept="image/jpeg">
 								<input type="hidden" name="userID" id="userID" value="<?php echo $user; ?>">
+								</div>
+								<div class="col-md-4"></div>
 						</div>
 						
 							<div class="form-group">

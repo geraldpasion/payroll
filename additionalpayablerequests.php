@@ -234,7 +234,7 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 					<i class="fa fa-clock-o modal-icon"></i>
-					<h4 class="modal-title">Additional payable details</h4>
+					<h4 class="modal-title">Additional Payable Details</h4>
 				</div>
 				<div class="modal-body">
 					<div class="ibox-content">
@@ -280,7 +280,7 @@
 							</div>	
 							<div class="form-group">
 								<div class="col-md-1"></div>
-								<label class="col-sm-3 control-label">Payable:</label>
+								<label class="col-sm-3 control-label">Due:</label>
 								<div class="col-md-8"><input type="text" id = "payable" class="zx" name = "payable" readonly = "" onKeyPress="return lettersonly(this, event)"></div>
 							</div>	
 							<div class="form-group">

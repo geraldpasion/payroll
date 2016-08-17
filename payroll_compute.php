@@ -6,8 +6,7 @@ email: gerald.pasion@gmail.com
 ?>
 
 
-<html>
-<body>
+
 <?php
 
 //require 'rb.php';
@@ -622,5 +621,3 @@ include 'taxtableMonthly.php';
 //end php  
 ?>
 
-</body>
-</html>

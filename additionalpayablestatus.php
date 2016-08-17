@@ -30,6 +30,7 @@
 		</style>
 		<script type="text/javascript">
 			$(document).on("click", ".viewempdialog", function () {
+
 			 var othersid = $(this).data('id');
 			 var date = $(this).data('date');
 			 var start = $(this).data('start');
@@ -42,6 +43,7 @@
 			 var payable = $(this).data('payable');
 			 var retro = $(this).data('retro');
 			 var remarks = $(this).data('remarks');
+			 var status = $(this).data('status');
 			 
 			 // sets the value for display in the modal
 			 $(".modal-body #othersid").val( othersid );	
@@ -55,10 +57,19 @@
 			 $(".modal-body #paid").val( paid );
 			 $(".modal-body #payable").val( payable );
 			 $(".modal-body #retro").val( retro );
+			 $(".modal-body #status").val( status );
 			 $(".modal-body #othersremarks").val( remarks );
+			 
 			 // As pointed out in comments, 
 			 // it is superfluous to have to manually call the modal.
-			 // $('#addBookDialog').modal('show');   
+			 // $('#addBookDialog').modal('show');  
+
+			 //use === for proper comparison of strings 
+			if(status==='paid'){
+				$('#approvedbtn').hide();
+				$('#disapprovedbtn').hide();
+
+			}
 			
 			});
 		</script>
@@ -189,14 +200,18 @@
 										echo "</thead>";
 										echo "<tfoot>";                    
 										echo "<tr>";
-										echo "<td colspan='10'>";
+										echo "<td colspan='12'>";
 										echo "<ul class='pagination pull-right'></ul>";
 										echo "</td>";
 										echo "</tr>";
 										echo "</tfoot>";
+
+										
 										
 										while ($row = mysqli_fetch_object($result))
 										{
+											//flag for checking if retro is paid. 0 if not paid by default
+											$paidcheck=0;
 											$othersid =$row->others_id;
 											$empsid =$row->employee_id;
 
@@ -215,7 +230,10 @@
 											} else {
 												$attend = "Absent";
 											}
-											
+
+											//status
+											if($row->others_status == 'paid')
+												$paidcheck=1;
 											echo "<tr>";
 											if($empLevel == "3") { // for level 3, i used the name as link for the modal
 												echo "<td><a href='#' data-toggle='modal' data-target='#myModal4'
@@ -231,6 +249,7 @@
 														data-paid='"."PHP ".@number_format($row->others_paid,2)."'
 														data-payable='"."PHP ".@number_format($row->others_payable,2)."'
 														data-retro='"."PHP ".@number_format($row->others_retro,2)."'
+														data-status='$row->others_status' 
 														class = 'viewempdialog'>". $row->employee_firstname . " " . $row->employee_lastname . "</a></td>";
 												echo "<td>" . date("Y-m-d",strtotime($row->attendance_date)) . "</td>";
 											} else { // for level 1 and 2, since i don't need to display the name, i used the date as link for the modal
@@ -247,6 +266,7 @@
 														data-paid='"."PHP ".@number_format($row->others_paid,2)."'
 														data-payable='"."PHP ".@number_format($row->others_payable,2)."'
 														data-retro='"."PHP ".@number_format($row->others_retro,2)."'
+														data-status='$row->others_status' 
 														class = 'viewempdialog'>". date("Y-m-d",strtotime($row->attendance_date)) . "</a></td>";
 											}
 											echo "<td>" . $row->attendance_daytype . "</td>";
@@ -336,6 +356,11 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-1"></div>
+								<label class="col-sm-3 control-label">Status:</label>
+								<div class="col-md-8"><input type="text" id = "status" class="zx" name = "status" required="" readonly = ""onKeyPress="return lettersonly(this, event)"></div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-1"></div>
 								<label class="col-sm-3 control-label">Remarks:</label>
 								<div class="col-md-6">
 									<?php
@@ -351,12 +376,16 @@
 					</div>
 				</div>	
 				<div class="modal-footer">
+
+
 					<?php
 						if($empLevel == "3") { // level 3 users are allowed to approve/disapprove requests so buttons are showed 
-							echo "<button class='btn btn-primary' type='submit' name = 'approved'><i class='fa fa-check'></i> Approve</button></a>";
-							echo "<button class='btn btn-danger' type='submit' name = 'disapproved'><i class='fa fa-warning'></i> Disapprove</button></button></a>";
+							
+							echo "<button id=approvedbtn class='btn btn-primary' type='submit' name = 'approved'><i class='fa fa-check'></i> Approve</button></a>";
+							echo "<button id=disapprovedbtn class='btn btn-danger' type='submit' name = 'disapproved'><i class='fa fa-warning'></i> Disapprove</button></button></a>";
 						}
 					?>
+
 					<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
 					</form>
 				</div>				

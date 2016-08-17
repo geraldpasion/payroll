@@ -4,7 +4,7 @@
         <?php
              include('menuheader.php');
         ?>
-        <title>Add employee</title>
+        <title>Add Employee</title>
 		
 		<style>
 			.btn1{
@@ -147,7 +147,7 @@
 			<div class="col-lg-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-title">
-						<h5>Add new employee</h5>
+						<h5>Add New Employee</h5>
 						<div class="ibox-tools">
 							<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-wrench"></i></a>

@@ -1,253 +1,11 @@
 <?php
 
-function TaxMonthly($TaxCode, $NetTaxableIncome, $return_grosscheck=0, $return_fixedamount=0){
+function TaxMonthly($TaxCode, $NetTaxableIncome, $cutoff){
 
-  $TaxValues = array( 
-                'Z' => array( 
-                       'Level2' => array(
-                                        'GrossCheck' => 0,
-                                        'FixedTaxAmount' => 0,
-                                        'PercentOver' => 5
-                                   ),
-                       'Level3' => array(
-                                        'GrossCheck' => 883,
-                                        'FixedTaxAmount' => 41.67,
-                                        'PercentOver' => 10
-                                   ),
-                       'Level4' => array(
-                                        'GrossCheck' => 2500,
-                                        'FixedTaxAmount' => 208.33,
-                                        'PercentOver' => 15
-                                   ),
-                       'Level5' => array(
-                                        'GrossCheck' => 5833,
-                                        'FixedTaxAmount' => 708.33,
-                                        'PercentOver' => 20
-                                   ),
-                       'Level6' => array(
-                                        'GrossCheck' => 11667,
-                                        'FixedTaxAmount' => 1875,
-                                        'PercentOver' => 25
-                                   ),
-                       'Level7' => array(
-                                        'GrossCheck' => 20833,
-                                        'FixedTaxAmount' => 4166.67,
-                                        'PercentOver' => 30
-                                   ),
-                       'Level8' => array(
-                                        'GrossCheck' => 41667,
-                                        'FixedTaxAmount' => 10416.67,
-                                        'PercentOver' => 32
-                                   ),
-
-                  ),
-
-                'S/ME' => array( 
-                       'Level2' => array(
-                                        'GrossCheck' => 4167,
-                                        'FixedTaxAmount' => 0,
-                                        'PercentOver' => 5
-                                   ),
-                       'Level3' => array(
-                                        'GrossCheck' => 5000,
-                                        'FixedTaxAmount' => 41.67,
-                                        'PercentOver' => 10
-                                   ),
-                       'Level4' => array(
-                                        'GrossCheck' => 6667,
-                                        'FixedTaxAmount' => 208.33,
-                                        'PercentOver' => 15
-                                   ),
-                       'Level5' => array(
-                                        'GrossCheck' => 10000,
-                                        'FixedTaxAmount' => 708.33,
-                                        'PercentOver' => 20
-                                   ),
-                       'Level6' => array(
-                                        'GrossCheck' => 15833,
-                                        'FixedTaxAmount' => 1875,
-                                        'PercentOver' => 25
-                                   ),
-                       'Level7' => array(
-                                        'GrossCheck' => 25000,
-                                        'FixedTaxAmount' => 4166.67,
-                                        'PercentOver' => 30
-                                   ),
-                       'Level8' => array(
-                                        'GrossCheck' => 45833,
-                                        'FixedTaxAmount' => 10416.67,
-                                        'PercentOver' => 32
-                                   ),
-
-                  ),
-
-                  'ME1/S1' => array( 
-                       'Level2' => array(
-                                        'GrossCheck' => 6250,
-                                        'FixedTaxAmount' => 0,
-                                        'PercentOver' => 5
-                                   ),
-                       'Level3' => array(
-                                        'GrossCheck' => 7083,
-                                        'FixedTaxAmount' => 41.67,
-                                        'PercentOver' => 10
-                                   ),
-                       'Level4' => array(
-                                        'GrossCheck' => 8750,
-                                        'FixedTaxAmount' => 208.33,
-                                        'PercentOver' => 15
-                                   ),
-                       'Level5' => array(
-                                        'GrossCheck' => 12083,
-                                        'FixedTaxAmount' => 708.33,
-                                        'PercentOver' => 20
-                                   ),
-                       'Level6' => array(
-                                        'GrossCheck' => 17917,
-                                        'FixedTaxAmount' => 1875,
-                                        'PercentOver' => 25
-                                   ),
-                       'Level7' => array(
-                                        'GrossCheck' => 27083,
-                                        'FixedTaxAmount' => 4166.67,
-                                        'PercentOver' => 30
-                                   ),
-                       'Level8' => array(
-                                        'GrossCheck' => 47917,
-                                        'FixedTaxAmount' => 10416.67,
-                                        'PercentOver' => 32
-                                   ),
-
-                  
-
-                  ),
-
-                  'ME2/S2' => array( 
-                       'Level2' => array(
-                                        'GrossCheck' => 8333,
-                                        'FixedTaxAmount' => 0,
-                                        'PercentOver' => 5
-                                   ),
-                       'Level3' => array(
-                                        'GrossCheck' => 9167,
-                                        'FixedTaxAmount' => 41.67,
-                                        'PercentOver' => 10
-                                   ),
-                       'Level4' => array(
-                                        'GrossCheck' => 10833,
-                                        'FixedTaxAmount' => 208.33,
-                                        'PercentOver' => 15
-                                   ),
-                       'Level5' => array(
-                                        'GrossCheck' => 14167,
-                                        'FixedTaxAmount' => 708.33,
-                                        'PercentOver' => 20
-                                   ),
-                       'Level6' => array(
-                                        'GrossCheck' => 20000,
-                                        'FixedTaxAmount' => 1875,
-                                        'PercentOver' => 25
-                                   ),
-                       'Level7' => array(
-                                        'GrossCheck' => 29167,
-                                        'FixedTaxAmount' => 4166.67,
-                                        'PercentOver' => 30
-                                   ),
-                       'Level8' => array(
-                                        'GrossCheck' => 50000,
-                                        'FixedTaxAmount' => 10416.67,
-                                        'PercentOver' => 32
-                                   ),
-
-                  
-
-                  ),
-
-                  'ME3/S3' => array( 
-                       'Level2' => array(
-                                        'GrossCheck' => 10417,
-                                        'FixedTaxAmount' => 0,
-                                        'PercentOver' => 5
-                                   ),
-                       'Level3' => array(
-                                        'GrossCheck' => 11250,
-                                        'FixedTaxAmount' => 41.67,
-                                        'PercentOver' => 10
-                                   ),
-                       'Level4' => array(
-                                        'GrossCheck' => 12917,
-                                        'FixedTaxAmount' => 208.33,
-                                        'PercentOver' => 15
-                                   ),
-                       'Level5' => array(
-                                        'GrossCheck' => 16250,
-                                        'FixedTaxAmount' => 708.33,
-                                        'PercentOver' => 20
-                                   ),
-                       'Level6' => array(
-                                        'GrossCheck' => 22083,
-                                        'FixedTaxAmount' => 1875,
-                                        'PercentOver' => 25
-                                   ),
-                       'Level7' => array(
-                                        'GrossCheck' => 31250,
-                                        'FixedTaxAmount' => 4166.67,
-                                        'PercentOver' => 30
-                                   ),
-                       'Level8' => array(
-                                        'GrossCheck' => 52083,
-                                        'FixedTaxAmount' => 10416.67,
-                                        'PercentOver' => 32
-                                   ),
-
-                  
-
-                  ),
-
-                  'ME4/S4' => array( 
-                       'Level2' => array(
-                                        'GrossCheck' => 12500,
-                                        'FixedTaxAmount' => 0,
-                                        'PercentOver' => 5
-                                   ),
-                       'Level3' => array(
-                                        'GrossCheck' => 13333,
-                                        'FixedTaxAmount' => 41.67,
-                                        'PercentOver' => 10
-                                   ),
-                       'Level4' => array(
-                                        'GrossCheck' => 15000,
-                                        'FixedTaxAmount' => 208.33,
-                                        'PercentOver' => 15
-                                   ),
-                       'Level5' => array(
-                                        'GrossCheck' => 18333,
-                                        'FixedTaxAmount' => 708.33,
-                                        'PercentOver' => 20
-                                   ),
-                       'Level6' => array(
-                                        'GrossCheck' => 24167,
-                                        'FixedTaxAmount' => 1875,
-                                        'PercentOver' => 25
-                                   ),
-                       'Level7' => array(
-                                        'GrossCheck' => 33333,
-                                        'FixedTaxAmount' => 4166.67,
-                                        'PercentOver' => 30
-                                   ),
-                       'Level8' => array(
-                                        'GrossCheck' => 54167,
-                                        'FixedTaxAmount' => 10416.67,
-                                        'PercentOver' => 32
-                                   ),
-
-                  
-
-                  ),
-
-
-  );//end array TaxValues
-
+ 
+ob_start();
+$TaxValues=TaxValuesFunct();
+ob_end_clean();
   //initialized
   $NetIncomeAfterTax=0;
 
@@ -261,23 +19,18 @@ function TaxMonthly($TaxCode, $NetTaxableIncome, $return_grosscheck=0, $return_f
     $Level='Level'.($i+1);
     //echo $i.'<br>';
     
-    if($NetTaxableIncome>=$TaxValues[$TaxCode][$Level]['GrossCheck']){
+    if($NetTaxableIncome>=$TaxValues[$cutoff][$TaxCode][$Level]['GrossCheck']){
 
       echo 'NetTaxableIncome: '.$NetTaxableIncome.'<br>';
       echo $Level.'<br>';
-      $grosscheck = $TaxValues[$TaxCode][$Level]['GrossCheck'];
+      $grosscheck = $TaxValues[$cutoff][$TaxCode][$Level]['GrossCheck'];
       echo 'GrossCheck: '.$grosscheck.'<br>';
 
       $TaxDetails[]=$Level;
       $TaxDetails[]=$grosscheck;
-
-      /*if($return_grosscheck>0){
-        return $grosscheck;
-        break;
-      }*/
       
       //get value of Fixed Tax Amount from table
-      $FixedTaxAmount=$TaxValues[$TaxCode][$Level]['FixedTaxAmount'];
+      $FixedTaxAmount=$TaxValues[$cutoff][$TaxCode][$Level]['FixedTaxAmount'];
       echo "FixedTaxAmount: ".$FixedTaxAmount.'<br>';
 
       $TaxDetails[]=$FixedTaxAmount;
@@ -286,7 +39,7 @@ function TaxMonthly($TaxCode, $NetTaxableIncome, $return_grosscheck=0, $return_f
       //echo 'GrossMinusFixedTax: '.$GrossMinusFixedTax.'<br>';
 
       //get % Over
-      $PercentOver = $TaxValues[$TaxCode][$Level]['PercentOver'];
+      $PercentOver = $TaxValues[$cutoff][$TaxCode][$Level]['PercentOver'];
       echo 'PercentOver: '.$PercentOver.'<br>';
       $TaxDetails[]=$PercentOver;
 

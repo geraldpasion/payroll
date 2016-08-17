@@ -95,7 +95,7 @@ $team = $_SESSION['employee_team'];
 						<a href="#"><i class="fa fa-clock-o"></i><span class="nav-label">Time Keeping</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'dtr2.php'){echo 'active'; }else { echo ''; } ?>"><a href="dtr2.php">DTR</a></li>
-							<!--li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'attendance2.php'){echo 'active'; }else { echo ''; } ?>"><a href="attendance2.php">Attendance</a></li-->
+							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'attendance2.php'){echo 'active'; }else { echo ''; } ?>"><a href="attendance2.php">Attendance</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'logedit.php'){echo 'active'; }else { echo ''; } ?>"><a href="logedit.php">Log edit requests</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'logedittracker.php'){echo 'active'; }else { echo ''; } ?>"><a href="logedittracker.php">Log edit status</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'additionalpayable.php'){echo 'active'; }else { echo ''; } ?>"><a href="additionalpayable.php">Others application</a></li>

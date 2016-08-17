@@ -103,7 +103,7 @@
 				var datet = new Date(datet);
 				var datet = datet.getFullYear() + '/' + (datet.getMonth() + 1) + '/' + datet.getDate(); 
 
-			    document.location.href = "getEmpDetails.php?from=2&id="+id+"&datef="+datef+"&datet="+datet;
+			    document.location.href = "getEmpDetails2.php?from=2&id="+id+"&datef="+datef+"&datet="+datet;
 			}
 		</script>
 
@@ -193,7 +193,7 @@
 											}
 										?>
 										<td style="padding:10px;"><button type="submit" name="test" class="btn btn-w-m btn-primary">Validate</button></td>
-										<td style="padding:10px;"><button type="button" name="export" class="btn btn-w-m btn-primary" onclick="<?php echo 'exportAll('.$datef.','.$datet.')'; ?>">Export All Attendance</button></td>
+										<!--td style="padding:10px;"><button type="button" name="export" class="btn btn-w-m btn-primary" onclick="<?php //echo 'exportAll('.$datef.','.$datet.')'; ?>">Export All Attendance</button></td-->
 									</tr>
 								</table>
 							</form>
@@ -212,7 +212,7 @@
 								echo "<div style='padding-left:60px;padding-right:60px;'>";
 									echo "<input type='text' class='form-control input-sm m-b-xs' id='filter' placeholder='Search in table'><br>";
 								
-								if ($result = $mysqli->query("SELECT DISTINCT employee.employee_id, employee_firstname, employee_lastname FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id $keydate ORDER BY attendance_date")) //get records from db
+								if ($result = $mysqli->query("SELECT DISTINCT employee.employee_id, employee_firstname, employee_lastname, employee_type FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id $keydate ORDER BY attendance_date")) //get records from db
 								{
 									if ($result->num_rows > 0) //display employee based on date range
 									{
@@ -221,6 +221,7 @@
 										echo "<thead>";
 										echo "<tr>";
 										echo "<th style='padding-left:20px;padding-right:80px;'>Name</th>";
+										echo "<th style='padding-left:20px;padding-right:80px;'>Shift Type</th>";
 										echo "<th colspan='2' style='text-align:center;padding-right:20px;'>Action</th>";
 										echo "</tr>";
 										echo "</thead>";
@@ -238,12 +239,14 @@
 											echo "<td style='padding-left:20px;padding-right:80px;'>" . $row->employee_firstname . " " . $row->employee_lastname . "</td>";
 
 											$emp_id = $row->employee_id;
+											$emp_type = $row->employee_type;
 											$datef = strtotime($keydatefrom)*1000;
 											$datet = strtotime($keydateto)*1000;
 
+											echo "<td style='padding-left:20px;padding-right:80px;'>" . $row->employee_type . "</td>";
 											echo "<td style='width:200px;'><input type='hidden' name='fromAtt' id='fromAtt' value='2'><button class='btn btn-info btn-block' type='button' name='open' onclick='showEmp(".$emp_id.",".$datef.",".$datet.")'><span class='glyphicon glyphicon-folder-open'>&nbsp;</span><span>Open</button></span></td>";
 											 
-											echo "<td style='padding-right:20px; width:200px;'><button type='button' name='export' id='exportFile' class='btn btn-primary btn-block' onclick='exportDet(".$emp_id.",".$datef.",".$datet.")'><span class='glyphicon glyphicon-file'>&nbsp;</span><span>Export Attendance</span></button></td>";
+											//echo "<td style='padding-right:20px; width:200px;'><button type='button' name='export' id='exportFile' class='btn btn-primary btn-block' onclick='exportDet(".$emp_id.",".$datef.",".$datet.")'><span class='glyphicon glyphicon-file'>&nbsp;</span><span>Export Attendance</span></button></td>";
 											
 											echo "</tr>";
 											
@@ -256,7 +259,7 @@
 							else{
 								if(isset($_POST['test'])){
 									$datefilter = $_POST['datefilter'];
-
+									$e_team = $_SESSION['employee_team'];
 									$cutarray = array();
 									$cutarray = split(" - ", $datefilter);
 									$keydatefrom = $cutarray[0];
@@ -264,11 +267,11 @@
 									$keydateto = $cutarray[1];
 									$keydateto = date("Y-m-d", strtotime($keydateto));
 
-									$keydate = "WHERE attendance_date BETWEEN '$keydatefrom' AND '$keydateto' AND (attendance.status = 'Done' OR attendance.attendance_status = 'active' OR attendance.attendance_status = 'outforbreak' OR attendance.attendance_status = 'infrombreak')";
+									$keydate = "WHERE attendance_date BETWEEN '$keydatefrom' AND '$keydateto' AND (attendance.status = 'Done' OR attendance.attendance_status = 'active' OR attendance.attendance_status = 'outforbreak' OR attendance.attendance_status = 'infrombreak') AND employee.employee_level = 1 AND employee.employee_team = '$e_team'";
 									echo "<div style='padding-left:60px;padding-right:60px;'>";
 									echo "<input type='text' class='form-control input-sm m-b-xs' id='filter' placeholder='Search in table'><br>";
 									
-									if ($result = $mysqli->query("SELECT DISTINCT employee.employee_id, employee_firstname, employee_lastname FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id $keydate ORDER BY attendance_date")) //get records from db
+									if ($result = $mysqli->query("SELECT DISTINCT employee.employee_id, employee_firstname, employee_lastname, employee_type FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id $keydate ORDER BY attendance_date")) //get records from db
 									{
 										if ($result->num_rows > 0) //display employee based on date range
 										{
@@ -277,6 +280,7 @@
 											echo "<thead>";
 											echo "<tr>";
 											echo "<th style='padding-left:20px;padding-right:80px;'>Name</th>";
+											echo "<th style='padding-left:20px;padding-right:80px;'>Shift Type</th>";
 											echo "<th colspan='2' style='text-align:center;padding-right:20px;'>Action</th>";
 											echo "</tr>";
 											echo "</thead>";
@@ -294,12 +298,14 @@
 												echo "<td style='padding-left:20px;padding-right:80px;'>" . $row->employee_firstname . " " . $row->employee_lastname . "</td>";
 
 												$emp_id = $row->employee_id;
+												$emp_type= $row->employee_type;
 												$datef = strtotime($keydatefrom)*1000;
 												$datet = strtotime($keydateto)*1000;
 
+												echo "<td style='padding-left:20px;padding-right:80px;'>" . $row->employee_type . "</td>";
 												echo "<td style='width:200px;'><button class='btn btn-info btn-block' type='button' name='open' onclick='showEmp(".$emp_id.",".$datef.",".$datet.")'><span class='glyphicon glyphicon-folder-open'>&nbsp;</span><span>Open</button></span></td>";
 												 
-												echo "<td style='padding-right:20px; width:200px;'><button type='button' name='export' id='exportFile' class='btn btn-primary btn-block' onclick='exportDet(".$emp_id.",".$datef.",".$datet.")'><span class='glyphicon glyphicon-file'>&nbsp;</span><span>Export Attendance</span></button></td>";
+												//echo "<td style='padding-right:20px; width:200px;'><button type='button' name='export' id='exportFile' class='btn btn-primary btn-block' onclick='exportDet(".$emp_id.",".$datef.",".$datet.")'><span class='glyphicon glyphicon-file'>&nbsp;</span><span>Export Attendance</span></button></td>";
 												
 												echo "</tr>";
 												

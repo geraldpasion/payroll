@@ -18,6 +18,11 @@ document.frmUser.submit();
 		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">		
 				
 		<script src="js/keypress.js"></script>
+		<script>
+		function myFunction() {
+			document.getElementById("frmUser").reset();
+		}
+		</script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				 showEdited=function(){
@@ -103,7 +108,7 @@ document.frmUser.submit();
 						<div class="ibox-content">	
 							<div class="form-group">
 							<div class="col-md-3"></div>
-								<label class='col-sm-1 control-label'>Type</label>
+								<label class='col-sm-1 control-label' style="margin-top:5px;">Type</label>
 								<div class='col-md-4'>
 									<select id = 'leavetype' name = 'leavetype' onclick='updateInput()' class = 'form-control' required='' data-default-value='z' >
 										<option selected='true' disabled='disabled' value = ''>Select type...</option>
@@ -118,7 +123,7 @@ document.frmUser.submit();
 							</div><br><br><br>
 					<div class="form-group">
 						<div class="col-md-3"></div>
-						<label class="col-sm-1 control-label">Credits</label>
+						<label class="col-sm-1 control-label" style="margin-top:5px;">Credits</label>
 						<div class="col-md-2"><input id = "leavecredit" type="text"  class="form-control" name="leavecredit" required="" onKeyPress="return numbersonly(this, event)"/></div>
 						<div class="col-md-2">
 							<select class="form-control" id='action' name='action'>
@@ -145,7 +150,7 @@ document.frmUser.submit();
 
 									if ($result1->num_rows > 0) //display records if any
 									{
-										echo "<input type='checkbox' id='select_all'/><label class='control-label'> Check/Uncheck All</label>";
+										echo "<input type='checkbox' id='select_all'/>&nbsp;&nbsp;<label class='control-label'>Check/Uncheck All</label>";
 										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";																			
 										echo "<thead>";
 										echo "<tr>";
@@ -161,7 +166,7 @@ document.frmUser.submit();
 										echo "</thead>";
 										echo "<tfoot>";                    
 										echo "<tr>";
-										echo "<td colspan='7'>";
+										echo "<td colspan='12'>";
 										echo "<ul class='pagination pull-right'></ul>";
 										echo "</td>";
 										echo "</tr>";
@@ -198,8 +203,10 @@ document.frmUser.submit();
 							
 						?>
 							<div class="form-group">
-								<div class="col-md-5"></div>
-								<div class="col-md-5"><button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary" onClick="setUpdateAction();">Submit</button></div>
+								<div class="col-md-8"></div>
+								<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary" onClick="setUpdateAction();">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<button type="button" onClick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
+							</div>
 							</div>
 						</form>
 						<br><br><br>

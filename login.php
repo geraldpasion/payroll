@@ -78,7 +78,7 @@
 
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
-			<h2>iconnect</h2>
+			<h2>iConnect</h2>
             <h3>Welcome to iConnect</h3>
             <p>Please login.
             </p>

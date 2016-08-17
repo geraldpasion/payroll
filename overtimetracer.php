@@ -130,22 +130,23 @@
 									{
 										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
 										echo "<thead>";
-										echo "<tr>";	
-										echo "<th>Name</th>";
-										echo "<th>Date</th>";
-										echo "<th>Start</th>";
-										echo "<th>End</th>";
-										echo "<th>Duration</th>";
-										echo "<th>Reason</th>";
-										echo "<th>Status</th>";
-										echo "<th>Remarks</th>";
-										echo "<th>Managed by</th>";
-										echo "<th>Progress</th>";
+										echo "<tr style='text-align:center'>";	
+										echo "<th style='text-align:center'>Name</th>";
+										echo "<th style='text-align:center'>Date</th>";
+										echo "<th style='text-align:center'>Start</th>";
+										echo "<th style='text-align:center'>End</th>";
+										echo "<th style='text-align:center'>Duration</th>";
+										echo "<th style='text-align:center'>Reason</th>";
+										echo "<th style='text-align:center'>Status</th>";
+										//echo "<th style='text-align:center'>Remarks</th>";
+										echo "<th style='text-align:center'>Managed by</th>";
+										echo "<th style='text-align:center'>Action</th>";
+										echo "<th style='text-align:center'>Progress</th>";
 										echo "</tr>";
 										echo "</thead>";
 										echo "<tfoot>";                    
 										echo "<tr>";
-										echo "<td colspan='10'>";
+										echo "<td colspan='12'>";
 										echo "<ul class='pagination pull-right'></ul>";
 										echo "</td>";
 										echo "</tr>";
@@ -159,7 +160,7 @@
 											
 											
 											echo "<tr>";
-											echo "<td><a href='#' data-toggle='modal' data-target='#myModal4'
+											echo "<td style='text-align:center'><a href='#' data-toggle='modal' data-target='#myModal4'
 														data-name='$row->employee_firstname $row->employee_lastname' 
 														data-id='$row->overtime_id' 
 														data-date='$row->overtime_date'
@@ -169,9 +170,9 @@
 														data-remarks='$row->overtime_remarks'
 														
 														class = 'viewempdialog'>". $row->employee_firstname . " " . $row->employee_lastname . "</a></td>";
-											echo "<td>" . date("Y-m-d",strtotime($row->overtime_date)) . "</td>";
-											echo "<td>" . date("g:i A",strtotime($row->overtime_start)) . "</td>";
-											echo "<td>" . date("g:i A",strtotime($row->overtime_end)) . "</td>";
+											echo "<td style='text-align:center'>" . date("Y-m-d",strtotime($row->overtime_date)) . "</td>";
+											echo "<td style='text-align:center'>" . date("g:i A",strtotime($row->overtime_start)) . "</td>";
+											echo "<td style='text-align:center'>" . date("g:i A",strtotime($row->overtime_end)) . "</td>";
 											$OTin = $row->overtime_start;
 											$OTout = $row->overtime_end;											
 											$OTCount = date('H:i', strtotime($OTout) - strtotime($OTin) - strtotime('03:00'));
@@ -187,13 +188,13 @@
 											$stmt->execute();
 											$stmt->close();
 											}
-											echo "<td>" . $OTCountDec . "</td>";
-											echo "<td>" . $row->overtime_reason . "</td>";
-											echo "<td>" . $row->overtime_status . "</td>";
-											echo "<td>" . $row->overtime_remarks . "</td>";
-											echo "<td>" . $row->overtime_approvedby. "</td>";
-											echo "<td> <a href = 'overtimeform.php?id=$empsid&otid=$overtime'><button class='btn btn-success' type='button'><i class='fa fa-print'></i> Print</button></a></td>";
-											echo "<td><a href='#' data-toggle='modal' data-target='#myModal4' data-name='$row->employee_firstname $row->employee_lastname' 
+											echo "<td style='text-align:center'>" . $OTCountDec . "</td>";
+											echo "<td style='text-align:center'>" . $row->overtime_reason . "</td>";
+											echo "<td style='text-align:center'>" . $row->overtime_status . "</td>";
+											//echo "<td style='text-align:center'>" . $row->overtime_remarks . "</td>";
+											echo "<td style='text-align:center'>" . $row->overtime_approvedby. "</td>";
+											echo "<td style='text-align:center'> <a href = 'overtimeform.php?id=$empsid&otid=$overtime'><button class='btn btn-success' type='button'><i class='fa fa-print'></i> Print</button></a></td>";
+											echo "<td style='text-align:center'><a href='#' data-toggle='modal' data-target='#myModal4' data-name='$row->employee_firstname $row->employee_lastname' 
 														data-id='$row->overtime_id' 
 														data-date='$row->overtime_date'
 														data-start='$row->overtime_start'

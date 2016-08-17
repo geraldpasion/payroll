@@ -145,7 +145,7 @@
 					<div class="modal-header">
 					<i class="fa fa-question modal-icon"></i>
 						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-						<h4 class="modal-title">Answer inquiry</h4>
+						<h4 class="modal-title">Answer Inquiry</h4>
 					</div>
 					<div class="modal-body">
 						<div class="ibox-content">
