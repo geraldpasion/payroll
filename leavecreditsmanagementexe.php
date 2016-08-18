@@ -382,7 +382,7 @@ for($i=0;$i<$usersCount;$i++) {
 		}
 	}
 
-	if ($result = $mysqli->query("SELECT * FROM employee WHERE employee_id='" . $_POST["id"][$i] . "'")) {
+	/*if ($result = $mysqli->query("SELECT * FROM employee WHERE employee_id='" . $_POST["id"][$i] . "'")) {
 		if ($result->num_rows > 0){
 			while ($row = $result->fetch_object()){
 				$inc = $row->employee_incentive;
@@ -403,7 +403,31 @@ for($i=0;$i<$usersCount;$i++) {
 				}
 			}
 		}
-	}
+	}*/
+	/*if ($result = $mysqli->query("SELECT * FROM tbl_leave WHERE employee_id='" . $_POST["id"][$i] . "' AND leave_status='Approved'")) {
+		if ($result->num_rows > 0){
+			while ($row = $result->fetch_object()){
+				$lt = $row->leave_type;
+				//$vl = $row->employee_vacationleave;
+				//$sl = $row->employee_sickleave;
+				//$ml = $row->employee_maternityleave;
+				//$pl = $row->employee_paternityleave;
+				//$spl = $row->employee_singleparentleave;
+				$date = date('Y-m-d');
+			if($lt == 'Sick leave'){
+				if ($stmt = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('" . $_POST["id"][$i] . "', '".$date."', '-1', '0', '0', '0', '0', '0')"))
+				{
+					$stmt->execute();
+					$stmt->close();
+				}
+				// show an error if the query has an error
+				else{
+					echo "ERROR: Could not prepare SQL statement.";
+				}
+			}
+			}
+		}
+	}*/
 	header("Location: leavecreditsmanagement.php?edited");	
 }
 

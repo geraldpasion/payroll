@@ -250,29 +250,6 @@ tr:hover{background-color:#f5f5f5}
           </div>
           <div class="ibox-content">
             <form name="testmng" id="formko" action="addedittest.php" method="post">
-<?php
-    //navigation for Add option
-    if (isset($_REQUEST['add'])) {
-?>
-                        <input type="submit" value="Cancel" name="cancel" class="btn btn-info" title="Cancel"/>
-                        <input type="submit" value="Save" name="savea" class="btn btn-info" onclick="validatetestform('testmng')" title="Save the Changes"/>
-
-<?php
-    } else if (isset($_REQUEST['edit'])) { //navigation for Edit option
-?>
-                        <input type="submit" value="Cancel" name="cancel" class="btn btn-info" title="Cancel"/>
-                        <input type="submit" value="Save" name="savem" class="btn btn-info" onclick="validatetestform('testmng')" title="Save the changes"/>
-
-<?php
-    } else {  
-?>
-                         
-                        <input type="submit" value="Add Test" name="add" class="btn btn-info" title="Add"/>
-<?php }
-?>
-                    
-
-               
                 <div class="page">
 <?php
 {
@@ -286,33 +263,33 @@ tr:hover{background-color:#f5f5f5}
                     <table class='add'>
 
                         <tr>
-                            <td>Test Name</td>
+                            <td><b>Test Name</b></td>
                             <td><input type="text" class = "form-control" id ="tname" name="testname" value="" size="16" onkeyup="isalphanum(this)"  /></td>
                             <td><div class="help"><b>Note:</b><br/>Test Name must be Unique<br/> in order to identify different<br/> tests on same subject.</div></td>
                         </tr>
                         <tr>
-                            <td>Test Description</td>
+                            <td><b>Test Description</b></td>
                             <td><textarea name="testdesc" class = "form-control" id ="tdesc" cols="20" rows="3" ></textarea></td>
                             <td><div class="help"><b>Describe here:</b><br/>What the test is all about?</div></td>
                         </tr>
                         <tr>
-                            <td>Total Questions</td>
+                            <td><b>Total Questions</b></td>
                             <td><input type="text" class = "form-control" name="totalqn" id="tques" value="" size="16" onkeyup="isnum(this)" onKeyPress="return numbersonly(this, event)" onpaste="return false" onDrop="return false" /></td>
 
                         </tr>
                         <tr>
-                            <td>Duration(Mins)</td>
+                            <td><b>Duration(Mins)</b></td>
                             <td><input type="text" class = "form-control" name="duration" id="tdur" value="" size="16" onkeyup="isnum(this)"  onKeyPress="return numbersonly(this, event)" onpaste="return false" onDrop="return false"/></td>
 
                         </tr>
 
                         <tr>
-                            <td>Test Secret Code</td>
+                            <td><b>Test Secret Code</b></td>
                             <td><input type="text" class = "form-control" name="testcode" id="tsc" value="" size="16" onkeyup="isalphanum(this)"  /></td>
                             <td><div class="help"><b>Note:</b><br/>Candidates must enter<br/>this code in order to <br/> take the test</div></td>
                         </tr>
 
-                    </table>
+                    </table
 
 <?php
     } else if (isset($_REQUEST['edit'])) {
@@ -325,40 +302,40 @@ tr:hover{background-color:#f5f5f5}
 
 
             //editing components
-?>
-                    <table class="edit" >
+
+                    echo '<table class="edit" >
                         <tr>
                         </tr>
                         <tr>
-                            <td>Test Name</td>
-                            <td><input class = "form-control" type="hidden" name="testid2" value="<?php echo $r['testid']; ?>"/><input type="text" name="testname2" id="testname2" value="<?php echo htmlspecialchars_decode($r['testname'], ENT_QUOTES); ?>" size="16" onkeyup="isalphanum(this)" /></td>
+                            <td><b>Test Name</b></td>
+                            <td><input class = "form-control" type="hidden" name="testid2" value="'.$r['testid'].'"/><input type="text" name="testname2" id="testname2" value="'. htmlspecialchars_decode($r['testname'], ENT_QUOTES).'" size="16" onkeyup="isalphanum(this)" /></td>
                             <td><div class="help"><b>Note:</b><br/>Test Name must be Unique<br/> in order to identify different<br/> tests on same subject.</div></td>
                         </tr>
                         <tr>
-                            <td>Test Description</td>
-                            <td><textarea  class = "form-control" name="testdesc2" id="testdesc2" cols="20" rows="3" ><?php echo htmlspecialchars_decode($r['testdesc'], ENT_QUOTES); ?></textarea></td>
+                            <td><b>Test Description</b></td>
+                            <td><textarea  class = "form-control" name="testdesc2" id="testdesc2" cols="20" rows="3" >"'.htmlspecialchars_decode($r['testdesc'], ENT_QUOTES).'"</textarea></td>
                             <td><div class="help"><b>Describe here:</b><br/>What the test is all about?</div></td>
                         </tr>
                         <tr>
-                            <td>Total Questions</td>
-                            <td><input  class = "form-control" type="text" name="totalqn2" id="totalqn2" value="<?php echo htmlspecialchars_decode($r['totalquestions'], ENT_QUOTES); ?>" size="16" onkeyup="isnum(this)" onKeyPress="return numbersonly(this, event)" onpaste="return false" onDrop="return false"/></td>
+                            <td><b>Total Questions</b></td>
+                            <td><input  class = "form-control" type="text" name="totalqn2" id="totalqn2" value="'.htmlspecialchars_decode($r['totalquestions'], ENT_QUOTES).'" size="16" onkeyup="isnum(this)" onKeyPress="return numbersonly(this, event)" onpaste="return false" onDrop="return false"/></td>
 
                         </tr>
                         <tr>
-                            <td>Duration(Mins)</td>
-                            <td><input  class = "form-control" type="text" name="duration2" id="duration2" value="<?php echo htmlspecialchars_decode($r['duration'], ENT_QUOTES); ?>" size="16" onkeyup="isnum(this)" onKeyPress="return numbersonly(this, event)" onpaste="return false" onDrop="return false"/></td>
+                            <td><b>Duration(Mins)</b></td>
+                            <td><input  class = "form-control" type="text" name="duration2" id="duration2" value="'.htmlspecialchars_decode($r['duration'], ENT_QUOTES).'" size="16" onkeyup="isnum(this)" onKeyPress="return numbersonly(this, event)" onpaste="return false" onDrop="return false"/></td>
 
                         </tr>
 
                         <tr>
-                            <td>Test Secret Code</td>
-                            <td><input  class = "form-control" type="text" name="testcode2" id="testcode2" value="<?php echo htmlspecialchars_decode($r['tcode'], ENT_QUOTES); ?>" size="16" onkeyup="isalphanum(this)" /></td>
+                            <td><b>Test Secret Code</b></td>
+                            <td><input  class = "form-control" type="text" name="testcode2" id="testcode2" value="'.htmlspecialchars_decode($r['tcode'], ENT_QUOTES) .'" size="16" onkeyup="isalphanum(this)" /></td>
                             <td><div class="help"><b>Note:</b><br/>Candidates must enter<br/>this code in order to <br/> take the test</div></td>
                         </tr>
 
-                    </table>
+                    </table';
 
-<?php
+
                                 }
                             }
 
@@ -398,7 +375,7 @@ while($result1=mysqli_fetch_object($result))
                    
                     echo "<td><a href='prepqn.php?id=".$testid."'><button class='btn btn-success' name = 'edit' type='button'><i class='fa fa-plus'></i> Add</button></td></a>";
                      echo "<td><a href='addedittest.php?edit=".$result1->testname."'><button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> Edit</button></td></a>";
-                    echo "<td><a href='#' id='$testid' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Delete</button></td></a>";
+                    echo "<td><a href='#' id='$testid' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Delete</button></a></td>";
                     
 
                     }
@@ -416,15 +393,41 @@ while($result1=mysqli_fetch_object($result))
                                     //     . "<td class=\"tddata\"><a title=\"Edit " . htmlspecialchars_decode($r['testname'], ENT_QUOTES) . "\"href=\"addeditquestions.php?edit=" . htmlspecialchars_decode($r['testname'], ENT_QUOTES) . "\"><img src=\"../images/edit.png\" height=\"30\" width=\"40\" alt=\"Edit\" /></a></td>"
                                     //     . "<td class=\"tddata\"><a title=\"Manage Questions of " . htmlspecialchars_decode($r['testname'], ENT_QUOTES) . "\"href=\"addeditquestions.php?manageqn=" . htmlspecialchars_decode($r['testname'], ENT_QUOTES) . "\"><img src=\"../images/mngqn.png\" height=\"30\" width=\"40\" alt=\"Manage Questions\" /></a></td></tr>";
                                     // }
+                    //echo "</tr>";
 ?>
                                 
 <?php
+
                                 }
+                                echo "</table";
+
                             }
                         }
 ?>
 
                 </div>
+                <?php
+    //navigation for Add option
+    if (isset($_REQUEST['add'])) {
+?>
+                      <br><br><div class="col-md-10"></div>
+                        <input type="submit" value="Save" name="savea" class="btn btn-info" onclick="validatetestform('testmng')" title="Save the Changes"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="submit" value="Back" name="back" class="btn btn-info" title="Back"/>
+
+<?php
+    } else if (isset($_REQUEST['edit'])) { //navigation for Edit option
+?>  
+                      <br><br><div class="col-md-10"></div>
+                        <input type="submit" value="Save" name="savem" class="btn btn-info" onclick="validatetestform('testmng')" title="Save the changes"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="submit" value="Back" name="back" class="btn btn-info" title="Back"/>
+
+<?php
+    } else {  
+?>
+                      <br><br><div class="col-md-11"></div>
+                        <input type="submit" value="Add Test" name="add" class="btn btn-info" title="Add"/>
+<?php }
+?>
                 </div>
 
             </form>

@@ -6,7 +6,7 @@
 			include('menuheader.php');
 			$empid = $_SESSION['logsession'];
 		?>
-		<title>Interview schedule</title>
+		<title>Interview Schedule</title>
 				<style>
 			.form-horizontal .control-label{
 			/* text-align:right; */
@@ -92,7 +92,7 @@
 			<div class="col-lg-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-title">
-						<h5>Interview schedule</h5>
+						<h5>Interview Schedule</h5>
 						<div class="ibox-tools">
 							<a class="collapse-link">
 								<i class="fa fa-chevron-up"></i>
@@ -180,6 +180,10 @@
 				</div>
 			</div>
         </div>
+
+		<?php
+			include('menufooter.php');
+		?>
 	<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
 		<div class="modal-dialog modal-small">
 			<div class="modal-content">
@@ -227,8 +231,5 @@
 				</div>				
 			</div>
 	
-		<?php
-			include('menufooter.php');
-		?>
 	</body>
 </html>

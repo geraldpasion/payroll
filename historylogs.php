@@ -11,6 +11,7 @@ include('dbconfig.php');
 
 										echo "<tr class = 'josh'>"; 
 											echo "<td>" . $row1->date . "</td>";
+											echo "<td>" . $row1->type . "</td>";
 											echo "<td>" . $row1->employee_incentive . "</td>";
 											echo "<td>" . $row1->employee_vacationleave . "</td>";
 											echo "<td>" . $row1->employee_sickleave . "</td>";

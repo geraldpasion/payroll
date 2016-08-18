@@ -281,7 +281,7 @@
 				}
 				toastr.success("Processing successfully submitted!");
 			}
-			history.replaceState({}, "Title", "processing2.php");
+			history.replaceState({}, "Title", "registration.php");
 
 			});
 		</script>

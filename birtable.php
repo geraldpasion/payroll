@@ -24,6 +24,7 @@
 		
 		</style>	
 		<script type="text/javascript">
+		
 			$(document).on("click", ".editempdialog", function () {
 			 var one = $(this).data('one');
 			 var two = $(this).data('2');

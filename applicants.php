@@ -41,7 +41,7 @@
 				document.getElementById("date1").disabled=false;
 				document.getElementById("time1").disabled=false;
 				document.getElementById("interviewer1").disabled=false;
-			} else {
+			} else if (document.getElementById("status").value != ""){
 				document.getElementById("date1").disabled=true;
 				document.getElementById("time1").disabled=true;
 				document.getElementById("interviewer1").disabled=true;
@@ -49,6 +49,7 @@
 				$('#time1').val('');
 				$('#interviewer1').val('');
 			}
+			
 		}
 		</script>
 		
@@ -268,7 +269,7 @@
 						<form id = "uploadForm" method="POST" action = "applicantstatus.php"  class="form-horizontal">
 							<div class="form-group">
 								<div class = "form-group">
-										<div class= "col-sm-1"></div><label class="col-sm-2 control-label" required>Status</label><div class = "col-md-8"><select class = "form-control" id = "status" value = "Select" name ="status" onchange="changetextbox();" data-default-value="z" required><option selected="true" disabled="disabled" value = "z">Select status...</option>  <option value = "For interview">For interview</option><option value = "No show">No show</option><option value = "Hired">Hired</option></select>
+										<div class= "col-sm-1"></div><label class="col-sm-2 control-label" required>Status</label><div class = "col-md-8"><select class = "form-control" id = "status" value = "Select" name ="status" onchange="changetextbox();" data-default-value="z" required=""><option selected="true" disabled="disabled" value = "">Select status...</option>  <option value = "For interview">For interview</option><option value = "No show">No show</option><option value = "Hired">Hired</option></select>
 									</div>
 								</div>
 								<div class = "form-group">

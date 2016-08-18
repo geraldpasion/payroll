@@ -4,7 +4,7 @@
 		<?php
 			 include('supervisormenuheader.php');
 		?>
-		<title>Applicant list</title>
+		<title>Applicant List</title>
 		<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
 		<script src="js/plugins/toastr/toastr.min.js"></script>
 		<link href="css/animate.css" rel="stylesheet">
@@ -155,7 +155,7 @@
 			<div class="col-lg-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-title">
-						<h5>Applicant list</h5>
+						<h5>Applicant List</h5>
 						<div class="ibox-tools">
 							<a class="collapse-link">
 								<i class="fa fa-chevron-up"></i>

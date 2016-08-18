@@ -77,7 +77,7 @@ thead{
 											</tr>
 											<tr>
 												<td>BIR</td>
-												<td> <a href = 'birtable.php'><button class='btn btn-success' type='button'><i class='fa fa-print'></i> View</button></a></td>
+												<td> <a href = 'taxtable.php'><button class='btn btn-success' type='button'><i class='fa fa-print'></i> View</button></a></td>
 											</tr>
 											<tr>
 												<td>Philhealth</td>

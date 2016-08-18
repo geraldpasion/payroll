@@ -1,7 +1,7 @@
 <?php
 
 
-function TaxValuesFunct(){
+function TaxValuesFunct($editflag=0){
   include 'dbconfig.php';
          
 		$sql = 
@@ -12,14 +12,16 @@ function TaxValuesFunct(){
      
      //select these fields from two tables
      $fields=array(
+        'tax_id',
      	'TaxType',
      	'TaxCode',
-     	'tax_id',
      	'Level',
      	'GrossCheck',
      	'FixedTaxAmount',
      	'PercentOver'
      	);
+
+
 
      //prepare a multidimensional array
      $TaxValues = array();
@@ -27,49 +29,68 @@ function TaxValuesFunct(){
 		$count=1;
      $result = $conn->query($sql);
          if ($result->num_rows > 0) {
-         	echo "<table border=1>";
+         	echo "<table id='taxtblid' class='footable table table-stripped table-hover table-responsive' data-page-size='1000' data-filter=#filter>";
 
+            //table headers
          	echo "<tr>";
-         	echo "<th></th>";
+         	echo "<td align='right'><b>#</b></td>";
          	foreach ($fields as $field){
-         			echo "<th>".$field."</th>";
+         			echo "<td align='right'><b>".$field."</b></td>";
          	}
+            //additional column for edit button
+                if ($editflag==1){
+                    echo "<td align='right'></td>";
+                }
          	echo "</tr>";
          	
+            //table values per row
                  while($row = $result->fetch_assoc()) {
        				//echo $count.": ".$row['Level']."<br>";
        				echo "<tr>";
-                 	echo "<td>".$count."</td>";
+                 	echo "<td align='right'>".$count."</td>";
                  	foreach($fields as $field){ //generate data horizontally
-                 		echo "<td>".$row[$field]."</td>";
-
-                 		//generate array
-                 		//$value=$row[$field];
-
-
+                 		
+                        if($field=='GrossCheck' || $field=='FixedTaxAmount')
+                            echo "<td align='right'>".number_format($row[$field],2)."</td>";
+                        else if($field=='PercentOver')
+                            echo "<td align='right'>".$row[$field]."%</td>";
+                        else
+                            echo "<td align='right'>".$row[$field]."</td>";
                  	}
 
+
+            //additional column for edit button
+                if ($editflag==1){
+                    echo "<td><a href='#' data-toggle='modal' data-target='#myModal4' class = 'editempdialog' id='editempdialog'";
+                               
+                               foreach($fields as $field){
+                                echo "data-".$field."=".$row[$field]." ";
+                               }
+
+
+                         echo "                >                                              
+                        <button class='btn btn-info editempdialog' name = 'edit' type='button'><i class='fa fa-paste'></i> Edit</button></a></td>";
+                }
                  	//generate array
                  	$TaxValues[$row['TaxType']][$row['TaxCode']][$row['Level']]['GrossCheck']=$row['GrossCheck'];
                  	$TaxValues[$row['TaxType']][$row['TaxCode']][$row['Level']]['FixedTaxAmount']=$row['FixedTaxAmount'];
                  	$TaxValues[$row['TaxType']][$row['TaxCode']][$row['Level']]['PercentOver']=$row['PercentOver'];
-
                  	echo "</tr>";
-                 	
+       				$count++; 
 
-       				
-
-       				$count++;  
                  }
              echo "</tr>";
              echo "</table>";
          }//end if
-echo "<pre>";
-print_r($TaxValues);
-echo "</pre>";
+
+
+
+
 
 return $TaxValues;
 }// endTaxValues();
+
+
 
 //call function
 //TaxValuesFunct();

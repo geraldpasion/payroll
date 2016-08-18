@@ -1407,6 +1407,13 @@ return $count;
 
 }
 
+
+function printarraystructure($ArrayVariable){
+    echo "<pre>";
+    print_r($ArrayVariable);
+    echo "</pre>";
+
+}
 //**********************Wilma**************************//
 
 

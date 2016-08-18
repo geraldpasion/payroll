@@ -175,44 +175,6 @@ else if (isset($_REQUEST['savea'])) {
              
 <form name="prepqn" action="prepqn.php?id=<?php echo $gid; ?>" method="post">
 
-                    
-<?php
-if (isset($_SESSION['testqn'])) {
-    // Navigations
-?>
-                       <!-- <li><input type="submit" value="LogOut" name="logout" class="btn btn-info" title="Log Out"/></li>-->
-
-        <?php
-        //navigation for Add option
-        if (isset($_REQUEST['add'])) {
-        ?>                  
-                            <input type="submit" value="Cancel" name="cancel" class="btn btn-info" title="Cancel"/>
-                           
-                            
-                            <input type="submit" value="Save" name="savea" class="btn btn-info" onclick="validateqnform('prepqn')" title="Save the Changes"/>
-
-<?php
-        } else if (isset($_REQUEST['edit'])) { //navigation for Edit option
-?>
-                            <input type="submit" value="Cancel" name="cancel" class="btn btn-info" title="Cancel"/>
-                            <input type="submit" value="Save" name="savem" class="btn btn-info" onclick="validateqnform('prepqn')" title="Save the Changes"/>
-
-                        <?php
-                    } else {  //navigation for Default
-                        ?>
-                        <script type="text/javascript">
-                        function goback(){
-                            window.location.href='addedittest.php';
-                        }
-                        </script>
-                    
-                        <input type="button" value="Back" name="back" class="btn btn-info" title="back" onclick="goback()"/></input>
-                    
-                        <input type="submit" value="Add Questions" name="add" class="btn btn-info" title="Add Questions"/>
-                        <?php }
-                } ?>
-
-             
 
                 <div class="page">
                         <?php
@@ -225,7 +187,7 @@ if (isset($_SESSION['testqn'])) {
                         if ((int) $r1['q'] == (int) htmlspecialchars_decode($r2['totalquestions'],ENT_QUOTES))
                             echo "<div class=\"pmsg\">Status: All the Questions are Created for this test.</div>";
                         else
-                            echo "<div class=\"pmsg\">Status: Still you need to create " . (htmlspecialchars_decode($r2['totalquestions'],ENT_QUOTES) - $r1['q']) . " Question/s. After that only, test will be available for candidates.</div>";
+                            echo "<div class=\"pmsg\">Status: Still you need to create " . (htmlspecialchars_decode($r2['totalquestions'],ENT_QUOTES) - $r1['q']) . " Question/s. After that only, test will be available for candidates.</div><br><br>";
                         ?>
                         <?php
                         if (isset($_SESSION['testqn'])) {
@@ -235,47 +197,49 @@ if (isset($_SESSION['testqn'])) {
                                 /*                                 * ************************ Step 3 - Case 1 ************************ */
                                 //Form for the new Question
                         ?>
-                                <table cellpadding="20" cellspacing="20" align = "center"style="text-align:left;"  >
-                                    <tr>
-                                        <td>Question</td>
-                                        <td><textarea name="question" cols="40" rows="3"  ></textarea></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Option A</td>
-                                        <td><input type="text" name="optiona" value="" size="30"  /></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Option B</td>
-                                        <td><input type="text" name="optionb" value="" size="30"  /></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Option C</td>
-                                        <td><input type="text" name="optionc" value="" size="30"  /></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Option D</td>
-                                        <td><input type="text" name="optiond" value="" size="30"  /></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Correct Answer</td>
-                                        <td>
-                                            <select name="correctans">
-                                                <option value="<Choose the Correct Answer>" selected>&lt;Choose the Correct Answer&gt;</option>
-                                                <option value="optiona">Option A</option>
-                                                <option value="optionb">Option B</option>
-                                                <option value="optionc">Option C</option>
-                                                <option value="optiond">Option D</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        
-                                        <td><input type="hidden" name="marks" value="1" size="30" onkeyup="isnum(this)" /></td>
-
-                                    </tr>
-
-                                </table>
+                                <div class="form-group">
+                                    <div class="col-sm-2"></div>
+                                    <label class="control-label col-sm-2">Question <input type="hidden" name="qnid" /></label>
+                                    <div class="col-sm-4"><textarea type="text" id = "question" class="form-control" required = "" name = "question" placeholder = "Enter your question here" value=""></textarea></div>
+                                </div><br><br><br>
+                                <div class="form-group">
+                                    <div class="col-sm-2"></div>
+                                    <label class="control-label col-sm-2">Option A:</label>
+                                    <div class="col-sm-4"><input type="text" class="form-control" id="optiona" name="optiona" placeholder="Enter option A"></div>
+                                </div><br><br>
+                                <div class="form-group">
+                                    <div class="col-sm-2"></div>
+                                    <label class="control-label col-sm-2">Option B:</label>
+                                    <div class="col-sm-4"><input type="text" class="form-control" id="optionb" name="optionb" placeholder="Enter option B"></div>
+                                </div><br><br>
+                                <div class="form-group">
+                                    <div class="col-sm-2"></div>
+                                    <label class="control-label col-sm-2">Option C:</label>
+                                    <div class="col-sm-4"><input type="text" class="form-control" id="optionc" name="optionc" placeholder="Enter option C"></div>
+                                </div><br><br>
+                                <div class="form-group">
+                                    <div class="col-sm-2"></div>
+                                    <label class="control-label col-sm-2">Option D:</label>
+                                    <div class="col-sm-4"><input type="text" class="form-control" id="optiond" name="optiond" placeholder="Enter option D"></div>
+                                </div><br><br>
+                                <div class="form-group">
+                                    <div class="col-sm-2"></div>
+                                    <label class="control-label col-sm-2">Correct Answer:</label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" name="correctans">
+                                            <option value="<Choose the Correct Answer>" selected>Choose the Correct Answer</option>
+                                            <option value="optiona">Option A</option>
+                                            <option value="optionb">Option B</option>
+                                            <option value="optionc">Option C</option>
+                                            <option value="optiond">Option D</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-2"></div>
+                                    <label class="control-label col-sm-2"></label>
+                                    <div class="col-sm-4"><input type="hidden" name="marks" value="1" size="30" onkeyup="isnum(this)"/></div>
+                                </div><br><br>
 
 <?php
                             } else if (isset($_REQUEST['edit'])) {
@@ -286,50 +250,53 @@ if (isset($_SESSION['testqn'])) {
                                 } else if ($r = mysqli_fetch_array($result)) {
                                     //editing components
 ?>
-                                    <table cellpadding="20" cellspacing="20" style="text-align:left;margin-left:15em;" >
-                                        <tr>
-                                            <td>Question<input type="hidden" name="qnid" value="<?php echo $r['qnid']; ?>" /></td>
-                                            <td><textarea name="question" cols="40" rows="3"  ><?php echo htmlspecialchars_decode($r['question'],ENT_QUOTES); ?></textarea></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Option A</td>
-                                            <td><input type="text" name="optiona" value="<?php echo htmlspecialchars_decode($r['optiona'],ENT_QUOTES); ?>" size="30"  /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Option B</td>
-                                            <td><input type="text" name="optionb" value="<?php echo htmlspecialchars_decode($r['optionb'],ENT_QUOTES); ?>" size="30"  /></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Option C</td>
-                                            <td><input type="text" name="optionc" value="<?php echo htmlspecialchars_decode($r['optionc'],ENT_QUOTES); ?>" size="30"  /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Option D</td>
-                                            <td><input type="text" name="optiond" value="<?php echo htmlspecialchars_decode($r['optiond'],ENT_QUOTES); ?>" size="30"  /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Correct Answer</td>
-                                            <td>
-                                                <select name="correctans">
-                                                    <option value="optiona" <?php if (strcmp(htmlspecialchars_decode($r['correctanswer'],ENT_QUOTES), "optiona") == 0)
+                                    <div class="form-group">
+                                    <div class="col-sm-2"></div>
+                                    <label class="control-label col-sm-2">Question <input type="hidden" name="qnid" value="<?php echo $r['qnid']; ?>" /></label>
+                                    <div class="col-sm-4"><textarea type="text" id = "question" class="form-control" required = "" name = "question" placeholder = "Enter your question here" value=""></textarea></div>
+                                </div><br><br><br>
+                                <div class="form-group">
+                                    <div class="col-sm-2"></div>
+                                    <label class="control-label col-sm-2">Option A:</label>
+                                    <div class="col-sm-4"><input type="text" class="form-control" id="optiona" name="optiona" placeholder="Enter option A" value="<?php echo htmlspecialchars_decode($r['optiona'],ENT_QUOTES); ?>"></div>
+                                </div><br><br>
+                                <div class="form-group">
+                                    <div class="col-sm-2"></div>
+                                    <label class="control-label col-sm-2">Option B:</label>
+                                    <div class="col-sm-4"><input type="text" class="form-control" id="optionb" name="optionb" placeholder="Enter option B" value="<?php echo htmlspecialchars_decode($r['optionb'],ENT_QUOTES); ?>"></div>
+                                </div><br><br>
+                                <div class="form-group">
+                                    <div class="col-sm-2"></div>
+                                    <label class="control-label col-sm-2">Option C:</label>
+                                    <div class="col-sm-4"><input type="text" class="form-control" id="optionc" name="optionc" placeholder="Enter option C" value="<?php echo htmlspecialchars_decode($r['optionc'],ENT_QUOTES); ?>"></div>
+                                </div><br><br>
+                                <div class="form-group">
+                                    <div class="col-sm-2"></div>
+                                    <label class="control-label col-sm-2">Option D:</label>
+                                    <div class="col-sm-4"><input type="text" class="form-control" id="optiond" name="optiond" placeholder="Enter option D" value="<?php echo htmlspecialchars_decode($r['optiond'],ENT_QUOTES); ?>"></div>
+                                </div><br><br>
+                                <div class="form-group">
+                                    <div class="col-sm-2"></div>
+                                    <label class="control-label col-sm-2">Correct Answer:</label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" name="correctans">
+                                            <option value="<Choose the Correct Answer>" selected>Choose the Correct Answer</option>
+                                            <option value="optiona" <?php if (strcmp(htmlspecialchars_decode($r['correctanswer'],ENT_QUOTES), "optiona") == 0)
                                         echo "selected"; ?>>Option A</option>
-                                                    <option value="optionb" <?php if (strcmp(htmlspecialchars_decode($r['correctanswer'],ENT_QUOTES), "optionb") == 0)
+                                            <option value="optionb" <?php if (strcmp(htmlspecialchars_decode($r['correctanswer'],ENT_QUOTES), "optionb") == 0)
                                         echo "selected"; ?>>Option B</option>
-                                                    <option value="optionc" <?php if (strcmp(htmlspecialchars_decode($r['correctanswer'],ENT_QUOTES), "optionc") == 0)
+                                            <option value="optionc" <?php if (strcmp(htmlspecialchars_decode($r['correctanswer'],ENT_QUOTES), "optionc") == 0)
                                         echo "selected"; ?>>Option C</option>
-                                                    <option value="optiond" <?php if (strcmp(htmlspecialchars_decode($r['correctanswer'],ENT_QUOTES), "optiond") == 0)
+                                            <option value="optiond" <?php if (strcmp(htmlspecialchars_decode($r['correctanswer'],ENT_QUOTES), "optiond") == 0)
                                         echo "selected"; ?>>Option D</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            
-                                            <td><input type="hidden" name="marks" value="<?php echo htmlspecialchars_decode($r['marks'],ENT_QUOTES); ?>" size="30" onkeyup="isnum(this)" /></td>
-
-                                        </tr>
-
-                                    </table>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-2"></div>
+                                    <label class="control-label col-sm-2"></label>
+                                    <div class="col-sm-4"><input type="hidden" name="marks" value="1" size="30" onkeyup="isnum(this)" value="<?php echo htmlspecialchars_decode($r['marks'],ENT_QUOTES); ?>"/></div>
+                                </div><br><br>
 <?php
                                 }
                             }
@@ -340,7 +307,7 @@ if (isset($_SESSION['testqn'])) {
                                 // Defualt Mode: Displays the Existing Question/s, If any.
                                 $result = $mysqli->query("SELECT @row_number:=@row_number+1 AS row_number,qnid,question,correctanswer FROM question, (SELECT @row_number:=0) AS t where testid='".$gid."'");
                                 if (mysqli_num_rows($result) == 0) {
-                                    echo "<h3 style=\"color:#0000cc;text-align:center;\">No Questions Yet..!</h3>";
+                                    echo "<br><br><br><h3 style=\"color:#0000cc;text-align:center;\">No Questions Yet!</h3>";
                                 } else {
                                     $i = 0;
                                     echo "<table class='footable table table-stripped' data-page-size='8' data-filter=#filter>";
@@ -393,6 +360,43 @@ if (isset($_SESSION['testqn'])) {
                             }
                         }
 ?>
+                <?php
+if (isset($_SESSION['testqn'])) {
+    // Navigations
+?>
+                       <!-- <li><input type="submit" value="LogOut" name="logout" class="btn btn-info" title="Log Out"/></li>-->
+
+        <?php
+        //navigation for Add option
+        if (isset($_REQUEST['add'])) {
+        ?>                  
+                            
+                            <br><br><div class="col-md-10"></div>
+                            <input type="submit" value="Save" name="savea" class="btn btn-info" onclick="validateqnform('prepqn')" title="Save the Changes"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="submit" value="Back" name="back" class="btn btn-info" title="Back"/>
+
+<?php
+        } else if (isset($_REQUEST['edit'])) { //navigation for Edit option
+?>
+                            <br><br><div class="col-md-10"></div>
+                            <input type="submit" value="Save" name="savem" class="btn btn-info" onclick="validateqnform('prepqn')" title="Save the Changes"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="submit" value="Back" name="back" class="btn btn-info" title="Back"/>
+                            
+
+                        <?php
+                    } else {  //navigation for Default
+                        ?>
+                        <script type="text/javascript">
+                        function goback(){
+                            window.location.href='addedittest.php';
+                        }
+                        </script>
+                        
+                        <br><br><div class="col-md-9"></div>
+                        <input type="submit" value="Add Questions" name="add" class="btn btn-info" title="Add Questions"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="button" value="Back" name="back" class="btn btn-info" title="back" onclick="goback()"/></input>
+                        <?php }
+                } ?>
                     </div>      
                 </div>
             </div>

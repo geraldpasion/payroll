@@ -18,6 +18,7 @@ if(isset($_POST['approved'])){
 	   $maternity=$row['employee_maternityleave'];
 	   $paternity=$row['employee_paternityleave'];
 	   $singleparent=$row['employee_singleparentleave'];
+	   $date = date('Y-m-d');
 	}
 
 	if($_POST['type']=='Sick leave'){
@@ -30,6 +31,11 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','".$date."','-1','0','0','0','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
 				}
 			}
 			header("Location: leaveapproval.php?approved");
@@ -48,6 +54,11 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','".$date."','0','-1','0','0','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
 				}
 			}
 			header("Location: leaveapproval.php?approved");
@@ -66,6 +77,11 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','".$date."','0','0','-1','0','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
 				}
 			}
 			header("Location: leaveapproval.php?approved");
@@ -84,6 +100,11 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','".$date."','0','0','0','-1','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
 				}
 			}
 			header("Location: leaveapproval.php?approved");
@@ -102,6 +123,11 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','".$date."','0','0','0','0','-1','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
 				}
 			}
 			header("Location: leaveapproval.php?approved");
@@ -120,6 +146,11 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','".$date."','0','0','0','0','0','-1')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
 				}
 			}
 			header("Location: leaveapproval.php?approved");

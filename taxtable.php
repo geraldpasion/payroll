@@ -24,28 +24,28 @@
 		
 		</style>	
 		<script type="text/javascript">
+
 			$(document).on("click", ".editempdialog", function () {
-			 var one = $(this).data('one');
-			 var two = $(this).data('2');
-			 var three = $(this).data('3');
-			 var four = $(this).data('4');
-			 var five = $(this).data('5');
-			 var six = $(this).data('6');
-			 var seven = $(this).data('7');
-			 var eight = $(this).data('8');
-			 var id = $(this).data('id');
+
+			 var tax_id = $(this).data('tax_id');	
+			 var TaxType = $(this).data('taxtype');
+			 var TaxCode = $(this).data('taxcode');
+			 var Level = $(this).data('level');
+			 var GrossCheck = $(this).data('grosscheck');
+			 var FixedTaxAmount = $(this).data('fixedtaxamount');
+			 var PercentOver = $(this).data('percentover');
 			 
-			 $(".modal-body #one").val( one );
-			 $(".modal-body #id").val( id );
-			 $(".modal-body #2").val( two );
-			 $(".modal-body #3").val( three );
-			 $(".modal-body #4").val( four );
-			 $(".modal-body #5").val( five );
-			 $(".modal-body #6").val( six );
-			 $(".modal-body #7").val( seven );
-			 $(".modal-body #8").val( eight );
-			 $(".modal-body #6").val( total );
+
+
+			 $(".modal-body #tax_id").val( tax_id );
+			 $(".modal-body #TaxType").val( TaxType );
+			 $(".modal-body #TaxCode").val( TaxCode );
+			 $(".modal-body #Level").val( Level );
+			 $(".modal-body #GrossCheck").val( GrossCheck );
+			 $(".modal-body #FixedTaxAmount").val( FixedTaxAmount );
+			 $(".modal-body #PercentOver").val( PercentOver );
 			 });
+			
 		</script>			
 				<script type="text/javascript">
 			$(document).ready(function(){
@@ -68,7 +68,7 @@
 						}
 						toastr.success("BIR table successfully edited!");
 				}
-				history.replaceState({}, "Title", "birtable.php");
+				//history.replaceState({}, "Title", "birtable.php");
 				
 			});
 		</script>
@@ -113,62 +113,15 @@
             </div>
         </div>
  
+
             <div class="ibox-content">
 				<?php
-					include('dbconfig.php');
-					if ($result = $mysqli->query("SELECT * FROM witholding_tax")) //get records from db
-					{
-						if ($result->num_rows > 0) //display records if any
-						{
-							echo "<table class='footable table table-stripped' data-page-size='1000' data-filter=#filter>";								
-							echo "<thead>";
-							echo "<tr>";	
-							echo "<th>Type</th>";
-							echo "<th>Status</th>";
-                            echo "<th>1</th>";
-							echo "<th>2</th>";
-							echo "<th>3</th>";
-							echo "<th>4</th>";
-							echo "<th>5</th>";
-							echo "<th>6</th>";
-							echo "<th>7</th>";
-							echo "<th>8</th>";
-							echo "</tr>";
-							echo "</thead>";
-							
-							while ($row = mysqli_fetch_object($result))
-							{
-								echo "<tr class ='josh'>";
-								echo "<td>" . $row->Payroll_Type . "</td>";
-								echo "<td>" . $row->Status . "</td>";
-								echo "<td>" . $row->Withholding_tax1 . "</td>";
-								echo "<td>" . $row->Withholding_tax2 . "</td>";
-								echo "<td>" . $row->Withholding_tax3 . "</td>";
-								echo "<td>" . $row->Withholding_tax4 . "</td>";
-								echo "<td>" . $row->Withholding_tax5 . "</td>";
-								echo "<td>" . $row->Withholding_tax6 . "</td>";
-								echo "<td>" . $row->Withholding_tax7 . "</td>";
-								echo "<td>" . $row->Withholding_tax8 . "</td>";
+				//generate table here
+				include 'testtable.php';
 
-								echo "<td><a href='#' data-toggle='modal' data-target='#myModal4' class = 'editempdialog'
-													data-id='$row->Tax_ID'
-													data-one='$row->Withholding_tax1' 
-													data-2='$row->Withholding_tax2' 
-													data-3='$row->Withholding_tax3' 
-													data-4='$row->Withholding_tax4' 
-													data-5='$row->Withholding_tax5' 
-													data-6='$row->Withholding_tax6' 
-													data-7='$row->Withholding_tax7' 
-													data-8='$row->Withholding_tax8' 
-										
-										><button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> Edit</button></a>&nbsp;&nbsp;";
-										
-										
-								echo "</tr>";
-							}
-							echo "</table>";
-						}
-					}
+
+				TaxValuesFunct(1);
+
 				?>
 				</div>
 			</div>
@@ -184,48 +137,42 @@
 				</div>
 				<div class="modal-body">
 					<div class="ibox-content">
-						<form id = "myForm" method="POST" action = "editbirtable.php" class="form-horizontal">
+						<form id = "myForm" method="POST" action = "taxtableexe.php" class="form-horizontal">
 						<input id = "id" name = "id" type="hidden" class="form-control" readonly = "readonly">
+							
+						<?php 
+
+						 $fields=array(
+						 'tax_id',
+				     	'TaxType',
+				     	'TaxCode',
+				     	'Level',
+				     	'GrossCheck',
+				     	'FixedTaxAmount',
+				     	'PercentOver'
+				     	);
+
+						foreach ($fields as $field){
+
+						?>
+
 							<div class="form-group">
 								<div class = "col-sm-1"></div>
-								<label class="col-sm-2 control-label">1</label>
-								<div class="col-md-8"><input id = "one" name = "one" type="text" onpaste="return false" onDrop="return false" class="form-control" onKeyPress="return doubleonly(this, event)"></div>
+								<label class="col-sm-2 control-label"><?php echo $field ?></label>
+								<div class="col-md-8"><?php 
+
+								if($field=='tax_id' || $field=='TaxType' || $field=='TaxCode' || $field=='Level') //readonly
+								echo '<input id = "'.$field.'" name = "'.$field.'" type="text" onpaste="return false" onDrop="return false" class="form-control" onKeyPress="return doubleonly(this, event)" readonly>';
+								else
+								echo '<input id = "'.$field.'" name = "'.$field.'" type="text" onpaste="return false" onDrop="return false" class="form-control" onKeyPress="return doubleonly(this, event)">';
+
+								 ?></div>
 							</div>
-							<div class="form-group">
-								<div class = "col-sm-1"></div>
-								<label class="col-sm-2 control-label">2</label>
-								<div class="col-md-8"><input id = "2" type="text" name = "two" onpaste="return false" onDrop="return false" class="form-control" onKeyPress="return doubleonly(this, event)"></div>
-							</div>
-							<div class="form-group">
-								<div class = "col-sm-1"></div>
-								<label class="col-sm-2 control-label">3</label>
-								<div class="col-md-8"><input id = "3" type="text" name = "three" onpaste="return false" onDrop="return false" class="form-control" onKeyPress="return doubleonly(this, event)"></div>
-							</div>
-							<div class="form-group">
-								<div class = "col-sm-1"></div>
-								<label class="col-sm-2 control-label">4</label>
-								<div class="col-md-8"><input id = "4" type="text" name = "four" onpaste="return false" onDrop="return false" class="form-control" onKeyPress="return doubleonly(this, event)"></div>
-							</div>
-							<div class="form-group">
-								<div class = "col-sm-1"></div>
-								<label class="col-sm-2 control-label">5</label>
-								<div class="col-md-8"><input id = "5" type="text" name = "five" onpaste="return false" onDrop="return false" class="form-control" onKeyPress="return doubleonly(this, event)"></div>
-							</div>
-							<div class="form-group">
-								<div class = "col-sm-1"></div>
-								<label class="col-sm-2 control-label">6</label>
-								<div class="col-md-8"><input id = "6" type="text" name = "six" onpaste="return false" onDrop="return false" class="form-control" onKeyPress="return doubleonly(this, event)"></div>
-							</div>
-							<div class="form-group">
-								<div class = "col-sm-1"></div>
-								<label class="col-sm-2 control-label">7</label>
-								<div class="col-md-8"><input id = "7" type="text" name = "seven" onpaste="return false" onDrop="return false" class="form-control" onKeyPress="return doubleonly(this, event)"></div>
-							</div>
-							<div class="form-group">
-								<div class = "col-sm-1"></div>
-								<label class="col-sm-2 control-label">8</label>
-								<div class="col-md-8"><input id = "8" type="text" name = "eight" onpaste="return false" onDrop="return false" class="form-control" onKeyPress="return doubleonly(this, event)"></div>
-							</div>						
+							
+						<?php 
+						
+						}
+						?>						
 						
 					</div>
 				</div>

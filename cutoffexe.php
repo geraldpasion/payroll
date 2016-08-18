@@ -7,6 +7,9 @@ if(isset($_POST['sx'])){
 
 	$schedArray = array();
 	$schedArray = split(" - ", $sched);
+
+	$start = $schedArray[0];
+	$ending = $schedArray[1];
 	
 	$count = count($_POST['id']);
 		for ($i=0; $i <$count ; $i++) { 
@@ -17,6 +20,7 @@ if(isset($_POST['sx'])){
 					if ($stmt = $mysqli->prepare("UPDATE emp_cutoff SET empcut_initial = '".$schedArray[0]."', empcut_end = '".$schedArray[1]."' WHERE employee_id = '".$_POST["id"][$i]."'")){
 						$stmt->execute();
 						$stmt->close();
+
 					}
 					$attstatus = $mysqli->query("SELECT * FROM total_comp WHERE employee_id = '".$_POST["id"][$i]."'");
 					if ($attstatus->num_rows > 0) {
@@ -28,6 +32,9 @@ if(isset($_POST['sx'])){
 								echo "<script></script>";
 								// $stmt->execute();
 								// $stmt->close();
+
+								//update cutoff table cutoff_sched_submission to submitted
+								
 							}
 							if ($stmt = $mysqli->query("DELETE FROM total_comp WHERE employee_id = '".$_POST["id"][$i]."'"))
 							{
@@ -45,9 +52,20 @@ if(isset($_POST['sx'])){
 						$stmt->close();
 					}
 				}
-			}
+			}//end if
+		}//end for loop
+
+
+		$sql="UPDATE cutoff SET cutoff_sched_submission = 'Submitted' WHERE  cutoff_initial='$start' AND cutoff_end='$ending'";
+		echo $sql;
+		if ($stmt2 = $mysqli->query($sql))
+		{
+			//$stmt2->execute();
+			//$stmt2->close();
+			header("Location: attendanceapproval.php");
 		}
-		header("Location: cutoff.php?changeCutoff");
+		//header("Location: cutoff.php?changeCutoff");
+		//header("Location: attendanceapproval.php");
 }
 
 if(isset($_GET['daterange2']) and $_GET['daterange2'] != '' and isset($_GET['daterange3']) and $_GET['daterange3'] != ''){
@@ -63,7 +81,7 @@ if(isset($_GET['daterange2']) and $_GET['daterange2'] != '' and isset($_GET['dat
 			return false;
 		}
 		else{
-		$mysqli->query("INSERT INTO cutoff (cutoff_id, cutoff_initial, cutoff_end, cutoff_status, cutoff_submission, cutoff_sched_submission) VALUES ('','$initial','$end','Active','','Submitted')");
+		$mysqli->query("INSERT INTO cutoff (cutoff_id, cutoff_initial, cutoff_end, cutoff_status, cutoff_submission, cutoff_sched_submission) VALUES ('','$initial','$end','Active','','')");
 		echo 'swal({  title: "Saved",   text: "Cutoff Saved",   timer: 3000, type: "success",   showConfirmButton: false}); $("#myModal4").modal("hide"); $("#daterange2").val(""); $("#daterange3").val("");';
 			// return false;
 		}

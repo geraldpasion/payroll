@@ -150,7 +150,7 @@
                             Please fill all fields.
 						</div>
 						<form id = "myForm" method = "post"  class="form-horizontal" action = "adminovertimeapplicationexe.php">
-													<div class="form-group">
+							<div class="form-group">
 								<input type="hidden" id = "empid" name = "empid" class="form-control" value = " <?php echo $_SESSION['logsession'] ?>">
 								<label class="col-sm-4 control-label">Employee Name</label>
 								<div class="col-md-4"><input type="text" onfocus="clearThis(this)" id="name" name="name" onpaste="return false" onDrop="return false" class="form-control ename" onKeyPress="return lettersonly(this, event)" required></div>
@@ -179,9 +179,9 @@
 											<span class="fa fa-clock-o"></span>
 										</span>
 									</div>
-                            </div>
+                            	</div>
 							</div>
-								<div class="form-group">
+							<div class="form-group">
 								<label class="col-sm-4 control-label">Reason</label>
 								<div class="col-md-4"><input id = "reason"  onpaste="return false" onDrop="return false" name = "reason" type="text" class="form-control" required="" placeholder = "Type your reason here..."></div>
 							</div>

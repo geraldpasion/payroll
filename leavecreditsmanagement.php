@@ -230,6 +230,7 @@ document.frmUser.submit();
 								<thead>
 									<tr>
 										<th>Date Modified</th>
+										<th>Type</th>
 										<th>PRD</th>
 										<th>VL</th>
 										<th>SL</th>
