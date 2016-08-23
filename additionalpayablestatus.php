@@ -10,7 +10,11 @@
 				include('menuheader.php');
 			} else if(isset($_SESSION['logsession']) && $empLevel == '2') {
 				include('supervisormenuheader.php');
-			} else {
+			}else if(isset($_SESSION['logsession']) && $empLevel == '4'){
+				include('levelexe.php');
+
+			}
+			 else {
 				include('employeemenuheader.php');
 			}
 			// this gets the appropriate header for the employee based on their employee level

@@ -93,6 +93,7 @@
 													$cutarray = split(" - ", $selection);
 													$initialcut = $cutarray[0];
 													$endcut = $cutarray[1];
+
 													echo '<option value="'.$initialcut.' - '.$endcut.'">'.date("F d, Y",strtotime($initialcut)).' - ';
 													echo date("F d, Y",strtotime($endcut)).'</option>';
 												}else{
@@ -118,9 +119,9 @@
 								if(isset($_POST['test1'])){
 									$initialcut2 = strtotime($initialcut)*1000;
 									$endcut2 = strtotime($endcut)*1000;
-									echo'<!--button type="button" onClick="exportAll('.$initialcut2.','.$endcut2.')" class="btn btn-w-m btn-primary disabled"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;Export All</button-->';
+									echo'<button type="button" onClick="exportAll('.$initialcut2.','.$endcut2.')" class="btn btn-w-m btn-primary"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;Export All</button>';
 								} else {
-									echo'<!--button type="button" class="btn btn-w-m btn-primary"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;Export All</button-->';
+									echo'<button type="button" class="btn btn-w-m btn-primary"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;Export All</button>';
 								} ?>
 								</div>
 							</form>
@@ -131,9 +132,10 @@
 					<div class="ibox-content" id = "tableHolderz">
 						<?php
 							include('dbconfig.php');
+								$ID=$_SESSION['logsession'];
 								if(isset($_POST['test1'])){
 								$cutoffrange = $initialcut . ' - ' .$endcut;
-								if ($result1 = $mysqli->query("SELECT * FROM employee INNER JOIN total_comp_salary ON employee.employee_id = total_comp_salary.employee_id WHERE total_comp_salary.process_status='Submitted' AND total_comp_salary.cutoff='$cutoffrange'")) //get records from db
+								if ($result1 = $mysqli->query("SELECT * FROM employee INNER JOIN total_comp_salary ON employee.employee_id = total_comp_salary.employee_id WHERE total_comp_salary.process_status='Submitted' AND total_comp_salary.cutoff='$cutoffrange' AND employee.employee_id='$ID'")) //get records from db
 								{
 									if ($result1->num_rows > 0) //display records if any
 									{
@@ -158,7 +160,7 @@
 											$empid = $row1->employee_id;
 											$compid = $row1->id;
 											echo "<tr class = 'josh'>";
-											echo "<td>" . $empid . "</td>";
+											echo "<td name='eid'>" . $empid . "</td>";
 											echo "<td>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</td>";
 											echo "<td>" . $row1->employee_department . "</td>";
 											//echo "<td><a href='#' data-toggle='modal' 
@@ -167,9 +169,13 @@
 											//		data-submitdate='".$cutoffsubmitdate."'
 											//		data-target='#myModal4' class = 'editempdialog'><button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> Edit</button></a>&nbsp;&nbsp;";
 											//echo "<a href='#' id='$empid' cutoff='".$initialcut." - ".$endcut."' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Deactivate</button></button></a>";
-												echo "<td>
-														<a id='export' class='btn btn-info'  data-toggle='modal' data-target='#modalconfirm'>";
-														//<button class='btn btn-info' name = 'export' id='export' type='button'>
+												echo "<td>";
+												 echo"<a id='export' class='btn btn-info'  data-toggle='modal' data-target='#modalconfirm'>";
+												 $_SESSION['initialcutS'] =$initialcut;
+												  $_SESSION['endcutS'] =$endcut;
+												  $_SESSION['compidS'] =$compid;
+													//	echo"<a id='export' class='btn btn-info'  href='print_payslip.php?initial=".$initialcut."&end=".$endcut."&id=".$empid."&compid=".$compid."' target='_blank'>";
+													//	<button class='btn btn-info' name = 'export' id='export' type='button'>
 														//	<i class='fa fa-file'></i>&nbsp;&nbsp;View/Download
 														//	</button>
 														echo "View/Download";
@@ -186,17 +192,17 @@
 					</div>
 					<div class="modal inmodal fade" id="modalconfirm" tabindex="-1" role="dialog" aria-hidden="true">
               			<div class="modal-dialog modal-sm">
-                			<div class="modal-content" style="max-width:920px;">
+                			<div class="modal-content">
                 				<div class="modal-header">
-                    			<form id = "uploadForm" method="post" action="payslipexe.php" class="form-horizontal">
+                    			<form id = "uploadForm" method="post" action="payslipexe.php" class="form-horizontal"  target="_blank">
                     				<button type="button" class="close" data-dismiss="modal">&times;</button>
                     				<i class="glyphicon glyphicon-question-sign modal-icon"></i>
                     				<h4 class="modal-title">Payslip Password Confirmation</h4>
                   				</div><!--/.modal-header-->
                   				<div class="modal-body">
                     				<div class="alert alert-warning">
-                      					<p>Enter your username:</p><br>
-                      					<input type="text" class="form-control" id="empnum" name="empnumber" placeholder="Enter username"><br>
+                      					<!--<p>Enter your account username:</p><br>
+                      					<input type="text" class="form-control" id="acctun" name="acctusername" placeholder="Enter username"><br>-->
                       					<p>Enter your payslip password:</p><br>
                       					<input type="password" class="form-control" id="paypw" name="payslippassword" placeholder="Enter password">
                     				</div>
@@ -221,3 +227,12 @@
 	</body>
 
 </html>
+<?php
+		if(isset($_GET['invalid']))
+		{
+			echo '<script type="text/javascript">'
+			   , 'alert("sad");'
+			   , '</script>'
+			;	
+		}
+	?>

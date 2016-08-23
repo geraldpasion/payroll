@@ -8,7 +8,10 @@
 				include('menuheader.php');
 			} else if(isset($_SESSION['logsession']) && $empLevel == '2') {
 				include('supervisormenuheader.php');
-			} else {
+			}else if(isset($_SESSION['logsession']) && $empLevel == '4'){
+				include('levelexe.php');
+			}
+			 else {
 				include('employeemenuheader.php');
 			}
 			$empid = $_SESSION['logsession'];

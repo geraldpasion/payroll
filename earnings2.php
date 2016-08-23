@@ -7,14 +7,7 @@ document.frmUser.submit();
 }
 		</script>
 		<?php
-				session_start();
-		$empLevel = $_SESSION['employee_level'];
-		if(isset($_SESSION['logsession']) && $empLevel == '3') {
-				include('menuheader.php');
-
-		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
-			include('levelexe.php');
-		}
+			 include('menuheader.php');
 		?>
 		<title>Cut Off Settings</title>
 		<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
@@ -273,7 +266,7 @@ document.frmUser.submit();
 					<div class="ibox-content">					
 						<div class="form-group">
 	                        <div class = "col-md-5"></div>
-	                        <a href='#' data-target="#myModal4" data-toggle='modal' ><button class='btn btn-info' name = 'edit' type='button'>New Cut-off</button></a>
+	                        <a href='#' data-target="#myModal4" data-toggle='modal' ><button class='btn btn-info' name = 'edit' type='button'>New Earnings</button></a>
 						</div>
 						<!--Schedule List-->
 						<div class="form-group">
@@ -474,12 +467,12 @@ document.frmUser.submit();
 						<form id = "uploadForm" method="POST" action="" onsubmit="return false;" class="form-horizontal">
 
 							<div class="form-group">
-								<label class="col-sm-2 control-label">From</label>
-								<div class="col-md-8"><input type="text" id="daterange2" onpaste="return false" onDrop="return false" class="form-control" name="daterange2" required="" placeholder="click to pick date"></div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">To</label>
-								<div class="col-md-8"><input type="text" id="daterange3" onpaste="return false" onDrop="return false" class="form-control" name="daterange3" required="" placeholder="click to pick date"></div>
+								<label class="col-sm-3 control-label">Particular</label>
+									<div class="col-md-4" id="partinp"><input type="text" onfocus="clearThis(this)" id="parts" name="parts" class="form-control ename" required="" placeholder="Enter Name"></div>
+									<br><br><br>		
+								<label class="col-sm-3 control-label">Type</label>
+									<div class="col-sm-4"><select id="earningtype" name="earningtype" class="form-control" data-default-value="z" required=""><option selected="true" disabled="disabled" value="">Select type...</option><option value = "Taxable">Taxable</option><option value = "Non-Taxable">Non-Taxable</option></select></div>
+									<br><br><br>									
 							</div>
 							<div class="col-md-3"></div>
 									<button id ="reset" type="reset" class="btn btn-w-m btn-warning">Reset</button>
@@ -644,19 +637,19 @@ $(document).ready(function(){
     <script src="js/timepicki.js"></script>
     <script type="text/javascript">
 			$("#addCutoff").click(function(){
-				var daterange2 = $("#daterange2").val();
-				var daterange3 = $("#daterange3").val();
-				var paysched = $("#paymentsched").val();
+				var parts = $("#parts").val();
+				var earningtype = $("#earningtype").val();
+				//var paysched = $("#paymentsched").val();
 				var element = $(this);
 				 $.ajax({
 				   type: "POST",
-				   url: "cutoffexe.php?daterange2=" + daterange2 + "&daterange3=" + daterange3 + "&paysched" + paymentsched,
+				   url: "earningse2.php?parts=" + parts + "&earningtype=" +earningtype,
 				   success: function(data){
 				   		//location.reload();
 						eval(data);
 						$.ajax({
 						   type: "POST",
-						   url: "cutoffrefreshdropdown.php",
+						   url: "earningsfreshdropdown.php",
 						   success: function(data){
 						   		$('#leavetype').html(data);
 							}
@@ -682,7 +675,7 @@ $(document).ready(function(){
 					}
 					toastr.success("Cut-off successfully added!");
 				}
-				header("Location: cutoff.php?changeCutoff");
+				header("Location: earnings2.php?changeCutoff");
 			});
 		</script>
     <script>

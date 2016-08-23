@@ -9,7 +9,11 @@
 				include('menuheader.php');
 			} else if(isset($_SESSION['logsession']) && $empLevel == '2') {
 				include('supervisormenuheader.php');
-			} else {
+			}else if(isset($_SESSION['logsession']) && $empLevel == '4'){
+				include('levelexe.php');
+
+			}
+			 else {
 				include('employeemenuheader.php');
 			}
 			// this gets the appropriate header for the employee based on their employee level
@@ -189,7 +193,7 @@
 								?>
 								<div class="col-md-4">
 									<?php 
-										if($empLevel == "3") { // level 3 employees are allowed to submit application of others for any employee
+										if($empLevel == "3" OR $empLevel=="4") { // level 3 employees are allowed to submit application of others for any employee
 											echo '<input type="text" onfocus="clearThis(this)" id="name" onpaste="return false" onDrop="return false" class="form-control ename">';
 										} else { // level 1&2 employees are only allowed to submit own applications therefore search is disabled
 											echo '<input type="text" onfocus="clearThis(this)" id="name" onpaste="return false" onDrop="return false" value="'.$employee.'" class="form-control ename" disabled>';

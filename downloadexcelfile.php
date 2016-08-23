@@ -236,6 +236,19 @@ foreach ($heads as $key => $value){
 //get employee ids from the given cutoff at totalcomputation
 $employeeids = get_employeeids_from_cutoff($cutoff);
 
+//check each employee_status is 'active'
+foreach ($employeeids as $employee_id){
+	//if employee_status is 'finalpay' or 'Inactive', remove from list.
+	 $sql = "SELECT employee_status FROM employee WHERE employee_id='$employee_id'";
+     $result = $conn->query($sql);
+         if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+            	
+            }
+          }
+}
+
 //default styling
 $objPHPExcel->getDefaultStyle()
     ->getAlignment()

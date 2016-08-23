@@ -3,7 +3,14 @@
 
 	<head>
 		<?php
-			include('menuheader.php');
+		session_start();
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
 		?>
 		<title>Announcement list</title>
 		<script type="text/javascript">
@@ -234,7 +241,7 @@ function generate_table_header(){
 		echo "<tr>";
 			echo "<th class='ann-date'>Date</th>";
 			echo "<th>Announcements</th>";
-			echo "<th>Action</th>";
+			echo "<th style='text-align:center'>Action</th>";
 		echo "</tr>";
 	echo "</thead>";
 
@@ -250,7 +257,7 @@ include('dbconfig.php');
 				echo "<tr>";
 					echo "<td class='ann-date'>". date("Y-m-d", strtotime($row->announcement_date)) ."</td>";
 					echo "<td class='announcement-content'>". $row->announcement_details ."</td>";
-					echo "<td>";
+					echo "<td style='text-align:center'>";
 
 					//view
 					echo "<a href='#' data-toggle='modal' data-target='#myModal4' data-announcement='$row->announcement_details' 

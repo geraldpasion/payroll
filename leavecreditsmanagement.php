@@ -8,17 +8,23 @@ document.frmUser.submit();
 }
 		</script>
 		<?php
-			 include('menuheader.php');
+			session_start();
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
 		?>
 		<title>Leave Credits</title>
 		<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
 		<script src="js/plugins/toastr/toastr.min.js"></script>
 		<link href="css/animate.css" rel="stylesheet">
 		<link href="css/style.css" rel="stylesheet">
-		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">		
-				
+		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">
 		<script src="js/keypress.js"></script>
-		<script>
+		<script type="text/javascript">
 		function myFunction() {
 			document.getElementById("frmUser").reset();
 		}
@@ -48,6 +54,7 @@ document.frmUser.submit();
 				
 			});
 		</script>
+		
 		<script type="text/javascript">
 			$(document).on("click", ".viewhistorylogs", function () {
 				var id = $(this).data('id');
@@ -78,7 +85,7 @@ document.frmUser.submit();
 		?>
 	</head>
 	<body>
-		<form name="frmUser" method="post" action="">
+		<form name="frmUser" id="frmUser" method="post" action="">
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="ibox float-e-margins">
@@ -156,12 +163,12 @@ document.frmUser.submit();
 										echo "<tr>";
 										echo "<th></th>";
 										echo "<th>Name</th>";
-										echo "<th>PRD</th>";
-										echo "<th>VL</th>";
-										echo "<th>SL</th>";
-										echo "<th>ML</th>";
-										echo "<th>PL</th>";
-										echo "<th>SPL</th>";
+										echo "<th style='text-align:center'>PRD</th>";
+										echo "<th style='text-align:center'>VL</th>";
+										echo "<th style='text-align:center'>SL</th>";
+										echo "<th style='text-align:center'>ML</th>";
+										echo "<th style='text-align:center'>PL</th>";
+										echo "<th style='text-align:center'>SPL</th>";
 										echo "</tr>";
 										echo "</thead>";
 										echo "<tfoot>";                    
@@ -187,12 +194,12 @@ document.frmUser.submit();
 											echo "<td><input type='checkbox' id='chk2' class='checkbox' name='id[]' value='$empid'></td>";
 
 											echo "<td><a href='#' data-toggle='modal' data-id='$empid' data-name='$name' class='viewhistorylogs' data-target='#myModal4'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</a></td>";
-											echo "<td>" . $row1->employee_incentive . "</td>";
-											echo "<td>" . $row1->employee_vacationleave . "</td>";
-											echo "<td>" . $row1->employee_sickleave . "</td>";
-											echo "<td>" . $row1->employee_maternityleave . "</td>";
-											echo "<td>" . $row1->employee_paternityleave . "</td>";
-											echo "<td>" . $row1->employee_singleparentleave . "</td>";
+											echo "<td style='text-align:center'>" . $row1->employee_incentive . "</td>";
+											echo "<td style='text-align:center'>" . $row1->employee_vacationleave . "</td>";
+											echo "<td style='text-align:center'>" . $row1->employee_sickleave . "</td>";
+											echo "<td style='text-align:center'>" . $row1->employee_maternityleave . "</td>";
+											echo "<td style='text-align:center'>" . $row1->employee_paternityleave . "</td>";
+											echo "<td style='text-align:center'>" . $row1->employee_singleparentleave . "</td>";
 										
 											echo "</tr>";
 										}

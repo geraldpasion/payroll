@@ -3,7 +3,14 @@
 
   <head>
             <?php
-            include('menuheader.php');
+    session_start();
+    $empLevel = $_SESSION['employee_level'];
+    if(isset($_SESSION['logsession']) && $empLevel == '3') {
+        include('menuheader.php');
+
+    }else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+      include('levelexe.php');
+    }
             include('dbsettings.php');
         ?>
 <script type="text/javascript">//ajax
@@ -356,7 +363,7 @@ tr:hover{background-color:#f5f5f5}
                     echo    "<th>Test Description</th>";
                     echo    "<th>Test Secret Code</th>";
                     echo    "<th>Questions</th>";
-                    echo    "<th>Edit</th>";
+                    echo    "<th style='text-align:center'>Edit</th>";
                     echo "</thead>";
                     echo    " </tr>";
 ?>
@@ -374,8 +381,8 @@ while($result1=mysqli_fetch_object($result))
 
                    
                     echo "<td><a href='prepqn.php?id=".$testid."'><button class='btn btn-success' name = 'edit' type='button'><i class='fa fa-plus'></i> Add</button></td></a>";
-                     echo "<td><a href='addedittest.php?edit=".$result1->testname."'><button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> Edit</button></td></a>";
-                    echo "<td><a href='#' id='$testid' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Delete</button></a></td>";
+                     echo "<td style='text-align:center'><a href='addedittest.php?edit=".$result1->testname."'><button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> Edit</button></td></a>";
+                    echo "<td style='text-align:center'><a href='#' id='$testid' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Delete</button></a></td>";
                     
 
                     }

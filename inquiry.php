@@ -3,7 +3,14 @@
 
 	<head>
 		<?php
-			include('menuheader.php');
+			session_start();
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
 		?>
 		<title>Pending Inquiries</title>
 		<style>
@@ -142,9 +149,9 @@
 									echo "<thead>";
 									echo "<tr>";
 									echo "<th>Name</th>";
-									echo "<th >Date</th>";
+									echo "<th>Date</th>";
 									echo "<th>Question</th>";
-									echo "<th>Action</th>";
+									echo "<th style='text-align:center'>Action</th>";
 									echo "</tr>";
 									echo "</thead>";
 									echo "<tfoot>";                    
@@ -163,7 +170,7 @@
 										echo "<td>" . $row->inquiry_question . "</td>";
 										$question =htmlentities($row->inquiry_question);
 										$answer = htmlentities($row->inquiry_answer);
-										echo '<td><a href="#" data-toggle="modal" data-target="#myModal4" data-inqid="'.$row->inquiry_id.'" data-quest="'.$question.'" data-answer="'.$answer.'" class = "answerdialog">';
+										echo '<td style="text-align:center"><a href="#" data-toggle="modal" data-target="#myModal4" data-inqid="'.$row->inquiry_id.'" data-quest="'.$question.'" data-answer="'.$answer.'" class = "answerdialog">';
 										echo "<button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> Answer</button></a>&nbsp;&nbsp;";
 										echo "</td>";
 										echo "</tr>";

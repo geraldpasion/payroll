@@ -2,7 +2,14 @@
 <html>
 	<head>
 		<?php
-			include('menuheader.php');
+			session_start();
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
 		?>
 		<title>Post announcement</title>
 		<style>

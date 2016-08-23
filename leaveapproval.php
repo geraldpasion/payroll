@@ -3,7 +3,14 @@
 
 	<head>
 		<?php
-			include('menuheader.php');
+				session_start();
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
 		?>
 		<title>Leave Approval</title>
 		<style>
@@ -195,13 +202,14 @@
 							
 								echo "<th>Reason</th>";
 								echo "<th>Type</th>";
-								echo "<th>SL</th>";
-								echo "<th>VL</th>";
-								echo "<th>PRD</th>";
-								echo "<th>ML</th>";
-								echo "<th>PL</th>";
-								echo "<th>SPL</th>";
+								echo "<th style='text-align:center'>SL</th>";
+								echo "<th style='text-align:center'>VL</th>";
+								echo "<th style='text-align:center'>PRD</th>";
+								echo "<th style='text-align:center'>ML</th>";
+								echo "<th style='text-align:center'>PL</th>";
+								echo "<th style='text-align:center'>SPL</th>";
 								//echo "<th>Action</th>";
+								//echo "<th>Approval Status</th>";
 								echo "</tr>";
 								echo "</thead>";
 								echo "<tfoot>";                    
@@ -234,12 +242,13 @@
 									echo "<td>" . date("Y-m-d",strtotime($row->leave_start)) . "</td>";
 									echo "<td>" . $row->leave_reason . "</td>";
 									echo "<td>" . $row->leave_type . "</td>";
-									echo "<td>" . $row->employee_sickleave . "</td>";
-									echo "<td>" . $row->employee_vacationleave . "</td>";
-									echo "<td>" . $row->employee_incentive . "</td>";
-									echo "<td>" . $row->employee_maternityleave . "</td>";
-									echo "<td>" . $row->employee_paternityleave . "</td>";
-									echo "<td>" . $row->employee_singleparentleave . "</td>";
+									echo "<td style='text-align:center;'>" . $row->employee_sickleave . "</td>";
+									echo "<td style='text-align:center;'>" . $row->employee_vacationleave . "</td>";
+									echo "<td style='text-align:center;'>" . $row->employee_incentive . "</td>";
+									echo "<td style='text-align:center;'>" . $row->employee_maternityleave . "</td>";
+									echo "<td style='text-align:center;'>" . $row->employee_paternityleave . "</td>";
+									echo "<td style='text-align:center;'>" . $row->employee_singleparentleave . "</td>";
+									//echo "<td>" . $row->leave_status . "</td>";
 									//echo "<td><a href='#' id='$leaveid' class = 'approve'><button class='btn btn-primary' type='button'><i class='fa fa-check'></i> Approve</button></a>&nbsp;&nbsp;
 									//<a href='#' id='$leaveid' class = 'delete'><button class='btn btn-danger' type='button'><i class='fa fa-warning'></i> Disapprove</button></button></a>
 									//</td>";

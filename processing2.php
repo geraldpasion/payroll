@@ -2,7 +2,14 @@
 <html>
 	<head>
 		<?php
-			 include('menuheader.php');
+					session_start();
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
 		?>
 		<title>Employee list</title>
 		<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
@@ -281,7 +288,7 @@
 				}
 				toastr.success("Processing successfully submitted!");
 			}
-			history.replaceState({}, "Title", "registration.php");
+			//history.replaceState({}, "Title", "registration.php");
 
 			});
 		</script>
@@ -413,7 +420,7 @@
 							include('dbconfig.php');
 								if(isset($_POST['test1'])){
 									
-								if ($result1 = $mysqli->query("SELECT * FROM employee INNER JOIN emp_cutoff ON employee.employee_id = emp_cutoff.employee_id WHERE emp_cutoff.empcut_initial='$initialcut' AND emp_cutoff.empcut_end = '$endcut'")) //get records from db
+								if ($result1 = $mysqli->query("SELECT * FROM employee INNER JOIN emp_cutoff ON employee.employee_id = emp_cutoff.employee_id WHERE emp_cutoff.empcut_initial='$initialcut' AND emp_cutoff.empcut_end = '$endcut' AND employee_status='active'")) //get records from db
 								{
 									if ($result1->num_rows > 0) //display records if any
 									{
@@ -428,7 +435,7 @@
 										echo "<th>Shift Type</th>";
 										echo "<th>Payment Schedule</th>";
 										echo "<th>Status</th>";
-										echo "<th>Action</th>";
+										echo "<th style='text-align:center'>Action</th>";
 										echo "</tr>";
 										echo "</thead>";
 										echo "<tfoot>";                    
@@ -460,12 +467,12 @@
 											echo "<td>" . $row1->employee_type . "</td>";
 											echo "<td>" . $row1->cutoff . "</td>";
 											echo "<td name='proc_status' id='proc_status".$row1->employee_id."'>" . $status->process_status . "</td>";
-											echo "<td><a href='#' data-toggle='modal' 
+											echo "<td style='text-align:center'><a href='#' data-toggle='modal' 
 													data-employee-id='$empid' 												
 													data-cutoffd='".$initialcut." - ".$endcut."'
 													data-submitdate='".$cutoffsubmitdate."'
 													data-target='#myModal4' class = 'editempdialog'><button class='btn btn-info' name = 'edit' id='edit' type='button'><i class='fa fa-paste'></i> Edit</button></a>&nbsp;&nbsp;";
-											echo "<a href='finalpay.php' id='$empid' cutoff='".$initialcut." - ".$endcut."' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> For Final Pay</button></button></a>";											
+											echo "<a href='finalpayexe.php?emp_id=".$row1->employee_id."' id='$empid' cutoff='".$initialcut." - ".$endcut."' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> For Final Pay</button></button></a>";											
 											echo "</tr>";
 										}									
 										echo "</table>";

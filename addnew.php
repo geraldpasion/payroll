@@ -2,7 +2,14 @@
 <html>
     <head>
         <?php
-             include('menuheader.php');
+            session_start();
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
         ?>
         <title>Add Employee</title>
 		
@@ -256,7 +263,7 @@
 											<label class="col-md-2 control-label">Department</label>
 											<div class="col-md-4"><input type="text" id = "department" onpaste="return false" onDrop="return false" class="form-control cap" required="" name = "department"></div>
 											<label class="col-md-2 control-label">Employment Status</label>
-											<div class="col-md-4"><select class = "form-control" id = "empstatus" name="empstatus" value = "Select" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select Employment Status...</option>  <option value = "Project">Project</option><option value = "Contractual">Contractual</option><option value = "Provisionary">Provisionary</option><option value = "Regular">Regular</option><option value = "Student Training">Student Training</option></select></div>
+											<div class="col-md-4"><select class = "form-control" id = "empstatus" name="empstatus" value = "Select" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select Employment Status...</option>  <option value = "Project">Project</option><option value = "Contractual">Contractual</option><option value = "Probationary">Probationary</option><option value = "Regular">Regular</option><option value = "Student Training">Student Training</option></select></div>
 										</div>
 										<div class="form-group">
 											<label class="col-md-2 control-label">Tax code</label>
@@ -280,7 +287,7 @@
 											<label class="col-md-2 control-label">Basic Pay</label>
 											<div class="col-md-4"><input type="text" id = "rate" onpaste="return false" onDrop="return false"class="form-control" name = "monthly" required="" onKeyPress="return doubleonly(this, event)"></div>
 											<label class="col-md-2 control-label">Shift type</label>
-											<div class="col-md-4"><select class = "form-control" id = "emptype" name="shift" value = "Select" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select shift type...</option>  <option value = "Fixed">Fixed</option><option value = "Flexible">Flexible</option><option value = "Shifting">Shifting</option></select></div>
+											<div class="col-md-4"><select class = "form-control" id = "emptype" name="shift" value = "Select" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select shift type...</option>  <option value = "Fixed">Fixed</option><option value = "Flexible">Flexible</option></select></div>
 										</div>
 										<div class="form-group">
 											<label class="col-md-2 control-label">Shift start</label>
@@ -292,8 +299,8 @@
 											<label class="col-md-2 control-label">Rest day</label>
 											<div class="col-md-2"><select class = "form-control" id = "restday" name = "restday" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select rest day...</option><option value = "1">Monday</option><option value = "Tuesday">Tuesday</option><option value = "Wednesday">Wednesday</option><option value = "Thursday">Thursday</option><option value = "Friday">Friday</option><option value = "Saturday">Saturday</option><option value = "Sunday">Sunday</option></select></div>
 											<div class="col-md-2"><select class = "form-control" id = "restday2" name = "restday2" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select rest day...</option><option value = "1">Monday</option><option value = "Tuesday">Tuesday</option><option value = "Wednesday">Wednesday</option><option value = "Thursday">Thursday</option><option value = "Friday">Friday</option><option value = "Saturday">Saturday</option><option value = "Sunday">Sunday</option></select></div>
-											<label class="col-md-2 control-label">Team</label>
-											<div class="col-md-4"><input type="text" id = "team" onpaste="return false" onDrop="return false" class="form-control cap" name = "team" required=""></div>
+											<label class="col-md-2 control-label">Account No.:</label>
+											<div class="col-md-4"><input type="text" id = "acctno" onpaste="return false" onDrop="return false" class="form-control cap" name = "acctno" required=""></div>
 										</div>
 										<div class="form-group">
 											<label class="col-md-2 control-label">Access level</label>
@@ -353,7 +360,7 @@
 											<label class="col-md-2 control-label">Department</label>
 											<div class="col-md-4"><input type="text" id = "department" onpaste="return false" onDrop="return false" class="form-control cap" required="" name = "department"></div>
 											<label class="col-md-2 control-label">Employment Status</label>
-											<div class="col-md-4"><select class = "form-control" id = "empstatus" name="empstatus" value = "Select" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select Employment Status...</option>  <option value = "Project">Project</option><option value = "Contractual">Contractual</option><option value = "Provisionary">Provisionary</option><option value = "Regular">Regular</option><option value = "Student Training">Student Training</option></select></div>
+											<div class="col-md-4"><select class = "form-control" id = "empstatus" name="empstatus" value = "Select" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select Employment Status...</option>  <option value = "Project">Project</option><option value = "Contractual">Contractual</option><option value = "Probationary">Probatisonary</option><option value = "Regular">Regular</option><option value = "Student Training">Student Training</option></select></div>
 										</div>
 										<div class="form-group">
 											<label class="col-md-2 control-label">Tax code</label>
@@ -377,7 +384,7 @@
 											<label class="col-md-2 control-label">Basic Pay</label>
 											<div class="col-md-4"><input type="text" id = "rate" onpaste="return false" onDrop="return false"class="form-control" name = "monthly" required="" onKeyPress="return doubleonly(this, event)"></div>
 											<label class="col-md-2 control-label">Shift type</label>
-											<div class="col-md-4"><select class = "form-control" id = "emptype" name="shift" value = "Select" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select shift type...</option>  <option value = "Fixed">Fixed</option><option value = "Flexible">Flexible</option><option value = "Shifting">Shifting</option></select></div>
+											<div class="col-md-4"><select class = "form-control" id = "emptype" name="shift" value = "Select" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select shift type...</option>  <option value = "Fixed">Fixed</option><option value = "Flexible">Flexible</option></select></div>
 										</div>
 										<div class="form-group">
 											<label class="col-md-2 control-label">Shift start</label>
@@ -387,45 +394,88 @@
 										</div>
 										<div class="form-group">
 											<label class="col-md-2 control-label">Rest day</label>
-											<div class="col-md-2"><select class = "form-control" id = "restday" name = "restday" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select rest day...</option><option value = "1">Monday</option><option value = "Tuesday">Tuesday</option><option value = "Wednesday">Wednesday</option><option value = "Thursday">Thursday</option><option value = "Friday">Friday</option><option value = "Saturday">Saturday</option><option value = "Sunday">Sunday</option></select></div>
-											<div class="col-md-2"><select class = "form-control" id = "restday2" name = "restday2" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select rest day...</option><option value = "1">Monday</option><option value = "Tuesday">Tuesday</option><option value = "Wednesday">Wednesday</option><option value = "Thursday">Thursday</option><option value = "Friday">Friday</option><option value = "Saturday">Saturday</option><option value = "Sunday">Sunday</option></select></div>
-
-											<label class="col-md-2 control-label">Team</label>
-											<div class="col-md-4"><select id = "teamname" class="form-control"  data-default-value="z" name="teamname" required=""></div>';
-								
-
-									include("dbconfig.php");
-
-									if ($result1 = $mysqli->query("SELECT * FROM team")) //get records from db
-																{
-																	if ($result1->num_rows > 0) //display records if any
-																	{
-																	
-																	
-																		while ($row1 = mysqli_fetch_object($result1))
-																	
-																		{ 
-																			
-																			echo '<option value='.$row1->team_name."\">".$row1->team_name. '</option>';
-																			
-																		}
-																		
-																		
-																	}
-																}
-
-								echo' </SELECT>
-								</div>
+											<div class="col-md-4"><select class = "form-control" id = "restday" name = "restday" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select rest day...</option><option value = "1">Monday</option><option value = "Tuesday">Tuesday</option><option value = "Wednesday">Wednesday</option><option value = "Thursday">Thursday</option><option value = "Friday">Friday</option><option value = "Saturday">Saturday</option><option value = "Sunday">Sunday</option></select></div>
+											<label class="col-md-2 control-label">Rest day</label>
+											<div class="col-md-4"><select class = "form-control" id = "restday2" name = "restday2" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select rest day...</option><option value = "1">Monday</option><option value = "Tuesday">Tuesday</option><option value = "Wednesday">Wednesday</option><option value = "Thursday">Thursday</option><option value = "Friday">Friday</option><option value = "Saturday">Saturday</option><option value = "Sunday">Sunday</option></select></div>
 										</div>
 										<div class="form-group">
-											<label class="col-md-2 control-label">Access level</label>
-											<div class="col-md-4"><select class = "form-control" id = "access" name = "access" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select access level...</option><option value = "1">1</option><option value = "2">2</option><option value = "3">3</option><option value = "4">4</option></select></div>
-											<label class="col-md-2 control-label">Password</label>
+											<label class="col-md-2 control-label">Account No.:</label>
+											<div class="col-md-4"><input type="text" id = "acctnum" onpaste="return false" onDrop="return false" class="form-control cap" name = "acctnum" required=""></div>
+											<label class="col-md-2 control-label">Payslip Password</label>
+											<div class="col-md-4"> <input type="text" id = "pwpassword" name="pwpassword" onpaste="return false" onDrop="return false" class="form-control" required=""></div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-2 control-label">Login Password</label>
 											<div class="col-md-4"> <input type="text" id = "password" name="password" onpaste="return false" onDrop="return false" class="form-control" required=""></div>
+											<label class="col-md-2 control-label">Access level</label>
+											<div class="col-md-4"><select onchange="dis()" class = "form-control" id = "access" name = "access" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select access level...</option><option value = "1">1</option><option value = "2">2</option><option value = "3">3</option><option value = "4">4</option></select></div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-2 control-label">Team #1</label>
+											<div class="col-md-4"><select id = "teamname" class="form-control"  data-default-value="z" name="teamname" required=""><option selected="true" disabled="disabled" value = "">Select team...</option></div>';
+											include("dbconfig.php");
+											if ($result1 = $mysqli->query("SELECT * FROM team")) {//get records from db
+												if ($result1->num_rows > 0) { //display records if any
+													while ($row1 = mysqli_fetch_object($result1)) { 
+														echo '<option value='.$row1->team_name."\">".$row1->team_name. '</option>';
+													}
+												}
+											}
+										echo '</select></div>
+										<label class="col-md-2 control-label">Team #2</label>
+											<div class="col-md-4"><select id = "teamname1" class="form-control"  data-default-value="z" name="teamname" required=""><option selected="true" disabled="disabled" value = "">Select team...</option></div>';
+											include("dbconfig.php");
+											if ($result1 = $mysqli->query("SELECT * FROM team")) {//get records from db
+												if ($result1->num_rows > 0) { //display records if any
+													while ($row1 = mysqli_fetch_object($result1)) { 
+														echo '<option value='.$row1->team_name."\">".$row1->team_name. '</option>';
+													}
+												}
+											}
+										echo '</select></div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-2 control-label">Team #3</label>
+											<div class="col-md-4"><select id = "teamname2" class="form-control"  data-default-value="z" name="teamname" required=""><option selected="true" disabled="disabled" value = "">Select team...</option></div>';
+											include("dbconfig.php");
+											if ($result1 = $mysqli->query("SELECT * FROM team")) {//get records from db
+												if ($result1->num_rows > 0) { //display records if any
+													while ($row1 = mysqli_fetch_object($result1)) { 
+														echo '<option value='.$row1->team_name."\">".$row1->team_name. '</option>';
+													}
+												}
+											}
+										echo '</select></div>
+											<label class="col-md-2 control-label">Team #4</label>
+											<div class="col-md-4"><select id = "teamname3" class="form-control"  data-default-value="z" name="teamname" required=""><option selected="true" disabled="disabled" value = "">Select team...</option></div>';
+											include("dbconfig.php");
+											if ($result1 = $mysqli->query("SELECT * FROM team")) {//get records from db
+												if ($result1->num_rows > 0) { //display records if any
+													while ($row1 = mysqli_fetch_object($result1)) { 
+														echo '<option value='.$row1->team_name."\">".$row1->team_name. '</option>';
+													}
+												}
+											}
+										echo '</select></div>
 										</div>';
 									}
 									?>
-									<div class="col-md-4">
+									<script>
+									function dis(){
+										var val=document.getElementById("access").value;
+											if(val==1 || val==2 || val==4){
+											 document.getElementById("teamname1").disabled=true;
+											 document.getElementById("teamname2").disabled=true;
+											 document.getElementById("teamname3").disabled=true;
+											}else if(val==3){
+
+											 document.getElementById("teamname1").disabled=false;
+											 document.getElementById("teamname2").disabled=false;
+											 document.getElementById("teamname3").disabled=false;
+											}
+									}
+									</script>
+									<br><br><div class="col-md-4">
 									<button id ="submit" type="submit" class="btn btn1 btn-w-m btn-primary">Submit</button>
 									</div>
 									<div class="col-md-4">

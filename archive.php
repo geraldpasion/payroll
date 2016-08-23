@@ -2,7 +2,14 @@
 <html>
 	<head>
 		<?php
-			 include('menuheader.php');
+			session_start();
+        $empLevel = $_SESSION['employee_level'];
+        if(isset($_SESSION['logsession']) && $empLevel == '3') {
+                include('menuheader.php');
+
+        }else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+            include('levelexe.php');
+        }
 		?>
 		<title>Archive</title>
 		<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
@@ -109,7 +116,7 @@
                                                     <th>Name</th>
                                                     <th class = "col-md-2">Max Amount</th>
                                                     <th class = "col-md-5">Type</th>
-                                                    <th class = "col-md-3">Action</th>
+                                                    <th class = "col-md-3" style='text-align:center'>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -128,7 +135,7 @@
                                                         echo "<td>".$row->earnings_type."</td>";
                                                         
                                                         //restore
-                                                        echo "<td><a href='earnings_restore.php?earnings_id=".$row->earnings_id."' class='btn btn-success' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
+                                                        echo "<td style='text-align:center'><a href='earnings_restore.php?earnings_id=".$row->earnings_id."' class='btn btn-success' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
 
                                                         //delete
                                                         echo "<a href='earnings_delete_archive.php?earnings_id=".$row->earnings_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure? You want to delete this file?\");'>Delete</a>&nbsp;&nbsp; ";
@@ -183,7 +190,7 @@
                                                     <th>Name</th>
                                                     <th class = "col-md-2">Max Amount</th>
                                                     <th class = "col-md-5">Type</th>
-                                                    <th class = "col-md-3">Action</th>
+                                                    <th class = "col-md-3" style='text-align:center'>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -202,7 +209,7 @@
                                                         echo "<td>".$row->deduction_type."</td>";
                                                         
                                                         //restore
-                                                        echo "<td><a href='deduction_restore.php?deduction_id=".$row->deduction_id."' class='btn btn-success' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
+                                                        echo "<td style='text-align:center'><a href='deduction_restore.php?deduction_id=".$row->deduction_id."' class='btn btn-success' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
 
                                                         //delete
                                                         echo "<a href='deduction_delete_archive.php?deduction_id=".$row->deduction_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure? You want to delete this file?\");'>Delete</a>&nbsp;&nbsp; ";
@@ -256,7 +263,7 @@
                                                 <tr>
                                                     <th>Date</th>
                                                     <th class = "col-md-5">Announcement</th>
-                                                    <th class = "col-md-3">Action</th>
+                                                    <th class = "col-md-3" style='text-align:center'>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -270,7 +277,7 @@
                                                     while ($row = mysqli_fetch_object($result)){
                                                         echo "<tr>";
                                                             echo "<td class='ann-date'>". date("Y-m-d", strtotime($row->announcement_date)) ."</td>";
-                                                            echo "<td class='announcement-content'>". $row->announcement_details ."</td>";
+                                                            echo "<td class='col-xs-5 announcement-content'>". $row->announcement_details ."</td>";
                                                             echo "<td>";
 
                                                             //restore
@@ -328,7 +335,7 @@
                                                     <th class = "col-md-2">Name</th>
                                                     <th>Date</th>
                                                     <th class = "col-md-5">Type</th>
-                                                    <th class = "col-md-3">Action</th>
+                                                    <th class = "col-md-3" style='text-align:center'>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -353,7 +360,7 @@
                                                         }
 
                                                         //restore
-                                                        echo "<td><a href='holiday_restore.php?holidayid=".$row->holiday_id."' class='btn btn-success' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
+                                                        echo "<td style='text-align:center'><a href='holiday_restore.php?holidayid=".$row->holiday_id."' class='btn btn-success' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
 
                                                         //delete
                                                         echo "<a href='holiday_delete_archive.php?holidayid=".$row->holiday_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure? You want to delete this file?\");'>Delete</a>&nbsp;&nbsp; ";

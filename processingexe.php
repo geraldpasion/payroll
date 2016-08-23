@@ -35,4 +35,9 @@ foreach($employeeIDs as $empid) {
 
 $mysqli->query("UPDATE cutoff SET process_submission='Submitted' WHERE cutoff_initial = '$initial' AND cutoff_end = '$end' AND cutoff_submission='Submitted'");
 
+
 ?>
+
+<script>
+window.location = "registration.php";
+</script>

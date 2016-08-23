@@ -2,7 +2,14 @@
 <html>
 	<head>
 		<?php
-			 include('menuheader.php');
+			 session_start();
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
 		?>
 		<title>Employee List</title>
 		<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
@@ -120,7 +127,12 @@
 			 var status = $(this).data('status');
 			 var jobtitle = $(this).data('jobtitle');
 			 var level = $(this).data('level');
+			 var acctnum = $(this).data('acctnum');
+			 var payslippassword = $(this).data('payslippassword');
 			 var team = $(this).data('team');
+			 var team1 = $(this).data('team1');
+			 var team2 = $(this).data('team2');
+			 var team3 = $(this).data('team3');
 			 var imgss = "images/"+$(this).data('im');
 
 			 document.getElementById("output").src = imgss;
@@ -162,6 +174,11 @@
 			 $(".modal-body #jobtitle").val( jobtitle );
 			 $(".modal-body #level").val( level );
 			 $(".modal-body #team").val( team );
+			 $(".modal-body #team1").val( team1 );
+			 $(".modal-body #team2").val( team2 );
+			 $(".modal-body #team3").val( team3 );
+			 $(".modal-body #acctnum").val( acctnum );
+			 $(".modal-body #payslippassword").val( payslippassword );
 			 // As pointed out in comments, 
 			 // it is superfluous to have to manually call the modal.
 			 // $('#addBookDialog').modal('show');   
@@ -201,8 +218,12 @@
 			 var sickleave = $(this).data('sickleave');
 			 var vacationleave = $(this).data('vacationleave');
 			 var status = $(this).data('status');
-			 var team = $(this).data('team');
 			 var level = $(this).data('level');
+			 var acctnum = $(this).data('acctnum');
+			 var team1 = $(this).data('team1');
+			 var team2 = $(this).data('team2');
+			 var team3 = $(this).data('team3');
+			 var payslippassword = $(this).data('payslippassword');
 			 
 			 
 			 $(".modal-body #empid").val( employeeid );
@@ -219,7 +240,7 @@
 			 $(".modal-body #cellnum").val( cellnum );	
 			 $(".modal-body #employeetype").val( employeetype );
 			 $(".modal-body #employeestatus").val( employeestatus );	
-			 $(".modal-body #jobtitle").val( jobtitle );	
+			 $(".modal-body #jobtitle").val( jobtitle );
 			 $(".modal-body #department").val( department );	
 			 $(".modal-body #rate").val( rate );	
 			 $(".modal-body #taxcode").val( taxcode );	
@@ -237,6 +258,12 @@
 			 $(".modal-body #status").val( status );	
 			 $(".modal-body #team").val( team );
 			 $(".modal-body #level").val( level );
+			 $(".modal-body #team").val( team );
+			 $(".modal-body #team1").val( team1 );
+			 $(".modal-body #team2").val( team2 );
+			 $(".modal-body #team3").val( team3 );
+			 $(".modal-body #acctnum").val( acctnum );
+			 $(".modal-body #payslippassword").val( payslippassword );
 			 // As pointed out in comments, 
 			 // it is superfluous to have to manually call the modal.
 			 // $('#addBookDialog').modal('show');   
@@ -372,11 +399,11 @@
 										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
-										echo "<th style='text-align:center;'>ID</th>";
-										echo "<th style='text-align:center;'>Name</th>";
-										echo "<th style='text-align:center;'>Department</th>";
-										echo "<th style='text-align:center;'>Team</th>";
-										echo "<th style='text-align:center;'>Access Level</th>";
+										echo "<th>ID</th>";
+										echo "<th>Name</th>";
+										echo "<th>Department</th>";
+										echo "<th>Team</th>";
+										echo "<th style='text-align:center'>Access Level</th>";
 										echo "<th style='text-align:center;'>Action</th>";
 										echo "</tr>";
 										echo "</thead>";
@@ -400,9 +427,9 @@
 											$restdayArray = split('/', $row1->employee_restday);
 											echo "<tr class = 'josh'>";
 											//employee id
-											echo "<td style='text-align:center;'>" . $row1->employee_id . "</td>";
+											echo "<td>" . $row1->employee_id . "</td>";
 											//name
-											echo "<td style='text-align:center;'><a href='#' data-toggle='modal'
+											echo "<td><a href='#' data-toggle='modal'
 														data-employee-id='$empid' 
 														data-lastname='$row1->employee_lastname' 
 														data-firstname='$row1->employee_firstname' 
@@ -431,15 +458,20 @@
 														data-jobtitle='$row1->employee_jobtitle'  
 														data-password='$row1->employee_password' 
 														data-level='$row1->employee_level' 
-													data-team='$row1->employee_team'  
+														data-acctnum='$row1->account_number'
+														data-team='$row1->employee_team'
+														data-team1='$row1->employee_team1'
+														data-team2='$row1->employee_team2'
+														data-team3='$row1->employee_team3'
+														data-payslippassword='$row1->employee_payslippassword'  
 
 											data-target='#myModal2' class = 'viewempdialog'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</a></td>";
 											//department
-											echo "<td style='text-align:center;'>" . $row1->employee_department . "</td>";
+											echo "<td>" . $row1->employee_department . "</td>";
 											//team
-											echo "<td style='text-align:center;'>" . $row1->employee_team . "</td>";
+											echo "<td>" . $row1->employee_team . "</td>";
 											//access level
-											echo "<td style='text-align:center;'>" . $row1->employee_level . "</td>";
+											echo "<td style='text-align:center'>" . $row1->employee_level . "</td>";
 											//edit
 											echo "<td style='text-align:center;'><a href='#' data-toggle='modal' 
 													data-employee-id='$empid' 
@@ -472,7 +504,12 @@
 													data-jobtitle='$row1->employee_jobtitle' 
 													data-password='$row1->employee_password' 
 													data-level='$row1->employee_level' 
-													data-team='$row1->employee_team' 
+													data-team='$row1->employee_team'
+													data-team1='$row1->employee_team1'
+													data-team2='$row1->employee_team2'
+													data-team3='$row1->employee_team3'
+													data-acctnum='$row1->account_number'
+													data-payslippassword='$row1->employee_payslippassword' 
 													data-im='$row1->image'
 													
 													
@@ -665,7 +702,9 @@
 								<div class="col-sm-3"><input type="text" id = "oLeave"  name = "oLeave" readonly = "readonly" required=""></div><br>
 							<div class="form-group"></div>
 								<label class="col-sm-3 control-label">Payment Schedule</label>
-								<div class="col-sm-3"><input type="text" id = "cutoff" name = "cutoff" readonly = "readonly" onKeyPress="return lettersonly(this, event)" required=""></div>	
+								<div class="col-sm-3"><input type="text" id = "cutoff" name = "cutoff" readonly = "readonly" onKeyPress="return lettersonly(this, event)" required=""></div>
+								<label class="col-sm-3 control-label">Account No.</label>
+								<div class="col-sm-3"><input type="text" id = "acctnum" name = "acctnum" readonly = "readonly" onKeyPress="return lettersonly(this, event)" required=""></div>	
 									</div>
 								</div>
 							</ul>
@@ -971,7 +1010,7 @@
 								<div class="col-md-4"><input type="text" id = "department" onpaste="return false" onDrop="return false" class="form-control" name = "department" required=""></div>
 								<label class="col-sm-2 control-label">Employment Status</label>
 								<div class="col-md-4">
-									<select class = "form-control" name = "employeestatus" id = "employeestatus" value = "Select" required=""><option value = "Project">Project</option><option value = "Contractual">Contractual</option><option value = "Provisionary">Provisionary</option><option value = "Regular">Regular</option><option value = "Student Training">Student Training</option></select>
+									<select class = "form-control" name = "employeestatus" id = "employeestatus" value = "Select" required=""><option value = "Project">Project</option><option value = "Contractual">Contractual</option><option value = "Probationary">Probationary</option><option value = "Regular">Regular</option><option value = "Student Training">Student Training</option></select>
 								</div>
 							</div>
 							<div class="form-group">
@@ -998,7 +1037,7 @@
 								<label class="col-sm-2 control-label">Basic Pay</label>
 								<div class="col-md-4"><input type="text" id = "rate" onpaste="return false" onDrop="return false" class="form-control" name = "rate" onKeyPress="return doubleonly(this, event)" required=""></div>
 								<label class="col-sm-2 control-label">Shift Type</label>
-								<div class="col-md-4"><select class = "form-control" id = "employeetype" name="employeetype" value = "Select" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select shift type...</option>  <option value = "Fixed">Fixed</option><option value = "Flexible">Flexible</option><option value = "Shifting">Shifting</option></select></div>
+								<div class="col-md-4"><select class = "form-control" id = "employeetype" name="employeetype" value = "Select" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select shift type...</option>  <option value = "Fixed">Fixed</option><option value = "Flexible">Flexible</option></select></div>
 							</div>							
 							<div class="form-group">
 									<label class="col-sm-2 control-label">Shift start</label>
@@ -1013,7 +1052,26 @@
 								<div class="col-md-4"><select class = "form-control" name = "restday2" id = "restday2" required=""><option value = "Monday">Monday</option><option value = "Tuesday">Tuesday</option><option value = "Wednesday">Wednesday</option><option value = "Thursday">Thursday</option><option value = "Friday">Friday</option><option value = "Saturday">Saturday</option><option value = "Sunday">Sunday</option></select></div>
 							</div>
 							<div class="form-group">
-								<label class="col-md-2 control-label">Team</label>
+								<label class="col-md-2 control-label">Account No.:</label>
+								<div class="col-md-4"><input type="text" id = "acctnum" onpaste="return false" onDrop="return false" class="form-control cap" name = "acctnum" required=""></div>
+								<label class="col-md-2 control-label">Payslip Password</label>
+								<div class="col-md-4"> <input type="text" id = "payslippassword" onpaste="return false" onDrop="return false" name = "paypassword" class="form-control" required="" required=""></div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label">Log In Password</label>
+								<div class="col-md-4"> <input type="text" id = "password" onpaste="return false" onDrop="return false" name = "logpassword"class="form-control" required="" required=""></div>
+								<label class="col-sm-2 control-label">Access level</label>
+								<div class="col-md-4">
+									<select class = "form-control" name = "level" id = "level" required="">
+										<option value = "1">1</option>
+										<option value = "2">2</option>
+										<option value = "3">3</option>
+										<option value = "4">4</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label">Team #1</label>
 								<div class="col-md-4"><select id = "team" class="form-control"  data-default-value="z" name="team" required="">
 								<?php 
 								include('dbconfig.php');
@@ -1039,16 +1097,87 @@
 								?>
 								</SELECT>
 								</div>
-								
-								<label class="col-sm-2 control-label">Access level</label>
-								<div class="col-md-4"><select class = "form-control" name = "level" id = "level" required=""><option value = "1">1</option><option value = "2">2</option><option value = "3">3</option></select></div>
+								<label class="col-md-2 control-label">Team #2</label>
+								<div class="col-md-4"><select id = "team1" class="form-control"  data-default-value="z" name="team1" required="">
+								<?php 
+								include('dbconfig.php');
+
+								if ($result1 = $mysqli->query("SELECT * FROM team")) //get records from db
+																{
+																	if ($result1->num_rows > 0) //display records if any
+																	{
+																	
+																	
+																		while ($row1 = mysqli_fetch_object($result1))
+																	
+																		{ 
+																			
+																			echo '<option value="'.$row1->team_name."\">".$row1->team_name. '</option>';
+																			
+																		}
+																		
+																		
+																	}
+																}
+
+								?>
+								</SELECT>
+								</div>
 							</div>
 							<div class="form-group">		
-								<label class="col-md-2 control-label">Log In Password</label>
-								<div class="col-md-4"> <input type="text" id = "password" onpaste="return false" onDrop="return false" name = "password"class="form-control" required="" required=""></div>
-								<label class="col-md-2 control-label">Payslip Password</label>
-								<div class="col-md-4"> <input type="text" id = "password" onpaste="return false" onDrop="return false" name = "password"class="form-control" required="" required=""></div>
-							</div>						
+								<label class="col-md-2 control-label">Team #3</label>
+								<div class="col-md-4"><select id = "team2" class="form-control"  data-default-value="z" name="team2" required="">
+								<?php 
+								include('dbconfig.php');
+
+								if ($result1 = $mysqli->query("SELECT * FROM team")) //get records from db
+																{
+																	if ($result1->num_rows > 0) //display records if any
+																	{
+																	
+																	
+																		while ($row1 = mysqli_fetch_object($result1))
+																	
+																		{ 
+																			
+																			echo '<option value="'.$row1->team_name."\">".$row1->team_name. '</option>';
+																			
+																		}
+																		
+																		
+																	}
+																}
+
+								?>
+								</SELECT>
+								</div>
+								<label class="col-md-2 control-label">Team #4</label>
+								<div class="col-md-4"><select id = "team3" class="form-control"  data-default-value="z" name="team3" required="">
+								<?php 
+								include('dbconfig.php');
+
+								if ($result1 = $mysqli->query("SELECT * FROM team")) //get records from db
+																{
+																	if ($result1->num_rows > 0) //display records if any
+																	{
+																	
+																	
+																		while ($row1 = mysqli_fetch_object($result1))
+																	
+																		{ 
+																			
+																			echo '<option value="'.$row1->team_name."\">".$row1->team_name. '</option>';
+																			
+																		}
+																		
+																		
+																	}
+																}
+
+								?>
+								</SELECT>
+								</div>
+							</div>			
 						</div>
 					</div>
 					</ul>
@@ -1112,7 +1241,21 @@
 				</ul-->
 					</div>
 				</div>
-				
+				<script>
+								function dis(){
+									var val=document.getElementById("level").value;
+										if(val==1 || val==2 || val==4){
+											 document.getElementById("team1").disabled=true;
+											 document.getElementById("team2").disabled=true;
+											 document.getElementById("team3").disabled=true;
+										}
+										else if(val==3){
+											 document.getElementById("team1").disabled=false;
+											 document.getElementById("team2").disabled=false;
+											 document.getElementById("team3").disabled=false;
+										}
+								}
+							</script>	
 				<div class="modal-footer">
 					<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
 					<button type="submit" class="btn btn-primary">Submit</button>

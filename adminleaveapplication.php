@@ -2,14 +2,21 @@
 <html>
 	<head>
 		<?php
-			include('menuheader.php');
+		session_start();
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
 		?>
 
 		<?php
 			include('dbconfig.php');
 			if(isset($_POST['idss'])){
 				$ids2 = $_POST['idss'];
-				if ($result = $mysqli->query("SELECT * FROM employee where employee_id=ids2")){
+				if ($result = $mysqli->query("SELECT * FROM employee where employee_id='$ids2'")){
 					if ($result->num_rows > 0){
 						while ($row = $result->fetch_object()){
 							$tim=$row->employee_vacationleave;

@@ -3,9 +3,16 @@
 
 	<head>
 		<?php
-			include('menuheader.php');
+		session_start();
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
 		?>
-		<title>Inactive employee list</title>
+		<title>Inactive Employee List</title>
 				<style>
 			.form-horizontal .control-label{
 			/* text-align:right; */
@@ -177,7 +184,7 @@
 			<div class="col-lg-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-title">
-						<h5>Inactive employee list</h5>
+						<h5>Inactive Employee List</h5>
 						<div class="ibox-tools">
 							<a class="collapse-link">
 								<i class="fa fa-chevron-up"></i>
@@ -222,7 +229,7 @@
 									echo "<th>ID</th>";
 									echo "<th>Name</th>";
 									echo "<th>Department</th>";
-									echo "<th>Action</th>";
+									echo "<th style='text-align:center'>Action</th>";
 									echo "</tr>";
 									echo "</thead>";
 									echo "<tfoot>";                    
@@ -269,7 +276,7 @@
 
 											data-target='#myModal2' class = 'viewempdialog'>" . $row->employee_lastname . "," . " " . $row->employee_firstname . " " . $row->employee_middlename . "</a></td>";
 											echo "<td>" . $row->employee_department . "</td>";
-											echo "<td><a href='#' id='$empid' class = 'activate'><button class='btn btn-primary' type='button'><i class='fa fa-check'></i> Activate</button></a>&nbsp;&nbsp;";
+											echo "<td style='text-align:center'><a href='#' id='$empid' class = 'activate'><button class='btn btn-primary' type='button'><i class='fa fa-check'></i> Activate</button></a>&nbsp;&nbsp;";
 											// echo "<a href='#' id = '$empid' class = 'delete'><button class='btn btn-danger' name = 'edit' type='button'><i class='fa fa-warning'></i> Delete</button></a>";
 											echo "</td>";
 											echo "</tr>";
@@ -294,13 +301,13 @@
 				?>
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 					<i class="fa fa-user modal-icon"></i>
-					<h4 class="modal-title">Employee information</h4>
+					<h4 class="modal-title">Employee Information</h4>
 				</div>
 				<div class="modal-body">
 					<div class="ibox-content">
 											<form id = "uploadForm" method="POST" action = "editemployee.php" class="form-horizontal">
 															<div class="form-group">
-									<h2>Personal information<h2>
+									<h2>Personal Details<h2>
 									</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Employee ID</label>
@@ -341,7 +348,7 @@
 								<div class="col-md-4"><input type="text" id = "cellnum" class="zx" maxlength="11" name = "mobile" onKeyPress="return numbersonly(this, event)" readonly = "readonly" required=""></div>
 							</div>
 																<div class="form-group">
-									<h2>Employee information<h2>
+									<h2>Employee Details<h2>
 									</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Type</label>

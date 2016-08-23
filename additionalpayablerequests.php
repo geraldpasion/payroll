@@ -3,8 +3,15 @@
 
 	<head>
 		<?php
+			
 			session_start();
-			include('menuheader.php');
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
 		?>
 		<title>Pending Additional Payable</title>
 		<style>
@@ -32,6 +39,7 @@
 			 var paid = $(this).data('paid');
 			 var payable = $(this).data('payable');
 			 var retro = $(this).data('retro');
+			 var appstat = $(this).data('appstat');
 			 
 			 // sets the value for display in the modal
 			 $(".modal-body #othersid").val( othersid );	
@@ -45,6 +53,7 @@
 			 $(".modal-body #paid").val( paid );
 			 $(".modal-body #payable").val( payable );
 			 $(".modal-body #retro").val( retro );
+			 $(".modal-body #appstat").val( appstat );
 			 // As pointed out in comments, 
 			 // it is superfluous to have to manually call the modal.
 			 // $('#addBookDialog').modal('show');   
@@ -165,6 +174,7 @@
 							echo "<th>Day type</th>";
 							echo "<th>Attendance</th>";
                             echo "<th>Reason</th>";
+                            echo "<th>Approval Status</th>";
 							
 							echo "</tr>";
 							echo "</thead>";
@@ -206,6 +216,8 @@
 														data-paid='$row->others_paid'
 														data-payable='$row->others_payable'
 														data-retro='$row->others_retro'
+														data-appstat='$row->app_status'
+
 														class = 'viewempdialog'>". $row->employee_firstname . " " . $row->employee_lastname . "</a></td>";
 								echo "<td>" . date("Y-m-d",strtotime($row->attendance_date)) . "</td>";
 								echo "<td>" . $row->attendance_daytype . "</td>";
@@ -215,6 +227,7 @@
 									echo "<td>Absent</td>";
 								}
 								echo "<td>" . $row->others_reason . "</td>";
+								echo "<td>" . $row->app_status . "</td>";
 								echo "</tr>";
 							}
 							echo "</table>";
@@ -292,6 +305,11 @@
 								<div class="col-md-1"></div>
 								<label class="col-sm-3 control-label">Reason:</label>
 								<div class="col-md-8"><input type="text" id = "reason" class="zx" name = "reason" required="" readonly = ""onKeyPress="return lettersonly(this, event)"></div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-1"></div>
+								<label class="col-sm-3 control-label">Status:</label>
+								<div class="col-md-8"><input type="text" id = "appstat" class="zx" name = "appstat" required="" readonly = ""onKeyPress="return lettersonly(this, event)"></div>
 							</div>
 							<div class="form-group">
 								<div class="col-md-1"></div>

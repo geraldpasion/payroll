@@ -3,7 +3,14 @@
 
 	<head>
 		<?php
-			include('menuheader.php');
+		session_start();
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
 		?>
 		<title>Loan Application</title>
 		<style>
@@ -18,6 +25,11 @@
 				showDropdowns: true
 			});
 		});
+		</script>
+		<script>
+		function myFunction() {
+			document.getElementById("myForm").reset();
+		}
 		</script>
 		<script>
 		function clearThis(target){
@@ -127,10 +139,13 @@
 							<div class="form-group">
 								<label class="col-sm-4 control-label">Date</label>
 								<div class="col-md-4"><input id = "date" type="text" onfocus="clearThis(this)" onpaste="return false" onDrop="return false"  class="form-control" name="daterange" required="" onKeyPress="return noneonly(this, event)"/> </div>
-							</div>
-								
-							<div class="col-md-5"></div>
+							</div><br><br>
+							<div class="form-group">
+							<div class="col-md-8"></div>
 								<button id ="submit" type="submit" class="btn btn-w-m btn-primary">Submit</button>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<button type="button" onClick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
+							</div>
 						</form>
 					</div>
 				</div>

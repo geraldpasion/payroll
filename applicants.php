@@ -2,7 +2,14 @@
 <html>
 	<head>
 		<?php
-			 include('menuheader.php');
+			session_start();
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
 		?>
 		<title>Applicant List</title>
 		<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
@@ -194,7 +201,7 @@
 										echo "<th>Position</th>";
 										echo "<th>Score</th>";
 										echo "<th>Status</th>";
-										echo "<th>Action</th>";
+										echo "<th style='text-align:center'>Action</th>";
 										echo "</tr>";
 										echo "</thead>";
 										echo "<tfoot>";                    
@@ -242,7 +249,7 @@
 									}
 								}
 											
-											echo "<td> <a href = 'personalinfo.php?id=$id'><button class='btn btn-success' type='button'><i class='fa fa-print'></i> Print</button></a></td>";
+											echo "<td style='text-align:center'> <a href = 'personalinfo.php?id=$id'><button class='btn btn-success' type='button'><i class='fa fa-print'></i> Print</button></a></td>";
 											echo "</tr>";
 										}
 										

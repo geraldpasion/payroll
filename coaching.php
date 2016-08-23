@@ -3,7 +3,14 @@
 
 	<head>
 		<?php
-			 include('menuheader.php');
+			session_start();
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
 		?>
 		<script type="text/javascript">
 		$(function() {
@@ -183,11 +190,11 @@
 								<label class="col-sm-1 control-label">Trainee</label>
 								<div class="col-md-4"><input id = "trainee" type="text" onfocus="clearThis(this)" name = "trainee" onpaste="return false" onDrop="return false" class = "form-control skills ename" required="" class="form-control"></div>
 								
-							</div>
+							</div><br><br>
 							<div class="form-group">
-							<div class="col-md-4"></div>
-								<div class="col-md-4"><button id = "submit" type="submit" class="btn btn-w-m btn-primary">Submit</button></div>
-								<div class="col-md-4"><button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button></div>
+							<div class="col-md-8"></div>
+								<button id = "submit" type="submit" class="btn btn-w-m btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
 							</div>
 						</form>
 					</div>

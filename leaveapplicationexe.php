@@ -26,6 +26,7 @@ if(isset($_POST['adleavesub'])){
 	}
 	if(isset($_POST['daterange1'])){
 		$date = $_POST['daterange1'];
+		$datea = date('m/d/y');
 		$constart = substr($date, 0,10);
 		$conend = substr($date, 13,22);
 		$startdate = date("Y-m-d",strtotime($constart));
@@ -36,13 +37,59 @@ if(isset($_POST['adleavesub'])){
 			header("Location: adminleaveapplication.php?error");
 		}
 		else{
-			$stmt = $mysqli->query("INSERT INTO tbl_leave (employee_id, leave_start, leave_reason, leave_type, leave_halfday, leave_hours) VALUES ('$empid','$startdate', '$reason', '$leavetype', '$halfBool', '$hours')");
+			if($stmt = $mysqli->prepare("INSERT INTO tbl_leave (employee_id, leave_start, leave_reason, leave_type, leave_halfday, leave_hours) VALUES ('$empid','$startdate', '$reason', '$leavetype', '$halfBool', '$hours')")){
+				$stmt->execute();
+				$stmt->close();
+				if($leavetype == 'Sick leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','-1','0','0','0','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Vacation leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','-1','0','0','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Paid rest day / Incentive'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','0','-1','0','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Maternity leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','0','0','-1','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Paternity leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','0','0','0','-1','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Single-parent leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','0','0','0','0','-1')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+			}
 			header("Location: adminleaveapplication.php?able");
 		}
 	}
 
 	if(isset($_POST['daterange2'])){
 		$date1 = $_POST['daterange2'];
+		$dateb = date('m/d/y');
 		$constart1 = substr($date1, 0,10);
 		$conend1 = substr($date1, 13,22);
 		$startdate1 = date("Y-m-d",strtotime($constart1));
@@ -53,13 +100,59 @@ if(isset($_POST['adleavesub'])){
 			header("Location: adminleaveapplication.php?error");
 		}
 		else{
-			$stmt = $mysqli->query("INSERT INTO tbl_leave (employee_id, leave_start, leave_reason, leave_type, leave_halfday, leave_hours) VALUES ('$empid','$startdate1', '$reason', '$leavetype', '$halfBool', '$hours')");
+			if($stmt = $mysqli->prepare("INSERT INTO tbl_leave (employee_id, leave_start, leave_reason, leave_type, leave_halfday, leave_hours) VALUES ('$empid','$startdate1', '$reason', '$leavetype', '$halfBool', '$hours')")){
+				$stmt->execute();
+				$stmt->close();
+				if($leavetype == 'Sick leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','-1','0','0','0','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Vacation leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','-1','0','0','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Paid rest day / Incentive'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','0','-1','0','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Maternity leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','0','0','-1','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Paternity leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','0','0','0','-1','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Single-parent leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','0','0','0','0','-1')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+			}
 			header("Location: adminleaveapplication.php?able");
 		}
 	}
 
 	if(isset($_POST['daterange3'])){
 		$date2 = $_POST['daterange3'];
+		$datec = date('m/d/y');
 		$constart2 = substr($date2, 0,10);
 		$conend2 = substr($date2, 13,22);
 		$startdate2 = date("Y-m-d",strtotime($constart2));
@@ -70,7 +163,52 @@ if(isset($_POST['adleavesub'])){
 			header("Location: adminleaveapplication.php?error");
 		}
 		else{
-			$stmt = $mysqli->query("INSERT INTO tbl_leave (employee_id, leave_start, leave_reason, leave_type, leave_halfday, leave_hours) VALUES ('$empid','$startdate2', '$reason', '$leavetype', '$halfBool', '$hours')");
+			if($stmt = $mysqli->prepare("INSERT INTO tbl_leave (employee_id, leave_start, leave_reason, leave_type, leave_halfday, leave_hours) VALUES ('$empid','$startdate', '$reason', '$leavetype', '$halfBool', '$hours')")){
+				$stmt->execute();
+				$stmt->close();
+				if($leavetype == 'Sick leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','-1','0','0','0','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Vacation leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','-1','0','0','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Paid rest day / Incentive'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','0','-1','0','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Maternity leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','0','0','-1','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Paternity leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','0','0','0','-1','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Single-parent leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','0','0','0','0','-1')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+			}
 			header("Location: adminleaveapplication.php?able");
 		}
 	}
@@ -78,6 +216,7 @@ if(isset($_POST['adleavesub'])){
 
 	if(isset($_POST['daterange4'])){
 		$date3 = $_POST['daterange4'];
+		$dated = date('m/d/y');
 		$constart3 = substr($date3, 0,10);
 		$conend3 = substr($date3, 13,22);
 		$startdate3 = date("Y-m-d",strtotime($constart3));
@@ -88,7 +227,52 @@ if(isset($_POST['adleavesub'])){
 			header("Location: adminleaveapplication.php?error");
 		}
 		else{
-			$stmt = $mysqli->query("INSERT INTO tbl_leave (employee_id, leave_start, leave_reason, leave_type, leave_halfday, leave_hours) VALUES ('$empid','$startdate3', '$reason', '$leavetype', '$halfBool', '$hours')");
+			if($stmt = $mysqli->prepare("INSERT INTO tbl_leave (employee_id, leave_start, leave_reason, leave_type, leave_halfday, leave_hours) VALUES ('$empid','$startdate3', '$reason', '$leavetype', '$halfBool', '$hours')")){
+				$stmt->execute();
+				$stmt->close();
+				if($leavetype == 'Sick leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','-1','0','0','0','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Vacation leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','-1','0','0','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Paid rest day / Incentive'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','0','-1','0','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Maternity leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','0','0','-1','0','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Paternity leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','0','0','0','-1','0')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+				else if($leavetype == 'Single-parent leave'){
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."',CURDATE(),'Credited','0','0','0','0','0','-1')"))
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
+				}
+			}
 			header("Location: adminleaveapplication.php?able");
 		}
 	}

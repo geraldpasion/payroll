@@ -913,6 +913,9 @@ echo nextline().'**********************************************************'.dou
          insert_statement($into, $values, 'totalcomputation');
          }
 
+         //restart time limit - this is to avoid fatal erros from php limitations
+         set_time_limit(30);
+
          echo nextline()."=============================================================================".nextline();
          echo nextline();
 
@@ -1004,7 +1007,7 @@ function check_comp_id_existence($comp_id, $table){
 
 function update_statement($id){
 //use redbean framework for ease of use.
-//require 'rb.php';
+require 'rb.php';
 
      R::setup( 'mysql:host=localhost;dbname=payroll','root', '' ); //for both mysql or mariaDB
     R::setAutoResolve( TRUE ); 
@@ -1034,7 +1037,23 @@ function get_employeeids_from_cutoff($cutoff){
                  }
          }
 
+     //check each employee_status if it is 'active'
+foreach ($emp_ids as $key => $employee_id){
+    //if employee_status is 'finalpay' or 'Inactive', remove from list.
+     $sql = "SELECT employee_status FROM employee WHERE employee_id='$employee_id'";
+     $result = $conn->query($sql);
+         if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                if($row['employee_status']!='active'){
+                    //remove from the list
+                    unset($emp_ids[$key]);
+                }
+            }
+          }
+}//end foreach
 
+    //return final list of employee_id within cutoff
     return $emp_ids; 
 
 }

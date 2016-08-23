@@ -6,6 +6,7 @@ if(isset($_POST['approved'])){
 	$approvedby = $_SESSION['fname'] . " " . $_SESSION['lname'];
 	$leaveid = $_POST['leave_id1'];
 	$empid = $_POST['empid1'];
+	//$logid = $_POST['logid1'];
 	$remarks = $_POST['remarks'];
 	$start = $_POST['start'];
 	
@@ -18,7 +19,15 @@ if(isset($_POST['approved'])){
 	   $maternity=$row['employee_maternityleave'];
 	   $paternity=$row['employee_paternityleave'];
 	   $singleparent=$row['employee_singleparentleave'];
-	   $date = date('Y-m-d');
+	   $date = date('m/d/y');
+	}
+	/*$result2 = mysqli_query($mysqli, "SELECT * FROM leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id WHERE leave_logs.employee_id = '$empid' and tbl_leave.leave_id = '$leaveid' AND leave_logs.type = 'Credited'");
+	while($row = mysqli_fetch_array($result)){
+	   $logid=$row['log_id'];
+	}*/
+	$result2 = mysqli_query($mysqli, "SELECT * FROM leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id WHERE leave_logs.employee_id = '$empid' and tbl_leave.leave_id = '$leaveid' AND leave_logs.type = 'Credited'");
+	while($row = mysqli_fetch_array($result2)){
+	   $logid=$row['log_id'];
 	}
 
 	if($_POST['type']=='Sick leave'){
@@ -31,7 +40,8 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','".$date."','-1','0','0','0','0','0')"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid' AND tbl_leave.leave_type = 'Sick leave'"))
+						
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -54,7 +64,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','".$date."','0','-1','0','0','0','0')"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid'  AND tbl_leave.leave_type = 'Vacation leave'"))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -77,7 +87,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','".$date."','0','0','-1','0','0','0')"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid'  AND tbl_leave.leave_type = 'Paid rest day / Incentive'"))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -100,7 +110,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','".$date."','0','0','0','-1','0','0')"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid'  AND tbl_leave.leave_type = 'Maternity leave'"))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -123,7 +133,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','".$date."','0','0','0','0','-1','0')"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid'  AND tbl_leave.leave_type = 'Paternity leave'"))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -146,7 +156,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, date, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','".$date."','0','0','0','0','0','-1')"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid' AND tbl_leave.leave_type = 'Single-parent leave'"))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -211,6 +221,10 @@ if(isset($_POST['approved2'])){
 	   $paternity=$row['employee_paternityleave'];
 	   $singleparent=$row['employee_singleparentleave'];
 	}
+	$result2 = mysqli_query($mysqli, "SELECT * FROM leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id WHERE leave_logs.employee_id = '$empid' and tbl_leave.leave_id = '$leaveid' AND leave_logs.type = 'Credited'");
+	while($row = mysqli_fetch_array($result2)){
+	   $logid=$row['log_id'];
+	}
 
 	if($_POST['type']=='Sick leave'){
 		if($sick!=0){
@@ -222,6 +236,12 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid' AND tbl_leave.leave_type = 'Sick leave'"))
+						
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
 				}
 			}
 			header("Location: leaveapproval2.php?approved");
@@ -240,6 +260,12 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid' AND tbl_leave.leave_type = 'Vacation leave'"))
+						
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
 				}
 			}
 			header("Location: leaveapproval2.php?approved");
@@ -258,6 +284,12 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid' AND tbl_leave.leave_type = 'Paid rest day / Incentive'"))
+						
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
 				}
 			}
 			header("Location: leaveapproval2.php?approved");
@@ -276,6 +308,12 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid' AND tbl_leave.leave_type = 'Maternity leave'"))
+						
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
 				}
 			}
 			header("Location: leaveapproval2.php?approved");
@@ -294,6 +332,12 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid' AND tbl_leave.leave_type = 'Paternity leave'"))
+						
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
 				}
 			}
 			header("Location: leaveapproval2.php?approved");
@@ -312,6 +356,12 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid' AND tbl_leave.leave_type = 'Single-parent leave'"))
+						
+					{
+						$stmt3->execute();
+						$stmt3->close();
+					}
 				}
 			}
 			header("Location: leaveapproval2.php?approved");

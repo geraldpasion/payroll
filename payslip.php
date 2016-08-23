@@ -2,7 +2,14 @@
 <html>
 	<head>
 		<?php
-			 include('menuheader.php');
+				session_start();
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
 		?>
 		<title>Payslip list</title>
 		<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
@@ -143,7 +150,7 @@
 										echo "<th>ID</th>";
 										echo "<th>Name</th>";
 										echo "<th>Department</th>";
-										echo "<th>Action</th>";
+										echo "<th style='text-align:center'>Action</th>";
 										echo "</tr>";
 										echo "</thead>";
 										echo "<tfoot>";                    
@@ -167,7 +174,7 @@
 											//		data-submitdate='".$cutoffsubmitdate."'
 											//		data-target='#myModal4' class = 'editempdialog'><button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> Edit</button></a>&nbsp;&nbsp;";
 											//echo "<a href='#' id='$empid' cutoff='".$initialcut." - ".$endcut."' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Deactivate</button></button></a>";
-												echo "<td>
+												echo "<td style='text-align:center'>
 														<a id='export' class='btn btn-info' href='print_payslip.php?initial=".$initialcut."&end=".$endcut."&id=".$empid."&compid=".$compid."' target='_blank'>";
 														//<button class='btn btn-info' name = 'export' id='export' type='button'>
 														//	<i class='fa fa-file'></i>&nbsp;&nbsp;View/Download

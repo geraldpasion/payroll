@@ -8,7 +8,15 @@
 	    //if($fromAttendance == 2) {				// this part is removed since supervisor(level 2) is now prevented-
 	    //	include('supervisormenuheader.php'); 	// -access of all employees attendance records
 	    //} else if($fromAttendance == 1) {
-	    	include('menuheader.php');
+	    	session_start();
+        $empLevel = $_SESSION['employee_level'];
+        if(isset($_SESSION['logsession']) && $empLevel == '3') {
+                include('menuheader.php');
+
+        }else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+            include('levelexe.php');
+        }
+			$employee_id = $_SESSION['logsession'];
 	     	$fromAttendance = 1; // remove this if supervisor is allowed to view attendance of all
 	 	// }
 

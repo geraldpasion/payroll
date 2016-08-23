@@ -3,7 +3,14 @@
 
 	<head>
 		<?php
-			include('menuheader.php');
+		session_start();
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
 		?>
 		<title>Overtime Application</title>
 		<style>
@@ -141,6 +148,7 @@
 						</div>
 					</div>
 					<div class="ibox-content">
+						
 						<div id = "success" class="alert alert-success alert-dismissable" style="display: none;">
 							<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
 							You have applied for overtime.

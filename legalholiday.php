@@ -3,7 +3,14 @@
 
 	<head>
 		<?php
-			include('menuheader.php');
+			session_start();
+		$empLevel = $_SESSION['employee_level'];
+		if(isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
+
+		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
+			include('levelexe.php');
+		}
 		?>
 		<title>Holiday management</title>
 		<style>
@@ -211,7 +218,7 @@
 									echo "<th>Date</th>";
 									echo "<th>Type</th>";
 									//echo "<th>Percentage</th>";
-									echo "<th>Action</th>";
+									echo "<th style='text-align:center'>Action</th>";
 									echo "</tr>";
 									echo "</thead>";
 									echo "<tfoot>";                    
@@ -242,7 +249,7 @@
 										}
 
 										//echo "<td>" . $row->holiday_rate . "%</td>";
-										echo "<td><a href='#' data-toggle='modal' data-target='#myModal4' class = 'editholidaydialog'
+										echo "<td style='text-align:center'><a href='#' data-toggle='modal' data-target='#myModal4' class = 'editholidaydialog'
 													data-id='$row->holiday_id' 
 													data-name='$row->holiday_name' 
 													data-date='$row->holiday_date' 

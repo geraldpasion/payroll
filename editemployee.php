@@ -35,9 +35,14 @@ $shift = $shift."-".$shift2;
 $restday = $_POST['restday']."/".$_POST['restday2'];
 $datehired = date("Y-m-d",strtotime($_POST['daterange2']));
 $jobtitle = $_POST['jobtitle'];
-$password = $_POST['password'];
+$password = $_POST['logpassword'];
 $level = $_POST['level'];
 $team = $_POST['team'];
+$accountNo=$_POST['acctnum'];
+$paypass=$_POST['paypassword'];
+$team1=$_POST['team1'];
+$team2=$_POST['team2'];
+$team3=$_POST['team3'];
 
 // $target_Folder = "upload/";
 // $uid = $_POST['userID'];
@@ -47,11 +52,18 @@ $team = $_POST['team'];
 // $image = $target_Folder . $file_name;
 // $mysqli->query("INSERT INTO image (p_id,p_img) VALUES ('$uid','$image')");
 
-
+echo"<script>alert('$team3');</script>";
 // insert the new record into the database
-		if ($stmt = $mysqli->prepare("UPDATE employee SET employee_lastname = '$lastname', employee_firstname = '$firstname', employee_middlename = '$middlename', employee_gender = '$gender', employee_birthday = '$birthday', employee_marital = '$marital', employee_address = '$address', employee_city = '$city', employee_zip = '$zip', employee_email = '$email', employee_cellnum = '$mobile', employee_type = '$type', employee_jobtitle = '$jobtitle', employee_department = '$department', employee_empstatus = '$empstat', employee_taxcode = '$taxcode', employee_sss = '$sss', employee_philhealth = '$philhealth', employee_pagibig = '$hdmf', employee_tin = '$tin', employee_shift = '$shift', employee_datehired = '$datehired', employee_restday = '$restday',employee_password = '$password', employee_level = '$level', employee_team = '$team', cutoff = '$paymentSched' WHERE employee_id = '$employeeid'")){	
+		if ($stmt = $mysqli->prepare("UPDATE employee SET employee_lastname = '$lastname', employee_firstname = '$firstname',
+		 employee_middlename = '$middlename', employee_gender = '$gender', employee_birthday = '$birthday',
+		 employee_marital = '$marital', employee_address = '$address', employee_city = '$city', employee_zip = '$zip', employee_email = '$email',
+		 employee_cellnum = '$mobile', employee_type = '$type', employee_jobtitle = '$jobtitle', employee_department = '$department', employee_empstatus = '$empstat',
+		 employee_taxcode = '$taxcode', employee_sss = '$sss', employee_philhealth = '$philhealth', employee_pagibig = '$hdmf', employee_tin = '$tin', employee_shift = '$shift',
+		 employee_datehired = '$datehired', employee_restday = '$restday',employee_password = '$password', employee_level = '$level', employee_team = '$team', cutoff = '$paymentSched',
+		 account_number='$accountNo', employee_payslippassword='$paypass', employee_team1 = '$team1', employee_team2 = '$team2' , employee_team3 = '$team3' WHERE employee_id = '$employeeid' ")){	
 			$stmt->execute();
 			$stmt->close();
+			
 				if(!isset($_POST['picture'])){
 					$imagesize = 1;
 					$uploadOk = 1;
