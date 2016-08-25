@@ -491,7 +491,7 @@
 									{
 										echo '<form method="POST" action = "processingexe.php"  class="form-horizontal" id="form1"><input type="hidden" value="$selection" name="cutsel" id="cutsel">';
 										echo '<input type="hidden" value="'.$initialcut . ' - ' . $endcut.'" name="cutoff" id="cutoff">';
-										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
+										echo "<table class='footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
 										echo "<th>ID</th>";

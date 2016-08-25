@@ -110,7 +110,7 @@
                                         <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" style = "margin-left:-2em;">
                                             <h4>Deleted List of Earnings</h4>
                                         </div>
-                                        <table class = "footable table table-stripped' data-page-size='8' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
+                                        <table class = "footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
@@ -184,7 +184,7 @@
                                         <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" style = "margin-left:-2em;">
                                             <h4>Deleted List of Deductions</h4>
                                         </div>
-                                        <table class = "footable table table-stripped' data-page-size='5' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
+                                        <table class = "footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
@@ -258,7 +258,7 @@
                                         <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" style = "margin-left:-2em;">
                                             <h4>Deleted List of Announcements</h4>
                                         </div>
-                                        <table class = "footable table table-stripped' data-page-size='5' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
+                                        <table class = "footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th>Date</th>
@@ -329,7 +329,7 @@
                                         <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" style = "margin-left:-2em;">
                                             <h4>Deleted List of Holidays</h4>
                                         </div>
-                                        <table class = "footable table table-stripped' data-page-size='8' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
+                                        <table class = "footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th class = "col-md-2">Name</th>

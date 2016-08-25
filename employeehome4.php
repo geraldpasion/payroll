@@ -137,7 +137,7 @@
                         <ul class="list-unstyled m-t-md">
                             <li>
                                 <a href = "coachingresult.php" style="color:white"><span class="fa fa-clipboard m-r-xs"></span>
-                                <label><?PHP echo $result7['total']; ?> Pending</label></a>
+                                <label><?PHP echo $result7['total']; ?> Updates</label></a>
                             </li>
                             <li>
                                 <a href = "coachingupdated.php" style="color:white"><span class="fa fa-thumbs-up m-r-xs"></span>

@@ -108,12 +108,23 @@ margin-left: 2px;
 				</div>
 				</div>
 				<br><br>';
+				$next1=$page-1;
+
+					echo " <a class='pagi' href='images.php?page=$next1'> < </a>";
+
+					echo " <a class='pagi' href='images.php?page=1'> 1 </a>";
+					echo " <a class='pagi' href='images.php?page=2'> 2 </a>";
+					echo " <a class='pagi' href='images.php?page=3'> 3 </a>";
+					echo " <a class='pagi' href='images.php?page=4'> 4 </a>";
+					
 				for($num=1;$num<=$total_pages;$num++) {
 					//$num=$num-$num+1;
-				
-            	echo "  <a class='pagi' href='images.php?page=$num'> $num </a>";
+				//echo"<script>alert($num);</script>";
+            	//echo "  <a class='pagi' href='images.php?page=$num'> $num </a>";
             	
 			}
+			$next=$page+1;
+			echo " <a class='pagi' href='images.php?page=$next'> > </a>";
 			 echo "<br><br><br> <b>Total Images: </b>" . $total_records."<br>";
 			echo'	</section>';
 			?>
