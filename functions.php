@@ -288,21 +288,6 @@ if ($result->num_rows > 0) {
 
 //*****************************************************compute OT******************************************
 
-//overwrite default hours_fields and deduction_fields if employee is flexi
-//list fields that can only be considered
-
-//if($employee_type=='Flexible'){
-                
-/*$hours_fields=array(
-    'reg_hrs',
-    'sh_ot'
-    );
-
-$deduction_fields=array(
-    'undertime'
-    );
-}//end if*/
-
 echo "<table>";
 
         foreach ($fields as $field){

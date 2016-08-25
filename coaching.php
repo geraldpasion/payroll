@@ -11,6 +11,9 @@
 		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
 			include('levelexe.php');
 		}
+		else if(!isset($empLevel)){
+			include 'logout.php';
+		}
 		?>
 		<script type="text/javascript">
 		$(function() {

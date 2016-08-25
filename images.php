@@ -112,14 +112,20 @@ margin-left: 2px;
 
 					echo " <a class='pagi' href='images.php?page=$next1'> < </a>";
 
-					echo " <a class='pagi' href='images.php?page=1'> 1 </a>";
-					echo " <a class='pagi' href='images.php?page=2'> 2 </a>";
-					echo " <a class='pagi' href='images.php?page=3'> 3 </a>";
-					echo " <a class='pagi' href='images.php?page=4'> 4 </a>";
-					
+				$page1=$page+1;
+				$page2=$page1+1;
+				$page3=$page2+1;
+				$page4=$page3+1;
+
+			echo "  <a class='pagi' href='images.php?page=$page'> $page </a>";
+			echo "  <a class='pagi' href='images.php?page=$page1'>$page1</a>";
+			echo "  <a class='pagi' href='images.php?page=$page2'>$page2</a>";
+			echo "  <a class='pagi' href='images.php?page=$page3'> $page3 </a>";
+			echo "  <a class='pagi' href='images.php?page=$page4'> $page4 </a>";
+
 				for($num=1;$num<=$total_pages;$num++) {
 					//$num=$num-$num+1;
-				//echo"<script>alert($num);</script>";
+				
             	//echo "  <a class='pagi' href='images.php?page=$num'> $num </a>";
             	
 			}
@@ -142,3 +148,7 @@ margin-left: 2px;
 	</div>
 </body>
 </html>
+<script>
+var page=<?php echo"$page";?>
+alert(page);
+</script>

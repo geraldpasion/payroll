@@ -169,12 +169,13 @@
                 <a href="announcementlist.php">
 		                       <div class="widget red-bg p-lg text-center">
                         <div class="m-b-md">
-                            <i class="fa fa-bell fa-4x"></i>
-                            <h3 class="font-bold no-margins">
+                            <i class="fa fa-bell fa-2x" style="color:white"></i>
+                            <h3 class="font-bold no-margins" style="color:white">
                                 Announcement
                             </h3>
-							 <small><?PHP if($result9['announcement_date']==""){echo"";} else {echo date("F d, Y",strtotime($result9['announcement_date']));} ?> </small><br>
-                            <div style="word-wrap:break-word;"><label><?PHP if($result9['announcement_details']==""){echo"";} else {echo $result9['announcement_details'];} ?> </label></div>
+							 <small style="color:white"><?PHP if($result9['announcement_date']==""){echo"";} else {echo date("F d, Y",strtotime($result9['announcement_date']));} ?> </small><br><br>
+                            <div style="word-wrap:break-word;"><label style="color:white;font-size:14px;"><?PHP if($result9['announcement_details']==""){echo"";} else {echo $result9['announcement_details'];} ?> </label></div>
+                            <a href="announcementlist.php" style="color:white;font-size:10px;">See more announcements</a>
                         </div>
                     </div>
                 </a>

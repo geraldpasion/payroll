@@ -14,6 +14,9 @@ if(!$_SESSION['login']) {
 	
 }
 $employee_id = $_SESSION['logsession'];
+if(!isset($employee_id)){
+	include 'logout.php';
+}
 ?>
 <!DOCTYPE html>
 <html>
