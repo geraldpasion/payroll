@@ -20,6 +20,7 @@ $endcut = $cutarray[1];
 			 $.ajax({
 			   type: "POST",
 			   url: "deletedeductions.php",
+			   async: false,
 			   data: info,
 			   success: function(){
 			 	}
@@ -60,6 +61,7 @@ $endcut = $cutarray[1];
 			$.ajax({
 			   type: "POST",
 			   url: "deleteearnings.php",
+			   async: false,
 			   data: info,
 			   success: function(){
 			 	}
@@ -133,14 +135,14 @@ $endcut = $cutarray[1];
 								<div class="col-md-4" id="partinp"><select id = 'particularsel' name = 'particularsel' type='text' class='form-control' required>
 									<option value=''></option>
 									<?php
-									if($stmt = $mysqli->query("SELECT * FROM earnings_setting")){
+									if($stmt = $mysqli->query("SELECT * FROM earnings_setting GROUP BY earnings_name")){
 										if($stmt->num_rows > 0){
 											while($row = $stmt->fetch_object()){
 												echo "<option>" . $row->earnings_name . "</option>";
 											}
 										}
 									}
-									if($stmt = $mysqli->query("SELECT * FROM deduction_settings")){
+									if($stmt = $mysqli->query("SELECT * FROM deduction_settings GROUP BY deduction_name")){
 										if($stmt->num_rows > 0){
 											while($row = $stmt->fetch_object()){
 												echo "<option>" . $row->deduction_name . "</option>";
@@ -148,6 +150,7 @@ $endcut = $cutarray[1];
 										}
 									}
 									?>
+									
 								</select></div>
 								<!-- <div class="col-md-4" id="partsel" style="display:none;"><select id = "particularsel" name = "particularsel" onchange="" type="text" class="form-control" required></select></div> -->
 								<br><br><br>								

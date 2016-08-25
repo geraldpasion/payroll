@@ -185,11 +185,12 @@
 					<?php
 						include('dbconfig.php');
 							$employeeidsession = $_SESSION['logsession'];
-						if ($result = $mysqli->query("SELECT * FROM tbl_leave INNER JOIN employee ON employee.employee_id = tbl_leave.employee_id WHERE (leave_status = 'Pending' AND employee_team = '$team') AND (employee.employee_level LIKE 1 OR tbl_leave.employee_id = $employee_id)  ORDER BY leave_id")) //get records from db
+							$team = $_SESSION['employee_team'];
+						if ($result = $mysqli->query("SELECT * FROM tbl_leave INNER JOIN employee ON employee.employee_id = tbl_leave.employee_id WHERE (leave_status = 'Pending' AND employee_team = '$team') AND employee.employee_level LIKE 1 ORDER BY leave_id")) //get records from db
 						{
 							if ($result->num_rows > 0) //display records if any
 							{
-								echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
+								echo "<table class='footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter>";								
 								echo "<thead>";
 								echo "<tr class = 'josh'>";	
 								echo "<th>Name</th>";

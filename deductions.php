@@ -145,6 +145,28 @@
 		    border-left:1px solid grey;
 		}
 		</style>
+
+<!--custom gdp code-->
+		<script type="text/javascript">
+		    $(function() {
+		        $('#deductionname').keyup(function() {
+		            if (this.value.match(/[^a-zA-Z0-9 ]/g)) {
+		                this.value = this.value.replace(/[^a-zA-Z0-9 ]/g, '');
+		            }
+		        });
+		    });
+
+		</script>
+
+		<script>
+		function filter_type(choice){
+		 //var choice = 'Taxable';
+		 var elem = 'New';
+		 var elem2 = 'Deductions';
+			    $("#partinp").replaceWith("<div class='col-md-4' id='partinp'><select id = 'earningname' name = 'earningname' type='text' class='form-control' required></select></div>");
+				$("#earningname").load("filter.php?choice=" + choice + "&elem=" + elem + "&elem2=" + elem2);
+		}
+		</script>	
 	
 	</head>
 
@@ -183,11 +205,24 @@
 						<div class="form-group">
 							<div class="col-md-2"></div>
 							<form method="POST" id="resetForm" class="form-horizontal" action="deductionexe.php">
-								<label class="col-sm-2 control-label">Deductions List</label>
-								<div class="col-md-4"><select id = "deductionname" class="form-control"  data-default-value="" name="deductionname" required="">
+
+
+								<label class="col-sm-2 control-label">Type</label>
+								<div class="col-md-4">
+								<select class = "form-control" id = "type" name = "type" onchange="filter_type(this.value)" required="" >
+									<option value="" disabled selected>Select Type</option>
+									<option value="Taxable">Taxable</option>
+									<option value="Non-Taxable">Non-Taxable</option>
+									
+								</SELECT>
+								</div><br><br><br>
+
+								<div class="col-md-3"></div>
+								<label class="col-sm-1 control-label">Deductions List</label>
+								<div class="col-md-4" id="partinp"><select id = "deductionname" class="form-control"  data-default-value="" name="deductionname" required="">
 									<option value="">Select Deductions</option>
 									<?php 
-									include('dbconfig.php');
+									/*include('dbconfig.php');
 
 									if ($result1 = $mysqli->query("SELECT * FROM deduction_settings")) //get records from db
 									{
@@ -198,7 +233,7 @@
 												echo '<option value="'.$row1->deduction_name.'">'.$row1->deduction_name.'</option>';
 											}																					
 										}
-									}
+									}*/
 
 									?>
 									</SELECT>
@@ -287,7 +322,7 @@
 						</div>
 						<br><br>
 	
-	<div class="modal inmodal fade" id="myModal4" tabindex="-1" role="dialog" aria-hidden="true">
+	<!--div class="modal inmodal fade" id="myModal4" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">				
@@ -303,7 +338,25 @@
 								<li class=""><a data-toggle="tab" href="#deduct">Deductions Summary</a></li>
 							</ul>
 							<div class="tab-content">
-								<div id="newedit" class="tab-pane fade active in" >
+								<!--div id="newedit" class="tab-pane fade active in" >
+									<div class="panel-body">
+										<form id="myForm" method="post" class="form-horizontal">
+											<label class="col-md-4 control-label"><h2>Input New Deduction</h2></label><br><br><br><br>
+										<div class="form-group">											
+											<label class="col-sm-3 control-label">Particular</label>
+												<div class="col-md-4" id="partinp"><input type="text" onfocus="clearThis(this)" id="name" name="name" class="form-control ename"required="" placeholder="Enter Name"></div>
+												<br><br><br>		
+											<label class="col-sm-3 control-label">Type</label>
+												<div class="col-sm-4"><select id="deducttype" name="deducttype" class="form-control" data-default-value="z" required=""><option selected="true" disabled="disabled" value="">Select type...</option><option value = "Taxable">Taxable</option><option value = "Non-Taxable">Non-Taxable</option></select></div>
+												<br><br><br>									
+										</div>
+										<div class="col-md-3"></div>
+										<button id ="reset" type="reset" class="btn btn-w-m btn-warning">Reset</button>
+										<button type="submit" class="btn btn-w-m btn-primary" id="sub2" name="sub2">Submit</button>		
+										</form>
+									</div>								
+								</div-->
+								<!--div id="newedit" class="tab-pane fade active in" >
 									<div class="panel-body">
 										<form id="myForm" method="post" class="form-horizontal">
 											<label class="col-md-4 control-label"><h2>Input New Deduction</h2></label><br><br><br><br>
@@ -335,7 +388,84 @@
 												</thead>
 												<tbody>
 													<?php
-														$emp_deductions = $mysqli->query("SELECT * FROM deduction_settings  ORDER BY deduction_id");
+														/*$emp_deductions = $mysqli->query("SELECT * FROM deduction_settings  ORDER BY deduction_id");
+														if($emp_deductions->num_rows > 0){
+															while($deduct = mysqli_fetch_object($emp_deductions)){
+																$deductid = $deduct->deduction_id;
+																echo '<tr>';
+																echo '<td>'.$deduct->deduction_id.'</td>';
+																echo '<td>'.$deduct->deduction_name.'</td>';
+																echo '<td>'.$deduct->deduction_type.'</td>';
+																echo "<td><a href='#' data-toggle='modal' data-target='#myModal4' id='$deductid' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Delete</button></a></td>";
+																echo '</tr>';
+															}
+														}*/
+													?>
+												</tbody>
+											</table>
+									</div>
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div-->
+
+	<div class="modal inmodal fade" id="myModal4" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">				
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<i class="fa fa-edit modal-icon"></i>
+					<h4 class="modal-title">Add New Deductions</h4>
+				</div>
+				<div class="modal-body">
+					<div class="ibox-content">						
+						<div class="tabs-container">
+							<ul id="mytab" class="nav nav-tabs">
+								<li class="active"><a data-toggle="tab" href="#newedit">Deductions</a></li>
+								<li class=""><a data-toggle="tab" href="#deduct">Deductions Summary</a></li>
+							</ul>
+							<div class="tab-content">
+								<div id="newedit" class="tab-pane fade active in" >
+									<div class="panel-body">
+										<form id="myForm" method="post" class="form-horizontal">
+											<label class="col-md-8 control-label"><h2>Input New Deduction</h2></label><br><br><br><br>
+										<div class="form-group">											
+											<label class="col-sm-5 control-label">Particular</label>
+												<div class="col-md-4" id="partinp"><input type="text" onfocus="clearThis(this)" id="name" name="name" class="form-control ename"required="" placeholder="Enter Name"></div>
+												<br><br><br>		
+											<label class="col-sm-5 control-label">Type</label>
+												<div class="col-sm-4"><select id="deducttype" name="deducttype" class="form-control" data-default-value="z" required=""><option selected="true" disabled="disabled" value="">Select type...</option><option value = "Taxable">Taxable</option><option value = "Non-Taxable">Non-Taxable</option></select></div>
+												<br><br><br>									
+										</div>
+										<div class="col-md-4"></div>
+										<button type="submit" class="btn btn-w-m btn-primary" id="sub2" name="sub2">Submit</button>
+										<button id ="reset" type="reset" class="btn btn-w-m btn-warning">Reset</button>
+										</form>
+									</div>								
+								</div>
+								
+								<div style= "max-height:500px; min-height:300px; overflow-y:scroll;" id="earn" class="tab-pane" >
+									<div class="panel-body">
+											<table class="footable table table-stripped" data-page-size="8" data-filter="#filter">						
+												<thead>
+													<tr>
+														<th>ID</th>
+														<th>Particular</th>
+														<th>Type</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<?php
+														$emp_deductions = $mysqli->query("SELECT * FROM deductions_setting  ORDER BY deductions_id");
 														if($emp_deductions->num_rows > 0){
 															while($deduct = mysqli_fetch_object($emp_deductions)){
 																$deductid = $deduct->deduction_id;
@@ -351,11 +481,10 @@
 												</tbody>
 											</table>
 									</div>
-								</div>
-
+								</div>		
 								<div class="modal-footer">
 									<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-								</div>
+								</div>												
 							</div>
 						</div>
 					</div>

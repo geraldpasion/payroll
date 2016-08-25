@@ -14,6 +14,17 @@
 		?>
 	</head>
 	<title>Gallery</title>
+	<style>
+.pagi{
+padding: 5px;
+background-color: #E0E0E0;
+border-radius: 5px;
+border: 2px solid #BDBDBD;
+float: left;
+margin-left: 2px;
+
+}
+	</style>
 	<body>
 		<div class="row">
 		<div class="col-lg-12">
@@ -47,13 +58,11 @@
 		<div class="ibox-content">
 
 		    <form action = "uploadgallery.php?f=3" method = "POST" enctype ="multipart/form-data">
+			
 			<input type="file" name ="file" accept="image/*" required>
 			<input hidden type="text" name="nam">
 			<br/>
-			<input type="submit" name="submit"  class="btn btn-primary" required>
-			<br/>
-			<br/>
-
+			<input type="submit" name="submit"  class="btn btn-primary" required><br><br><br>
 		<?php
 			include('sqlconnection.php');
 			echo'<div class="row">
@@ -76,14 +85,11 @@
               
               
             $total_records = mysqli_num_rows($qPage);
-            echo "<b>Total Images: </b>" . $total_records."<br>";
+          //  echo "<b>Total Images: </b>" . $total_records."<br>";
             $per_page = 8;
             $total_pages = ceil($total_records/$per_page);
 
-            for($num=1;$num<=$total_pages;$num++) {
-            	echo "<a class='pagi' href='images.php?page=$num'> $num </a>";
-			}
-			echo'	</section>';
+          // echo"<script>alert($total_records);</script>";
 
 			$result = mysqli_query($con, "SELECT * FROM image ORDER BY p_id DESC LIMIT $page1,8");
 			while($row = mysqli_fetch_array($result)) {
@@ -100,8 +106,21 @@
 			
 			echo'</div>
 				</div>
-				</div>';
+				</div>
+				<br><br>';
+				for($num=1;$num<=$total_pages;$num++) {
+					//$num=$num-$num+1;
+				
+            	echo "  <a class='pagi' href='images.php?page=$num'> $num </a>";
+            	
+			}
+			 echo "<br><br><br> <b>Total Images: </b>" . $total_records."<br>";
+			echo'	</section>';
 			?>
+			<br><br><br>
+
+			<br/>
+			<br/>
 			</form>
 	</div>
 	</div>

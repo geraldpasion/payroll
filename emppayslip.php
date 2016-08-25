@@ -12,6 +12,13 @@
 		<link href="css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 		<script src="js/plugins/clockpicker/clockpicker.js"></script>
 		<script src="js/keypress.js"></script>
+		
+ 	<link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+	<script src="sweetalert2-master/dist/sweetalert2.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="sweetalert2-master/dist/sweetalert2.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
 		<script type="text/javascript">
 			function runfunc(){
@@ -121,7 +128,7 @@
 									$endcut2 = strtotime($endcut)*1000;
 									echo'<button type="button" onClick="exportAll('.$initialcut2.','.$endcut2.')" class="btn btn-w-m btn-primary"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;Export All</button>';
 								} else {
-									echo'<button type="button" class="btn btn-w-m btn-primary"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;Export All</button>';
+									echo'<button type="button" class="btn btn-w-m btn-primary" disabled><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;Export All</button>';
 								} ?>
 								</div>
 							</form>
@@ -204,7 +211,7 @@
                       					<!--<p>Enter your account username:</p><br>
                       					<input type="text" class="form-control" id="acctun" name="acctusername" placeholder="Enter username"><br>-->
                       					<p>Enter your payslip password:</p><br>
-                      					<input type="password" class="form-control" id="paypw" name="payslippassword" placeholder="Enter password">
+                      					<input type="password" class="form-control" id="paypw" name="payslippassword" placeholder="Enter password" required>
                     				</div>
                   				</div><!--/.modal-body-->
                   				<div class="modal-footer">
@@ -219,6 +226,27 @@
 			</div>
         </div>
 	<div id="displaysomething"></div>
+	<script type="text/javascript">
+			function alertFunction2()
+		{
+			swal({  title: "Wrong payslip password!",   text: "",   timer: 2000, type: "error",   showConfirmButton: false}, 
+			function(zz){  
+			history.replaceState({}, "Title", "login.php");
+		});  
+		}
+	</script>
+<?php
+		if(isset($_GET['invalid']))
+		{
+			echo '<script type="text/javascript">'
+			   , 'alertFunction2();'
+			  // , 'alert("hahah");'
+			   , '</script>'
+			;
+		}
+	?>
+	<script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 		<?php
 			include('menufooter.php');
 		?>
@@ -227,12 +255,3 @@
 	</body>
 
 </html>
-<?php
-		if(isset($_GET['invalid']))
-		{
-			echo '<script type="text/javascript">'
-			   , 'alert("sad");'
-			   , '</script>'
-			;	
-		}
-	?>

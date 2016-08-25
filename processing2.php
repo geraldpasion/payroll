@@ -239,6 +239,7 @@
 			$.ajax({
 				   type: "POST",
 				   url: "processing2.php",
+				   async: false,
 				   data: info,
 				   success: function(){
 				   		$("#leavetype").val( cutoff );
@@ -269,7 +270,7 @@
 		</script>
 		<script type="text/javascript">
 			$(document).ready(function(){
-			showEdited2=function(){
+			paidSuccess=function(){
 			toastr.options = { 
 				"closeButton": true,
 			  "debug": false,
@@ -286,11 +287,55 @@
 			  "showMethod": "fadeIn",
 			  "hideMethod": "fadeOut" // 1.5s
 				}
-				toastr.success("Processing successfully submitted!");
+				toastr.success("Successfully removed!");
 			}
 			//history.replaceState({}, "Title", "registration.php");
 
 			});
+			$(document).ready(function(){
+				showEdited2=function(){
+				toastr.options = { 
+					"closeButton": true,
+				  "debug": false,
+				  "progressBar": true,
+				  "preventDuplicates": true,
+				  "positionClass": "toast-top-right",
+				  "onclick": null,
+				  "showDuration": "400",
+				  "hideDuration": "1000",
+				  "timeOut": "7000",
+				  "extendedTimeOut": "1000",
+				  "showEasing": "swing",
+				  "hideEasing": "linear",
+				  "showMethod": "fadeIn",
+				  "hideMethod": "fadeOut" // 1.5s
+					}
+					toastr.success("Processing successfully submitted!");
+				}
+			});
+			//history.replaceState({}, "Title", "registration.php");
+			$(document).ready(function(){
+			disable=function(){
+				 toastr.options = { 
+					"closeButton": true,
+				  "debug": false,
+				  "progressBar": true,
+				  "preventDuplicates": true,
+				  "positionClass": "toast-top-right",
+				  "onclick": null,
+				  "showDuration": "400",
+				  "hideDuration": "1000",
+				  "timeOut": "7000",
+				  "extendedTimeOut": "1000",
+				  "showEasing": "swing",
+				  "hideEasing": "linear",
+				  "showMethod": "fadeIn",
+				  "hideMethod": "fadeOut" // 1.5s
+				}
+				toastr.error('!');
+			}
+			history.replaceState({}, "Title", "processing2.php");				
+		});
 		</script>
 		<?php
 		if(isset($_GET['edited']))
@@ -304,12 +349,32 @@
 			   , '</script>'
 			;	
 		}
+		if(isset($_GET['paidSuccess']))
+		{
+			echo '<script type="text/javascript">'
+					, '$(document).ready(function(){'
+					, 'paidSuccess();'
+					, '});' 
+			   
+			   , '</script>'
+			;	
+		}
 
 		if(isset($_GET['submitted']))
 		{
 			echo '<script type="text/javascript">'
 					, '$(document).ready(function(){'
 					, 'showEdited2();'
+					, '});' 
+			   
+			   , '</script>'
+			;	
+		}
+		if(isset($_GET['disable']))
+		{
+			echo '<script type="text/javascript">'
+					, '$(document).ready(function(){'
+					, 'disable();'
 					, '});' 
 			   
 			   , '</script>'
@@ -472,7 +537,7 @@
 													data-cutoffd='".$initialcut." - ".$endcut."'
 													data-submitdate='".$cutoffsubmitdate."'
 													data-target='#myModal4' class = 'editempdialog'><button class='btn btn-info' name = 'edit' id='edit' type='button'><i class='fa fa-paste'></i> Edit</button></a>&nbsp;&nbsp;";
-											echo "<a href='finalpayexe.php?emp_id=".$row1->employee_id."' id='$empid' cutoff='".$initialcut." - ".$endcut."' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> For Final Pay</button></button></a>";											
+											echo "<a href='finalpayexe.php?emp_id=".$row1->employee_id."' id='$empid' cutoff='".$initialcut." - ".$endcut."' class = 'delete'><button id='payment' class='btn btn-warning' type='button'><i class='fa fa-warning'></i> For Final Pay</button></button></a>";											
 											echo "</tr>";
 										}									
 										echo "</table>";
@@ -544,7 +609,9 @@
 		?>
 
 
-		
+		<script type="text/javascript">
+
+		</script>
 		<script>
 			jQuery(function(){
 			   jQuery('#test1').click();

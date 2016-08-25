@@ -76,7 +76,7 @@
 					<div class="ibox-content"><br><br>
 						<div class="form-group">
 							<div style="margin-left:-125px" class="col-md-3"></div>
-							<form method="POST" action="emppayslip.php">
+							<form method="POST" action="supervisorpayslip.php">
 								<label class="col-sm-1 control-label">Cutoff List</label>
 								<div class="col-md-4" style="padding-bottom:10px;">
 									<select id = "sched" class="form-control"  data-default-value="z" name="sched" required="">
@@ -131,9 +131,10 @@
 					<div class="ibox-content" id = "tableHolderz">
 						<?php
 							include('dbconfig.php');
+							$ID=$_SESSION['logsession'];
 								if(isset($_POST['test1'])){
 								$cutoffrange = $initialcut . ' - ' .$endcut;
-								if ($result1 = $mysqli->query("SELECT * FROM employee INNER JOIN total_comp_salary ON employee.employee_id = total_comp_salary.employee_id WHERE total_comp_salary.process_status='Submitted' AND total_comp_salary.cutoff='$cutoffrange'")) //get records from db
+								if ($result1 = $mysqli->query("SELECT * FROM employee INNER JOIN total_comp_salary ON employee.employee_id = total_comp_salary.employee_id WHERE total_comp_salary.process_status='Submitted' AND total_comp_salary.cutoff='$cutoffrange'AND employee.employee_id='$ID' ")) //get records from db
 								{
 									if ($result1->num_rows > 0) //display records if any
 									{
@@ -169,6 +170,9 @@
 											//echo "<a href='#' id='$empid' cutoff='".$initialcut." - ".$endcut."' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Deactivate</button></button></a>";
 												echo "<td>
 														<a id='export' class='btn btn-info'  data-toggle='modal' data-target='#modalconfirm'>";
+														 $_SESSION['initialcutS'] =$initialcut;
+												 		 $_SESSION['endcutS'] =$endcut;
+												  		 $_SESSION['compidS'] =$compid;
 														//<button class='btn btn-info' name = 'export' id='export' type='button'>
 														//	<i class='fa fa-file'></i>&nbsp;&nbsp;View/Download
 														//	</button>
@@ -188,7 +192,7 @@
               			<div class="modal-dialog modal-sm">
                 			<div class="modal-content">
                 				<div class="modal-header">
-                    			<form id = "uploadForm" method="get" action="" class="form-horizontal">
+                    			<form id = "uploadForm" method="POST" action="payslipexe_2.php" class="form-horizontal" target="_blank">
                     				<button type="button" class="close" data-dismiss="modal">&times;</button>
                     				<i class="glyphicon glyphicon-question-sign modal-icon"></i>
                     				<h4 class="modal-title">Payslip Password Confirmation</h4>
@@ -196,11 +200,11 @@
                   				<div class="modal-body">
                     				<div class="alert alert-warning">
                       					<p>Enter your payslip password:</p><br>
-                      					<input type="password" class="form-control" id="paypw" placeholder="Enter password">
+                      					<input type="password" name="payslippassword" class="form-control" id="paypw" placeholder="Enter password" required>
                     				</div>
                   				</div><!--/.modal-body-->
                   				<div class="modal-footer">
-                    				<button type="submit" class="btn btn-primary" style = "width:120px;" >Confirm</button>
+                    				<button type="submit" class="btn btn-primary" name="confirm" style = "width:120px;" >Confirm</button>
                    					<button type="button" data-dismiss="modal" class="btn btn-white" style = "width:120px;">Cancel</button>
                  				</form>
                   				</div><!--/.modal-footer-->
@@ -211,6 +215,27 @@
 			</div>
         </div>
 	<div id="displaysomething"></div>
+	<script type="text/javascript">
+			function alertFunction2()
+		{
+			swal({  title: "Wrong payslip password!",   text: "",   timer: 2000, type: "error",   showConfirmButton: false}, 
+			function(zz){  
+			history.replaceState({}, "Title", "login.php");
+		});  
+		}
+	</script>
+<?php
+		if(isset($_GET['invalid']))
+		{
+			echo '<script type="text/javascript">'
+			   , 'alertFunction2();'
+			  // , 'alert("hahah");'
+			   , '</script>'
+			;
+		}
+	?>
+	<script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 		<?php
 			include('menufooter.php');
 		?>

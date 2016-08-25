@@ -1,8 +1,11 @@
 <?php 
 include('dbconfig.php');
-if(!isset($_SESSION)) session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    			session_start();
+			}
 if (!isset($_SESSION['logsession']) || $_SESSION['employee_level'] !== "1") {
   header("Location: login.php");
+  exit();
 }
 $employee_id = $_SESSION['logsession'];
 ?>

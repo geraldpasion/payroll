@@ -94,11 +94,11 @@
 
 						<?php
 							include('dbconfig.php');
-							if ($result = $mysqli->query("SELECT * FROM inquiry INNER JOIN employee ON employee.employee_id = inquiry.employee_id WHERE employee_team = '$team' AND inquiry_status = 'answered' ORDER BY inquiry_date DESC")) //get records from db
+							if ($result = $mysqli->query("SELECT * FROM inquiry INNER JOIN employee ON employee.employee_id = inquiry.employee_id WHERE employee_team = '$team' AND inquiry_status = 'answered' AND (employee_level = 1 OR employee_level = 2) ORDER BY inquiry_date DESC")) //get records from db
 							{
 								if ($result->num_rows > 0) //display records if any
 								{
-									echo "<table class='footable table table-stripped' data-page-size='5' data-filter=#filter>";								
+									echo "<table class='footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter>";								
 									echo "<thead>";
 									echo "<tr>";
 									echo "<th>Name</th>";

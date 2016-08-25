@@ -135,7 +135,7 @@
 								{
 									if ($result->num_rows > 0) //display records if any
 									{
-										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
+										echo "<table class='footable table table-stripped' data-limit-navigation='5' data-page-size='20' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr style='text-align:center'>";	
 										echo "<th>Name</th>";

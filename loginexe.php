@@ -21,7 +21,9 @@ if($check_user>0){
 	$result = $mysqli->query("SELECT * FROM employee WHERE employee_id = '$username'")->fetch_array();
 	
 	if($result['employee_level'] == '1'){
-		session_start();
+		if (session_status() == PHP_SESSION_NONE) {
+   			 session_start();
+		}
 	if(isset($_SESSION['logsession']))
 	{
 		unset($_SESSION['logsession']);
@@ -37,7 +39,9 @@ if($check_user>0){
 		header("location: employeehome.php");
 
 	}else if($result['employee_level'] == '3'){//  level 3
-		session_start();
+		if (session_status() == PHP_SESSION_NONE) {
+   			 session_start();
+		}
 		if(isset($_SESSION['logsession']))
 	{
 		unset($_SESSION['logsession']);
@@ -48,13 +52,20 @@ if($check_user>0){
 		$_SESSION['lname'] = $result['employee_lastname'];
 		$_SESSION['emptype'] = $result['employee_type'];
 		$_SESSION['employee_level'] = $result['employee_level'];
+
+		$_SESSION['employee_team'] = $result['employee_team'];
+		$_SESSION['employee_team1'] = $result['employee_team1'];
+		$_SESSION['employee_team2'] = $result['employee_team2'];
+		$_SESSION['employee_team3'] = $result['employee_team3'];
+		
 		//$_SESSION['password']=$result['employee_password'];
 
 		header("location: employeehome3.php");
 
 	}else if($result['employee_level'] == '2'){// level 2
-			session_start();
-		
+		if (session_status() == PHP_SESSION_NONE) {
+   			 session_start();
+		}
 		if(isset($_SESSION['logsession']))
 		{
 			unset($_SESSION['logsession']);
@@ -71,9 +82,9 @@ if($check_user>0){
 			header("location: employeehome2.php");
 
 	}else if($result['employee_level'] == '4'){// level 4
-			session_start();
-
-		
+		if (session_status() == PHP_SESSION_NONE) {
+   			 session_start();
+		}
 		if(isset($_SESSION['logsession']))
 		{
 			unset($_SESSION['logsession']);

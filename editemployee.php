@@ -114,4 +114,5 @@ echo"<script>alert('$team3');</script>";
 
 // redirec the user
 header("Location: employeelist.php?edited");
+exit();
 ?>

@@ -10,7 +10,7 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-<script src="sweetalert2-master/dist/sweetalert2.min.js"></script>
+	<script src="sweetalert2-master/dist/sweetalert2.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="sweetalert2-master/dist/sweetalert2.css">
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -75,7 +75,46 @@
 </head>
 
 <body class="gray-bg">
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+   			 session_start();
+		}
+if(!empty($_SESSION['logsession']))
+{
+	//echo "<script>alert('session yes!');</script>";
+	//header("location: loginexe.php");
+	$employee_id= isset($_SESSION['logsession']) ? $_SESSION['logsession'] : '';
+	include 'dbconfig.php';
+	$result = $mysqli->query("SELECT employee_level FROM employee WHERE employee_id = '$employee_id'")->fetch_array();
+	
+	if($result['employee_level'] == '1'){
+		$_SESSION['login'] = TRUE;
+		header("location: employeehome.php");
+		exit;
+	}
+	else if($result['employee_level'] == '2'){
+		$_SESSION['login'] = TRUE;
+		header("location: employeehome2.php");
+		exit;
+	}
+	else if($result['employee_level'] == '3'){
+		$_SESSION['login'] = TRUE;
+		header("location: employeehome3.php");
+		exit;
+	}
+	else if($result['employee_level'] == '4'){
+		$_SESSION['login'] = TRUE;
+		header("location: employeehome4.php");
+		exit;
+	}
+}
+else{
+	//echo "<script>alert('session not!');</script>";
+	
+	//echo "<div>hello".$_SESSION['logsession']."</div>";
 
+}
+?>
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
 			<h2>iConnect</h2>

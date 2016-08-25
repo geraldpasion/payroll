@@ -40,7 +40,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid' AND tbl_leave.leave_type = 'Sick leave'"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
 						
 					{
 						$stmt3->execute();
@@ -64,7 +64,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid'  AND tbl_leave.leave_type = 'Vacation leave'"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -87,7 +87,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid'  AND tbl_leave.leave_type = 'Paid rest day / Incentive'"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -110,7 +110,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid'  AND tbl_leave.leave_type = 'Maternity leave'"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -133,7 +133,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid'  AND tbl_leave.leave_type = 'Paternity leave'"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -156,7 +156,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid' AND tbl_leave.leave_type = 'Single-parent leave'"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -236,7 +236,7 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid' AND tbl_leave.leave_type = 'Sick leave'"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
 						
 					{
 						$stmt3->execute();
@@ -260,7 +260,7 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid' AND tbl_leave.leave_type = 'Vacation leave'"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
 						
 					{
 						$stmt3->execute();
@@ -284,7 +284,7 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid' AND tbl_leave.leave_type = 'Paid rest day / Incentive'"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
 						
 					{
 						$stmt3->execute();
@@ -308,7 +308,7 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid' AND tbl_leave.leave_type = 'Maternity leave'"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
 						
 					{
 						$stmt3->execute();
@@ -332,7 +332,7 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid' AND tbl_leave.leave_type = 'Paternity leave'"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
 						
 					{
 						$stmt3->execute();
@@ -356,7 +356,7 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs INNER JOIN tbl_leave ON tbl_leave.employee_id = leave_logs.employee_id SET type = 'Applied' WHERE leave_logs.employee_id = '$empid' AND leave_logs.log_id = '$logid' AND tbl_leave.leave_id = '$leaveid' AND tbl_leave.leave_type = 'Single-parent leave'"))
+					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
 						
 					{
 						$stmt3->execute();

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<?php
 		session_start();
@@ -14,52 +13,37 @@
 		?>
 		<title>Loan Application</title>
 		<style>
+			.btn3{
+				margin-left:6.5em;
+			}
 			.btn2{
-				margin-left:-10.7em;
+				margin-left:-10em;
+			}
+						.form-horizontal .control-label{
+			/* text-align:right; */
+			text-align:left;
 			}
 		</style>
-		<script type="text/javascript">
-		$(function() {
-			$('input[name="daterange"]').daterangepicker({
-				singleDatePicker: true,
-				showDropdowns: true
-			});
-		});
-		</script>
 		<script>
-		function myFunction() {
-			document.getElementById("myForm").reset();
-		}
+			function myFunction() {
+				document.getElementById("myForm").reset();
+			}
 		</script>
-		<script>
-		function clearThis(target){
-        	target.value= "";
-    	}
-		$(function() {
-			$( ".ename" ).autocomplete({
-				source: 'search.php'
-					
-			});
-			$( ".ename" ).autocomplete({
-			select: function(e, ui) {  
-                 document.getElementById("date").focus();
-               		}
-             });
-
-		});
+<script>
+			function myFunction() {
+				document.getElementById("myForm").reset();
+			}
 		</script>
-		<link href="css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
-		<!-- Clock picker -->
-		<script src="js/plugins/clockpicker/clockpicker.js"></script>
+		
 		<script type="text/javascript" >//ajax
 			$(document).ready(function(){
 			$(document).on('submit','#myForm', function() {
+			var reason = $("#reason").val();
 			var date = $("#date").val();
 			var empid = $("#empid").val();
-
 			// Returns successful data submission message when the entered information is stored in database.
-			var dataString = 'date1=' + date + '&empid1=' + empid;
-			if(empid==''){
+			var dataString = '&date1=' + date + '&empid1=' + empid;
+			if(reason==''){
 			$('#warning').fadeIn(700);
 			$('#success').hide();
 			}
@@ -67,14 +51,11 @@
 			// AJAX Code To Submit Form.
 			$.ajax({
 				type: "POST",
-				url: "adminloanapplicationexe.php",
+				url: "loanapplicationexe.php",
 				data: dataString,
 				cache: false,
 				success: function(result){
-				
 				$('#date').val('');
-				$('#empid').val('');
-			
 				toastr.options = { 
 				"closeButton": true,
 			  "debug": false,
@@ -99,6 +80,15 @@
 			});
 			});
 		</script>	
+
+				<script type="text/javascript">
+			$(function() {
+				$('input[name="daterange"]').daterangepicker({
+					singleDatePicker: true,
+					showDropdowns: true
+				});
+			});
+		</script>
 						<script>
 				function clearThis(target){
         	target.value= "";
@@ -107,6 +97,7 @@
 	</head>
 
 	<body>
+
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="ibox float-e-margins">
@@ -131,27 +122,31 @@
 						</div>
 					</div>
 					<div class="ibox-content">
-						<form id = "myForm" method = "POST" class="form-horizontal">
+					<div class="ibox-content">
+					<?php
+							include('dbconfig.php');
+							$employee_id = $_SESSION['logsession'];
+							$result = $mysqli->query("SELECT * FROM employee WHERE employee_id = '$employee_id'")->fetch_array();	
+					?>
+
+						<form id = "myForm" method="POST" action = "loanapplicationexe.php" class="form-horizontal">
 							<div class="form-group">
-								<label class="col-sm-4 control-label">Employee Name</label>
-								<div class="col-md-4"><input type="text" onfocus="clearThis(this)" id="empid" onpaste="return false" onDrop="return false"  class="form-control ename" onKeyPress="return lettersonly(this, event)"></div>
+								<input type="hidden" id = "empid" name = "empid" class="form-control" value = " <?php echo $_SESSION['logsession'] ?>">
+								<div class="col-md-3"></div>
+								<label class="col-sm-1 control-label">ID</label>
+								<div class="col-md-4"><input name = "employeeid" id = "employeeid" type="text" class="form-control" value = " <?php echo $employee_id ?> "readonly = "readonly"></div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-4 control-label">Date</label>
-								<div class="col-md-4"><input id = "date" type="text" onfocus="clearThis(this)" onpaste="return false" onDrop="return false"  class="form-control" name="daterange" required="" onKeyPress="return noneonly(this, event)"/> </div>
-							</div><br><br>
-							<div class="form-group">
-							<div class="col-md-8"></div>
-								<button id ="submit" type="submit" class="btn btn-w-m btn-primary">Submit</button>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<button type="button" onClick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
+							<div class="form-group"><div class="col-md-3"></div>
+								<label class="col-sm-1 control-label">Name</label>
+								<div class="col-md-4"><input type="text" id = "name" class="form-control" disabled = "" value  = "<?php echo $_SESSION['fname'] . " ".  $_SESSION['lname'] ?>"></div>
 							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	<?php include("db.php");	
+						
+							<div class="form-group"><div class="col-md-3"></div>
+								<label class="col-sm-1 control-label">Date</label>
+								<div class="col-md-4"><input id = "date" type="text" onfocus="clearThis(this)" class="form-control datepicker" name="daterange" required="" onKeyPress="return noneonly(this, event)"/> </div>
+							</div>
+	
+					<?php include("db.php");	
 	$query1 = "SELECT * FROM upload LIMIT 5";
 	$result = mysql_query($query1);
 ?>
@@ -177,8 +172,25 @@ while($row1=mysql_fetch_array($result))
 
 
 
+							<br><br>
+				
+							<div class="hr-line-dashed"></div>
+							<div class="form-group">
+								<div class="col-md-4"></div>
+								<div class="col-md-5"><button id = "submit" type="submit" class="btn btn3 btn-w-m btn-primary">Submit</button></div>
+								<!--div class="col-md-4"><button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button></div-->
+							</div>
+							</div>		
+</div>
+</div>
+</div>
+						</form>
+
+
+
+		
 		<?php
-			include('menufooter.php');
+			include('employeemenufooter.php');
 		?>
 	</body>
 </html>

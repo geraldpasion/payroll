@@ -10,6 +10,9 @@
 		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
 			include('levelexe.php');
 		}
+		else{
+			include('supervisormenuheader.php');
+		}
 		?>
 		<title>Applicant List</title>
 		<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
@@ -63,12 +66,24 @@
 		<script src="js/keypress.js"></script>
 				<script type="text/javascript">
 			$(document).on("click", ".editempdialog", function () {
+			 var naglog=<?php echo $_SESSION['employee_level']?> 
+		
+			if(naglog==3 || naglog==2){
+				document.getElementById("commentHr").disabled = true;
+				//alert(naglog);
+			}if(naglog==4){
+				document.getElementById("comment").disabled = true;
+				//alert(naglog);
+			}
+
 			 var id = $(this).data('id');
 			
 			 
 			 $(".modal-body #id").val( id );
 			 
 			 });
+
+			
 		</script>	
 
 		<script type="text/javascript">
@@ -77,6 +92,7 @@
 			 var time = $(this).data('time');
 			 var interviewer = $(this).data('interviewer');
 			 var comment = $(this).data('comment');
+			 var commentx = $(this).data('commentx');
 			 var name = $(this).data('name');
 			 
 			 $(".modal-body #date").val( date );	
@@ -84,10 +100,12 @@
 			 $(".modal-body #interviewer").val( interviewer );	
 			 $(".modal-body #comment").val( comment );
 			 $(".modal-body #name").val( name );
+			 $(".modal-body #commentHr").val( commentx );
 			 // As pointed out in comments, 
 			 // it is superfluous to have to manually call the modal.
 			 // $('#addBookDialog').modal('show');   
 			
+
 			});
 		</script>	
 
@@ -193,7 +211,7 @@
 								{
 									if ($result1->num_rows > 0) //display records if any
 									{
-										echo "<table class='footable table table-stripped' data-page-size='8' data-filter=#filter>";								
+										echo "<table class='footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
 										echo "<th>Name</th>";
@@ -232,14 +250,18 @@
 											echo "<td>". date("Y-m-d",strtotime($row1->date_applied)) ."</td>";
 											echo "<td>". $row1->position ."</td>";
 											echo "<td>". $row1->correctlyanswered ."%</td>";
-											if ($result11 = $mysqli->query("SELECT * FROM employee where employee_id='".$row1->interviewer."'")) //get records from db
+											if ($result11 = $mysqli->query("SELECT * FROM employee INNER JOIN emp_data ON emp_data.interviewer = employee.employee_id where employee_id='".$row1->interviewer."'")) //get records from db
 								{
 									if ($result11->num_rows > 0) //display records if any
 									{
 										while ($row11 = mysqli_fetch_object($result11))
 											
 										{
-										echo "<td><a href='#' data-toggle='modal' class='viewempdialog' data-target='#myModal5' data-date='$date' data-time='$time' data-interviewer='$row11->employee_firstname $row11->employee_lastname' data-comment='$row1->comments' data-name='$name'>". $row1->applicant_status ."</a></td>";
+
+										echo "<td><a href='#' data-toggle='modal' class='viewempdialog' data-target='#myModal5' data-date='$date' 
+										data-time='$time' data-interviewer='$row11->employee_firstname $row11->employee_lastname'
+										 data-comment='$row11->comments' data-commentx='$row11->commentHR' 
+										 data-name='$name'>". $row1->applicant_status ."</a></td>";
 										}
 									}
 									else if($row1->applicant_status == 'No show' || $row1->applicant_status == 'Hired' ){
@@ -300,8 +322,14 @@
 								</div>							
 							<div class="form-group">
 								<div class="col-md-1"></div>
-								<label class="col-sm-2 control-label">Comments</label>
-								<div class="col-md-8"><textarea type="text" id = "comment" class="form-control" required = "" name = "comments" placeholder = "Input your remarks here..."></textarea></div>
+								<label class="col-sm-2 control-label">Comments from interviewer</label>
+								<div class="col-md-8"><textarea type="text" id = "comment" class="form-control" required = "" name = "commentsHr" placeholder = "Input your remarks here..."></textarea></div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-1"></div>
+								<label class="col-sm-2 control-label">Comments from HR</label>
+								<div class="col-md-8"><textarea type="text" id = "commentHr" class="form-control" required = "" name = "comments" placeholder = "Input your remarks here..."></textarea></div>
 							</div>
 								
 							</div>
@@ -351,8 +379,13 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-1"></div>
-								<label class="col-sm-3 control-label">Comments:</label>
+								<label class="col-sm-3 control-label">Comments from interviewer:</label>
 								<div class="col-md-6"><input type="text" id = "comment" class="zx" name = "firstname" readonly = "readonly" onKeyPress="return lettersonly(this, event)"></div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-1"></div>
+								<label class="col-sm-3 control-label">Comments from HR:</label>
+								<div class="col-md-6"><input type="text" id = "commentHr" class="zx" name = "firstname" readonly = "readonly" onKeyPress="return lettersonly(this, event)"></div>
 							</div>
 							</div>
 					</div>

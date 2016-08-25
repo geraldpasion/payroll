@@ -149,24 +149,29 @@
 						<?php
 							include('dbconfig.php');
 							$result = $mysqli->query("SELECT * FROM employee WHERE employee_id = '$empid'")->fetch_array();
-							$team = $result['employee_team'];
+							$team1 = $result['employee_team'];
+							$team2 = $result['employee_team1'];
+							$team3 = $result['employee_team2'];
+							$team4 = $result['employee_team3'];
 							if($empLevel == '1') echo "<h4><label class='control-label' style='text-align:left;text-transform:uppercase;'>&nbsp;&nbsp;" . $result['employee_firstname'] . " " . $result['employee_lastname'] . "</h4></label>";
 						?>
 						<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
 						<?php
 							include('dbconfig.php');
-							if($empLevel == '3') {
+							if($empLevel == '4') {
 								$sqlString = "SELECT * FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE logedit_status ='Approved' OR logedit_status = 'Disapproved' order by logeditid desc";
-							} else if($empLevel == '2') {
-								$sqlString = "SELECT * FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE employee_team = '$team' AND (logedit_status ='Approved' OR logedit_status = 'Disapproved') order by logeditid desc";
-							} else {
-								$sqlString = "SELECT * FROM logedit WHERE employee_id = $empid";
+							} if($empLevel == '3') {
+								$sqlString = "SELECT * FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE (logedit_status ='Approved' OR logedit_status = 'Disapproved') AND (employee_team = '$team1' OR employee_team1 = '$team2' OR employee_team2 = '$team3' OR employee_team3 = '$team4') AND (employee_level = 1 OR employee_level = 2) order by logeditid desc";
+							} if($empLevel == '2') {
+								$sqlString = "SELECT * FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE employee_team = '$team1' AND employee_level = 1 AND (logedit_status ='Approved' OR logedit_status = 'Disapproved') order by logeditid desc";
+							} if($empLevel == '1') {
+								$sqlString = "SELECT * FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE employee_id = '$empid'";
 							}
 								if ($result = $mysqli->query($sqlString)) //get records from db
 								{
 									if ($result->num_rows > 0) //display records if any
 									{
-										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
+										echo "<table class='footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
 										if($empLevel != '1') echo "<th>Name</th>";
@@ -189,7 +194,7 @@
 										while ($row = $result->fetch_object())
 										{
 											echo "<tr class = 'josh'>";
-											if($empLevel != '1') echo "<td>" . $row->employee_firstname . " " . $row->employee_lastname . "</td>";
+											if($empLevel != '1'){ echo "<td>" . $row->employee_firstname . " " . $row->employee_lastname . "</td>";
 											echo "<td>" . date("Y-m-d",strtotime($row->logedit_date)) . "</td>";
 											echo "<td>" . date("g:i A",strtotime($row->logedit_timein)) . "</td>";
 											echo "<td>" . date("g:i A",strtotime($row->logedit_breakout)). "</td>";
@@ -197,7 +202,7 @@
 											echo "<td>" . date("g:i A",strtotime($row->logedit_timeout)) . "</td>";
 											echo "<td>" . $row->logedit_status . "</td>";
 											echo "<td>" . $row->logedit_approvedby . "</td>";
-											
+											}
 											echo "</tr>";
 										}
 										echo "</table>";

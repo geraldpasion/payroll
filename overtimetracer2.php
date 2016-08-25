@@ -45,11 +45,11 @@
 				<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
 				<?php
 					include('dbconfig.php');
-						if ($result = $mysqli->query("SELECT * FROM overtime INNER JOIN employee ON employee.employee_id = overtime.employee_id WHERE (overtime.overtime_status = 'Approved' OR overtime.overtime_status = 'Disapproved') AND (employee.employee_level = '1' OR overtime.employee_id = $employee_id) and employee.employee_team LIKE '$team' ORDER BY overtime.overtime_date DESC")) //get records from db
+						if ($result = $mysqli->query("SELECT * FROM overtime INNER JOIN employee ON employee.employee_id = overtime.employee_id WHERE (overtime.overtime_status = 'Approved' OR overtime.overtime_status = 'Disapproved') AND employee.employee_level = '1' and employee.employee_team LIKE '$team' ORDER BY overtime.overtime_date DESC")) //get records from db
 						{//SELECT * FROM overtime INNER JOIN employee ON employee.employee_id = overtime.employee_id WHERE (employee_team = '$team' AND (overtime.overtime_status = 'Approved' OR overtime.overtime_status = 'Disapproved') AND (employee.employee_level = '1' OR overtime.employee_id = $employee_id) ORDER BY overtime.overtime_date DESC
 							if ($result->num_rows > 0) //display records if any
 							{
-								echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
+								echo "<table class='footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter>";								
 								echo "<thead>";
 								echo "<tr>";	
 								echo "<th>Name</th>";

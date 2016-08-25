@@ -16,136 +16,109 @@
 			}
 		</style>
 		<?php
-							include('dbconfig.php');
-						$result = $mysqli->query("SELECT COUNT(leave_status) AS total FROM tbl_leave INNER JOIN employee ON employee.employee_id = tbl_leave.employee_id WHERE tbl_leave.leave_status = 'Pending' AND (employee.employee_id = $employee_id OR employee.employee_team LIKE '$team')")->fetch_array();
-						
-							$result2 = $mysqli->query("SELECT COUNT(leave_status) AS total FROM tbl_leave INNER JOIN employee ON employee.employee_id = tbl_leave.employee_id WHERE tbl_leave.leave_status = 'Approved' AND (employee.employee_id = $employee_id OR employee.employee_team LIKE '$team')")->fetch_array();
-							
-							$result3 = $mysqli->query("SELECT COUNT(leave_status) AS total FROM tbl_leave INNER JOIN employee ON employee.employee_id = tbl_leave.employee_id WHERE tbl_leave.leave_status = 'Disapproved' AND (employee.employee_id = $employee_id OR employee.employee_team LIKE '$team') ")->fetch_array();
-							
-							$result4 = $mysqli->query("SELECT COUNT(overtime_status) AS total FROM overtime INNER JOIN employee ON employee.employee_id = overtime.employee_id WHERE overtime.overtime_status = 'Pending' AND (employee.employee_id = $employee_id OR employee.employee_team LIKE '$team')")->fetch_array();
-							$result5 = $mysqli->query("SELECT COUNT(overtime_status) AS total FROM overtime INNER JOIN employee ON employee.employee_id = overtime.employee_id WHERE overtime.overtime_status = 'Approved' AND (employee.employee_id = $employee_id OR employee.employee_level = '1') AND employee.employee_team LIKE '$team'")->fetch_array();
-							$result6 = $mysqli->query("SELECT COUNT(overtime_status) AS total FROM overtime INNER JOIN employee ON employee.employee_id = overtime.employee_id WHERE overtime.overtime_status = 'Disapproved' AND (employee.employee_id = $employee_id OR employee.employee_team LIKE '$team')")->fetch_array();
-							$result7 = $mysqli->query("SELECT COUNT(coaching_status) AS total FROM coaching INNER JOIN employee ON employee.employee_id = coaching.employee_id WHERE coaching.coaching_status = 'Pending' AND (coaching.coaching_trainerid = $employee_id OR employee.employee_team LIKE '$team')")->fetch_array();
-							$result8 = $mysqli->query("SELECT COUNT(coaching_status) AS total FROM coaching INNER JOIN employee ON employee.employee_id = coaching.employee_id WHERE coaching.coaching_status = 'Completed' AND (coaching.coaching_trainerid = $employee_id OR employee.employee_team LIKE '$team')")->fetch_array();
-							$result9 = $mysqli->query("SELECT * FROM announcement ORDER BY announcement_date DESC LIMIT 1")->fetch_array();
-							$result10 = $mysqli->query("SELECT COUNT(loanstatus) AS total FROM loan WHERE loanstatus = 'Pending' AND employee_id = $employee_id")->fetch_array();
-							$result11 = $mysqli->query("SELECT COUNT(loanstatus) AS total FROM loan WHERE loanstatus = 'Approved' AND employee_id = $employee_id")->fetch_array();
-							$result12 = $mysqli->query("SELECT COUNT(loanstatus) AS total FROM loan WHERE loanstatus = 'Disapproved' AND employee_id = $employee_id")->fetch_array();
-							$result13 = $mysqli->query("SELECT COUNT(inquiry_status) AS total FROM inquiry INNER JOIN employee ON employee.employee_id = inquiry.employee_id WHERE inquiry.inquiry_status = 'Pending' AND (employee.employee_id = $employee_id OR employee.employee_team = '$team')")->fetch_array();
-							$result14 = $mysqli->query("SELECT COUNT(inquiry_status) AS total FROM inquiry INNER JOIN employee ON employee.employee_id = inquiry.employee_id WHERE inquiry.inquiry_status = 'answered' AND (employee.employee_id = $employee_id OR employee.employee_team = '$team')")->fetch_array();
-							$result15 = $mysqli->query("SELECT COUNT(applicant_status) AS total FROM emp_data WHERE applicant_status = 'For interview' AND interviewer = '$employee_id'")->fetch_array();
-				
-							
-							
-							
-							
-					
-		?>
+                            include('dbconfig.php');
+                            $result = $mysqli->query("SELECT COUNT(*) AS total FROM tbl_leave INNER JOIN employee ON employee.employee_id = tbl_leave.employee_id  WHERE employee_team = '$team' AND leave_status = 'Pending' AND employee_level = 1")->fetch_array();
+                            $result2 = $mysqli->query("SELECT COUNT(*) AS total FROM tbl_leave INNER JOIN employee ON employee.employee_id = tbl_leave.employee_id  WHERE employee_team = '$team' AND leave_status = 'Approved' AND employee_level = 1")->fetch_array();
+                            $result3 = $mysqli->query("SELECT COUNT(*) AS total FROM tbl_leave INNER JOIN employee ON employee.employee_id = tbl_leave.employee_id  WHERE employee_team = '$team' AND leave_status = 'Disapproved' AND employee_level = 1")->fetch_array();
+                            $result4 = $mysqli->query("SELECT COUNT(*) AS total FROM overtime INNER JOIN employee ON employee.employee_id = overtime.employee_id WHERE employee.employee_team LIKE '$team' AND overtime.overtime_status = 'Pending'")->fetch_array();
+                            $result5 = $mysqli->query("SELECT COUNT(*) AS total FROM overtime INNER JOIN employee ON employee.employee_id = overtime.employee_id WHERE overtime.overtime_status = 'Approved' AND employee.employee_level = '1' and employee.employee_team LIKE '$team'")->fetch_array();
+                            $result6 = $mysqli->query("SELECT COUNT(*) AS total FROM overtime INNER JOIN employee ON employee.employee_id = overtime.employee_id WHERE overtime.overtime_status = 'Disapproved' AND employee.employee_level = '1' and employee.employee_team LIKE '$team'")->fetch_array();
+                            $result7 = $mysqli->query("SELECT COUNT(*) AS total FROM coaching INNER JOIN employee ON employee.employee_id = coaching.employee_id WHERE (coaching.coaching_trainerid = $employee_id OR employee.employee_team LIKE '$team') AND coaching.coaching_status = 'Pending'")->fetch_array();
+                            $result8 = $mysqli->query("SELECT COUNT(*) AS total FROM coaching INNER JOIN employee ON employee.employee_id = coaching.employee_id WHERE (coaching.coaching_trainerid = $employee_id OR employee.employee_team LIKE '$team') AND coaching.coaching_status = 'Completed'")->fetch_array();
+                            $result9 = $mysqli->query("SELECT * FROM announcement ORDER BY announcement_date DESC LIMIT 1")->fetch_array();
+                            $result10 = $mysqli->query("SELECT COUNT(*) AS total FROM loan RIGHT JOIN employee ON employee.employee_id = loan.employee_id WHERE loanstatus = 'Pending'")->fetch_array();
+                            $result11 = $mysqli->query("SELECT COUNT(*) AS total FROM loan WHERE employee_id = '$employee_id' AND loanstatus = 'Approved'")->fetch_array();
+                            $result12 = $mysqli->query("SELECT COUNT(*) AS total FROM loan WHERE employee_id = '$employee_id' AND loanstatus = 'Disapproved'")->fetch_array();
+                            $result13 = $mysqli->query("SELECT COUNT(*) AS total FROM inquiry INNER JOIN employee ON employee.employee_id = inquiry.employee_id WHERE employee_team = '$team' AND inquiry_status = 'Pending' AND (employee_level = 2 or employee_level = 1)")->fetch_array();
+                            $result14 = $mysqli->query("SELECT COUNT(*) AS total FROM inquiry INNER JOIN employee ON employee.employee_id = inquiry.employee_id WHERE employee_team = '$team' AND inquiry_status = 'answered' AND (employee_level = 2 or employee_level = 1)")->fetch_array();
+                            $result15 = $mysqli->query("SELECT COUNT(applicant_status) AS total FROM emp_data WHERE applicant_status = 'For interview'")->fetch_array();
+                            $result16 = $mysqli->query("SELECT COUNT(*) AS total FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE employee_team = '$team' AND employee_level = 1 AND logedit_status ='Pending'")->fetch_array();
+                            $result17 = $mysqli->query("SELECT COUNT(*) AS total FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE employee_team = '$team' AND employee_level = 1 AND logedit_status ='Approved'")->fetch_array();
+                            $result18 = $mysqli->query("SELECT COUNT(*) AS total FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE employee_team = '$team' AND employee_level = 1 AND logedit_status ='Disapproved'")->fetch_array();
+
+        ?>
 	</head>
 	<body>
         <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
 					<div class="col-lg-4">
-					<a href = "dtr2.php">
-					<div class="widget lazur-bg p-xl">
-					                                <h2>
-                                    <span class="fa fa-clock-o m-r-xs"></span>DTR
-                                </h2>
-					<?php
-							include('dbconfig.php');
-
-								if ($resultx = $mysqli->query("SELECT * FROM attendance WHERE employee_id = $employee_id AND (attendance.status = 'Done' OR attendance.attendance_status = 'active') ORDER BY attendance_date DESC")) //get records from db
-								{
-									if ($resultx->num_rows > 0) //display records if any
-									{
-										echo "<table class='footable table table-stripped ' data-page-size='2' data-filter=#filter>";								
-										echo "<thead>";
-										echo "<tr>";
-										echo "<th>Date</th>";
-										echo "<th>In</th>";
-										echo "<th>Out</th>";
-										echo "</tr>";
-										echo "</thead>";
-										while ($row = $resultx->fetch_object())
-										{
-											$timeindisplay = date("g : i : A",strtotime($row->attendance_timein));
-											$breakoutdisplay = date("g : i : A",strtotime($row->attendance_breakout));
-											$breakindisplay = date("g : i : A",strtotime($row->attendance_breakin));
-											$timeoutdisplay = date("g : i : A",strtotime($row->attendance_timeout));
-											echo "<tr style='background-color:transparent'>";
-											echo "<td>" . date("F d, Y",strtotime($row->attendance_date)) . "</td>";
-											echo "<td>" . date("g:i A",strtotime($row->attendance_timein)) . "</td>";
-											if($row->attendance_timeout == ""){
-                                                echo "<td></td>";
-                                            }else{
-                                                echo "<td>" . date("g:i A",strtotime($row->attendance_timeout)) . "</td>";
-                                            }
-											
-											echo "</tr>";
-										}
-										echo "</table>";
-									}
-								}
-							
-						?>
-
-					
-					</div>	
-					</a>		
-				</div>
-						<div class="col-lg-4">
-				<a href = "overtimeapproval2.php">
+                    <!--a href = "logedittracker.php"-->
+                    <div class="widget lazur-bg p-xl">
+                        <h2>
+                            <span class="fa fa-clock-o m-r-xs"></span>Log edit
+                        </h2>
+                       <ul class="list-unstyled m-t-md">
+                            <li>
+                                <a href = "logedit.php" style="color:white"><span class="fa fa-clipboard m-r-xs"></span>
+                                <label><?PHP echo $result16['total']; ?> Pending</label></a>
+                            </li>
+                            <li>
+                                <a href = "logedittracker.php" style="color:white"><span class="fa fa-thumbs-up m-r-xs"></span>
+                                <label><?PHP echo $result17['total']; ?> Approved</label></a>
+                            </li>
+                            <li>
+                                <a href = "logedittracker.php" style="color:white"><span class="fa fa-thumbs-down m-r-xs"></span>
+                                <label><?PHP echo $result18['total']; ?> Disapproved</label></a>
+                            </li>
+                                                        <li>
+                            <label></label>
+                            </li>
+                        </ul>
+                    </div>  
+                    <!--/a-->        
+                </div>
+				<div class="col-lg-4">
+				<!--a href = "overtimeapproval2.php"-->
                     <div class="widget lazur-bg p-xl">
                                 <h2>
                                     <span class="fa fa-clock-o m-r-xs"></span>Overtime status
                                 </h2>
                         <ul class="list-unstyled m-t-md">
                             <li>
-                                <span class="fa fa-clipboard m-r-xs"></span>
-                                <label><?PHP echo $result4['total']; ?> Pending</label>
+                                <a href = "overtimeapproval2.php" style="color:white"><span class="fa fa-clipboard m-r-xs"></span>
+                                <label><?PHP echo $result4['total']; ?> Pending</label></a>
                             </li>
                             <li>
-                                <span class="fa fa-thumbs-up m-r-xs"></span>
-                                <label><?PHP echo $result5['total']; ?> Approved</label>
+                                <a href = "overtimetracer2.php" style="color:white"><span class="fa fa-thumbs-up m-r-xs"></span>
+                                <label><?PHP echo $result5['total']; ?> Approved</label></a>
                             </li>
                             <li>
-                                <span class="fa fa-thumbs-down m-r-xs"></span>
-                                <label><?PHP echo $result6['total']; ?> Disapproved</label>
+                                <a href = "overtimetracer2.php" style="color:white"><span class="fa fa-thumbs-down m-r-xs"></span>
+                                <label><?PHP echo $result6['total']; ?> Disapproved</label></a>
                             </li>
 														<li>
 							<label></label>
 							</li>
                         </ul>
                     </div>
-					</a>
+					<!--/a-->
 				</div>
                 <div class="col-lg-4">
-				<a href = "leaveapproval2.php">
+				<!--a href = "leaveapproval2.php"-->
                     <div class="widget lazur-bg p-xl">
                                 <h2>
                                     <span class="fa fa-plane m-r-xs"></span>Leave status
                                 </h2>
                         <ul class="list-unstyled m-t-md">
                             <li>
-                                <span class="fa fa-clipboard m-r-xs"></span>
-                                <label><?PHP echo $result['total']; ?> Pending</label>
+                                <a href = "leaveapproval2.php" style="color:white"><span class="fa fa-clipboard m-r-xs"></span>
+                                <label><?PHP echo $result['total']; ?> Pending</label></a>
                                
                             </li>
                             <li>
-                                <span class="fa fa-thumbs-up m-r-xs"></span>
-                                <label><?PHP echo $result2['total']; ?> Approved</label>
+                                <a href = "leavetracer2.php" style="color:white"><span class="fa fa-thumbs-up m-r-xs"></span>
+                                <label><?PHP echo $result2['total']; ?> Approved</label></a>
                             </li>
                             <li>
-                                <span class="fa fa-thumbs-down m-r-xs"></span>
-                                <label><?PHP echo $result3['total']; ?> Disapproved</label>
+                                <a href = "leavetracer2.php" style="color:white"><span class="fa fa-thumbs-down m-r-xs"></span>
+                                <label><?PHP echo $result3['total']; ?> Disapproved</label></a>
                             </li>
 							<li>
 								<label></label>
 							</li>
                         </ul>
                     </div>
-					</a>
+					<!--/a-->
 				</div>
 									
 					
@@ -154,45 +127,41 @@
 
            </div>
 		    <div class="row">
-							                <div class="col-lg-4">
-								<a href = "coachingresult2.php">
+				<div class="col-lg-4">
                     <div class="widget lazur-bg p-xl">
                                 <h2>
                                     <span class="fa fa-smile-o m-r-xs"></span>Coaching
                                 </h2>
                         <ul class="list-unstyled m-t-md">
                             <li>
-                                <span class="fa fa-clipboard m-r-xs"></span>
-                                <label><?PHP echo $result7['total']; ?> Pending</label>
+                                <a href = "coachingresult2.php" style="color:white"><span class="fa fa-clipboard m-r-xs"></span>
+                                <label><?PHP echo $result7['total']; ?> Updates</label></a>
                             </li>
                             <li>
-                                <span class="fa fa-thumbs-up m-r-xs"></span>
-                                <label><?PHP echo $result8['total']; ?> Completed</label>
+                                <a href = "coachingupdated2.php" style="color:white"><span class="fa fa-thumbs-up m-r-xs"></span>
+                                <label><?PHP echo $result8['total']; ?> Completed</label></a>
                             </li>
 
                         </ul>
                     </div>
-					</a>
 				</div>
-								<div class="col-lg-4">
-				<a href = "inquiry2.php">
+					<div class="col-lg-4">
                     <div class="widget lazur-bg p-xl">
                                 <h2>
                                     <span class="fa fa-question m-r-xs"></span>Inquiry status
                                 </h2>
                         <ul class="list-unstyled m-t-md">
                             <li>
-                                <span class="fa fa-clipboard m-r-xs"></span>
-                                <label><?PHP echo $result13['total']; ?> Pending</label>
+                                <a href = "inquiry2.php" style="color:white"><span class="fa fa-clipboard m-r-xs"></span>
+                                <label><?PHP echo $result13['total']; ?> Pending</label></a>
                             </li>
                             <li>
-                                <span class="fa fa-thumbs-up m-r-xs"></span>
-                                <label><?PHP echo $result14['total']; ?> Answered</label>
+                                <a href = "answeredinquiry2.php" style="color:white"><span class="fa fa-thumbs-up m-r-xs"></span>
+                                <label><?PHP echo $result14['total']; ?> Answered</label></a>
                             </li>
-
                         </ul>
                     </div>
-					</a>
+					
 				</div>
 			<div class="col-lg-4">
                 <a href="announcementlist2.php">
@@ -213,31 +182,31 @@
 			<div class="row">
 
 				<div class="col-lg-4">
-				<a href = "employeeloanstatus2.php">
+				<!--a href = "employeeloanstatus2.php"-->
                     <div class="widget lazur-bg p-xl">
                                 <h2>
                                     <span class="fa fa-money m-r-xs"></span>Loan status
                                 </h2>
                         <ul class="list-unstyled m-t-md">
-                            <li>
+                            <!--li>
                                 <span class="fa fa-clipboard m-r-xs"></span>
-                                <label><?PHP echo $result10['total']; ?> Pending</label>
+                                <label><?PHP //echo $result10['total']; ?> Pending</label>
+                            </li-->
+                            <li>
+                                <a href = "employeeloanstatus2.php" style="color:white"><span class="fa fa-thumbs-up m-r-xs"></span>
+                                <label><?PHP echo $result11['total']; ?> Approved</label></a>
                             </li>
                             <li>
-                                <span class="fa fa-thumbs-up m-r-xs"></span>
-                                <label><?PHP echo $result11['total']; ?> Approved</label>
-                            </li>
-                            <li>
-                                <span class="fa fa-thumbs-down m-r-xs"></span>
-                                <label><?PHP echo $result12['total']; ?> Disapproved</label>
+                                <a href = "employeeloanstatus2.php" style="color:white"><span class="fa fa-thumbs-down m-r-xs"></span>
+                                <label><?PHP echo $result12['total']; ?> Disapproved</label></a>
                             </li>
                         </ul>
                     </div>
-					</a>
+					<!--a-->
 				</div>
 				
 				<div class="col-lg-4">
-				<a href = "applicants2.php">
+				<a href = "applicants.php">
                     <div class="widget yellow-bg p-xl">
                                 <h2>
                                     <span class="fa fa-user m-r-xs"></span>Interview status

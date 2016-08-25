@@ -412,23 +412,23 @@
 										</div>
 										<div class="form-group">
 											<label class="col-md-2 control-label">Team #1</label>
-											<div class="col-md-4"><select id = "teamname" class="form-control"  data-default-value="z" name="teamname" required=""><option selected="true" disabled="disabled" value = "">Select team...</option></div>';
+											<div class="col-md-4"><select id = "teamname" class="form-control"  data-default-value="z" name="teamname" required=""><option selected="true"  value = "">Select team...</option></div>';
 											include("dbconfig.php");
 											if ($result1 = $mysqli->query("SELECT * FROM team")) {//get records from db
 												if ($result1->num_rows > 0) { //display records if any
 													while ($row1 = mysqli_fetch_object($result1)) { 
-														echo '<option value='.$row1->team_name."\">".$row1->team_name. '</option>';
+														echo '<option value='.$row1->team_name.">".$row1->team_name. '</option>';
 													}
 												}
 											}
 										echo '</select></div>
 										<label class="col-md-2 control-label">Team #2</label>
-											<div class="col-md-4"><select id = "teamname1" class="form-control"  data-default-value="z" name="teamname" required=""><option selected="true" disabled="disabled" value = "">Select team...</option></div>';
+											<div class="col-md-4"><select id = "teamname1" class="form-control"  data-default-value="z" name="teamname1" required=""><option selected="true"  value = "">Select team...</option></div>';
 											include("dbconfig.php");
 											if ($result1 = $mysqli->query("SELECT * FROM team")) {//get records from db
 												if ($result1->num_rows > 0) { //display records if any
 													while ($row1 = mysqli_fetch_object($result1)) { 
-														echo '<option value='.$row1->team_name."\">".$row1->team_name. '</option>';
+														echo '<option value='.$row1->team_name.">".$row1->team_name. '</option>';
 													}
 												}
 											}
@@ -436,23 +436,23 @@
 										</div>
 										<div class="form-group">
 											<label class="col-md-2 control-label">Team #3</label>
-											<div class="col-md-4"><select id = "teamname2" class="form-control"  data-default-value="z" name="teamname" required=""><option selected="true" disabled="disabled" value = "">Select team...</option></div>';
+											<div class="col-md-4"><select id = "teamname2" class="form-control"  data-default-value="z" name="teamname2" required=""><option selected="true"  value = "">Select team...</option></div>';
 											include("dbconfig.php");
 											if ($result1 = $mysqli->query("SELECT * FROM team")) {//get records from db
 												if ($result1->num_rows > 0) { //display records if any
 													while ($row1 = mysqli_fetch_object($result1)) { 
-														echo '<option value='.$row1->team_name."\">".$row1->team_name. '</option>';
+														echo '<option value='.$row1->team_name.">".$row1->team_name. '</option>';
 													}
 												}
 											}
 										echo '</select></div>
 											<label class="col-md-2 control-label">Team #4</label>
-											<div class="col-md-4"><select id = "teamname3" class="form-control"  data-default-value="z" name="teamname" required=""><option selected="true" disabled="disabled" value = "">Select team...</option></div>';
+											<div class="col-md-4"><select id = "teamname3" class="form-control"  data-default-value="z" name="teamname3" required=""><option selected="true"  value = "">Select team...</option></div>';
 											include("dbconfig.php");
 											if ($result1 = $mysqli->query("SELECT * FROM team")) {//get records from db
 												if ($result1->num_rows > 0) { //display records if any
 													while ($row1 = mysqli_fetch_object($result1)) { 
-														echo '<option value='.$row1->team_name."\">".$row1->team_name. '</option>';
+														echo '<option value='.$row1->team_name.">".$row1->team_name. '</option>';
 													}
 												}
 											}

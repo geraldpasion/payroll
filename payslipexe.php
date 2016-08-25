@@ -13,7 +13,7 @@ session_start();
 
 $password = mysqli_real_escape_string($mysqli,$_POST['payslippassword']);
 
-$sel_user = "SELECT * from employee where employee_id='$log' AND employee_password='$password' AND employee_status = 'active'";
+$sel_user = "SELECT * from employee where employee_id='$log' AND employee_payslippassword='$password' AND employee_status = 'active'";
 
 $run_user = mysqli_query($mysqli, $sel_user);
 
@@ -25,26 +25,21 @@ if($check_user>0){
 	$result = $mysqli->query("SELECT * FROM employee WHERE employee_id = '$log'")->fetch_array();
 	
 	$empid=$result['employee_id'];
-	$pass=$result['employee_password'];
+	$pass=$result['employee_payslippassword'];
 
 
-	if($result['employee_id']==$log AND $result['employee_password']==$password){
+	if($result['employee_id']==$log AND $result['employee_payslippassword']==$password){
 
 		// header("location:print_payslip.php?initial=".$initialcutha."&end=".$endcutha."&id=".$empid."&compid=".$compidha."");
 		 //echo"<script>window.open('print_payslip.php?initial=$initialcutha&end=$endcutha&id=$empid&compid=$compidha', '_blank')</script>";
 		echo "<script>window.location='print_payslip.php?initial=$initialcutha&end=$endcutha&id=$empid&compid=$compidha';</script>";
-	//	echo"<script>$('#modalconfirm').hide();</script>";
 		echo "hello";
-		//echo "<script>window.location='emppayslip.php';</script>";
-
-	
-	}else if($result['employee_password']!=$password){
-		echo "wrong password!";
-	header("location:emppayslip.php?invalidPass");
-
+		//header("location:emppayslip.php?invalid");
 	}
-	else{
-	echo"<script>alert('invalid input');</script>";
+	
+	}
+	else {
+//	echo"<script>alert('invalid input');</script>";
 	header("location:emppayslip.php?invalid");
 	}
 
@@ -56,7 +51,7 @@ else {
 	//header('location:login.php?denied');
 }
 
-}
+
 
 
 ?>

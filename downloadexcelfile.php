@@ -271,6 +271,7 @@ foreach ($employeeids as $emp_ids){
 //row number
 $cell=$col.$row;
 $value=$counter;
+$objPHPExcel->getActiveSheet()->getStyle($cell)->getNumberFormat()->setFormatCode('General');
 $objPHPExcel -> getActiveSheet() -> setCellValue($cell, $value);
 $counter++;
 $col++;
@@ -279,8 +280,24 @@ $col++;
 //employee ID
 $cell=$col.$row;
 //populate a cell
+$objPHPExcel->getActiveSheet()->getStyle($cell)->getNumberFormat()->setFormatCode('General');
 $objPHPExcel -> getActiveSheet() -> setCellValue($cell, $emp_ids);
 $col++;
+
+//Account #
+$sql = "SELECT account_number FROM employee WHERE employee_id='$emp_ids'";
+     $result = $conn->query($sql);
+     //$col++;
+         if ($result->num_rows > 0) {
+                 while($row_query = $result->fetch_assoc()) {
+                 	$cell=$col.$row;
+                 	$value=$row_query['account_number'];
+                 	$objPHPExcel->getActiveSheet()->getStyle($cell)->getNumberFormat()->setFormatCode('General');
+                 	$objPHPExcel -> getActiveSheet() -> setCellValue($cell, $value);
+					$col++;
+                 }
+            }
+
 
 //Employee Basic Info
 $prev_val="";
@@ -306,8 +323,6 @@ $prev_val="";
 			//if($col=='F')
 			//	$col++;
 		}
-
-
 
 
 //OT and equivalent earnings, get from total_comp and total_comp_salary
@@ -916,6 +931,7 @@ function head_titles(){
 $head_title = array(	
 	'Row No',
 	'Employee No',
+	'Account Number',
 	'Last Name',
 	'First Name',
 	'Middle Name',
@@ -1093,6 +1109,7 @@ function orange_heads(){
 	$orange_heads = array(	
 	'Row No',
 	'Employee No',
+	'Account Number',
 	'Last Name',
 	'First Name',
 	'Middle Name',

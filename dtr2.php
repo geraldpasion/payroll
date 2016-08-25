@@ -2,10 +2,14 @@
 <html>
 	<head>
 		<?php
-			session_start();
+			if (session_status() == PHP_SESSION_NONE) {
+    			session_start();
+			}
 			$empLevel = $_SESSION['employee_level'];
 			if(isset($_SESSION['logsession']) && $empLevel == '2') {
 				include('supervisormenuheader.php');
+			} else if (isset($_SESSION['logsession']) && $empLevel == '3') {
+				include('menuheader.php');
 			} else {
 				include('employeemenuheader.php');
 			}
@@ -168,7 +172,7 @@
 								{
 									if ($result->num_rows > 0) //display records if any
 									{
-										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
+										echo "<table class='footable table table-stripped' data-limit-navigation='5' data-page-size='20' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
 										//echo "<th>Name</th>";
@@ -592,6 +596,7 @@
 											// }
 											
 											//END LOIS
+											$attRecord = "";
 											if($row->attendance_status == "timeout") $attRecord = "Present";
 											else if($row->attendance_status == "inactive") $attRecord = "Absent";
 											$empType = $employeeData['employee_type'];

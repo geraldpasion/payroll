@@ -3,7 +3,7 @@
 
 	<head>
 		<?php
-		session_start();
+			session_start();
 		$empLevel = $_SESSION['employee_level'];
 		if(isset($_SESSION['logsession']) && $empLevel == '3') {
 				include('menuheader.php');
@@ -70,7 +70,7 @@
 			});
 			});*/
 
-		function deleteRecord() {
+		function deleteRecord(id) {
 		swal({
 		title: "Are you sure?",
 		text: "The action you are about to do cannot be undone!",
@@ -79,7 +79,31 @@
 		confirmButtonColor: "#dd6b55",
 		confirmButtonText: "Yes, delete it!",
 		closeOnConfirm: false
-		}, function(isConfirm){   if (isConfirm) {     swal("Deleted!", "Your imaginary file has been deleted.", "success");   } else {     swal("Cancelled", "Your imaginary file is safe :)", "error");   } });
+		}, function(isConfirm){   if (isConfirm) { 
+			swal("Deleted!", "Your imaginary file has been deleted.", "success");  
+			//alert(id);
+			
+			var id_val = id;
+			var request = $.ajax({
+			  url: "deleteannouncement.php",
+			  async: false,
+			  method: "GET",
+			  data: { announcement_id : id_val },
+			  dataType: "html"
+			});
+			 
+			request.done(function( msg ) {
+			  //alert(msg);
+			  window.location.replace("http://10.10.1.31/payroll/announcementlist.php");
+			});
+			 
+			// request.fail(function( jqXHR, textStatus ) {
+			//   alert( "Request failed: " + textStatus );
+			// });
+
+		} else {     
+			swal("Cancelled", "Your imaginary file is safe :)", "error");   
+		} });
 }
 		</script>
 
@@ -144,7 +168,7 @@
                         </form><br>
 
 							<!--table class="table table-striped table-hover table-responsive table-bordered"-->
-							<table class='footable table table-stripped' data-page-size='8' data-filter=#filter>
+							<table class='footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter>
 								<?php
 									//generate table headers
 									generate_table_header();
@@ -241,7 +265,7 @@ function generate_table_header(){
 		echo "<tr>";
 			echo "<th class='ann-date'>Date</th>";
 			echo "<th>Announcements</th>";
-			echo "<th style='text-align:center'>Action</th>";
+			echo "<th>Action</th>";
 		echo "</tr>";
 	echo "</thead>";
 
@@ -254,10 +278,14 @@ include('dbconfig.php');
 		if ($result->num_rows > 0) //display records if any
 		{
 			while ($row = mysqli_fetch_object($result)){
+				$announcement_details = $row->announcement_details;
+				//$announcement_details = str_replace('"','\"',$announcement_details);
+				//$announcement_details = str_replace("'","\'",$announcement_details);
+
 				echo "<tr>";
 					echo "<td class='ann-date'>". date("Y-m-d", strtotime($row->announcement_date)) ."</td>";
-					echo "<td class='announcement-content'>". $row->announcement_details ."</td>";
-					echo "<td style='text-align:center'>";
+					echo "<td class='announcement-content'>". $announcement_details ."</td>";
+					echo "<td>";
 
 					//view
 					echo "<a href='#' data-toggle='modal' data-target='#myModal4' data-announcement='$row->announcement_details' 
@@ -275,7 +303,7 @@ include('dbconfig.php');
 
 					//delete
 					//echo "<a href='announcement_delete.php?ann_id=".$row->announcement_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure?\");'>Delete</a>&nbsp;&nbsp; ";
-					echo "<a href='#' class='btn btn-danger' onclick='deleteRecord()'>Delete</a>&nbsp;&nbsp; ";
+					echo "<a href='#' class='btn btn-danger' onclick='deleteRecord(".$row->announcement_id.")'>Delete</a>&nbsp;&nbsp; ";
 					"</td>";
 				echo "</tr>";
 			}
@@ -288,15 +316,16 @@ include('dbconfig.php');
 ?>
 
 <script>
-	function loadDoc() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (xhttp.readyState == 4 && xhttp.status == 200) {
-     document.getElementById("details").innerHTML = xhttp.responseText;
-    }
-  };
-  xhttp.open("GET", "ajax_info.txt", true);
-  xhttp.send();
+// 	function loadDoc() {
+//   var xhttp = new XMLHttpRequest();
+//   xhttp.onreadystatechange = function() {
+//     if (xhttp.readyState == 4 && xhttp.status == 200) {
+//      document.getElementById("details").innerHTML = xhttp.responseText;
+//     }
+//   };
+//   xhttp.open("GET", "ajax_info.txt", true);
+//   xhttp.send();
 
-}
+// }
+
 </script>

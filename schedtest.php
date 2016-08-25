@@ -193,7 +193,21 @@
 								<label class="col-sm-2 control-label" style="margin-top:5px;">Date</label>
 								<div class="col-md-4"><input id = "date" type="text"  class="form-control" name="daterange" required="" onKeyPress="return noneonly(this, event)"/></div>
 					</div>
-					<br><br><br><br>
+
+					<br><br>
+					<!---->
+
+					<div class="form-group">
+					<div class="col-md-3"></div>
+								<label class="col-sm-2 control-label" style="margin-top:5px;">Date Range</label>
+								<div class="col-md-4"><select id = 'hasdate' name = 'hasdate' onchange="change(this);" class = 'form-control' data-default-value='without' required=''>
+									<option value = 'without' selected>Without Date Range (tomorrow onwards)</option>
+									<option value = 'with'>With Specified Date Range</option>
+								</select></div>
+					</div>
+
+					<br><br>
+
 					<div class="ibox-content">
 					<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
 						</div>

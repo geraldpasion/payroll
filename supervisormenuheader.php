@@ -1,8 +1,9 @@
 <?php 
 include('dbconfig.php');
-if(!isset($_SESSION)) session_start();
+session_start();
 if (!isset($_SESSION['logsession']) || $_SESSION['employee_level'] !== "2") {
   header("Location: login.php?loginla");
+  exit();
 }
 $employee_id = $_SESSION['logsession'];
 $team = $_SESSION['employee_team'];
@@ -154,14 +155,14 @@ $team = $_SESSION['employee_team'];
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'announcementlist2.php'){echo 'active'; }else { echo ''; } ?>"><a href="announcementlist2.php">Announcement list</a></li>
 						</ul>
 					</li>
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'applicants2.php'){echo 'active'; }else { echo ''; } ?>">
-						<a href="applicants2.php"><i class="fa fa-file-o"></i><span class="nav-label">Interview</span></a>
-					</li>
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'images2.php'){echo 'active'; }else { echo ''; } ?>">
-						<a href="images2.php?"><i class="fa fa-image"></i><span class="nav-label">Gallery</span></a>
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'applicants.php'){echo 'active'; }else { echo ''; } ?>">
+						<a href="applicants.php"><i class="fa fa-file-o"></i><span class="nav-label">Interview</span></a>
 					</li>
 					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'supervisorpayslip.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="supervisorpayslip.php"><i class="fa fa-file"></i><span class="nav-label">Payslip</span></a>
+					</li>
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'images2.php'){echo 'active'; }else { echo ''; } ?>">
+						<a href="images2.php?"><i class="fa fa-image"></i><span class="nav-label">Gallery</span></a>
 					</li>
 				</ul>
 			</div>

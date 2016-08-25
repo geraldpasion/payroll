@@ -11,9 +11,9 @@ include 'dbconfig.php';
 $sql = "UPDATE employee SET employee_status='finalpay' WHERE employee_id=$emp_id";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Record updated successfully";
+    header("Location: processing2.php?paidSuccess");
 } else {
-    echo "Error updating record: " . $conn->error;
+    header("Location: processing2.php?disable");
 }
 
 

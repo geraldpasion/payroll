@@ -47,10 +47,11 @@ else{
 		$team2 = $_POST['teamname2'];
 		$team3 = $_POST['teamname3'];
 		$accountnum = $_POST['acctnum'];
+		$pwpassword=$_POST['pwpassword'];
 		// insert the new record into the database
 		if ($stmt = $mysqli->prepare("INSERT INTO employee (employee_lastname, employee_firstname, employee_middlename, employee_gender, employee_birthday, employee_marital,
-		employee_address, employee_city, employee_zip, employee_email, employee_cellnum, employee_type, employee_jobtitle, employee_empstatus, employee_department, employee_rate, employee_taxcode,  employee_sss, employee_philhealth, employee_pagibig, employee_tin, cutoff, employee_shift, employee_datehired, employee_restday, employee_password, employee_level, employee_team,employee_team1,employee_team2,employee_team3, image, account_number) 
-		VALUES ('$lastname', '$firstname', '$middlename', '$gender', '$birthday', '$marital', '$address', '$city', '$zip', '$email', '$mobile', '$emptype', '$jobtitle', '$empstatus', '$department', '$rate', '$taxcode',  '$sss', '$philhealth', '$pagibig', '$tin', '$pay_method', '$shift', '$datehired', '$restday', '$password', '$access', '$team','$team1','$team2','$team3','".$_FILES['file']['name']."', '$accountnum')"))
+		employee_address, employee_city, employee_zip, employee_email, employee_cellnum, employee_type, employee_jobtitle, employee_empstatus, employee_department, employee_rate, employee_taxcode,  employee_sss, employee_philhealth, employee_pagibig, employee_tin, cutoff, employee_shift, employee_datehired, employee_restday, employee_password, employee_payslippassword, employee_level, employee_team,employee_team1,employee_team2,employee_team3, image, account_number) 
+		VALUES ('$lastname', '$firstname', '$middlename', '$gender', '$birthday', '$marital', '$address', '$city', '$zip', '$email', '$mobile', '$emptype', '$jobtitle', '$empstatus', '$department', '$rate', '$taxcode',  '$sss', '$philhealth', '$pagibig', '$tin', '$pay_method', '$shift', '$datehired', '$restday', '$password', '$pwpassword', '$access', '$team','$team1','$team2','$team3','".$_FILES['file']['name']."', '$accountnum')"))
 		{
 			$stmt->execute();
 			$stmt->close();

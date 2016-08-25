@@ -37,7 +37,12 @@
 				});
 			});
 		</script>
+
 		<script type="text/javascript">
+			$('.clockpicker').clockpicker();
+		</script>
+		<script type="text/javascript">
+
 			$(function() {
 			$(".approve").click(function(){
 			var element = $(this);
@@ -151,11 +156,14 @@
 							include('dbconfig.php');
 								$employeeidsession = $_SESSION['logsession'];
 								$result = $mysqli->query("SELECT * FROM employee WHERE employee_id = '$employeeidsession'")->fetch_array();
-								$team = $result['employee_team'];
+								$team1 = $result['employee_team'];
+								$team2 = $result['employee_team1'];
+								$team3 = $result['employee_team2'];
+								$team4 = $result['employee_team3'];
 								if($empLevel == '2') {
-									$sqlString = "SELECT * FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE employee_team = '$team' AND logedit_status ='Pending'";
+									$sqlString = "SELECT * FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE employee_team = '$team1' AND employee_level = 1 AND logedit_status ='Pending'";
 								} else if($empLevel == '3') {
-									$sqlString = "SELECT * FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE logedit_status ='Pending'";
+									$sqlString = "SELECT * FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE (employee_team = '$team1' OR employee_team1 = '$team2' OR employee_team2 = '$team3' OR employee_team3 = '$team4') AND (employee_level = 1 OR employee_level = 2) AND logedit_status ='Pending'";
 								}
 								else if($empLevel == '4') {
 									$sqlString = "SELECT * FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE logedit_status ='Pending'";
@@ -164,7 +172,7 @@
 								{
 									if ($result->num_rows > 0) //display records if any
 									{
-										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
+										echo "<table class='footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
 										echo "<th>Name</th>";
@@ -237,13 +245,14 @@
 				</div>
 			</div>
         </div>
-	
-		<script type="text/javascript">
-			$('.clockpicker').clockpicker();
-		</script>
+
 		<?php
-		if($empLevel == '3') include('menufooter.php');
-		else if($empLevel == '2') include('employeemenufooter.php');
+		if($empLevel == '3' || $empLevel == '4') {
+			include('menufooter.php');
+		}
+		else if($empLevel == '2') {
+			include('employeemenufooter.php');
+		}
 		?>
 	</body>
 </html>

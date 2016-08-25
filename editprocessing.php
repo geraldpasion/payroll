@@ -4,6 +4,8 @@
 	include 'functions.php';
 	if(isset($_POST['editsub'])){
 
+
+
 		$empid = $_POST['empid'];
 		$action = $_POST['actionsel'];
 		$earndeduct = $_POST['earndeduct'];
@@ -16,6 +18,21 @@
 		
 		$end = $_POST['daterange3'];
 
+		$validate_a = "SELECT * FROM emp_earnings  WHERE earn_name = '$particular' AND earn_type = '$type' AND employee_id = '$empid'";
+		if($validate_res = $mysqli->query($validate_a)) {
+			if($validate_res->num_rows > 0) {
+				header("Location: processing2.php");
+				exit;	
+			}
+		}
+		$validate_b = "SELECT * FROM emp_deductions  WHERE deduct_name = '$particular' AND deduct_type = '$type' AND employee_id = '$empid'";
+		if($validate_res = $mysqli->query($validate_b)) {
+			if($validate_res->num_rows > 0) {
+				header("Location: processing2.php");
+				exit;	
+			}
+		}
+
 		if($action == 'New') {
 			$initial = date("Y-m-d", strtotime($_POST['daterange']));
 			if($end == ""){
@@ -24,6 +41,7 @@
 				$end = date("Y-m-d", strtotime($_POST['daterange3']));
 			}
 			if($earndeduct == 'Earnings'){
+				
 				if($stmt2 = $mysqli->prepare("INSERT INTO earnings_setting (earnings_name, earnings_max_amount, earnings_type) VALUES ('$particular','$amount','$type')")){
 					$stmt2->execute();
 					$stmt2->close();
@@ -37,6 +55,8 @@
 
 					$totalcomp = $mysqli->query("SELECT * FROM total_comp WHERE employee_id = '$empid'");
 					if($totalcomp->num_rows > 0) {
+
+						
 						$row1 = mysqli_fetch_object($totalcomp);
 						$comp_id = $row1->comp_id;
 						$cutoffdate = $row1->cutoff;
@@ -72,6 +92,7 @@
 				}
 			}
 			if($earndeduct == 'Deductions'){
+				
 				if($stmt2 = $mysqli->prepare("INSERT INTO deduction_settings (deduction_name, deduction_max_amount, deduction_type) VALUES ('$particular','$amount','$type')")){
 					$stmt2->execute();
 					$stmt2->close();

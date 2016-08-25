@@ -176,9 +176,16 @@
 						<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
 						<?php
 							include('dbconfig.php');
-							if($empLevel == "3") { // query for level 3 would be the records from the others table for all employees
+							/*$employeeidsession = $_SESSION['logsession'];
+							$result = $mysqli->query("SELECT * FROM employee WHERE employee_id = '$employeeidsession'")->fetch_array();
+							$team1 = $result['employee_team'];
+							$team2 = $result['employee_team1'];
+							$team3 = $result['employee_team2'];
+							$team4 = $result['employee_team3'];*/
+							if($empLevel == "4") { // query for level 3 would be the records from the others table for all employees
 								$queryString = "SELECT * FROM others INNER JOIN employee ON employee.employee_id = others.employee_id WHERE others.app_status = 'Approved' OR others.app_status = 'Disapproved' ORDER BY others.others_id desc";
-							} else { // query for level 2 and 1 would be the records from the others table for the user only 
+							} 
+							else { // query for level 2 and 1 would be the records from the others table for the user only 
 								$queryString = "SELECT * FROM others INNER JOIN employee ON employee.employee_id = others.employee_id  AND others.employee_id='$employee_id' WHERE others.app_status = 'Approved' OR others.app_status = 'Disapproved' ORDER BY others.attendance_date desc";
 							}
 								
@@ -186,10 +193,10 @@
 								{
 									if ($result->num_rows > 0) //display records if any
 									{
-										echo "<table class='footable table table-stripped' data-page-size='10' data-filter=#filter>";								
+										echo "<table class='footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
-										if($empLevel == "3") echo "<th>Name</th>"; // if not level 3, no need to show name
+										if($empLevel == "4") echo "<th>Name</th>"; // if not level 3, no need to show name
 										echo "<th>Date</th>";
 										echo "<th>Day type</th>";
 										echo "<th>Attendance</th>";
@@ -239,7 +246,7 @@
 											if($row->others_status == 'paid')
 												$paidcheck=1;
 											echo "<tr>";
-											if($empLevel == "3") { // for level 3, i used the name as link for the modal
+											if($empLevel == "4") { // for level 3, i used the name as link for the modal
 												echo "<td><a href='#' data-toggle='modal' data-target='#myModal4'
 														data-name='$row->employee_firstname $row->employee_lastname' 
 														data-id='$row->others_id' 
@@ -368,7 +375,7 @@
 								<label class="col-sm-3 control-label">Remarks:</label>
 								<div class="col-md-6">
 									<?php
-									if($empLevel == "3") { // for level 3, editing of remarks is allowed since level 3 users can approve/disapprove requests
+									if($empLevel == "3" || $empLevel == "4") { // for level 3, editing of remarks is allowed since level 3 users can approve/disapprove requests
 										echo '<textarea type="text" id = "othersremarks" class="form-control" name = "othersremarks" placeholder = "Input your remarks here..."></textarea>';
 									} else { // for level 1 and 2, remarks could only be viewed and are therefore disabled
 										echo '<textarea type="text" id = "othersremarks" class="form-control" name = "othersremarks" placeholder = "Input your remarks here..." disabled></textarea>';
@@ -383,7 +390,7 @@
 
 
 					<?php
-						if($empLevel == "3") { // level 3 users are allowed to approve/disapprove requests so buttons are showed 
+						if($empLevel == "4") { // level 3 users are allowed to approve/disapprove requests so buttons are showed 
 							
 							echo "<button id=approvedbtn class='btn btn-primary' type='submit' name = 'approved'><i class='fa fa-check'></i> Approve</button></a>";
 							echo "<button id=disapprovedbtn class='btn btn-danger' type='submit' name = 'disapproved'><i class='fa fa-warning'></i> Disapprove</button></button></a>";
@@ -397,11 +404,16 @@
 		</div>
 	</div>
 		<?php
-			if($empLevel == "3") {
+			if($empLevel == "3" || $empLevel == "4") {
 				include('menufooter.php');
 			} else {
 				include('employeemenufooter.php');
 			}
 		?>
 	</body>
+	<script type="text/javascript">
+    $('#myModal4').on('hidden.bs.modal', function () {
+    location.reload();
+	});
+	</script>
 </html>

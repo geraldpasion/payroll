@@ -173,12 +173,29 @@
 
 			function set_value(event, close) {
 				// use input values to set the time
-				var tim = ele_next.find(".ti_tx input").val();
+				var tim = parseInt(ele_next.find(".ti_tx input").val());
 				var mini = ele_next.find(".mi_tx input").val();
 				var meri = "";
 				if(settings.show_meridian){
 					meri = ele_next.find(".mer_tx input").val();
 				}
+				// var tx = $('.ti_tx input');
+				// //alert(tx.val());
+				// if (tx.value.length == 0 && keyevent.which == 48 ){
+				//       return false;
+				//    }
+				var allow_num = [1,2,3,4,5,6,7,8,9,10,11,12];
+				// if(tim==0){
+				// 	tim="12";
+				// }
+
+				if (jQuery.inArray(tim, allow_num)!='-1') {
+		            
+		        } else {
+		            tim = "";
+		            mini = "";
+		            meri = "";
+		        }
 				
 				if (tim.length !== 0 && mini.length !== 0 && (!settings.show_meridian || meri.length !== 0)) {
 					// store the value so we can set the initial value
@@ -273,6 +290,7 @@
 			}
 
 			function change_time(cur_ele, direction) {
+				
 				var cur_cli = "time";
 				var cur_time = Number(ele_next.find("." + cur_cli + " .ti_tx input").val());
 				var ele_st = Number(settings.min_hour_value);

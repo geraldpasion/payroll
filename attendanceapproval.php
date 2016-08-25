@@ -358,7 +358,7 @@ $(".modal-body #wew").val( wew );
 							if(isset($_POST['test'])){
 							if ($cut = $mysqli->query("SELECT * FROM emp_cutoff WHERE empcut_initial='$initialcut' AND empcut_end = '$endcut'")){
 								if ($cut->num_rows > 0){
-									echo "<table class='footable table table-stripped' id='attendancetable' name='attendancetable' data-page-size='30' data-filter=#filter>";								
+									echo "<table class='footable table table-stripped' id='attendancetable' name='attendancetable' data-limit-navigation='5' data-page-size='20' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
 										echo "<th>ID</th>";

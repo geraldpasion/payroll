@@ -205,6 +205,7 @@
 						<?php						
 							include('dbconfig.php');
 							if(isset($_POST['list'])){
+								$e_team = $_SESSION['employee_team'];
 								$keydatefrom = $_POST['datef'];
 								$keydateto = $_POST['datet'];
 
@@ -212,7 +213,7 @@
 								echo "<div style='padding-left:60px;padding-right:60px;'>";
 									echo "<input type='text' class='form-control input-sm m-b-xs' id='filter' placeholder='Search in table'><br>";
 								
-								if ($result = $mysqli->query("SELECT DISTINCT employee.employee_id, employee_firstname, employee_lastname, employee_type FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id $keydate ORDER BY attendance_date")) //get records from db
+								if ($result = $mysqli->query("SELECT DISTINCT employee.employee_id, employee_firstname, employee_lastname, employee_type FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id $keydate AND employee.employee_level = 1 AND employee.employee_team = '$e_team' ORDER BY attendance_date")) //get records from db
 								{
 									if ($result->num_rows > 0) //display employee based on date range
 									{
@@ -267,16 +268,16 @@
 									$keydateto = $cutarray[1];
 									$keydateto = date("Y-m-d", strtotime($keydateto));
 
-									$keydate = "WHERE attendance_date BETWEEN '$keydatefrom' AND '$keydateto' AND (attendance.status = 'Done' OR attendance.attendance_status = 'active' OR attendance.attendance_status = 'outforbreak' OR attendance.attendance_status = 'infrombreak') AND employee.employee_level = 1 AND employee.employee_team = '$e_team'";
+									$keydate = "WHERE attendance_date BETWEEN '$keydatefrom' AND '$keydateto' AND (attendance.status = 'Done' OR attendance.attendance_status = 'active' OR attendance.attendance_status = 'outforbreak' OR attendance.attendance_status = 'infrombreak')";
 									echo "<div style='padding-left:60px;padding-right:60px;'>";
 									echo "<input type='text' class='form-control input-sm m-b-xs' id='filter' placeholder='Search in table'><br>";
 									
-									if ($result = $mysqli->query("SELECT DISTINCT employee.employee_id, employee_firstname, employee_lastname, employee_type FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id $keydate ORDER BY attendance_date")) //get records from db
+									if ($result = $mysqli->query("SELECT DISTINCT employee.employee_id, employee_firstname, employee_lastname, employee_type FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id $keydate AND employee.employee_level = 1 AND employee.employee_team = '$e_team' ORDER BY attendance_date")) //get records from db
 									{
 										if ($result->num_rows > 0) //display employee based on date range
 										{
 											//echo "<form name='frmUser' method='post' action='export_attendance_process.php'>";
-											echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";	
+											echo "<table class='footable table table-stripped' data-limit-navigation='5' data-page-size='20' data-filter=#filter>";	
 											echo "<thead>";
 											echo "<tr>";
 											echo "<th style='padding-left:20px;padding-right:80px;'>Name</th>";

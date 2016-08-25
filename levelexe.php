@@ -1,8 +1,11 @@
 <?php 
 include('dbconfig.php');
-if(!isset($_SESSION)) session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 if (!isset($_SESSION['logsession']) || $_SESSION['employee_level'] !== "4") {
   header("Location: login.php?loginla");
+  exit();
 }
 $employee_id = $_SESSION['logsession'];
 ?>
@@ -83,8 +86,8 @@ $employee_id = $_SESSION['logsession'];
 							HRIS
 						</div>
 					</li>
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'employeehome.php'){echo 'active'; }else { echo ''; } ?>">
-						<a href="employeehome3.php"><i class="fa fa-home"></i><span class="nav-label">Home</span></a>
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'employeehome4.php'){echo 'active'; }else { echo ''; } ?>">
+						<a href="employeehome4.php"><i class="fa fa-home"></i><span class="nav-label">Home</span></a>
 					</li>
 					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'addnew.php' OR basename($_SERVER['SCRIPT_NAME']) == 'employeelist.php' OR basename($_SERVER['SCRIPT_NAME']) == 'teammanagement.php' OR basename($_SERVER['SCRIPT_NAME']) == 'inactiveemployeelist.php' OR basename($_SERVER['SCRIPT_NAME']) == 'schedtest.php' OR basename($_SERVER['SCRIPT_NAME']) == 'editrestday.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="#" ><i class="fa fa-group"></i><span class="nav-label ">Employee Management</span> <span class="fa arrow"></span></a>
@@ -104,10 +107,10 @@ $employee_id = $_SESSION['logsession'];
 						<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'legalholiday.php'){echo 'active'; }else { echo ''; } ?>"><a href="legalholiday.php">Holiday list</a></li>
 						</ul>
 					</li> -->
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'attendance.php' OR basename($_SERVER['SCRIPT_NAME']) == 'logedit.php' OR basename($_SERVER['SCRIPT_NAME']) == 'logedittracker.php' OR basename($_SERVER['SCRIPT_NAME']) == 'additionalpayable.php' OR basename($_SERVER['SCRIPT_NAME']) == 'additionalpayablerequests.php' OR basename($_SERVER['SCRIPT_NAME']) == 'additionalpayablestatus.php'){echo 'active'; }else { echo ''; } ?>">
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'attendance_4.php' OR basename($_SERVER['SCRIPT_NAME']) == 'logedit.php' OR basename($_SERVER['SCRIPT_NAME']) == 'logedittracker.php' OR basename($_SERVER['SCRIPT_NAME']) == 'additionalpayable.php' OR basename($_SERVER['SCRIPT_NAME']) == 'additionalpayablerequests.php' OR basename($_SERVER['SCRIPT_NAME']) == 'additionalpayablestatus.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="#"><i class="fa fa-clock-o"></i><span class="nav-label">Time Keeping</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'attendance.php'){echo 'active'; }else { echo ''; } ?>"><a href="attendance.php">Attendance</a></li>
+							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'attendance_4.php'){echo 'active'; }else { echo ''; } ?>"><a href="attendance_4.php">Attendance</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'logedit.php'){echo 'active'; }else { echo ''; } ?>"><a href="logedit.php">Log edit requests</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'logedittracker.php'){echo 'active'; }else { echo ''; } ?>"><a href="logedittracker.php">Log edit status</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'additionalpayable.php'){echo 'active'; }else { echo ''; } ?>"><a href="additionalpayable.php">Others application</a></li>

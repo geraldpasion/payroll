@@ -1,8 +1,17 @@
 <?php 
 include('dbconfig.php');
-if(!isset($_SESSION)) session_start();
-if (!isset($_SESSION['logsession']) || $_SESSION['employee_level'] !== "3") {
-  header("Location: login.php?loginla");
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+if(!$_SESSION['login']) {
+	header("Location: login.php");
+  exit();
+} else {
+	if (!isset($_SESSION['logsession']) || $_SESSION['employee_level'] !== "3") {
+	  header("Location: login.php");
+	  exit();
+	}
+	
 }
 $employee_id = $_SESSION['logsession'];
 ?>
@@ -86,6 +95,9 @@ $employee_id = $_SESSION['logsession'];
 					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'employeehome.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="employeehome3.php"><i class="fa fa-home"></i><span class="nav-label">Home</span></a>
 					</li>
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'employeeprofile3.php'){echo 'active'; }else { echo ''; } ?>">
+						<a href="employeeprofile3.php"><i class="fa fa-user"></i><span class="nav-label">Profile</span></a>
+					</li>
 					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'addnew.php' OR basename($_SERVER['SCRIPT_NAME']) == 'employeelist.php' OR basename($_SERVER['SCRIPT_NAME']) == 'teammanagement.php' OR basename($_SERVER['SCRIPT_NAME']) == 'inactiveemployeelist.php' OR basename($_SERVER['SCRIPT_NAME']) == 'schedtest.php' OR basename($_SERVER['SCRIPT_NAME']) == 'editrestday.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="#" ><i class="fa fa-group"></i><span class="nav-label ">Employee Management</span> <span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
@@ -97,63 +109,64 @@ $employee_id = $_SESSION['logsession'];
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'editrestday.php'){echo 'active'; }else { echo ''; } ?>"><a href="editrestday.php">Rest Day Settings</a></li>
 						</ul>
 					</li>
-					<!-- <li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'addnewholiday.php' OR basename($_SERVER['SCRIPT_NAME']) == 'legalholiday.php'){echo 'active'; }else { echo ''; } ?>">
+					<!-- <li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'addnewholiday.php' OR basename($_SERVER['SCRIPT_NAME']) == 'legalholiday.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="legalholiday.php"><i class="fa fa-gift"></i><span class="nav-label">Holiday Management</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
-						<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'addnewholiday.php'){echo 'active'; }else { echo ''; } ?>"><a href="addnewholiday.php">Add holiday</a></li>
-						<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'legalholiday.php'){echo 'active'; }else { echo ''; } ?>"><a href="legalholiday.php">Holiday list</a></li>
+						<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'addnewholiday.php'){echo 'active'; }else { echo ''; } ?>"><a href="addnewholiday.php">Add holiday</a></li>
+						<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'legalholiday.php'){echo 'active'; }else { echo ''; } ?>"><a href="legalholiday.php">Holiday list</a></li>
 						</ul>
 					</li> -->
 					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'attendance.php' OR basename($_SERVER['SCRIPT_NAME']) == 'logedit.php' OR basename($_SERVER['SCRIPT_NAME']) == 'logedittracker.php' OR basename($_SERVER['SCRIPT_NAME']) == 'additionalpayable.php' OR basename($_SERVER['SCRIPT_NAME']) == 'additionalpayablerequests.php' OR basename($_SERVER['SCRIPT_NAME']) == 'additionalpayablestatus.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="#"><i class="fa fa-clock-o"></i><span class="nav-label">Time Keeping</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
+							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'dtr2.php'){echo 'active'; }else { echo ''; } ?>"><a href="dtr2.php">DTR</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'attendance.php'){echo 'active'; }else { echo ''; } ?>"><a href="attendance.php">Attendance</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'logedit.php'){echo 'active'; }else { echo ''; } ?>"><a href="logedit.php">Log Edit Requests</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'logedittracker.php'){echo 'active'; }else { echo ''; } ?>"><a href="logedittracker.php">Log Edit Status</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'additionalpayable.php'){echo 'active'; }else { echo ''; } ?>"><a href="additionalpayable.php">Others Application</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'additionalpayablerequests.php'){echo 'active'; }else { echo ''; } ?>"><a href="additionalpayablerequests.php">Others Pending</a></li>
+							<!--li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'additionalpayablerequests.php'){echo 'active'; }else { echo ''; } ?>"><a href="additionalpayablerequests.php">Others Pending</a></li-->
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'additionalpayablestatus.php'){echo 'active'; }else { echo ''; } ?>"><a href="additionalpayablestatus.php">Others Status</a></li>
 						</ul>
 					</li>
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'adminovertimeapplication.php' OR basename($_SERVER['SCRIPT_NAME']) == 'overtimeapproval.php' OR basename($_SERVER['SCRIPT_NAME']) == 'overtimetracer.php'){echo 'active'; }else { echo ''; } ?>">
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'adminovertimeapplication3.php' OR basename($_SERVER['SCRIPT_NAME']) == 'overtimeapproval3.php' OR basename($_SERVER['SCRIPT_NAME']) == 'overtimetracer3.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="index-2.html"><i class="fa fa-clock-o"></i><span class="nav-label">Overtime Management</span> <span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'adminovertimeapplication.php'){echo 'active'; }else { echo ''; } ?>"><a href="adminovertimeapplication.php">Application</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'overtimeapproval.php'){echo 'active'; }else { echo ''; } ?>"><a href="overtimeapproval.php">Pending</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'overtimetracer.php'){echo 'active'; }else { echo ''; } ?>"><a href="overtimetracer.php">Status</a></li>
+							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'adminovertimeapplication3.php'){echo 'active'; }else { echo ''; } ?>"><a href="adminovertimeapplication3.php">Application</a></li>
+							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'overtimeapproval3.php'){echo 'active'; }else { echo ''; } ?>"><a href="overtimeapproval3.php">Pending</a></li>
+							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'overtimetracer3.php'){echo 'active'; }else { echo ''; } ?>"><a href="overtimetracer3.php">Status</a></li>
 						</ul>
 					</li>
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'adminleaveapplication.php' OR basename($_SERVER['SCRIPT_NAME']) == 'leaveapproval.php' OR basename($_SERVER['SCRIPT_NAME']) == 'leavecreditsmanagement.php' OR basename($_SERVER['SCRIPT_NAME']) == 'leavetracer.php'){echo 'active'; }else { echo ''; } ?>">
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'adminleaveapplication3.php' OR basename($_SERVER['SCRIPT_NAME']) == 'leaveapproval3.php' OR basename($_SERVER['SCRIPT_NAME']) == 'leavecreditsmanagement.php' OR basename($_SERVER['SCRIPT_NAME']) == 'leavetracer3.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="index-2.html"><i class="fa fa-briefcase"></i><span class="nav-label">Leave Management</span> <span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'adminleaveapplication.php'){echo 'active'; }else { echo ''; } ?>"><a href="adminleaveapplication.php">Application</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'leavecreditsmanagement.php'){echo 'active'; }else { echo ''; } ?>"><a href="leavecreditsmanagement.php">Credits</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'leaveapproval.php'){echo 'active'; }else { echo ''; } ?>"><a href="leaveapproval.php">Approval</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'leavetracer.php'){echo 'active'; }else { echo ''; } ?>"><a href="leavetracer.php">Status</a></li>
+							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'adminleaveapplication3.php'){echo 'active'; }else { echo ''; } ?>"><a href="adminleaveapplication3.php">Application</a></li>
+							<!--li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'leavecreditsmanagement.php'){echo 'active'; }else { echo ''; } ?>"><a href="leavecreditsmanagement.php">Credits</a></li-->
+							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'leaveapproval3.php'){echo 'active'; }else { echo ''; } ?>"><a href="leaveapproval3.php">Approval</a></li>
+							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'leavetracer3.php'){echo 'active'; }else { echo ''; } ?>"><a href="leavetracer3.php">Status</a></li>
 						</ul>
 					</li>
 					
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'adminloanapplication.php' OR basename($_SERVER['SCRIPT_NAME']) == 'loanapproval.php' OR basename($_SERVER['SCRIPT_NAME']) == 'loantracer.php'){echo 'active'; }else { echo ''; } ?>">
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'adminloanapplication.php' OR basename($_SERVER['SCRIPT_NAME']) == 'loanapproval.php' OR basename($_SERVER['SCRIPT_NAME']) == 'employeeloanstatus3.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="legalholiday.php"><i class="fa fa-money"></i><span class="nav-label">Loan Management</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 						<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'adminloanapplication.php'){echo 'active'; }else { echo ''; } ?>"><a href="adminloanapplication.php">Application</a></li>
-						<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'loanapproval.php'){echo 'active'; }else { echo ''; } ?>"><a href="loanapproval.php">Approval</a></li>
-						<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'loantracer.php'){echo 'active'; }else { echo ''; } ?>"><a href="loantracer.php">Status</a></li>
+						<!--li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'loanapproval.php'){echo 'active'; }else { echo ''; } ?>"><a href="loanapproval.php">Approval</a></li-->
+						<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'employeeloanstatus3.php'){echo 'active'; }else { echo ''; } ?>"><a href="employeeloanstatus3.php">Status</a></li>
 						</ul>
 					</li>
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'coaching.php' OR basename($_SERVER['SCRIPT_NAME']) == 'coachingresult.php' OR basename($_SERVER['SCRIPT_NAME']) == 'coachingupdated.php'){echo 'active'; }else { echo ''; } ?>">
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'coaching.php' OR basename($_SERVER['SCRIPT_NAME']) == 'coachingresult3.php' OR basename($_SERVER['SCRIPT_NAME']) == 'coachingupdated3.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="index-2.html"><i class="fa fa-smile-o"></i><span class="nav-label">Coaching</span> <span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'coaching.php'){echo 'active'; }else { echo ''; } ?>"><a href="coaching.php">New</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'coachingresult.php'){echo 'active'; }else { echo ''; } ?>"><a href="coachingresult.php">Update</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'coachingupdated.php'){echo 'active'; }else { echo ''; } ?>"><a href="coachingupdated.php">Result</a></li>
+							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'coachingresult3.php'){echo 'active'; }else { echo ''; } ?>"><a href="coachingresult3.php">Update</a></li>
+							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'coachingupdated3.php'){echo 'active'; }else { echo ''; } ?>"><a href="coachingupdated3.php">Result</a></li>
 						</ul>
 					</li>
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'inquiry.php' OR basename($_SERVER['SCRIPT_NAME']) == 'answeredinquiry.php'){echo 'active'; }else { echo ''; } ?>">
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'inquiry3.php' OR basename($_SERVER['SCRIPT_NAME']) == 'answeredinquiry3.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="index-2.html"><i class="fa fa-question"></i><span class="nav-label">Inquiries</span> <span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'inquiry.php'){echo 'active'; }else { echo ''; } ?>"><a href="inquiry.php">Pending</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'answeredinquiry.php'){echo 'active'; }else { echo ''; } ?>"><a href="answeredinquiry.php">Answered</a></li>
+							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'inquiry3.php'){echo 'active'; }else { echo ''; } ?>"><a href="inquiry3.php">Pending</a></li>
+							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'answeredinquiry3.php'){echo 'active'; }else { echo ''; } ?>"><a href="answeredinquiry3.php">Answered</a></li>
 						</ul>
 					</li>
 					
@@ -166,54 +179,60 @@ $employee_id = $_SESSION['logsession'];
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'announcementlist.php'){echo 'active'; }else { echo ''; } ?>"><a href="announcementlist.php">Announcement List</a></li>
 						</ul>
 					</li>
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'applicants.php' OR basename($_SERVER['SCRIPT_NAME']) == 'test1.php' OR basename($_SERVER['SCRIPT_NAME']) == 'addedittest.php' OR basename($_SERVER['SCRIPT_NAME']) == 'interview.php') {echo 'active'; } else { echo ''; } ?>">
+					<!--li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'applicants.php' OR basename($_SERVER['SCRIPT_NAME']) == 'test1.php' OR basename($_SERVER['SCRIPT_NAME']) == 'addedittest.php' OR basename($_SERVER['SCRIPT_NAME']) == 'interview.php') {echo 'active'; } else { echo ''; } ?>">
 						<a href="#"><i class="fa fa-folder-o"></i><span class="nav-label">Recruitment</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'applicants.php'){echo 'active'; }else { echo ''; } ?>"><a href="applicants.php">Applicants</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'test1.php'){echo 'active'; }else { echo ''; } ?>"><a href="test1.php">Form</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'addedittest.php'){echo 'active'; }else { echo ''; } ?>"><a href="addedittest.php">Add/Edit Test</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'interview.php'){echo 'active'; }else { echo ''; } ?>"><a href="interview.php">Interview </a></li>
+							<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'applicants.php'){echo 'active'; }else { echo ''; } ?>"><a href="applicants.php">Applicants</a></li>
+							<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'test1.php'){echo 'active'; }else { echo ''; } ?>"><a href="test1.php">Form</a></li>
+							<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'addedittest.php'){echo 'active'; }else { echo ''; } ?>"><a href="addedittest.php">Add/Edit Test</a></li>
+							<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'interview.php'){echo 'active'; }else { echo ''; } ?>"><a href="interview.php">Interview </a></li>
 						</ul>
+					</li-->
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'applicants.php'){echo 'active'; }else { echo ''; } ?>">
+						<a href="applicants.php"><i class="fa fa-file-o"></i><span class="nav-label">Interview</span></a>
 					</li>
-						<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'images.php'){echo 'active'; }else { echo ''; } ?>">
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'emppayslip_3.php'){echo 'active'; }else { echo ''; } ?>">
+						<a href="emppayslip_3.php"><i class="fa fa-file"></i><span class="nav-label">Payslip</span></a>
+					</li>
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'images.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="images.php"><i class="fa fa-image"></i><span class="nav-label">Gallery</span></a>
 					</li>
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'payrolllist.php' OR basename($_SERVER['SCRIPT_NAME']) == 'attendanceapproval.php' OR basename($_SERVER['SCRIPT_NAME']) == 'payrollapproval.php' OR basename($_SERVER['SCRIPT_NAME']) == 'cutoff.php' OR basename($_SERVER['SCRIPT_NAME']) == 'processing2.php'  OR basename($_SERVER['SCRIPT_NAME']) == 'registration.php' OR basename($_SERVER['SCRIPT_NAME']) == 'payslip.php' OR basename($_SERVER['SCRIPT_NAME']) == 'finalpay.php')  {echo 'active'; }else { echo ''; } ?>">
+					<!--li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'payrolllist.php' OR basename($_SERVER['SCRIPT_NAME']) == 'attendanceapproval.php' OR basename($_SERVER['SCRIPT_NAME']) == 'payrollapproval.php' OR basename($_SERVER['SCRIPT_NAME']) == 'cutoff.php' OR basename($_SERVER['SCRIPT_NAME']) == 'processing2.php'  OR basename($_SERVER['SCRIPT_NAME']) == 'registration.php' OR basename($_SERVER['SCRIPT_NAME']) == 'payslip.php' OR basename($_SERVER['SCRIPT_NAME']) == 'finalpay.php')  {echo 'active'; }else { echo ''; } ?>">
 
 						<a href="#"><i class="fa fa-money"></i><span class="nav-label">Payroll</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
-<!-- 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'processing.php'){echo 'active'; }else { echo ''; } ?>"><a href="processing.php">Basic Pay</a></li> -->
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'cutoff.php'){echo 'active'; }else { echo ''; } ?>"><a href="cutoff.php">Cut Off Settings</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'attendanceapproval.php'){echo 'active'; }else { echo ''; } ?>"><a href="attendanceapproval.php">Attendance Approval</a></li>
+<!-- 							<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'processing.php'){echo 'active'; }else { echo ''; } ?>"><a href="processing.php">Basic Pay</a></li> -->
+							<!--li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'cutoff.php'){echo 'active'; }else { echo ''; } ?>"><a href="cutoff.php">Cut Off Settings</a></li>
+							<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'attendanceapproval.php'){echo 'active'; }else { echo ''; } ?>"><a href="attendanceapproval.php">Attendance Approval</a></li>
 							<!-- <li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'payrolllist.php'){echo 'active'; }else { echo ''; } ?>"><a href="payrolllist.php">Processing2</a></li> -->
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'processing2.php'){echo 'active'; }else { echo ''; } ?>"><a href="processing2.php">Processing</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'registration.php'){echo 'active'; }else { echo ''; } ?>"><a href="registration.php">Registration</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'payslip.php'){echo 'active'; }else { echo ''; } ?>"><a href="payslip.php">Payslip</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'finalpay.php'){echo 'active'; }else { echo ''; } ?>"><a href="finalpay.php">Final Pay</a></li>
+							<!--li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'processing2.php'){echo 'active'; }else { echo ''; } ?>"><a href="processing2.php">Processing</a></li>
+							<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'registration.php'){echo 'active'; }else { echo ''; } ?>"><a href="registration.php">Registration</a></li>
+							<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'payslip.php'){echo 'active'; }else { echo ''; } ?>"><a href="emppayslip_3.php">Payslip</a></li>
+							<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'finalpay.php'){echo 'active'; }else { echo ''; } ?>"><a href="finalpay.php">Final Pay</a></li>
 						</ul>
 					</li>
-										<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'payrollfactor.php' OR basename($_SERVER['SCRIPT_NAME']) == 'governmenttables.php' OR basename($_SERVER['SCRIPT_NAME']) == 'earnings.php' OR basename($_SERVER['SCRIPT_NAME']) == 'deductions.php' OR basename($_SERVER['SCRIPT_NAME']) == 'processing.php' OR basename($_SERVER['SCRIPT_NAME']) == 'autoupdate.php') {echo 'active'; }else { echo ''; } ?>">
+										<!--li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'payrollfactor.php' OR basename($_SERVER['SCRIPT_NAME']) == 'governmenttables.php' OR basename($_SERVER['SCRIPT_NAME']) == 'earnings.php' OR basename($_SERVER['SCRIPT_NAME']) == 'deductions.php' OR basename($_SERVER['SCRIPT_NAME']) == 'processing.php' OR basename($_SERVER['SCRIPT_NAME']) == 'autoupdate.php') {echo 'active'; }else { echo ''; } ?>">
 						<a href="payroll.php"><i class="fa fa-gears"></i><span class="nav-label">Payroll Setting</span> <span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'payrollfactor.php'){echo 'active'; }else { echo ''; } ?>"><a href="payrollfactor.php">Payroll Factor Settings</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'processing.php'){echo 'active'; }else { echo ''; } ?>"><a href="processing.php">Basic Pay</a></li>
-<!-- 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'cutoff.php'){echo 'active'; }else { echo ''; } ?>"><a href="cutoff.php">Cut Off Settings</a></li> -->
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'governmenttables.php'){echo 'active'; }else { echo ''; } ?>"><a href="governmenttables.php">Benefits Settings</a></li>
-								<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'earnings.php'){echo 'active'; }else { echo ''; } ?>"><a href="earnings.php">Earnings Settings</a></li>
-										<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'deductions.php'){echo 'active'; }else { echo ''; } ?>"><a href="deductions.php">Deductions Settings</a></li>
-										<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'autoupdate.php'){echo 'active'; }else { echo ''; } ?>"><a href="autoupdate.php">System Calendar Update</a></li>
+							<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'payrollfactor.php'){echo 'active'; }else { echo ''; } ?>"><a href="payrollfactor.php">Payroll Factor Settings</a></li>
+							<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'processing.php'){echo 'active'; }else { echo ''; } ?>"><a href="processing.php">Basic Pay</a></li>
+<!-- 							<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'cutoff.php'){echo 'active'; }else { echo ''; } ?>"><a href="cutoff.php">Cut Off Settings</a></li> -->
+							<!--li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'governmenttables.php'){echo 'active'; }else { echo ''; } ?>"><a href="governmenttables.php">Benefits Settings</a></li>
+								<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'earnings.php'){echo 'active'; }else { echo ''; } ?>"><a href="earnings.php">Earnings Settings</a></li>
+										<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'deductions.php'){echo 'active'; }else { echo ''; } ?>"><a href="deductions.php">Deductions Settings</a></li>
+										<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'autoupdate.php'){echo 'active'; }else { echo ''; } ?>"><a href="autoupdate.php">System Calendar Update</a></li>
 						</ul>
-					</li>
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'archive.php'){echo 'active'; }else { echo ''; } ?>">
+					</li-->
+					<!--li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'archive.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="archive.php"><i class="fa fa-image"></i><span class="nav-label">Archive</span></a>
-					</li>
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'addnewholiday.php' OR basename($_SERVER['SCRIPT_NAME']) == 'legalholiday.php'){echo 'active'; }else { echo ''; } ?>">
+					</li-->
+					<!--li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'addnewholiday.php' OR basename($_SERVER['SCRIPT_NAME']) == 'legalholiday.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="legalholiday.php"><i class="fa fa-gift"></i><span class="nav-label">Holiday Management</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
-						<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'addnewholiday.php'){echo 'active'; }else { echo ''; } ?>"><a href="addnewholiday.php">Add Holiday</a></li>
-						<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'legalholiday.php'){echo 'active'; }else { echo ''; } ?>"><a href="legalholiday.php">Holiday List</a></li>
+						<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'addnewholiday.php'){echo 'active'; }else { echo ''; } ?>"><a href="addnewholiday.php">Add Holiday</a></li>
+						<li class="<?php //if(basename($_SERVER['SCRIPT_NAME']) == 'legalholiday.php'){echo 'active'; }else { echo ''; } ?>"><a href="legalholiday.php">Holiday List</a></li>
 						</ul>
-					</li>
+					</li-->
 				</ul>
 
 			</div>

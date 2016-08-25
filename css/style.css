@@ -201,7 +201,7 @@ h5 {
 .nav.navbar-top-links a {
   font-size: 14px;
 }
-.navbar-form-custom .form-control {
+.navbar-form-custom .form-control .access.teams2.teams3.teams4{
   background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
   border: medium none;
   font-size: 14px;
@@ -922,7 +922,7 @@ fieldset[disabled] .btn-white:active,
 fieldset[disabled] .btn-white.active {
   color: #cacaca;
 }
-.form-control,
+.form-control,.access,.teams2,.teams3,.teams4
 .form-control:focus,
 .has-error .form-control:focus,
 .has-success .form-control:focus,
@@ -1807,7 +1807,7 @@ a.DTTT_button:hover:not(.DTTT_disabled) {
   padding-left: 0;
 }
 .form-control,
-.single-line {
+.single-line,.access,.teams1,.teams2,.teams3,.teams4{
   background-color: #FFFFFF;
   background-image: none;
   border: 1px solid #e5e6e7;

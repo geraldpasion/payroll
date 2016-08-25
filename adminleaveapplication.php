@@ -255,7 +255,7 @@
 							</div>
 							<div class='form-group'>
 								<label class='col-sm-4 control-label'>PRD Credits</label>
-								<div class='col-md-4'><input type='text' value='".$inc."' class='form-control' readonly></div>
+								<div class='col-md-4'><input  id='prd' type='text' value='".$inc."' class='form-control' readonly></div>
 							</div>
 							<div class='form-group'>
 								<label class='col-sm-4 control-label'>VL Credits</label>
@@ -263,19 +263,19 @@
 							</div>
 							<div class='form-group'>
 								<label class='col-sm-4 control-label'>SL Credits</label>
-								<div class='col-md-4'><input type='text' value='".$sl."' class='form-control' readonly></div>
+								<div class='col-md-4'><input id='sl' type='text' value='".$sl."' class='form-control' readonly></div>
 							</div>
 							<div class='form-group'>
 								<label class='col-sm-4 control-label'>ML Credits</label>
-								<div class='col-md-4'><input type='text' value='".$ml."' class='form-control' readonly></div>
+								<div class='col-md-4'><input id='ml' type='text' value='".$ml."' class='form-control' readonly></div>
 							</div>
 							<div class='form-group'>
 								<label class='col-sm-4 control-label'>PL Credits</label>
-								<div class='col-md-4'><input type='text' value='".$pl."' class='form-control' readonly></div>
+								<div class='col-md-4'><input id='pl' type='text' value='".$pl."' class='form-control' readonly></div>
 							</div>
 							<div class='form-group'>
 								<label class='col-sm-4 control-label'>SPL Credits</label>
-								<div class='col-md-4'><input type='text' value='".$spl."' class='form-control' readonly></div>
+								<div class='col-md-4'><input id='spl' type='text' value='".$spl."' class='form-control' readonly></div>
 							</div>
 							<div class='hr-line-dashed'></div>
 							<div class='form-group'>
@@ -286,21 +286,21 @@
 								<label class='col-sm-4 control-label'>Length</label>
 								<div class='col-md-4'><select id = 'length' name = 'length' class = 'form-control' data-default-value='Full' required=''><option value = 'Full' selected>Full day leave</option><option value = 'Half'>Half day leave</option></select></div>
 							</div>
-							<div class='form-group'>
+							<div id='datea' class='form-group'>
 								<label class='col-sm-4 control-label'>Date</label>
 								<div class='col-md-4'> <input id = 'date' type='text'  onpaste='return false' onDrop='return false' class='form-control' name='daterange1' required='' onKeyPress='return noneonly(this, event)'/> </div>
 							</div>
-							<div class='form-group'>
+							<div id='date11' class='form-group'>
 								<label class='col-sm-4 control-label'>Date</label>
 								<div class='col-md-4'> <input id = 'date1' type='text' onpaste='return false' onDrop='return false' class='form-control' name='daterange2' onKeyPress='return noneonly(this, event)'/> </div>
 							
 							</div>
-							<div class='form-group'>
+							<div id='date22' class='form-group'>
 								<label class='col-sm-4 control-label'>Date</label>
 								<div class='col-md-4'> <input id = 'date2' type='text' onpaste='return false' onDrop='return false' class='form-control' name='daterange3' onKeyPress='return noneonly(this, event)'/> </div>
 							
 							</div>
-							<div class='form-group'>
+							<div id='date33' class='form-group'>
 								<label class='col-sm-4 control-label'>Date</label>
 								<div class='col-md-4'> <input id = 'date3' type='text' onpaste='return false' onDrop='return false' class='form-control' name='daterange4' onKeyPress='return noneonly(this, event)'/> </div>
 							
@@ -408,4 +408,168 @@
 			include('menufooter.php');
 		?>
 	</body>
+	<script type="text/javascript">
+
+	
+	var leavetype = $('#leavetype');
+
+	leavetype.change(function() {
+		var cur_type = $(this);
+		var prd = $('#prd');
+		var vlcred = $('#vlcred');
+		var sl = $('#sl');
+		var ml = $('#ml');
+		var pl = $('#pl');
+		var spl  = $('#spl');
+
+		
+
+		if(cur_type.val() == 'Leave without pay') {
+			show_all();
+		}
+		if(cur_type.val() == 'Paid rest day / Incentive') {
+			if(prd.val() >= 4) {
+				show_all();
+			}
+			if(prd.val() == 3) {
+				hide_date_a();
+			}
+			if(prd.val() == 2) {
+				hide_date_b();
+			}
+			if(prd.val() == 1) {
+				hide_date_c();
+			}
+			if(prd.val() == 0) {
+				hide_all();
+			}
+		}
+		else if(cur_type.val() == 'Vacation leave') {
+			if(vlcred.val() >= 4) {
+				show_all();
+			}
+			if(vlcred.val() == 3) {
+				hide_date_a();
+			}
+			if(vlcred.val() == 2) {
+				hide_date_b();
+			}
+			if(vlcred.val() == 1) {
+				hide_date_c();
+			}
+			if(vlcred.val() == 0) {
+				hide_all();
+			}
+		}
+		else if(cur_type.val() == 'Sick leave') {
+			if(sl.val() >= 4) {
+				show_all();
+			}
+			if(sl.val() == 3) {
+				hide_date_a();
+			}
+			if(sl.val() == 2) {
+				hide_date_b();
+			}
+			if(sl.val() == 1) {
+				hide_date_c();
+			}
+			if(sl.val() == 0) {
+				hide_all();
+			}
+		}
+		else if(cur_type.val() == 'Maternity leave') {
+			if(ml.val() >= 4) {
+				show_all();
+			}
+			if(ml.val() == 3) {
+				hide_date_a();
+			}
+			if(ml.val() == 2) {
+				hide_date_b();
+			}
+			if(ml.val() == 1) {
+				hide_date_c();
+			}
+			if(ml.val() == 0) {
+				hide_all();
+			}
+		}
+		else if(cur_type.val() == 'Paternity leave') {
+			if(pl.val() >= 4) {
+				show_all();
+			}
+			if(pl.val() == 3) {
+				hide_date_a();
+			}
+			if(pl.val() == 2) {
+				hide_date_b();
+			}
+			if(pl.val() == 1) {
+				hide_date_c();
+			}
+			if(pl.val() == 0) {
+				hide_all();
+			}
+		}
+		else if(cur_type.val() == 'Single-parent leave') {
+			if(spl.val() >= 4) {
+				show_all();
+			}
+			if(spl.val() == 3) {
+				hide_date_a();
+			}
+			if(spl.val() == 2) {
+				hide_date_b();
+			}
+			if(spl.val() == 1) {
+				hide_date_c();
+			}
+			if(spl.val() == 0) {
+				hide_all();
+			}
+		}
+
+
+	});
+	
+	function hide_date_a() {
+	var date3  = $('#date33');
+		date3.hide();
+	}
+	function hide_date_b() {
+	var date2  = $('#date22');
+	var date3  = $('#date33');
+		date2.hide();
+		date3.hide();
+	}
+	function hide_date_c() {
+	var date1  = $('#date11');
+	var date2  = $('#date22');
+	var date3  = ('#date32');
+		date1.hide();
+		date2.hide();
+		date3.hide();
+	}
+	function hide_all() {
+	var date  = $('#datea');
+	var date1  = $('#date11');
+	var date2  = $('#date22');
+	var date3  = $('#date33');
+		date.hide();
+		date1.hide();
+		date2.hide();
+		date3.hide();
+	}
+	function show_all() {
+	var date  = $('#datea');
+	var date1  = $('#date11');
+	var date2  = $('#date22');
+	var date3  = $('#date33');
+		date.show();
+		date1.show();
+		date2.show();
+		date3.show();
+	}
+	</script>
 </html>

@@ -201,6 +201,28 @@
 		    border-left:1px solid grey;
 		}
 		</style>
+
+<!--custom gdp code-->
+		<script type="text/javascript">
+		    $(function() {
+		        $('#earningname').keyup(function() {
+		            if (this.value.match(/[^a-zA-Z0-9 ]/g)) {
+		                this.value = this.value.replace(/[^a-zA-Z0-9 ]/g, '');
+		            }
+		        });
+		    });
+
+		</script>
+
+		<script>
+		function filter_type(choice){
+		 var elem = 'New';
+		 var elem2 = 'Earnings';
+			    $("#partinp").replaceWith("<div class='col-md-4' id='partinp'><select id = 'earningname' name = 'earningname' type='text' class='form-control' required=''></select></div>");
+				$("#earningname").load("filter.php?choice=" + choice + "&elem=" + elem + "&elem2=" + elem2);
+		}
+		</script>	
+
 	</head>
 
 	<body>
@@ -238,13 +260,30 @@
 							<div class="form-group">
 							<div class="col-md-2"></div>
 							<form method="POST" class="form-horizontal" action="earningsexe.php">
-								<label class="col-sm-2 control-label">Earnings List</label>
-								<div class="col-md-4"><select id = "earningname" class="form-control"  data-default-value="" name="earningname" required="">
-									<option value="">Select Earning</option>
-								<?php 
-								include('dbconfig.php');
 
-								if ($result1 = $mysqli->query("SELECT * FROM earnings_setting")) //get records from db
+								<label class="col-sm-2 control-label">Type</label>
+								<div class="col-md-4">
+								<select class = "form-control" id = "type" name = "type" onchange="filter_type(this.value)" required="" >
+									<option value="" disabled selected>Select Type</option>
+									<option value="Taxable">Taxable</option>
+									<option value="Non-Taxable">Non-Taxable</option>
+									
+								</SELECT>
+								</div><br><br><br>
+
+								<div class="col-md-3"></div>
+								<label class="col-sm-1 control-label">Earnings List</label>
+								<div class="col-md-4" id="partinp">
+								<select id = "earningname" class="form-control"  data-default-value="" name="earningname" required="">
+									<option value="" disabled selected required>Select Earning</option>
+								<?php 
+								/*include('dbconfig.php');
+
+								
+									$earn_type=$_POST['earningtype'];
+								if ($result1 = $mysqli->query("SELECT * FROM earnings_setting wHERE earnings_name <> '' 
+
+								GROUP BY earnings_name")) //get records from db
 								{
 									if ($result1->num_rows > 0) //display records if any
 									{
@@ -253,7 +292,8 @@
 											echo '<option value="'.$row1->earnings_name.'">'.$row1->earnings_name.'</option>';
 										}
 									}
-								}
+								}*/
+								
 
 								?>
 								</SELECT>
@@ -364,18 +404,18 @@
 								<div id="newedit" class="tab-pane fade active in" >
 									<div class="panel-body">
 										<form id="myForm" method="post" class="form-horizontal">
-											<label class="col-md-4 control-label"><h2>Input New Earning</h2></label><br><br><br><br>
+											<label class="col-md-8 control-label"><h2>Input New Earning</h2></label><br><br><br><br>
 										<div class="form-group">											
-											<label class="col-sm-3 control-label">Particular</label>
+											<label class="col-sm-5 control-label">Particular</label>
 												<div class="col-md-4" id="partinp"><input type="text" onfocus="clearThis(this)" id="name" name="name" class="form-control ename"required="" placeholder="Enter Name"></div>
 												<br><br><br>		
-											<label class="col-sm-3 control-label">Type</label>
+											<label class="col-sm-5 control-label">Type</label>
 												<div class="col-sm-4"><select id="earningtype" name="earningtype" class="form-control" data-default-value="z" required=""><option selected="true" disabled="disabled" value="">Select type...</option><option value = "Taxable">Taxable</option><option value = "Non-Taxable">Non-Taxable</option></select></div>
 												<br><br><br>									
 										</div>
-										<div class="col-md-3"></div>
+										<div class="col-md-5"></div>
+										<button type="submit" class="btn btn-w-m btn-primary" id="sub2" name="sub2">Submit</button>	
 										<button id ="reset" type="reset" class="btn btn-w-m btn-warning">Reset</button>
-										<button type="submit" class="btn btn-w-m btn-primary" id="sub2" name="sub2">Submit</button>		
 										</form>
 									</div>								
 								</div>
@@ -487,5 +527,7 @@ $(document).ready(function(){
 		<?php
 			include('menufooter.php');
 		?>
+
+							
 	</body>
 </html>

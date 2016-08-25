@@ -186,12 +186,12 @@
                                    placeholder="Search in table">
 				<?php
 					include('dbconfig.php');
-
-					if ($result = $mysqli->query("SELECT * FROM tbl_leave INNER JOIN employee ON employee.employee_id = tbl_leave.employee_id  WHERE employee_team = '$team' AND (leave_status = 'Approved' OR leave_status = 'Disapproved')  ORDER BY leave_id")) //get records from db
+					$team = $_SESSION['employee_team'];
+					if ($result = $mysqli->query("SELECT * FROM tbl_leave INNER JOIN employee ON employee.employee_id = tbl_leave.employee_id  WHERE employee_team = '$team' AND (leave_status = 'Approved' OR leave_status = 'Disapproved') AND employee_level = 1  ORDER BY leave_id")) //get records from db
 					{
 						if ($result->num_rows > 0) //display records if any
 						{
-							echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
+							echo "<table class='footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter>";								
 							echo "<thead>";
 							echo "<tr>";	
 							echo "<th>Name</th>";
