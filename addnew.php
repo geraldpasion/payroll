@@ -475,7 +475,7 @@
 											}
 									}
 									</script>
-									<br><br><div class="col-md-4">
+									<br><br><div class="col-md-2">
 									<button id ="submit" type="submit" class="btn btn1 btn-w-m btn-primary">Submit</button>
 									</div>
 									<div class="col-md-4">

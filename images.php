@@ -108,31 +108,85 @@ margin-left: 2px;
 				</div>
 				</div>
 				<br><br>';
+				if(!isset($_GET['page'])){
+					$num=1;
+				}else{
+					$num=$_GET['page'];
+				}
 				$next1=$page-1;
-
-					echo " <a class='pagi' href='images.php?page=$next1'> < </a>";
-
-				$page1=$page+1;
-				$page2=$page1+1;
-				$page3=$page2+1;
-				$page4=$page3+1;
-
-			echo "  <a class='pagi' href='images.php?page=$page'> $page </a>";
-			echo "  <a class='pagi' href='images.php?page=$page1'>$page1</a>";
-			echo "  <a class='pagi' href='images.php?page=$page2'>$page2</a>";
-			echo "  <a class='pagi' href='images.php?page=$page3'> $page3 </a>";
-			echo "  <a class='pagi' href='images.php?page=$page4'> $page4 </a>";
-
-				for($num=1;$num<=$total_pages;$num++) {
-					//$num=$num-$num+1;
+				$num1=$num;
 				
-            	//echo "  <a class='pagi' href='images.php?page=$num'> $num </a>";
-            	
-			}
+				if($num<=1){
+					echo " <a class='pagi' id='nexts'> < </a>";
+				}else{
+					echo " <a class='pagi' id='nexts' href='images.php?page=$next1'> < </a>";
+				}
+
+				// $page1=$page+1;
+				// $page2=$page1+1;
+				// $page3=$page2+1;
+				// $page4=$page3+1;
+
+			//echo "  <a class='pagi' href='images.php?page=$page'> $page </a>";
+			//echo "  <a class='pagi' href='images.php?page=$page1'>$page1</a>";
+			//echo "  <a class='pagi' href='images.php?page=$page2'>$page2</a>";
+			//echo "  <a class='pagi' href='images.php?page=$page3'> $page3 </a>";
+			//echo "  <a class='pagi' href='images.php?page=$page4'> $page4 </a>";
+				
+
+
+				
+				if($num>=$total_pages-2){
+
+					if($total_pages-$num==2){
+						$count=$num-1;
+					}else if($total_pages-$num==1){
+						$count=$num-2;
+					}else if($total_pages-$num==0){
+						$count=$num-3;
+					}
+					for($count;$count<=$total_pages;$count++) {
+						//$count=$count-$count+1;
+	            	echo "  <a class='pagi' href='images.php?page=$count'> $count </a>";
+					
+					}
+					
+					
+					
+				}else{
+					$max=4;
+					if($num>1){
+						$num--;
+						echo "  <a class='pagi' href='images.php?page=$num'> $num </a>";
+						$num++;
+						$max=3;
+					}
+					
+					for($count=1;$count<=$max;$count++) {
+						//$num=$num-$num+1;
+	            	echo "  <a class='pagi' href='images.php?page=$num'> $num </a>";
+	            	$num++;
+					}
+				}
+
+
 			$next=$page+1;
-			echo " <a class='pagi' href='images.php?page=$next'> > </a>";
+
+			if($num1>=$total_pages){
+				echo " <a class='pagi' id=''> > </a>";
+			}else{
+				echo " <a class='pagi' id=''  href='images.php?page=$next'> > </a>";
+			}
+
+
 			 echo "<br><br><br> <b>Total Images: </b>" . $total_records."<br>";
 			echo'	</section>';
+			/*if($page==1){
+				echo"<script>
+				document.getElementById('nexts').disabled=true;
+				alert();
+				</script>";
+			}*/
 			?>
 			<br><br><br>
 
@@ -149,6 +203,18 @@ margin-left: 2px;
 </body>
 </html>
 <script>
-var page=<?php echo"$page";?>
-alert(page);
+
+function gettotal(){
+var total=<?php echo"$total_pages"?>;
+var getpage=<?php echo"$page"?>;
+//alert(getpage);
+
+if(getpage==1){
+	
+ 	$("#nexts").attr('disabled',true);
+
+}
+
+
+}
 </script>

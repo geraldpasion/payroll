@@ -81,7 +81,7 @@
 				}
 				toastr.success("Result successfully updated!");
 			}
-			history.replaceState({}, "Title", "coachingresult.php");
+			history.replaceState({}, "Title", "coachingresult3.php");
 			});
 		</script>
 		<?php
@@ -222,8 +222,9 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+					
 					<button type="submit" class="btn btn-primary coaching">Submit</button>
+					<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
 					</form>
 				</div>
 			</div>

@@ -100,6 +100,21 @@
 				
 			});
 		</script>
+		<script>
+		function change(obj) {
+			var index = obj.selectedIndex;
+			var val = obj.options[index].value;
+			
+			document.getElementById('date').disabled=true;
+
+			if(val == "without") {
+				document.getElementById('date').disabled=true;
+				document.getElementById('date').value="";
+			} else if(val == "with") {
+				document.getElementById('date').disabled=false;
+			}
+		}
+		</script>
 		<?php
 		if(isset($_GET['edited']))
 		{
@@ -193,26 +208,23 @@
 								</SELECT>
 								</div>
 							</div><br><br><br>
-					<div class="form-group">
-					<div class="col-md-3"></div>
-								<label class="col-sm-2 control-label" style="margin-top:5px;">Date</label>
-								<div class="col-md-4"><input id = "date" type="text"  class="form-control" name="daterange" required="" onKeyPress="return noneonly(this, event)"/></div>
-					</div>
-
-					<br><br>
-					<!---->
 
 					<div class="form-group">
-					<div class="col-md-3"></div>
+							<div class="col-md-3"></div>
 								<label class="col-sm-2 control-label" style="margin-top:5px;">Date Range</label>
 								<div class="col-md-4"><select id = 'hasdate' name = 'hasdate' onchange="change(this);" class = 'form-control' data-default-value='without' required=''>
 									<option value = 'without' selected>Without Date Range (tomorrow onwards)</option>
 									<option value = 'with'>With Specified Date Range</option>
 								</select></div>
-					</div>
+							</div><br><br>
 
+							<div class="form-group">
+							<div class="col-md-3"></div>
+								<label class="col-sm-2 control-label" style="margin-top:5px;">Date</label>
+								<div class="col-md-4"><input id = "date" type="text" disabled class="form-control" name="daterange" required="" onKeyPress="return noneonly(this, event)"/></div>
+							</div>
 					<br><br>
-
+					<!---->
 					<div class="ibox-content">
 					<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
 						</div>
@@ -263,9 +275,9 @@
 							
 						?>
 							<div class="form-group">
-								<div class="col-md-8"></div>
-								<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary">Submit</button>
+								<div class="col-md-4"></div>
+								<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
 							</div>
 							
 						</form>
@@ -305,8 +317,9 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+					
 					<button type="submit" class="btn btn-primary">Submit</button>
+					<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
 					</form>
 				</div>
 			</div>

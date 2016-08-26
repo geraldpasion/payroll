@@ -165,7 +165,7 @@
 							} if($empLevel == '2') {
 								$sqlString = "SELECT * FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE employee_team = '$team1' AND employee_level = 1 AND (logedit_status ='Approved' OR logedit_status = 'Disapproved') order by logeditid desc";
 							} if($empLevel == '1') {
-								$sqlString = "SELECT * FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE employee_id = '$empid'";
+								$sqlString = "SELECT * FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE employee.employee_id = '$empid' AND logedit_status = 'Approved' AND employee_level = 1 order by logeditid desc";
 							}
 								if ($result = $mysqli->query($sqlString)) //get records from db
 								{
@@ -174,7 +174,7 @@
 										echo "<table class='footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
-										if($empLevel != '1') echo "<th>Name</th>";
+										if($empLevel != '1') { echo "<th>Name</th>";
 										echo "<th>Date</th>";
 										echo "<th>Time in</th>";
 										echo "<th>Out from break</th>";
@@ -191,10 +191,37 @@
 										echo "</td>";
 										echo "</tr>";
 										echo "</tfoot>";
+										} else { 
+										echo "<th>Date</th>";
+										echo "<th>Time in</th>";
+										echo "<th>Out from break</th>";
+										echo "<th>In from break</th>";
+										echo "<th>Time out</th>";
+										echo "<th>Status</th>";
+										echo "<th>Managed by</th>";
+										echo "</tr>";
+										echo "</thead>";
+										echo "<tfoot>";                    
+										echo "<tr>";
+										echo "<td colspan='78'>";
+										echo "<ul class='pagination pull-right'></ul>";
+										echo "</td>";
+										echo "</tr>";
+										echo "</tfoot>";
+										} 
 										while ($row = $result->fetch_object())
 										{
 											echo "<tr class = 'josh'>";
 											if($empLevel != '1'){ echo "<td>" . $row->employee_firstname . " " . $row->employee_lastname . "</td>";
+											echo "<td>" . date("Y-m-d",strtotime($row->logedit_date)) . "</td>";
+											echo "<td>" . date("g:i A",strtotime($row->logedit_timein)) . "</td>";
+											echo "<td>" . date("g:i A",strtotime($row->logedit_breakout)). "</td>";
+											echo "<td>" . date("g:i A",strtotime($row->logedit_breakin)) . "</td>";
+											echo "<td>" . date("g:i A",strtotime($row->logedit_timeout)) . "</td>";
+											echo "<td>" . $row->logedit_status . "</td>";
+											echo "<td>" . $row->logedit_approvedby . "</td>";
+											}
+											else{
 											echo "<td>" . date("Y-m-d",strtotime($row->logedit_date)) . "</td>";
 											echo "<td>" . date("g:i A",strtotime($row->logedit_timein)) . "</td>";
 											echo "<td>" . date("g:i A",strtotime($row->logedit_breakout)). "</td>";

@@ -54,6 +54,65 @@ $team3=$_POST['team3'];
 
 echo"<script>alert('$team3');</script>";
 // insert the new record into the database
+	if($level == 4){
+		if ($stmt = $mysqli->prepare("UPDATE employee SET employee_lastname = '$lastname', employee_firstname = '$firstname',
+		 employee_middlename = '$middlename', employee_gender = '$gender', employee_birthday = '$birthday',
+		 employee_marital = '$marital', employee_address = '$address', employee_city = '$city', employee_zip = '$zip', employee_email = '$email',
+		 employee_cellnum = '$mobile', employee_type = '$type', employee_jobtitle = '$jobtitle', employee_department = '$department', employee_empstatus = '$empstat',
+		 employee_taxcode = '$taxcode', employee_sss = '$sss', employee_philhealth = '$philhealth', employee_pagibig = '$hdmf', employee_tin = '$tin', employee_shift = '$shift',
+		 employee_datehired = '$datehired', employee_restday = '$restday',employee_password = '$password', employee_level = '$level', employee_team = '$team', cutoff = '$paymentSched',
+		 account_number='$accountNo', employee_payslippassword='$paypass', employee_team1 = '-', employee_team2 = '-' , employee_team3 = '-' WHERE employee_id = '$employeeid' ")){	
+			$stmt->execute();
+			$stmt->close();
+			
+				if(!isset($_POST['picture'])){
+					$imagesize = 1;
+					$uploadOk = 1;
+					include('sqlconnection.php');
+
+					if ($_FILES["picture"]["size"] > 50000000) {
+					   // echo "Sorry, your file is too large.";
+					    $imagesize = 0;
+					}
+
+					$check = getimagesize($_FILES["picture"]["tmp_name"]);
+					if($check !== false) {
+					  //  echo "";
+					    $uploadOk = 1;
+					} else {
+					  //  echo "File is not an image.";
+					    $uploadOk = 0;
+					}
+
+					$name = $_FILES['picture']['name'];
+					$tmp_name = $_FILES['picture']['tmp_name'];
+						
+					$location = 'images/';
+					$target = 'images/'.$name;
+
+					if($imagesize == 1) {
+						if( $uploadOk == 1) {
+							if(move_uploaded_file($tmp_name,$location.$name)) {
+								$nam = $_POST['userID'];
+								//$query = mysqli_query($con, "INSERT INTO image(p_id,p_img)VALUES('$nam','".$target."')");
+								$image_name = mysql_real_escape_string($_FILES['picture']['name']);
+								$mysqli->query("UPDATE employee SET image = '$image_name' WHERE employee_id = '$employeeid'");
+							}else{
+								//echo "file not uploaded";
+							}
+						}else{
+							//echo "";
+						}
+					}else{
+						//echo "";
+					}
+				}
+		}
+		else{
+			echo "ERROR: could not prepare SQL statement.";
+		}
+	}
+	else if($level == 3){
 		if ($stmt = $mysqli->prepare("UPDATE employee SET employee_lastname = '$lastname', employee_firstname = '$firstname',
 		 employee_middlename = '$middlename', employee_gender = '$gender', employee_birthday = '$birthday',
 		 employee_marital = '$marital', employee_address = '$address', employee_city = '$city', employee_zip = '$zip', employee_email = '$email',
@@ -110,6 +169,123 @@ echo"<script>alert('$team3');</script>";
 		else{
 			echo "ERROR: could not prepare SQL statement.";
 		}
+	}
+	else if($level == 2){
+		if ($stmt = $mysqli->prepare("UPDATE employee SET employee_lastname = '$lastname', employee_firstname = '$firstname',
+		 employee_middlename = '$middlename', employee_gender = '$gender', employee_birthday = '$birthday',
+		 employee_marital = '$marital', employee_address = '$address', employee_city = '$city', employee_zip = '$zip', employee_email = '$email',
+		 employee_cellnum = '$mobile', employee_type = '$type', employee_jobtitle = '$jobtitle', employee_department = '$department', employee_empstatus = '$empstat',
+		 employee_taxcode = '$taxcode', employee_sss = '$sss', employee_philhealth = '$philhealth', employee_pagibig = '$hdmf', employee_tin = '$tin', employee_shift = '$shift',
+		 employee_datehired = '$datehired', employee_restday = '$restday',employee_password = '$password', employee_level = '$level', employee_team = '$team', cutoff = '$paymentSched',
+		 account_number='$accountNo', employee_payslippassword='$paypass', employee_team1 = '-', employee_team2 = '-' , employee_team3 = '-' WHERE employee_id = '$employeeid' ")){	
+			$stmt->execute();
+			$stmt->close();
+			
+				if(!isset($_POST['picture'])){
+					$imagesize = 1;
+					$uploadOk = 1;
+					include('sqlconnection.php');
+
+					if ($_FILES["picture"]["size"] > 50000000) {
+					   // echo "Sorry, your file is too large.";
+					    $imagesize = 0;
+					}
+
+					$check = getimagesize($_FILES["picture"]["tmp_name"]);
+					if($check !== false) {
+					  //  echo "";
+					    $uploadOk = 1;
+					} else {
+					  //  echo "File is not an image.";
+					    $uploadOk = 0;
+					}
+
+					$name = $_FILES['picture']['name'];
+					$tmp_name = $_FILES['picture']['tmp_name'];
+						
+					$location = 'images/';
+					$target = 'images/'.$name;
+
+					if($imagesize == 1) {
+						if( $uploadOk == 1) {
+							if(move_uploaded_file($tmp_name,$location.$name)) {
+								$nam = $_POST['userID'];
+								//$query = mysqli_query($con, "INSERT INTO image(p_id,p_img)VALUES('$nam','".$target."')");
+								$image_name = mysql_real_escape_string($_FILES['picture']['name']);
+								$mysqli->query("UPDATE employee SET image = '$image_name' WHERE employee_id = '$employeeid'");
+							}else{
+								//echo "file not uploaded";
+							}
+						}else{
+							//echo "";
+						}
+					}else{
+						//echo "";
+					}
+				}
+		}
+		else{
+			echo "ERROR: could not prepare SQL statement.";
+		}
+	}
+	else if($level == 1){
+		if ($stmt = $mysqli->prepare("UPDATE employee SET employee_lastname = '$lastname', employee_firstname = '$firstname',
+		 employee_middlename = '$middlename', employee_gender = '$gender', employee_birthday = '$birthday',
+		 employee_marital = '$marital', employee_address = '$address', employee_city = '$city', employee_zip = '$zip', employee_email = '$email',
+		 employee_cellnum = '$mobile', employee_type = '$type', employee_jobtitle = '$jobtitle', employee_department = '$department', employee_empstatus = '$empstat',
+		 employee_taxcode = '$taxcode', employee_sss = '$sss', employee_philhealth = '$philhealth', employee_pagibig = '$hdmf', employee_tin = '$tin', employee_shift = '$shift',
+		 employee_datehired = '$datehired', employee_restday = '$restday',employee_password = '$password', employee_level = '$level', employee_team = '$team', cutoff = '$paymentSched',
+		 account_number='$accountNo', employee_payslippassword='$paypass', employee_team1 = '-', employee_team2 = '-' , employee_team3 = '-' WHERE employee_id = '$employeeid' ")){	
+			$stmt->execute();
+			$stmt->close();
+			
+				if(!isset($_POST['picture'])){
+					$imagesize = 1;
+					$uploadOk = 1;
+					include('sqlconnection.php');
+
+					if ($_FILES["picture"]["size"] > 50000000) {
+					   // echo "Sorry, your file is too large.";
+					    $imagesize = 0;
+					}
+
+					$check = getimagesize($_FILES["picture"]["tmp_name"]);
+					if($check !== false) {
+					  //  echo "";
+					    $uploadOk = 1;
+					} else {
+					  //  echo "File is not an image.";
+					    $uploadOk = 0;
+					}
+
+					$name = $_FILES['picture']['name'];
+					$tmp_name = $_FILES['picture']['tmp_name'];
+						
+					$location = 'images/';
+					$target = 'images/'.$name;
+
+					if($imagesize == 1) {
+						if( $uploadOk == 1) {
+							if(move_uploaded_file($tmp_name,$location.$name)) {
+								$nam = $_POST['userID'];
+								//$query = mysqli_query($con, "INSERT INTO image(p_id,p_img)VALUES('$nam','".$target."')");
+								$image_name = mysql_real_escape_string($_FILES['picture']['name']);
+								$mysqli->query("UPDATE employee SET image = '$image_name' WHERE employee_id = '$employeeid'");
+							}else{
+								//echo "file not uploaded";
+							}
+						}else{
+							//echo "";
+						}
+					}else{
+						//echo "";
+					}
+				}
+		}
+		else{
+			echo "ERROR: could not prepare SQL statement.";
+		}
+	}
 
 
 // redirec the user

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<?php
-			session_start();
+    <head>
+        <?php
+            session_start();
         $empLevel = $_SESSION['employee_level'];
         if(isset($_SESSION['logsession']) && $empLevel == '3') {
                 include('menuheader.php');
@@ -10,84 +10,84 @@
         }else if(isset($_SESSION['logsession']) && $empLevel == '4') {
             include('levelexe.php');
         }
-		?>
-		<title>Archive</title>
-		<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
-		<script src="js/plugins/toastr/toastr.min.js"></script>
-		<link href="css/animate.css" rel="stylesheet">
-		<link href="css/style.css" rel="stylesheet">
-		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">		
-				
-		<script src="js/keypress.js"></script>
-		 <script type="text/javascript">
-		// 	$(document).ready(function(){
-		// 		 showEdited=function(){
-		// 	toastr.options = { 
-		// 				"closeButton": true,
-		// 			  "debug": false,
-		// 			  "progressBar": true,
-		// 			  "preventDuplicates": true,
-		// 			  "positionClass": "toast-top-right",
-		// 			  "onclick": null,
-		// 			  "showDuration": "400",
-		// 			  "hideDuration": "1000",
-		// 			  "timeOut": "7000",
-		// 			  "extendedTimeOut": "1000",
-		// 			  "showEasing": "swing",
-		// 			  "hideEasing": "linear",
-		// 			  "showMethod": "fadeIn",
-		// 			  "hideMethod": "fadeOut" // 1.5s
-		// 				}
-		// 				toastr.success("Employee team updated!");
-		// 		}
-		// 		history.replaceState({}, "Title", "archive.php");
-				
-		// 	});
-		// </script>
-		<?php
-		if(isset($_GET['edited']))
-		{
-			echo '<script type="text/javascript">'
-					, '$(document).ready(function(){'	
-					, 'showEdited();'
-					, '});' 
-			   
-			   , '</script>'
-			;	
-		}
-		?>
-	</head>
-	<body>
-		<form name="frmUser" method="post" action="">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="ibox float-e-margins">
-					<div class="ibox-title">
-						<h5>Archive</h5>
-						<div class="ibox-tools">
-							<a class="collapse-link">
-								<i class="fa fa-chevron-up"></i>
-							</a>
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-								<i class="fa fa-wrench"></i>
-							</a>
-							<ul class="dropdown-menu dropdown-user">
-								<li><a href="#">Config option 1</a>
-								</li>
-								<li><a href="#">Config option 2</a>
-								</li>
-							</ul>
-							<a class="close-link">
-								<i class="fa fa-times"></i>
-							</a>
-						</div>
-					</div>
+        ?>
+        <title>Archive</title>
+        <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
+        <script src="js/plugins/toastr/toastr.min.js"></script>
+        <link href="css/animate.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/plugins/iCheck/custom.css" rel="stylesheet">        
+                
+        <script src="js/keypress.js"></script>
+         <script type="text/javascript">
+        //  $(document).ready(function(){
+        //       showEdited=function(){
+        //  toastr.options = { 
+        //              "closeButton": true,
+        //            "debug": false,
+        //            "progressBar": true,
+        //            "preventDuplicates": true,
+        //            "positionClass": "toast-top-right",
+        //            "onclick": null,
+        //            "showDuration": "400",
+        //            "hideDuration": "1000",
+        //            "timeOut": "7000",
+        //            "extendedTimeOut": "1000",
+        //            "showEasing": "swing",
+        //            "hideEasing": "linear",
+        //            "showMethod": "fadeIn",
+        //            "hideMethod": "fadeOut" // 1.5s
+        //              }
+        //              toastr.success("Employee team updated!");
+        //      }
+        //      history.replaceState({}, "Title", "archive.php");
+                
+        //  });
+        // </script>
+        <?php
+        if(isset($_GET['edited']))
+        {
+            echo '<script type="text/javascript">'
+                    , '$(document).ready(function(){'   
+                    , 'showEdited();'
+                    , '});' 
+               
+               , '</script>'
+            ;   
+        }
+        ?>
+    </head>
+    <body>
+        <form name="frmUser" method="post" action="">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Archive</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
 
-					
+                    
 
-						<div class="ibox-content">	
-							<div class="form-group">
-							<div class="table-responsive">
+                        <div class="ibox-content">  
+                            <div class="form-group">
+                            <div class="table-responsive">
                             <div class="col-lg-12">
                                 <div class = "col-lg-1 col-md-1 col-sm-5 col-xs-5">
                                     <h4>Search</h4>
@@ -103,9 +103,9 @@
                                     <br>
                                 </div>
                     <br>
-					<BR>
-					<BR>
-					<BR>
+                    <BR>
+                    <BR>
+                    <BR>
                                     <div id = "div1" style = "display:none;">
                                         <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" style = "margin-left:-2em;">
                                             <h4>Deleted List of Earnings</h4>
@@ -254,14 +254,14 @@
                                         </table>
                                     </div>
 
-                                    <div id = "div3" style = "display:none;">
-                                        <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" style = "margin-left:-2em;">
+                                    <div id = "div3">
+                                        <div class = "col-md-12" style = "margin-left:-2em;">
                                             <h4>Deleted List of Announcements</h4>
                                         </div>
-                                        <table class = "footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
+                                        <table style="table-layout: fixed;" class = "footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
                                             <thead>
-                                                <tr>
-                                                    <th>Date</th>
+                                                <tr class = 'josh'>
+                                                    <th class = "col-md-5">Date</th>
                                                     <th class = "col-md-5">Announcement</th>
                                                     <th class = "col-md-3" style='text-align:center'>Action</th>
                                                 </tr>
@@ -276,8 +276,8 @@
                                                 {
                                                     while ($row = mysqli_fetch_object($result)){
                                                         echo "<tr>";
-                                                            echo "<td class='ann-date'>". date("Y-m-d", strtotime($row->announcement_date)) ."</td>";
-                                                            echo "<td class='col-xs-5 announcement-content'>". $row->announcement_details ."</td>";
+                                                            echo "<td>". date("Y-m-d", strtotime($row->announcement_date)) ."</td>";
+                                                            echo "<td style='word-wrap: break-word'>". $row->announcement_details ."</td>";
                                                             echo "<td>";
 
                                                             //restore
@@ -503,10 +503,10 @@
                     </div>                                
                 </div>
             </div>
-		
-	</body>
-	<?php
-		include('menufooter.php');
-	?>
+        
+    </body>
+    <?php
+        include('menufooter.php');
+    ?>
 
 </html>

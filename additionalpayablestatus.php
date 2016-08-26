@@ -3,9 +3,14 @@
 
 	<head>
 		<?php
-			session_start();
+			if (session_status() == PHP_SESSION_NONE) {
+    			session_start();
+			}
 			$empLevel = $_SESSION['employee_level'];
 			$employee_id = $_SESSION['logsession'];
+			if(!isset($employee_id)){
+				include 'logout.php';
+			}
 			if (isset($_SESSION['logsession']) && $empLevel == '3')  {
 				include('menuheader.php');
 			} else if(isset($_SESSION['logsession']) && $empLevel == '2') {

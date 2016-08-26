@@ -225,7 +225,7 @@ else if (isset($_REQUEST['manageqn'])) {
 
 td,th,.add{
   
-    text-align: left;
+    text-align: center;
     padding: 8px;
 }
 tr:hover{background-color:#f5f5f5}

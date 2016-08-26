@@ -104,16 +104,16 @@ toastr.options = {
 						</div>
 						<form id = "myForm" method="POST"  class="form-horizontal">
 							<div class="form-group"><div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Employee ID</label>
+								<label class="col-sm-2 control-label">Employee ID</label>
 								<input type="hidden" id = "empid" name = "empid" class="form-control" value = " <?php echo $_SESSION['logsession'] ?>">
 								<div class="col-md-4"><input type="text" name = "" class="form-control" value = " <?php echo $_SESSION['logsession'] ?>" disabled></div>
 							</div>
 							<div class="form-group"><div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Employee name</label>
+								<label class="col-sm-2 control-label">Employee name</label>
 								<div class="col-md-4"><input type="text" class="form-control" value  = "<?php echo $_SESSION['fname'] . " ".  $_SESSION['lname'] ?>" disabled = ""></div>
 							</div>
 							<div class="form-group"><div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Questions</label>
+								<label class="col-sm-2 control-label">Questions</label>
 								<div class="col-md-4"><input type="text" id = "question" name = "question" class = "form-control" required= "" placeholder = "Input your questions here." style="height:100px;"></div>
 							</div>
 							<div class="form-group">

@@ -13,6 +13,9 @@
             include('levelexe.php');
         }
 			$employee_id = $_SESSION['logsession'];
+            if(!isset($employee_id)){
+                include 'logout.php';
+            }
 		?>
 		<title>Home</title>
 		<style>
@@ -33,7 +36,7 @@
                             $result6 = $mysqli->query("SELECT COUNT(*) AS total FROM overtime RIGHT JOIN employee ON employee.employee_id = overtime.employee_id WHERE overtime.overtime_status = 'Disapproved'")->fetch_array();
                             $result7 = $mysqli->query("SELECT COUNT(*) AS total FROM coaching INNER JOIN employee ON employee.employee_id = coaching.employee_id WHERE coaching_status = 'Pending'")->fetch_array();
                             $result8 = $mysqli->query("SELECT COUNT(*) AS total FROM coaching INNER JOIN employee ON employee.employee_id = coaching.employee_id WHERE coaching_status = 'Completed'")->fetch_array();
-                            $result9 = $mysqli->query("SELECT * FROM announcement ORDER BY announcement_date DESC LIMIT 1")->fetch_array();
+                            $result9 = $mysqli->query("SELECT * FROM announcement WHERE announcement_archive = 'active' ORDER BY announcement_id DESC LIMIT 1")->fetch_array();
                             $result10 = $mysqli->query("SELECT COUNT(*) AS total FROM loan RIGHT JOIN employee ON employee.employee_id = loan.employee_id WHERE loanstatus = 'Pending'")->fetch_array();
                             $result11 = $mysqli->query("SELECT COUNT(*) AS total FROM loan RIGHT JOIN employee ON employee.employee_id = loan.employee_id WHERE loanstatus = 'Approved'")->fetch_array();
                             $result12 = $mysqli->query("SELECT COUNT(*) AS total FROM loan RIGHT JOIN employee ON employee.employee_id = loan.employee_id WHERE loanstatus = 'Disapproved'")->fetch_array();
@@ -166,7 +169,7 @@
                     </div>
 				</div>
 			<div class="col-lg-4">
-                <a href="announcementlist.php">
+                <!--a href="announcementlist.php"-->
 		                       <div class="widget red-bg p-lg text-center">
                         <div class="m-b-md">
                             <i class="fa fa-bell fa-2x" style="color:white"></i>
@@ -174,11 +177,32 @@
                                 Announcement
                             </h3>
 							 <small style="color:white"><?PHP if($result9['announcement_date']==""){echo"";} else {echo date("F d, Y",strtotime($result9['announcement_date']));} ?> </small><br><br>
-                            <div style="word-wrap:break-word;"><label style="color:white;font-size:14px;"><?PHP if($result9['announcement_details']==""){echo"";} else {echo $result9['announcement_details'];} ?> </label></div>
-                            <a href="announcementlist.php" style="color:white;font-size:10px;">See more announcements</a>
+                            <div style="word-wrap:break-word;"><label class="show-read-more" style="color:white;font-size:14px;"><?PHP if($result9['announcement_details']==""){echo"";} else {echo $result9['announcement_details'];} ?> </label></div>
+                            <script>
+                            $(document).ready(function(){
+                                var maxLength = 80;
+                                $(".show-read-more").each(function(){
+                                    var myStr = $(this).text();
+                                    if($.trim(myStr).length > maxLength){
+                                        var newStr = myStr.substring(0, maxLength);
+                                        var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
+                                        $(this).empty().html(newStr);
+                                        $(this).append('<br><a href="announcementlist.php" class="read-more" style="color:white;font-size:10px;">..read more</a>');
+                                     $(this).append('<br><br><a href="announcementlist.php" style="color:white;font-size:10px;">See more announcements</a>');
+                                    }
+                                    else if($.trim(myStr).length < maxLength){
+                                        $(this).append('<br><br><a href="announcementlist.php" style="color:white;font-size:10px;">See more announcements</a>');
+                                    }
+                                });
+                                $(".read-more").click(function(){
+                                    $(this).siblings(".more-text").contents().unwrap();
+                                    $(this).remove();
+                                });
+                            });
+                            </script>
                         </div>
                     </div>
-                </a>
+                <!--/a-->
 			</div>
 
 			</div>

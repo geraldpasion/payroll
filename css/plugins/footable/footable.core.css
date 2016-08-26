@@ -15,6 +15,7 @@
 }
 .footable {
   width: 100%;
+  text-align:center;
   /** SORTING **/
 
   /** PAGINATION **/
@@ -122,6 +123,7 @@
   -moz-user-select: -moz-none;
   -ms-user-select: none;
   user-select: none;
+  text-align:center;
 }
 .footable > thead > tr > th.footable-sortable:hover {
   cursor: pointer;

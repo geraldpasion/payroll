@@ -8,7 +8,7 @@
 			$empLevel = $_SESSION['employee_level'];
 			if(isset($_SESSION['logsession']) && $empLevel == '3') {
 				include('menuheader.php');
-			} else if(isset($_SESSION['logsession']) && $empLevel == '2'){
+			} else if (isset($_SESSION['logsession']) && $empLevel == '2'){
 				include('supervisormenuheader.php');
 			}
 			else {

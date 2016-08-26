@@ -79,7 +79,7 @@
 				  "hideMethod": "fadeOut" // 1.5s
 				}
 				toastr.success("Leave successfully approved!");
-				history.replaceState({}, "Title", "leaveapproval.php");
+				history.replaceState({}, "Title", "leaveapproval3.php");
 			}
 			showDisapproved=function(){
 				toastr.options = { 
@@ -99,7 +99,7 @@
 				  "hideMethod": "fadeOut" // 1.5s
 				}
 				toastr.success("Leave successfully disapproved!");
-				history.replaceState({}, "Title", "leaveapproval.php");
+				history.replaceState({}, "Title", "leaveapproval3.php");
 			}
 			showAlert=function(){
 				toastr.options = { 
@@ -119,7 +119,7 @@
 				  "hideMethod": "fadeOut" // 1.5s
 				}
 				toastr.error("Cannot approve application! Insufficient leave credits!");
-				history.replaceState({}, "Title", "leaveapproval.php");
+				history.replaceState({}, "Title", "leaveapproval3.php");
 			}
 			
 		});
@@ -194,7 +194,7 @@
 						$team2 = $_SESSION['employee_team1'];
 						$team3 = $_SESSION['employee_team2'];
 						$team4 = $_SESSION['employee_team3'];
-						if ($result = $mysqli->query("SELECT * FROM tbl_leave RIGHT JOIN employee ON employee.employee_id = tbl_leave.employee_id WHERE leave_status = 'Pending' AND (employee.employee_team = '$team1' OR employee.employee_team1 = '$team2' OR employee.employee_team2 = '$team3' OR employee.employee_team3 = '$team4') AND (employee.employee_level = 1 OR employee.employee_level = 2) ORDER BY leave_id")) //get records from db
+						if ($result = $mysqli->query("SELECT * FROM tbl_leave RIGHT JOIN employee ON employee.employee_id = tbl_leave.employee_id WHERE leave_status = 'Pending' AND (employee_team = '$team1' OR employee_team1 = '$team2' OR employee_team2 = '$team3' OR employee_team3 = '$team4') AND (employee_level = 1 OR employee_level = 2) ORDER BY leave_id")) //get records from db
 						{
 							if ($result->num_rows > 0) //display records if any
 							{
@@ -203,7 +203,7 @@
 								echo "<tr class = 'josh'>";	
 								echo "<th>Name</th>";
 								echo "<th>Date</th>";
-							
+								echo "<th>Team</th>";	
 								echo "<th>Reason</th>";
 								echo "<th>Type</th>";
 								echo "<th style='text-align:center'>SL</th>";
@@ -243,7 +243,8 @@
 														data-type='$row->leave_type'
 														
 									class = 'viewempdialog'>" . $row->employee_firstname . " " . $row->employee_lastname .  "</a></td>";
-									echo "<td>" . date("Y-m-d",strtotime($row->leave_start)) . "</td>";
+									echo "<td>" . $row->leave_start . "</td>";
+									echo "<td>" . $row->employee_team . "</td>";
 									echo "<td>" . $row->leave_reason . "</td>";
 									echo "<td>" . $row->leave_type . "</td>";
 									echo "<td style='text-align:center;'>" . $row->employee_sickleave . "</td>";
@@ -312,7 +313,7 @@
 					</div>
 				</div>	
 				<div class="modal-footer">
-					<button class='btn btn-primary' type='submit' id="approved" name = "approved"><i class='fa fa-check'></i> Approve</button></a>
+					<button class='btn btn-primary' type='submit' id="approved3" name = "approved3"><i class='fa fa-check'></i> Approve</button></a>
 					<button class='btn btn-danger' type='submit' name = "disapproved"><i class='fa fa-warning'></i> Disapprove</button></button></a>
 					<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
 					</form>

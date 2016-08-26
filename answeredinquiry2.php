@@ -126,7 +126,7 @@
 										$question =htmlentities($row->inquiry_question);
 										$answer = htmlentities($row->inquiry_answer);
 										echo '<td><a href="#" data-toggle="modal" data-target="#myModal4" data-inqid="'.$row->inquiry_id.'" data-quest="'.$question.'" data-answer="'.$answer.'" class = "answerdialog">';
-										echo "<button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> View</button></a>&nbsp;&nbsp;";
+										echo "<button class='btn btn-info' name = 'edit' type='button'><i class='fa fa-paste'></i> View</button></a>";
 										echo "</td>";
 										echo "</tr>";
 										

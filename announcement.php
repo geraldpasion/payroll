@@ -30,8 +30,10 @@
 			$(document).ready(function(){
 			$(document).on('submit','#myForm', function() {
 			var announcement = $("#announcement").val();
+			var subject = $("#subject").val();
 			// Returns successful data submission message when the entered information is stored in database.
-			var dataString = 'announcement1='+ announcement;
+			var ann = 'announcement1='+ announcement;
+			var sub = 'subject1='+ subject;
 			if(announcement==''){
 			$('#warning').fadeIn(700);
 			$('#success').hide();
@@ -41,7 +43,7 @@
 			$.ajax({
 				type: "POST",
 				url: "announcementexe.php",
-				data: dataString,
+				data: ann+"&"+sub,
 				cache: false,
 				success: function(result){
 				toastr.options = { 
@@ -62,6 +64,7 @@
 				}
 				toastr.success("Successfully posted announcement!");
 				$('#announcement').val('');
+				$('#subject').val('');
 					}
 				});
 			}
@@ -106,13 +109,18 @@
 						</div>
 						<form id = "myForm" method="POST"  class="form-horizontal">
 							<div class="form-group">
+								<label class="col-sm-4 control-label">Subject</label>
+								<div class="col-md-3"><input type="text" id = "subject" name = "subject" class = "form-control" required = "" placeholder = "Subject"></textarea></div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-4 control-label">Announcements</label>
 								<div class="col-md-4"><textarea id = "announcement" name = "announcement" class = "form-control" required = "" placeholder = "Input your announcement here."></textarea></div>
 							</div>
 							<div class="form-group">
-								<br><br><div class="col-md-8"></div>
+								<center>
 								<button type="submit" id = "submit" class="btn btn-w-m btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
+								</center>
 							</div>
 						</form>
 					</div>

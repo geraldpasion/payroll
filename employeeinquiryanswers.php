@@ -58,6 +58,7 @@
 							{
 								if ($result->num_rows > 0) //display records if any
 								{
+									echo"<center>";	
 									echo "<table class='footable table table-stripped' data-page-size='8' data-filter=#filter>";								
 									echo "<thead>";
 									echo "<tr>";
@@ -89,6 +90,7 @@
 										echo "</tr>";
 									}
 									echo "</table>";
+									echo"</center>";	
 								}
 							}
 						?>

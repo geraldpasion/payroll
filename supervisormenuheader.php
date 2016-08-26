@@ -1,12 +1,18 @@
 <?php 
 include('dbconfig.php');
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 if (!isset($_SESSION['logsession']) || $_SESSION['employee_level'] !== "2") {
   header("Location: login.php?loginla");
   exit();
 }
 $employee_id = $_SESSION['logsession'];
 $team = $_SESSION['employee_team'];
+
+if(!isset($employee_id)){
+	include 'logout.php';
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -148,11 +154,11 @@ $team = $_SESSION['employee_team'];
 
 	
 					</li>
-					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'announcement2.php' OR basename($_SERVER['SCRIPT_NAME']) == 'announcementlist2.php'){echo 'active'; }else { echo ''; } ?>">
+					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'announcement2.php' OR basename($_SERVER['SCRIPT_NAME']) == 'announcementlist.php'){echo 'active'; }else { echo ''; } ?>">
 						<a href="#"><i class="fa fa-exclamation"></i><span class="nav-label">Announcements</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'announcement2.php'){echo 'active'; }else { echo ''; } ?>"><a href="announcement2.php">Post announcement</a></li>
-							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'announcementlist2.php'){echo 'active'; }else { echo ''; } ?>"><a href="announcementlist2.php">Announcement list</a></li>
+							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'announcementlist.php'){echo 'active'; }else { echo ''; } ?>"><a href="announcementlist.php">Announcement list</a></li>
 						</ul>
 					</li>
 					<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'applicants.php'){echo 'active'; }else { echo ''; } ?>">

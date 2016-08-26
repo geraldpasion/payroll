@@ -118,21 +118,21 @@
 													<div class="form-group">
 								<input type="hidden" id = "empid" name = "empid" class="form-control" value = " <?php echo $_SESSION['logsession'] ?>">
 								<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Employee ID</label>
+								<label class="col-sm-2 control-label">Employee ID</label>
 								<div class="col-md-4"><input type="text" class="form-control" value = " <?php echo $_SESSION['logsession'] ?>" disabled = ""></div>
 							</div>
 	
 										<div class="form-group"><div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Reason</label>
+								<label class="col-sm-2 control-label">Reason</label>
 								<div class="col-md-4"><input id = "reason" name = "reason" type="text" class="form-control" required="" placeholder = "Type your reason here..."></div>
 							</div>
 							<div class="form-group"><div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Date</label>
+								<label class="col-sm-2 control-label">Date</label>
 								<div class="col-md-4"><input id = "date" type="text" onpaste="return false" onDrop="return false" class="form-control datepicker" name="daterange" required="" onKeyPress="return noneonly(this, event)"/> </div>
 							
 							</div>
 								<div class="form-group"><div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Time from</label>
+								<label class="col-sm-2 control-label">Time from</label>
 								<div class="col-md-4">
 									
 										<input type="text" id = "timefrom" name="timefrom" onpaste="return false" onDrop="return false" class="form-control timepicker1" required="" onKeyPress="return noneonly(this, event)">
@@ -141,15 +141,17 @@
 								</div>
 							</div>
 							<div class="form-group"><div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Time to</label>
+								<label class="col-sm-2 control-label">Time to</label>
 								<div class="col-md-4">
 										<input id = "timeto" type="text" onpaste="return false" onDrop="return false" class="form-control timepicker1" required="" onKeyPress="return noneonly(this, event)" >
 							
                             </div>
 							</div>
 							
-							<div class="col-md-4"></div>
-								<button id ="submit" type="submit" class="btn btn-w-m btn-primary">Submit</button>
+							<center>
+								<button id ="submit" type="submit" class="btn btn-w-m btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<button type="button" onClick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
+							</center>
 							</form>
 					</div>
 				</div>

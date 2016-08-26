@@ -8,6 +8,9 @@ if (!isset($_SESSION['logsession']) || $_SESSION['employee_level'] !== "1") {
   exit();
 }
 $employee_id = $_SESSION['logsession'];
+if(!isset($employee_id)){
+	include 'logout.php';
+}
 ?>
 <!DOCTYPE html>
 <html>

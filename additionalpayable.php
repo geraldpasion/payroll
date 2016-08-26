@@ -3,8 +3,14 @@
 
 	<head>
 		<?php
-			session_start();
+			if (session_status() == PHP_SESSION_NONE) {
+			    session_start();
+			}
 			$empLevel = $_SESSION['employee_level'];
+			if(!isset($empLevel)){
+				include 'logout.php';
+			}
+
 			if (isset($_SESSION['logsession']) && $empLevel == '3')  {
 				include('menuheader.php');
 			} else if(isset($_SESSION['logsession']) && $empLevel == '2') {
@@ -258,9 +264,11 @@
 								<div class="col-md-4"><input id = "reason"  onpaste="return false" onDrop="return false" name = "reason" type="text" class="form-control" required="" placeholder = "Type your reason here..."></div>
 							</div><br><br>
 							<div class="form-group">
-							<div class="col-md-8"></div>
+							
+							<center>
 								<button id ="submit" type="submit" class="btn btn-w-m btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<button type="button" onClick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
+							</center>
 							</div>
 							</form>
 					</div>

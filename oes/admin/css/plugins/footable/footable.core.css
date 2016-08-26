@@ -15,6 +15,7 @@
 }
 .footable {
   width: 100%;
+  text-align:center;
   /** SORTING **/
 
   /** PAGINATION **/

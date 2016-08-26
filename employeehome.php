@@ -24,68 +24,47 @@
                             $result6 = $mysqli->query("SELECT COUNT(*) AS total FROM overtime WHERE employee_id = $employee_id AND overtime_status = 'Disapproved'")->fetch_array();
                             $result7 = $mysqli->query("SELECT COUNT(*) AS total FROM coaching WHERE employee_id = '$employee_id'")->fetch_array();
                             $result8 = $mysqli->query("SELECT COUNT(*) AS total FROM coaching WHERE employee_id = '$employee_id'")->fetch_array();
-                            $result9 = $mysqli->query("SELECT * FROM announcement ORDER BY announcement_date DESC LIMIT 1")->fetch_array();
+                            $result9 = $mysqli->query("SELECT * FROM announcement WHERE announcement_archive = 'active' ORDER BY announcement_id DESC LIMIT 1")->fetch_array();
                             $result10 = $mysqli->query("SELECT COUNT(*) AS total FROM loan WHERE employee_id = '$employee_id' AND loanstatus='Pending'")->fetch_array();
                             $result11 = $mysqli->query("SELECT COUNT(*) AS total FROM loan WHERE employee_id = '$employee_id' AND loanstatus='Approved'")->fetch_array();
                             $result12 = $mysqli->query("SELECT COUNT(*) AS total FROM loan WHERE employee_id = '$employee_id' AND loanstatus='Disapproved'")->fetch_array();
                             $result13 = $mysqli->query("SELECT COUNT(*) AS total FROM inquiry WHERE employee_id = $employee_id AND inquiry_status = 'Pending'")->fetch_array();
                             $result14 = $mysqli->query("SELECT COUNT(*) AS total FROM inquiry WHERE employee_id = $employee_id AND inquiry_status = 'Answered'")->fetch_array();
                             $result15 = $mysqli->query("SELECT COUNT(applicant_status) AS total FROM emp_data WHERE applicant_status = 'For interview'")->fetch_array();
-                            $result16 = $mysqli->query("SELECT COUNT(*) AS total FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE logedit_status ='Pending'")->fetch_array();
-                            $result17 = $mysqli->query("SELECT COUNT(*) AS total FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE logedit_status ='Approved'")->fetch_array();
-                            $result18 = $mysqli->query("SELECT COUNT(*) AS total FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE logedit_status ='Disapproved'")->fetch_array();
+                            //$result16 = $mysqli->query("SELECT COUNT(*) AS total FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE logedit_status ='Pending'")->fetch_array();
+                            $result17 = $mysqli->query("SELECT COUNT(*) AS total FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE employee.employee_id = '$employee_id' AND logedit_status = 'Approved' AND employee_level = 1")->fetch_array();
+                            $result18 = $mysqli->query("SELECT COUNT(*) AS total FROM logedit INNER JOIN employee ON employee.employee_id = logedit.employee_id WHERE employee.employee_id = '$employee_id' AND logedit_status = 'Disapproved'")->fetch_array();
 
         ?>
 	</head>
 	<body>
         <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
-				<div class="col-lg-4">
-                    <a href = "dtr2.php">
+			     <div class="col-lg-4">
+                    <!--a href = "logedittracker.php"-->
                     <div class="widget lazur-bg p-xl">
-                                                    <h2>
-                                    <span class="fa fa-clock-o m-r-xs"></span>DTR
-                                </h2>
-                    <?php
-                            include('dbconfig.php');
-
-                                if ($resultx = $mysqli->query("SELECT * FROM attendance WHERE employee_id = $employee_id AND (attendance.status = 'Done' OR attendance.attendance_status = 'active') ORDER BY attendance_date DESC LIMIT 2")) //get records from db
-                                {
-                                    if ($resultx->num_rows > 0) //display records if any
-                                    {
-                                        echo "<table class='footable table table-stripped ' data-page-size='20' data-limit-navigation='5' data-filter=#filter>";                               
-                                        echo "<thead>";
-                                        echo "<tr>";
-                                        echo "<th>Date</th>";
-                                        echo "<th>In</th>";
-                                        echo "<th>Out</th>";
-                                        echo "</tr>";
-                                        echo "</thead>";
-                                        while ($row = $resultx->fetch_object())
-                                        {
-                                            $timeindisplay = date("g : i : A",strtotime($row->attendance_timein));
-                                            $breakoutdisplay = date("g : i : A",strtotime($row->attendance_breakout));
-                                            $breakindisplay = date("g : i : A",strtotime($row->attendance_breakin));
-                                            $timeoutdisplay = date("g : i : A",strtotime($row->attendance_timeout));
-                                            echo "<tr style='background-color:transparent'>";
-                                            echo "<td>" . date("F d, Y",strtotime($row->attendance_date)) . "</td>";
-                                            echo "<td>" . date("g:i A",strtotime($row->attendance_timein)) . "</td>";
-                                            if($row->attendance_timeout == ""){
-                                                echo "<td></td>";
-                                            }else{
-                                                echo "<td>" . date("g:i A",strtotime($row->attendance_timeout)) . "</td>";
-                                            }
-                                            echo "</tr>";
-                                        }
-                                        echo "</table>";
-                                    }
-                                }
-                            
-                        ?>
-
-                    
+                        <h2>
+                            <span class="fa fa-clock-o m-r-xs"></span>Log edit
+                        </h2>
+                       <ul class="list-unstyled m-t-md">
+                            <!--li>
+                                <a href = "logedit.php" style="color:white"><span class="fa fa-clipboard m-r-xs"></span>
+                                <label><?PHP //echo $result16['total']; ?> Pending</label></a>
+                            </li-->
+                            <li>
+                                <a href = "logedittracker.php" style="color:white"><span class="fa fa-thumbs-up m-r-xs"></span>
+                                <label><?PHP echo $result17['total']; ?> Approved</label></a>
+                            </li>
+                            <li>
+                                <a href = "logedittracker.php" style="color:white"><span class="fa fa-thumbs-down m-r-xs"></span>
+                                <label><?PHP echo $result18['total']; ?> Disapproved</label></a>
+                            </li>
+                                                        <li>
+                            <label></label>
+                            </li>
+                        </ul>
                     </div>  
-                    </a>        
+                    <!--/a-->        
                 </div>
 				<div class="col-lg-4">
 				<a href = "employeeovertimestatus.php">
@@ -188,20 +167,41 @@
 					</a>
 				</div>
 			<div class="col-lg-4">
-                <a href="employeeannouncementlist.php">
-		                       <div class="widget red-bg p-lg text-center">
+                <!--a href="announcementlist.php"-->
+                               <div class="widget red-bg p-lg text-center">
                         <div class="m-b-md">
                             <i class="fa fa-bell fa-2x" style="color:white"></i>
                             <h3 class="font-bold no-margins" style="color:white">
                                 Announcement
                             </h3>
                              <small style="color:white"><?PHP if($result9['announcement_date']==""){echo"";} else {echo date("F d, Y",strtotime($result9['announcement_date']));} ?> </small><br><br>
-                            <div style="word-wrap:break-word;"><label style="color:white;font-size:14px;"><?PHP if($result9['announcement_details']==""){echo"";} else {echo $result9['announcement_details'];} ?> </label></div>
-                            <a href="employeeannouncementlist.php" style="color:white;font-size:10px;">See more announcements</a>
+                            <div style="word-wrap:break-word;"><label class="show-read-more" style="color:white;font-size:14px;"><?PHP if($result9['announcement_details']==""){echo"";} else {echo $result9['announcement_details'];} ?> </label></div>
+                            <script>
+                            $(document).ready(function(){
+                                var maxLength = 80;
+                                $(".show-read-more").each(function(){
+                                    var myStr = $(this).text();
+                                    if($.trim(myStr).length > maxLength){
+                                        var newStr = myStr.substring(0, maxLength);
+                                        var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
+                                        $(this).empty().html(newStr);
+                                        $(this).append('<br><a href="employeeannouncementlist.php" class="read-more" style="color:white;font-size:10px;">..read more</a>');
+                                     $(this).append('<br><br><a href="employeeannouncementlist.php" style="color:white;font-size:10px;">See more announcements</a>');
+                                    }
+                                    else if($.trim(myStr).length < maxLength){
+                                        $(this).append('<br><br><a href="employeeannouncementlist.php" style="color:white;font-size:10px;">See more announcements</a>');
+                                    }
+                                });
+                                $(".read-more").click(function(){
+                                    $(this).siblings(".more-text").contents().unwrap();
+                                    $(this).remove();
+                                });
+                            });
+                            </script>
                         </div>
                     </div>
-                </a>
-			</div>
+                <!--/a-->
+            </div>
 
 			</div>
 			<div class="row">

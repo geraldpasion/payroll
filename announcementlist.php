@@ -1,3 +1,65 @@
+
+		<?php
+//functions
+
+function generate_table_header(){
+	echo "<thead>";
+		echo "<tr>";
+			echo "<th class='ann-date'>Date</th>";
+			echo "<th>Subject</th>";
+			echo "<th>Action</th>";
+		echo "</tr>";
+	echo "</thead>";
+
+}
+
+function generate_table_contents(){
+include('dbconfig.php');
+	if ($result = $mysqli->query("SELECT * FROM announcement WHERE announcement_archive = 'active' ORDER BY announcement_date DESC")) //get records from db
+	{
+		if ($result->num_rows > 0) //display records if any
+		{
+			while ($row = mysqli_fetch_object($result)){
+				$announcement_details = $row->announcement_details;
+				$subject=$row->subject;
+				//$announcement_details = str_replace('"','\"',$announcement_details);
+				//$announcement_details = str_replace("'","\'",$announcement_details);
+
+				echo "<tbody><tr>";
+					echo "<td class='ann-date'>". date("Y-m-d", strtotime($row->announcement_date)) ."</td>";
+					echo "<td class='announcement-content'>". $subject ."</td>";
+					echo "<td>";
+
+					//view
+					echo "<a href='#' data-toggle='modal' data-target='#myModal4' data-announcement='$row->announcement_details' 
+					class = 'answerdialog btn btn-success'>
+										 View
+										</a>&nbsp;&nbsp";
+
+					//edit
+					echo "<a href='#?id=".$row->announcement_id."' data-toggle='modal' data-target='#myModal5' 
+					data-announcement='$row->announcement_details'
+					data-announcementid='$row->announcement_id'   
+					class = 'answerdialog btn btn-primary'>
+										 Edit
+										</a>&nbsp;&nbsp";
+
+					//delete
+					//echo "<a href='announcement_delete.php?ann_id=".$row->announcement_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure?\");'>Delete</a>&nbsp;&nbsp; ";
+					echo "<a href='#' class='btn btn-danger' onclick='deleteRecord(".$row->announcement_id.")'>Delete</a>&nbsp;&nbsp; ";
+					"</td>";
+				echo "</tr>
+				</tbody>";
+				
+
+			}
+		}
+	}
+}
+
+
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -10,6 +72,8 @@
 
 		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
 			include('levelexe.php');
+		}else if(isset($_SESSION['logsession']) && $empLevel == '2') {
+			include('supervisormenuheader.php');
 		}
 		?>
 		<title>Announcement list</title>
@@ -124,65 +188,6 @@
 	</head>
 
 	<body>
-
-
-		<!-- bootbox code -->
-    <script src="js/bootbox.min.js"></script>
-    <script>
-        $(document).on("click", ".alert", function(e) {
-            bootbox.alert("Hello world!", function() {
-                console.log("Alert Callback");
-            });
-        });
-    </script>
-
-		<!--div class="row"-->
-		<div>
-			<div class="col-lg-12">
-				<div class="ibox float-e-margins">
-					<div class="ibox-title">
-						<h5>Announcement List</h5>
-						<div class="ibox-tools">
-							<a class="collapse-link">
-								<i class="fa fa-chevron-up"></i>
-							</a>
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-								<i class="fa fa-wrench"></i>
-							</a>
-							<ul class="dropdown-menu dropdown-user">
-								<li><a href="#">Config option 1</a>
-								</li>
-								<li><a href="#">Config option 2</a>
-								</li>
-							</ul>
-							<a class="close-link">
-								<i class="fa fa-times"></i>
-							</a>
-						</div>
-					</div>
-
-					<div class="ibox-content">
-                        <form>
-                        <input type="text" class="form-control" id="filter"
-                                   placeholder="Search in table">
-                        </form><br>
-
-							<!--table class="table table-striped table-hover table-responsive table-bordered"-->
-							<table class='footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter>
-								<?php
-									//generate table headers
-									generate_table_header();
-
-									//generate table contents
-									generate_table_contents();
-
-								?>
-							</table>
-
-					</div>
-				</div>
-			</div>
-        </div>
 		<div class="modal inmodal fade" id="myModal4" tabindex="-1" role="dialog"  aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -251,81 +256,70 @@
 				</div>
 			</div>
 		</div>
+
+
+		<!-- bootbox code -->
+    <script src="js/bootbox.min.js"></script>
+    <script>
+        $(document).on("click", ".alert", function(e) {
+            bootbox.alert("Hello world!", function() {
+                console.log("Alert Callback");
+            });
+        });
+    </script>
+
+		<!--div class="row"-->
+		<div>
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>Announcement List</h5>
+						<div class="ibox-tools">
+							<a class="collapse-link">
+								<i class="fa fa-chevron-up"></i>
+							</a>
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+								<i class="fa fa-wrench"></i>
+							</a>
+							<ul class="dropdown-menu dropdown-user">
+								<li><a href="#">Config option 1</a>
+								</li>
+								<li><a href="#">Config option 2</a>
+								</li>
+							</ul>
+							<a class="close-link">
+								<i class="fa fa-times"></i>
+							</a>
+						</div>
+					</div>
+
+					<div class="ibox-content">
+                        <form>
+                        <input type="text" class="form-control" id="filter"
+                                   placeholder="Search in table">
+                        </form><br>
+
+							<!--table class="table table-striped table-hover table-responsive table-bordered"-->
+							<table class='footable table table-stripped' data-page-size='10' data-limit-navigation='5' data-filter=#filter>
+								<?php
+									//generate table headers
+									generate_table_header();
+
+									//generate table contents
+									generate_table_contents();
+									
+								?>
+
+							</table>
+
+					</div>
+				</div>
+			</div>
+        </div>
+		
+		
 		<?php
 			include('employeemenufooter.php');
 		?>
-	</body>
-</html>
-
-<?php
-//functions
-
-function generate_table_header(){
-	echo "<thead>";
-		echo "<tr>";
-			echo "<th class='ann-date'>Date</th>";
-			echo "<th>Announcements</th>";
-			echo "<th>Action</th>";
-		echo "</tr>";
-	echo "</thead>";
-
-}
-
-function generate_table_contents(){
-include('dbconfig.php');
-	if ($result = $mysqli->query("SELECT * FROM announcement WHERE announcement_archive = 'active' ORDER BY announcement_date DESC")) //get records from db
-	{
-		if ($result->num_rows > 0) //display records if any
-		{
-			while ($row = mysqli_fetch_object($result)){
-				$announcement_details = $row->announcement_details;
-				//$announcement_details = str_replace('"','\"',$announcement_details);
-				//$announcement_details = str_replace("'","\'",$announcement_details);
-
-				echo "<tr>";
-					echo "<td class='ann-date'>". date("Y-m-d", strtotime($row->announcement_date)) ."</td>";
-					echo "<td class='announcement-content'>". $announcement_details ."</td>";
-					echo "<td>";
-
-					//view
-					echo "<a href='#' data-toggle='modal' data-target='#myModal4' data-announcement='$row->announcement_details' 
-					class = 'answerdialog btn btn-success'>
-										 View
-										</a>&nbsp;&nbsp";
-
-					//edit
-					echo "<a href='#?id=".$row->announcement_id."' data-toggle='modal' data-target='#myModal5' 
-					data-announcement='$row->announcement_details'
-					data-announcementid='$row->announcement_id'   
-					class = 'answerdialog btn btn-primary'>
-										 Edit
-										</a>&nbsp;&nbsp";
-
-					//delete
-					//echo "<a href='announcement_delete.php?ann_id=".$row->announcement_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure?\");'>Delete</a>&nbsp;&nbsp; ";
-					echo "<a href='#' class='btn btn-danger' onclick='deleteRecord(".$row->announcement_id.")'>Delete</a>&nbsp;&nbsp; ";
-					"</td>";
-				echo "</tr>";
-			}
-		}
-	}
-}
 
 
-
-?>
-
-<script>
-// 	function loadDoc() {
-//   var xhttp = new XMLHttpRequest();
-//   xhttp.onreadystatechange = function() {
-//     if (xhttp.readyState == 4 && xhttp.status == 200) {
-//      document.getElementById("details").innerHTML = xhttp.responseText;
-//     }
-//   };
-//   xhttp.open("GET", "ajax_info.txt", true);
-//   xhttp.send();
-
-// }
-
-</script>

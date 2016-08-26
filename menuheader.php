@@ -3,16 +3,16 @@ include('dbconfig.php');
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-if(!$_SESSION['login']) {
-	header("Location: login.php");
-  exit();
-} else {
-	if (!isset($_SESSION['logsession']) || $_SESSION['employee_level'] !== "3") {
-	  header("Location: login.php");
-	  exit();
-	}
+// if(!$_SESSION['logsession']) {
+// 	header("Location: login.php");
+//   exit();
+// } else {
+// 	if (!isset($_SESSION['logsession']) || $_SESSION['employee_level'] !== "3") {
+// 	  header("Location: login.php");
+// 	  exit();
+// 	}
 	
-}
+// }
 $employee_id = $_SESSION['logsession'];
 if(!isset($employee_id)){
 	include 'logout.php';

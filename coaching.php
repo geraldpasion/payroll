@@ -195,9 +195,11 @@
 								
 							</div><br><br>
 							<div class="form-group">
-							<div class="col-md-8"></div>
+							<!--<div class="col-md-5"></div>-->
+							<center>
 								<button id = "submit" type="submit" class="btn btn-w-m btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
+							</center>
 							</div>
 						</form>
 					</div>

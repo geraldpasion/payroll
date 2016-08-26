@@ -3,15 +3,27 @@
 
 	<head>
 		<?php
-				session_start();
+		if (session_status() == PHP_SESSION_NONE) {
+    			session_start();
+			}
 		$empLevel = $_SESSION['employee_level'];
+		$empid = $_SESSION['logsession'];
+
 		if(isset($_SESSION['logsession']) && $empLevel == '3') {
 				include('menuheader.php');
 
 		}else if(isset($_SESSION['logsession']) && $empLevel == '4') {
 			include('levelexe.php');
 		}
-			$empid = $_SESSION['logsession'];
+		else
+		{
+			include 'login.php';
+		}
+			
+
+		if(!isset($empid)){
+			include 'logout.php';
+		}
 		?>
 		<title>Interview Schedule</title>
 				<style>

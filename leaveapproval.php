@@ -202,9 +202,9 @@
 							
 								echo "<th>Reason</th>";
 								echo "<th>Type</th>";
-								echo "<th style='text-align:center'>SL</th>";
-								echo "<th style='text-align:center'>VL</th>";
 								echo "<th style='text-align:center'>PRD</th>";
+								echo "<th style='text-align:center'>VL</th>";
+								echo "<th style='text-align:center'>SL</th>";
 								echo "<th style='text-align:center'>ML</th>";
 								echo "<th style='text-align:center'>PL</th>";
 								echo "<th style='text-align:center'>SPL</th>";
@@ -242,9 +242,9 @@
 									echo "<td>" . date("Y-m-d",strtotime($row->leave_start)) . "</td>";
 									echo "<td>" . $row->leave_reason . "</td>";
 									echo "<td>" . $row->leave_type . "</td>";
-									echo "<td style='text-align:center;'>" . $row->employee_sickleave . "</td>";
-									echo "<td style='text-align:center;'>" . $row->employee_vacationleave . "</td>";
 									echo "<td style='text-align:center;'>" . $row->employee_incentive . "</td>";
+									echo "<td style='text-align:center;'>" . $row->employee_vacationleave . "</td>";
+									echo "<td style='text-align:center;'>" . $row->employee_sickleave . "</td>";
 									echo "<td style='text-align:center;'>" . $row->employee_maternityleave . "</td>";
 									echo "<td style='text-align:center;'>" . $row->employee_paternityleave . "</td>";
 									echo "<td style='text-align:center;'>" . $row->employee_singleparentleave . "</td>";

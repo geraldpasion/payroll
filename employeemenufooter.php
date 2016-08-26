@@ -1,4 +1,4 @@
-<div class="footer">
+<div class="footer" style="position: relative; clear: both;">
             <div class="pull-right">
                 <div id="clockbox"></div>
             </div>

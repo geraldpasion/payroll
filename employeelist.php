@@ -138,7 +138,7 @@
 			 document.getElementById("output").src = imgss;
 			 
 			 
-			 if(level==1||level==2||level==4){
+			if(level==1||level==2||level==4){
 
 					 $(".teams2").fadeOut();
 					 $(".teams3").fadeOut();
@@ -245,7 +245,15 @@
 			 var team2 = $(this).data('team2');
 			 var team3 = $(this).data('team3');
 			 var team4 = $(this).data('team4');
-			 
+			 var vleave = $(this).data('vleave');
+			 var sleave = $(this).data('sleave');
+			 var prd = $(this).data('prd');
+			 var mleave = $(this).data('mleave');
+			 var pleave = $(this).data('pleave');
+			 var spleave = $(this).data('spleave');
+			 var paylessleave = $(this).data('paylessleave');
+			 var oleave = $(this).data('oleave');
+
 			 
 			 
 			 $(".modal-body #empid").val( employeeid );
@@ -286,6 +294,14 @@
 			 $(".modal-body #team4").val( team4 );
 			 $(".modal-body #acctnum").val( acctnum );
 			 $(".modal-body #payslippassword").val( payslippassword );
+			 $(".modal-body #vLeave").val( vleave );
+			 $(".modal-body #sLeave").val( sleave );
+			 $(".modal-body #paidRST").val( prd );
+			 $(".modal-body #mLeave").val( mleave );
+			 $(".modal-body #pLeave").val( pleave );
+			 $(".modal-body #spLeave").val( spleave );
+			 $(".modal-body #leaveNoPay").val( paylessleave );
+			 $(".modal-body #oLeave").val( oleave );
 			 // As pointed out in comments, 
 			 // it is superfluous to have to manually call the modal.
 			 // $('#addBookDialog').modal('show');   
@@ -383,6 +399,29 @@
 		}
 		?>
 		<script src="js/keypress.js"></script>
+
+		<script type="text/javascript">
+			// $(document).on("click", ".viewempdialog", function () {
+			// var employeeid = $(this).data('employee-id');			
+			// //var cutoffd = $(this).data('cutoffd');
+			// //var submitdate = $(this).data('submitdate');
+
+			// $.ajax({
+	  //           url: "employeelist_modal.php",
+	  //           method: "POST",
+	  //           data:{
+			//        empid: employeeid
+			//        //cutoff: cutoffd,
+			//        //submit: submitdate
+			//     },
+	  //           success: function(data) {
+	  //               $('#employeelist_modal').html(data);
+	  //           }
+	  //       });
+			
+			// });
+		</script>
+		
 	</head>
 	<body>
 		<div class="row">
@@ -485,6 +524,12 @@
 														data-team2='$row1->employee_team1'
 														data-team3='$row1->employee_team2'
 														data-team4='$row1->employee_team3'
+														data-vleave='$row1->employee_vacationleave'
+														data-sleave='$row1->employee_sickleave'
+														data-prd='$row1->employee_incentive'
+														data-mleave='$row1->employee_maternityleave'
+														data-pleave='$row1->employee_paternityleave'
+														data-spleave='$row1->employee_singleparentleave'
 														data-payslippassword='$row1->employee_payslippassword'  
 
 											data-target='#myModal2' class = 'viewempdialog'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</a></td>";
@@ -531,6 +576,12 @@
 													data-team3='$row1->employee_team2'
 													data-team4='$row1->employee_team3'
 													data-acctnum='$row1->account_number'
+													data-vleave='$row1->employee_vacationleave'
+													data-sleave='$row1->employee_sickleave'
+														data-prd='$row1->employee_incentive'
+														data-mleave='$row1->employee_maternityleave'
+														data-pleave='$row1->employee_paternityleave'
+														data-spleave='$row1->employee_singleparentleave'
 													data-payslippassword='$row1->employee_payslippassword' 
 													data-im='$row1->image'
 													
@@ -563,7 +614,7 @@
  ?>
 	<div class="modal inmodal fade" id="myModal2" tabindex="-1" role="dialog"  aria-hidden="true">
 		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
+			<div class="modal-content" id="employeelist_modal">
 				<div class="modal-header">
 				<?php
 					//$q = mysqli_query("SELECT * FROM employee WHERE employee_id = '$empid");
@@ -673,76 +724,76 @@
 								<label class="col-sm-3 control-label">Department</label>
 								<div class="col-sm-3"><input type="text" id = "department"  name = "department" readonly = "readonly" data-mask="99-999999999-9" required=""></div>
 							<!-- <div class="form-group"></div> -->
-								<label class="col-sm-3 control-label">Vacation Leave</label>
-								<div class="col-sm-3"> <input type="text" id = "vLeave" name = "vLeave"  readonly = "readonly" required=""></div>
-								<br>
+								<label class="col-sm-3 control-label">Access Level</label>
+								<div class="col-sm-3"><input type = "text" id = "level" name = "level" readonly = "readonly" required="" ></div><br>
+
 							<div class="form-group"></div>	
 								<label class="col-sm-3 control-label">Team 1</label>
 								<div class="col-sm-3"> <input type="text" id = "team1" name = "team"  readonly = "readonly" required=""></div>
 							<!-- <div class="form-group"></div> -->
-								<label class="col-sm-3 control-label">Team 2</label>
-								<div class="col-sm-3"> <input type="text" id = "team2" name = "team1"  readonly = "readonly" required=""></div><br>
+								<label class="col-sm-3 control-label">Vacation Leave</label>
+								<div class="col-sm-3"> <input type="text" id = "vLeave" name = "vLeave"  readonly = "readonly" required=""></div><br>
 
-							<div class="form-group"></div>	
-								<label class="col-sm-3 control-label">Team 3</label>
+
+							<div class="form-group"></div>
+								<label class="col-sm-3 control-label" id="vt2">Team 2</label>
+								<div class="col-sm-3"> <input type="text" id = "team2" name = "team1"  readonly = "readonly" required=""></div>
+							<!-- <div class="form-group"></div> -->
+								<label class="col-sm-3 control-label">Sick Leave</label>
+								<div class="col-sm-3"> <input type="text" id = "sLeave" name = "sLeave"  readonly = "readonly" required=""></div><br>
+
+							<div class="form-group"></div>
+								<label class="col-sm-3 control-label" id="vt3">Team 3</label>
 								<div class="col-sm-3"> <input type="text" id = "team3" name = "team2"  readonly = "readonly" required=""></div>
 							<!-- <div class="form-group"></div> -->
-								<label class="col-sm-3 control-label">Team 4</label>
-								<div class="col-sm-3"> <input type="text" id = "team4" name = "team3"  readonly = "readonly" required=""></div><br>
-
-							<div class="form-group"></div>
-								<label class="col-sm-3 control-label">Sick Leave</label>
-								<div class="col-sm-3"> <input type="text" id = "sLeave" name = "sLeave"  readonly = "readonly" required=""></div>
-							<!-- <div class="form-group"></div> -->
-								<label class="col-sm-3 control-label">Shift Type</label>
-								<div class="col-sm-3"> <input type="text" id = "employeetype" name = "employeetype"  readonly = "readonly" required=""></div><br>
+								<label class="col-sm-3">Paid Restday/Incentive</label>
+								<div class="col-sm-3"><input type="text" id = "paidRST"  name = "paidRST" readonly = "readonly" required=""></div><br>
 						
 							<div class="form-group"></div>
-								<label class="col-sm-3 control-label">Maternity Leave</label>
-								<div class="col-sm-3"><input type="text" id = "mLeave"  name = "mLeave" readonly = "readonly" data-mask="999-999-999" required=""></div>
+								<label class="col-sm-3 control-label" id="vt4">Team 4</label>
+								<div class="col-sm-3"> <input type="text" id = "team4" name = "team3"  readonly = "readonly" required=""></div>
 							<!-- <div class="form-group"></div> -->
+								<label class="col-sm-3 control-label">Maternity Leave</label>
+								<div class="col-sm-3"><input type="text" id = "mLeave"  name = "mLeave" readonly = "readonly" data-mask="999-999-999" required=""></div><br>
+							
+							<div class="form-group"></div>
 								<label class="col-sm-3 control-label">Schedule</label>
 								<div class="col-sm-3"> <input type="text" id = "shift" name = "shift"  readonly = "readonly" required=""></div>
-								<br>
-
-							<div class="form-group"></div>
+							<!-- <div class="form-group"></div> -->
 								<label class="col-sm-3 control-label">Paternity Leave</label>
 								<div class="col-sm-3"> <input type="text" id = "pLeave" name = "pLeave"  readonly = "readonly" required=""></div>
-								<label class="col-sm-3 control-label">Restday</label>
-							<!-- <div class="form-group"></div> -->
-								<div class="col-sm-3"><input type="text" id = "restday"  name = "restday" readonly = "readonly" required=""></div>
 								<br>
 
 							<div class="form-group"></div>
+								<label class="col-sm-3 control-label">Restday</label>
+								<div class="col-sm-3"><input type="text" id = "restday"  name = "restday" readonly = "readonly" required=""></div>
+							<!-- <div class="form-group"></div> -->
 								<label class="col-sm-3">Single-Parent Leave</label>
 								<div class="col-sm-3"><input type="text" id = "spLeave"  name = "spLeave" readonly = "readonly" required=""></div>
-							<!-- <div class="form-group"></div> -->
-								<label class="col-sm-3 control-label">Access Level</label>
-								<div class="col-sm-3"><input type = "text" id = "level" name = "level" readonly = "readonly" required="" ></div><br>
-							
-							<div class="form-group"></div>
-								<label class="col-sm-3">Leave without pay</label>
-								<div class="col-sm-3"><input type="text" id = "leaveNoPay"  name = "leaveNoPay" readonly = "readonly" required=""></div>
-							<!-- <div class="form-group"></div> -->
-								<label class="col-sm-3 control-label">Password</label>
-								<div class="col-sm-3"><input type="text" id = "password" name="password" readonly = "readonly" readonly = "readonly" required=""></div><br>
-							
-							<div class="form-group"></div>
-								<label class="col-sm-3">Paid Restday/Incentive</label>
-								<div class="col-sm-3"><input type="text" id = "paidRST"  name = "paidRST" readonly = "readonly" required=""></div>
-							<!-- <div class="form-group"></div> -->
-								<label class="col-sm-3 control-label">Tin No.</label>
-								<div class="col-sm-3"><input type="text" id = "tin" name = "tin" readonly = "readonly" onKeyPress="return lettersonly(this, event)" required=""></div><br>
+								<br>
 
 							<div class="form-group"></div>
-								<label class="col-sm-3">Other Leave</label>
-								<div class="col-sm-3"><input type="text" id = "oLeave"  name = "oLeave" readonly = "readonly" required=""></div>
+								<label class="col-sm-3 control-label">Password</label>
+								<div class="col-sm-3"><input type="text" id = "password" name="password" readonly = "readonly" readonly = "readonly" required=""></div>
 							<!-- <div class="form-group"></div> -->
+								<label class="col-sm-3">Leave without pay</label>
+								<div class="col-sm-3"><input type="text" id = "leaveNoPay"  name = "leaveNoPay" readonly = "readonly" required=""></div><br>
+							
+							<div class="form-group"></div>
+								<label class="col-sm-3 control-label">Tin No.</label>
+								<div class="col-sm-3"><input type="text" id = "tin" name = "tin" readonly = "readonly" onKeyPress="return lettersonly(this, event)" required=""></div>
+							<!-- <div class="form-group"></div> -->
+								<label class="col-sm-3">Other Leave</label>
+								<div class="col-sm-3"><input type="text" id = "oLeave"  name = "oLeave" readonly = "readonly" required=""></div><br>
+
+							<div class="form-group"></div>
 								<label class="col-sm-3 control-label">Payment Schedule</label>
 								<div class="col-sm-3"><input type="text" id = "cutoff" name = "cutoff" readonly = "readonly" onKeyPress="return lettersonly(this, event)" required=""></div>
-									
-									</div>
-								</div>
+							<!-- <div class="form-group"></div> -->
+								<label class="col-sm-3 control-label">Shift Type</label>
+								<div class="col-sm-3"> <input type="text" id = "employeetype" name = "employeetype"  readonly = "readonly" required=""></div>
+							</div>
+						</div>
 							</ul>
 
 								<div id="paysettings" class="tab-pane" >
@@ -881,19 +932,41 @@
 							</div>
 						</ul>
 
-						<div style= "max-height:100px; min-height:100px; overflow-y:scroll;" id="leavedetails" class="tab-pane" >
+						<div style= "max-height:100px; min-height:300px; overflow-y:scroll;" id="leavedetails" class="tab-pane" >
 								<div class="panel-body">
-									<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>						
+									<table id="leave_type" class='footable table table-stripped' data-page-size='20' data-filter=#filter>						
 										<thead>
 											<tr>
 												<th>Leave Type</th>
 												<th>From</th>
-												<th>To</th>
-												<th>Days</th>
+												<th>Status</th>
+												<!--th>To</th-->
+												<!--th>Days</th-->
 												<th>Approved By</th>
 												<th>Approve Date</th>
 											</tr>
 										</thead>
+										<tbody>
+											<?php
+											//call employeelist_modal.php here
+
+
+
+												/*$leavedetails = $mysqli->query("SELECT * FROM tbl_leave WHERE employee_id=$empid");
+													if($leavedetails->num_rows > 0){
+														while($leave = $leavedetails->fetch_object()){
+															echo '<tr>';
+															echo '<td>'.$leave->leave_type.'</td>';
+															echo '<td>'.$leave->leave_start.'</td>';
+															//echo '<td>'.$leave->.'</td>';
+															echo '<td>'.$leave->leave_approvedby.'</td>';
+															echo '<td>'.$leave->leave_approvaldate.'</td>';
+															echo '</tr>';
+														}
+													}
+												*/
+											?>
+										</tbody>
 									</table>
 								</div>
 							</div>
@@ -910,6 +983,38 @@
 							</div>
 						</div>
 					</div>
+						<!--script>
+								/function dis(){
+								//	var val=document.getElementByClassname("level").value;
+								//var val =  document.getElementsByName("level").value;
+								var myValue = $( "#level" ).val();
+								//alert(myValue);
+										if(myValue==1 || myValue==2 || myValue==4){
+											  $("#team2").hide();
+											  $("#team3").hide();
+											  $("#team4").hide();
+											  $("#vt2").hide();
+											  $("#vt3").hide();
+											  $("#vt4").hide();
+											 //document.getElementById("team2").disabled=true;
+											// document.getElementById("team3").disabled=true;
+											// document.getElementById("team4").disabled=true;
+											 
+											// alert('1,2,4');
+
+										}//else if(myValue==3){
+											  //$(".teams2").fadeIn();
+											  //$(".teams3").fadeIn();
+											  //$(".teams4").fadeIn();
+											  //$("#lt2").fadeIn();
+											  //$("#lt3").fadeIn();
+											  //$("#lt4").fadeIn();
+											//document.getElementById("team2").style.visibility=false;
+											// document.getElementById("team3").style.visibility=false;
+											// document.getElementById("team4").style.visibility=false;
+										//}
+								}
+							</script-->
 							<!-- <div class="form-group"></div>
 								<label class="col-sm-3 control-label">Taxable</label>
 								<div class="col-sm-3"><input type="text" id = "password" name = "password" onKeyPress="return lettersonly(this, event)" readonly = "readonly" required=""></div>
@@ -1108,7 +1213,7 @@
 							</div>
 							<div class="form-group">
 								<label class="col-md-2 control-label">Team #1</label>
-								<div class="col-md-4"><select id = "team1" class="teams1"  data-default-value="z" name="team" required=""><option selected="true"  value = "">Select team...</option>
+								<div class="col-md-4"><select id = "team1" class="teams1"  data-default-value="z" name="team" ><option selected="true"  value = "">Select team...</option>
 								<?php 
 								include('dbconfig.php');
 
@@ -1134,7 +1239,7 @@
 								</SELECT>
 								</div>
 								<label class="col-md-2 control-label" id ="lt2">Team #2</label>
-								<div class="col-md-4"><select id = "team2" class="teams2"  data-default-value="z" name="team1" required=""><option selected="true"  value = "">Select team...</option>
+								<div class="col-md-4"><select id = "team2" class="teams2"  data-default-value="z" name="team1" ><option selected="true"  value = "">Select team...</option>
 								<?php 
 								include('dbconfig.php');
 
@@ -1162,7 +1267,7 @@
 							</div>
 							<div class="form-group">		
 								<label class="col-md-2 control-label" id ="lt3">Team #3</label>
-								<div class="col-md-4"><select id = "team3" class="teams3"  data-default-value="z" name="team2" required=""><option selected="true"  value = "">Select team...</option>
+								<div class="col-md-4"><select id = "team3" class="teams3"  data-default-value="z" name="team2" ><option selected="true"  value = "">Select team...</option>
 								<?php 
 								include('dbconfig.php');
 
@@ -1188,7 +1293,7 @@
 								</SELECT>
 								</div>
 								<label class="col-md-2 control-label" id ="lt4">Team #4</label>
-								<div class="col-md-4"><select id = "team4" class="teams4"  data-default-value="z" name="team3" required=""><option selected="true"  value = "">Select team...</option>
+								<div class="col-md-4"><select id = "team4" class="teams4"  data-default-value="z" name="team3" ><option selected="true"  value = "">Select team...</option>
 								<?php 
 								include('dbconfig.php');
 
@@ -1310,8 +1415,9 @@
 								}
 							</script>	
 				<div class="modal-footer">
-					<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+					
 					<button type="submit" class="btn btn-primary">Submit</button>
+					<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
 
 					</form> <!-- END OF EDIT MODAL -->
 				</div>
@@ -1319,6 +1425,7 @@
 		</div>
 				 <script src="js/jquery.min.js"></script>
 		<script src="js/timepicki.js"></script>
+		
 		<script>
 		$('.timepicker1').timepicki();
 		</script>
@@ -1333,5 +1440,26 @@
 			include('menufooter.php');
 		?>
 	</body>
+	<script type="text/javascript">
+		$('#myModal2').on('shown.bs.modal', function () {
+	   		var menuId = $('#empid').val();
+			var request = $.ajax({
+			  url: "leave_type_table.php",
+			  method: "GET",
+			  data: { empid : menuId },
+			  dataType: "html"
+			});
+			 
+			request.done(function(msg) {
+				//alert(msg);
+			  $("#leave_type").html(msg);
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			});
+		});
+
+	</script>
 
 </html>

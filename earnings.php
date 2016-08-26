@@ -372,10 +372,11 @@
 							
 							?>
 							<div class="form-group">								
-								<div class="col-sm-9"></div>								
-								<div class="col-sm-1">
-								<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button></div>
-								<button id = "sub" type="submit" name="sub" class="btn btn3 btn-w-m btn-primary">Submit</button>
+								<div class="col-sm-4"></div>								
+								
+								<button id = "sub" type="submit" name="sub" class="btn btn3 btn-w-m btn-primary">Submit</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
+								
 							</div>
 						</form>
 						</div>
