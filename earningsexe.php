@@ -105,7 +105,7 @@ else{
 				$stmt->close();
 
 				echo 'swal({title: "SUCCESS",text: "Earning Successfully Added",timer: 1000, type: "success",showConfirmButton: false}); window.setTimeout(function(){location.reload();}, 1000);';
-				header("Location: earnings.php?added");
+				//header("Location: earnings.php?added");
 			}
 			// show an error if the query has an error
 			else

@@ -15,6 +15,9 @@
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
+
+//initialize checking of updates
+//include 'initialization.php';
 	
 //show errors remove on live site
 	// 	if ($resultss = $mysqli->query("SELECT * FROM cutoff WHERE cutoff_id = '1'")){

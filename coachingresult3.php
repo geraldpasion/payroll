@@ -149,7 +149,7 @@
 
 
 								//retained old code here
-								if ($result = $mysqli->query("SELECT * FROM coaching INNER JOIN employee ON employee.employee_id = coaching.employee_id WHERE coaching_status = 'Pending' AND (employee_team = '$team1' OR employee_team1 = '$team2' OR employee_team2 = '$team3' OR employee_team3 = '$team4') AND (employee_level = 1 OR employee_level = 2)")) //get records from db
+								if ($result = $mysqli->query("SELECT * FROM coaching INNER JOIN employee ON employee.employee_id = coaching.employee_id WHERE coaching_status = 'Pending' AND (employee_team = '$team1' OR employee_team = '$team2' OR employee_team = '$team3' OR employee_team = '$team4') AND (employee_level = 1 OR employee_level = 2)")) //get records from db
 								//if ($result = $mysqli->query("SELECT * FROM coaching'")) //get records from db
 								{
 									if ($result->num_rows > 0) //display records if any

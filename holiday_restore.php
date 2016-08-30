@@ -4,7 +4,7 @@ $username = "root";
 $password = "";
 $dbname = "payroll";
 
-$holidayid=$_GET['holidayid'];
+$holidayid=$_GET['announcement_id'];
 
 echo "id: ".$holidayid;
 // Create connection

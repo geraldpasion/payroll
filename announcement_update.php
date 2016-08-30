@@ -3,6 +3,7 @@
 
 $announcement_val=$_POST['ann_val'];
 $ann_id=$_POST['ann_id'];
+$subject_val=$_POST['sebject_val'];
 
 //$ann_id = 10;
 
@@ -19,7 +20,7 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "UPDATE announcement SET announcement_details='$announcement_val' WHERE announcement_id='$ann_id'";
+$sql = "UPDATE announcement SET announcement_details='$announcement_val', subject='$subject_val' WHERE announcement_id='$ann_id'";
 
 if (mysqli_query($conn, $sql)) {
     echo "Record updated successfully";

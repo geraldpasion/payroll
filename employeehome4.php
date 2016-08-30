@@ -180,7 +180,7 @@
                             <div style="word-wrap:break-word;"><label class="show-read-more" style="color:white;font-size:14px;"><?PHP if($result9['announcement_details']==""){echo"";} else {echo $result9['announcement_details'];} ?> </label></div>
                             <script>
                             $(document).ready(function(){
-                                var maxLength = 80;
+                                var maxLength = 50;
                                 $(".show-read-more").each(function(){
                                     var myStr = $(this).text();
                                     if($.trim(myStr).length > maxLength){
@@ -188,7 +188,7 @@
                                         var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
                                         $(this).empty().html(newStr);
                                         $(this).append('<br><a href="announcementlist.php" class="read-more" style="color:white;font-size:10px;">..read more</a>');
-                                     $(this).append('<br><br><a href="announcementlist.php" style="color:white;font-size:10px;">See more announcements</a>');
+                                     $(this).append('<br><a href="announcementlist.php" style="color:white;font-size:10px;">See more announcements</a>');
                                     }
                                     else if($.trim(myStr).length < maxLength){
                                         $(this).append('<br><br><a href="announcementlist.php" style="color:white;font-size:10px;">See more announcements</a>');

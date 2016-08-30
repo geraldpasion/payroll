@@ -198,7 +198,7 @@
 					$team2 = $_SESSION['employee_team1'];
 					$team3 = $_SESSION['employee_team2'];
 					$team4 = $_SESSION['employee_team3'];
-					if ($result = $mysqli->query("SELECT * FROM tbl_leave RIGHT JOIN employee ON employee.employee_id = tbl_leave.employee_id  WHERE (leave_status = 'Approved' OR leave_status = 'Disapproved') AND (employee.employee_level = 1 OR employee.employee_level = 2) AND (employee.employee_team = '$team1' OR employee.employee_team1 = '$team2' OR employee.employee_team2 = '$team3' OR employee.employee_team3 = '$team4') ORDER BY leave_id DESC")) //get records from db
+					if ($result = $mysqli->query("SELECT * FROM tbl_leave RIGHT JOIN employee ON employee.employee_id = tbl_leave.employee_id  WHERE (leave_status = 'Approved' OR leave_status = 'Disapproved') AND (employee.employee_level = 1 OR employee.employee_level = 2) AND (employee.employee_team = '$team1' OR employee.employee_team = '$team2' OR employee.employee_team = '$team3' OR employee.employee_team = '$team4') ORDER BY leave_id DESC")) //get records from db
 					{
 						if ($result->num_rows > 0) //display records if any
 						{
@@ -206,8 +206,8 @@
 							echo "<thead>";
 							echo "<tr>";	
 							echo "<th>Name</th>";
+							echo "<th>Team</th>";
 							echo "<th>Date</th>";
-                     
                             echo "<th>Reason</th>";
 							echo "<th>Type</th>";
 							echo "<th>Status</th>";
@@ -244,8 +244,8 @@
 														data-remarks='$row->leave_remarks'
 														
 									class = 'viewempdialog'>" . $row->employee_firstname . " " . $row->employee_lastname .  "</a></td>";
+								echo "<td>" . $row->employee_team . "</td>";
 								echo "<td>" . date("Y-m-d",strtotime($row->leave_start)) . "</td>";
-			
 								echo "<td>" . $row->leave_reason . "</td>";
 								echo "<td>" . $row->leave_type . "</td>";
 								echo "<td>" . $row->leave_status . "</td>";

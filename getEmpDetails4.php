@@ -324,6 +324,7 @@
 							echo "<button type='submit' name='list' id='list' class='btn btn-success' style='float:right;'><span class='glyphicon glyphicon-circle-arrow-left'>&nbsp;</span><span>Employee List</span></button>";
 							echo "<input type='text' class='form-control input-sm m-b-xs' id='filter' placeholder='Search in table'>";
 
+							//query for FIXED
 							if ($result = $mysqli->query("SELECT * FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id $keydate ORDER BY attendance_date")) //get records from db
 							{
 								if ($result->num_rows > 0) //display records if any
@@ -579,6 +580,8 @@
 									echo "</table>";
 								}
 							}
+
+							//query for FLEXIBLE
 							if ($result = $mysqli->query("SELECT * FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id $keydate1 ORDER BY attendance_date")) //get records from db
 							{
 								if ($result->num_rows > 0) //display records if any

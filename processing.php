@@ -230,13 +230,13 @@ if(isset($_GET['addEarnings']))
 							<br><br>
 							<div class="form-group">
 								<div class="col-md-3"></div>
-								<label class="col-md-1 control-label">Amount</label>
+								<label class="col-md-2 control-label">Amount</label>
 								<div class="col-md-4"><input type="text" class="form-control" name="amount" placeholder="Enter Amount"/></div>
 							</div>
 							<br><br>
 							<div class="form-group">
 								<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Date Applied</label>
+								<label class="col-sm-2 control-label">Date Applied</label>
 								<div class="col-md-4"><input id = "date" type="text" onpaste="return false" onDrop="return false" class="form-control" name="daterange3" onKeyPress="return noneonly(this, event)" placeholder="click to pick date"/></div>
 							</div>
 							<!-- <br><br>

@@ -17,33 +17,323 @@
         <link href="css/animate.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
         <link href="css/plugins/iCheck/custom.css" rel="stylesheet">        
-                
+        <script type="text/javascript">
+            $(document).on("click", ".answerdialog", function () {
+             var inqid = $(this).data('announcement');
+             var subje = $(this).data('subject');
+             
+              $(".modal-body #details").val( inqid );
+              $(".modal-body #subject").val( subje );
+             
+             });
+        </script>
         <script src="js/keypress.js"></script>
-         <script type="text/javascript">
-        //  $(document).ready(function(){
-        //       showEdited=function(){
-        //  toastr.options = { 
-        //              "closeButton": true,
-        //            "debug": false,
-        //            "progressBar": true,
-        //            "preventDuplicates": true,
-        //            "positionClass": "toast-top-right",
-        //            "onclick": null,
-        //            "showDuration": "400",
-        //            "hideDuration": "1000",
-        //            "timeOut": "7000",
-        //            "extendedTimeOut": "1000",
-        //            "showEasing": "swing",
-        //            "hideEasing": "linear",
-        //            "showMethod": "fadeIn",
-        //            "hideMethod": "fadeOut" // 1.5s
-        //              }
-        //              toastr.success("Employee team updated!");
-        //      }
-        //      history.replaceState({}, "Title", "archive.php");
-                
-        //  });
-        // </script>
+         
+
+        <script type="text/javascript">
+ 
+//delete announcement
+        function delete_ann(id) {
+        swal({
+        title: "Are you sure?",
+        text: "The action you are about to do cannot be undone!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#dd6b55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+        }, function(isConfirm){   if (isConfirm) { 
+            swal("Deleted!", "Your imaginary file has been deleted.", "success");  
+            //alert(id);
+            
+            var id_val = id;
+            var request = $.ajax({
+              url: "announcement_delete_archive.php",
+              async: false,
+              method: "GET",
+              data: { announcement_id : id_val },
+              dataType: "html"
+            });
+             
+            request.done(function( msg ) {
+            //  alert('deleted');
+              window.location.replace("http://10.10.1.31/payroll/archive.php");
+            });
+             
+            // request.fail(function( jqXHR, textStatus ) {
+            //   alert( "Request failed: " + textStatus );
+            // });
+
+        } else {     
+            swal("Cancelled", "Your imaginary file is safe :)", "error");   
+        } });
+
+}
+//restore announcement
+function restore_ann(id) {
+        swal({
+        title: "Are you sure?",
+        text: "The action you are about to do cannot be undone!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1ab394",
+        confirmButtonText: "Yes, restore it!",
+        closeOnConfirm: false
+        }, function(isConfirm){   if (isConfirm) { 
+            swal("Restored!", "Your imaginary file has been deleted.", "success");  
+            //alert(id);
+            
+            var id_val = id;
+            var request = $.ajax({
+              url: "announcement_restore.php",
+              async: false,
+              method: "GET",
+              data: { announcement_id : id_val },
+              dataType: "html"
+            });
+             
+            request.done(function( msg ) {
+            //  alert('restored');
+              window.location.replace("http://10.10.1.31/payroll/archive.php");
+            });
+             
+            // request.fail(function( jqXHR, textStatus ) {
+            //   alert( "Request failed: " + textStatus );
+            // });
+
+        } else {     
+            swal("Cancelled", "Your imaginary file is safe :)", "error");   
+        } });
+
+}
+
+//delete earnings
+        function delete_earnings(id) {
+        swal({
+        title: "Are you sure?",
+        text: "The action you are about to do cannot be undone!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#dd6b55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+        }, function(isConfirm){   if (isConfirm) { 
+            swal("Deleted!", "Your imaginary file has been deleted.", "success");  
+            //alert(id);
+            
+            var id_val = id;
+            var request = $.ajax({
+              url: "earnings_delete_archive.php",
+              async: false,
+              method: "GET",
+              data: { announcement_id : id_val },
+              dataType: "html"
+            });
+             
+            request.done(function( msg ) {
+            //  alert('deleted');
+              window.location.replace("http://10.10.1.31/payroll/archive.php");
+            });
+             
+            // request.fail(function( jqXHR, textStatus ) {
+            //   alert( "Request failed: " + textStatus );
+            // });
+
+        } else {     
+            swal("Cancelled", "Your imaginary file is safe :)", "error");   
+        } });
+
+}
+
+//restore earnings
+function restore_earnings(id) {
+        swal({
+        title: "Are you sure?",
+        text: "The action you are about to do cannot be undone!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1ab394",
+        confirmButtonText: "Yes, restore it!",
+        closeOnConfirm: false
+        }, function(isConfirm){   if (isConfirm) { 
+            swal("Restored!", "Your imaginary file has been deleted.", "success");  
+            //alert(id);
+            
+            var id_val = id;
+            var request = $.ajax({
+              url: "earnings_restore.php",
+              async: false,
+              method: "GET",
+              data: { announcement_id : id_val },
+              dataType: "html"
+            });
+             
+            request.done(function( msg ) {
+             // alert('restored');
+              window.location.replace("http://10.10.1.31/payroll/archive.php");
+            });
+             
+            // request.fail(function( jqXHR, textStatus ) {
+            //   alert( "Request failed: " + textStatus );
+            // });
+
+        } else {     
+            swal("Cancelled", "Your imaginary file is safe :)", "error");   
+        } });
+
+}
+//restore_deductions
+
+function restore_deductions(id) {
+        swal({
+        title: "Are you sure?",
+        text: "The action you are about to do cannot be undone!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1ab394",
+        confirmButtonText: "Yes, restore it!",
+        closeOnConfirm: false
+        }, function(isConfirm){   if (isConfirm) { 
+            swal("Restored!", "Your imaginary file has been deleted.", "success");  
+            //alert(id);
+            
+            var id_val = id;
+            var request = $.ajax({
+              url: "deduction_restore.php",
+              async: false,
+              method: "GET",
+              data: { announcement_id : id_val },
+              dataType: "html"
+            });
+             
+            request.done(function( msg ) {
+             // alert('restored');
+              window.location.replace("http://10.10.1.31/payroll/archive.php");
+            });
+             
+            // request.fail(function( jqXHR, textStatus ) {
+            //   alert( "Request failed: " + textStatus );
+            // });
+
+        } else {     
+            swal("Cancelled", "Your imaginary file is safe :)", "error");   
+        } });
+
+}
+//delete_deductions
+function delete_deductions(id) {
+        swal({
+        title: "Are you sure?",
+        text: "The action you are about to do cannot be undone!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#dd6b55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+        }, function(isConfirm){   if (isConfirm) { 
+             swal("Deleted!", "Your imaginary file has been deleted.", "success");  
+            //alert(id);
+            
+            var id_val = id;
+            var request = $.ajax({
+              url: "deduction_delete_archive.php",
+              async: false,
+              method: "GET",
+              data: { announcement_id : id_val },
+              dataType: "html"
+            });
+             
+            request.done(function( msg ) {
+             // alert('restored');
+              window.location.replace("http://10.10.1.31/payroll/archive.php");
+            });
+             
+            // request.fail(function( jqXHR, textStatus ) {
+            //   alert( "Request failed: " + textStatus );
+            // });
+
+        } else {     
+            swal("Cancelled", "Your imaginary file is safe :)", "error");   
+        } });
+
+}
+
+//restore_Holidays
+
+function restore_holidays(id) {
+        swal({
+        title: "Are you sure?",
+        text: "The action you are about to do cannot be undone!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1ab394",
+        confirmButtonText: "Yes, restore it!",
+        closeOnConfirm: false
+        }, function(isConfirm){   if (isConfirm) { 
+            swal("Restored!", "Your imaginary file has been deleted.", "success");  
+            //alert(id);
+            
+            var id_val = id;
+            var request = $.ajax({
+              url: "holiday_restore.php",
+              async: false,
+              method: "GET",
+              data: { announcement_id : id_val },
+              dataType: "html"
+            });
+             
+            request.done(function( msg ) {
+             // alert('restored');
+              window.location.replace("http://10.10.1.31/payroll/archive.php");
+            });
+             
+            // request.fail(function( jqXHR, textStatus ) {
+            //   alert( "Request failed: " + textStatus );
+            // });
+
+        } else {     
+            swal("Cancelled", "Your imaginary file is safe :)", "error");   
+        } });
+
+}
+//delete_holidays
+function delete_holidays(id) {
+        swal({
+        title: "Are you sure?",
+        text: "The action you are about to do cannot be undone!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#dd6b55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+        }, function(isConfirm){   if (isConfirm) { 
+             swal("Deleted!", "Your imaginary file has been deleted.", "success");  
+            //alert(id);
+            
+            var id_val = id;
+            var request = $.ajax({
+              url: "holiday_delete_archive.php",
+              async: false,
+              method: "POST",
+              data: { announcement_id : id_val },
+              dataType: "html"
+            });
+             
+            request.done(function( msg ) {
+             // alert('restored');
+              window.location.replace("http://10.10.1.31/payroll/archive.php");
+            });
+             
+            // request.fail(function( jqXHR, textStatus ) {
+            //   alert( "Request failed: " + textStatus );
+            // });
+
+        } else {     
+            swal("Cancelled", "Your imaginary file is safe :)", "error");   
+        } });
+
+}
+        </script>
         <?php
         if(isset($_GET['edited']))
         {
@@ -110,7 +400,7 @@
                                         <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" style = "margin-left:-2em;">
                                             <h4>Deleted List of Earnings</h4>
                                         </div>
-                                        <table class = "footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
+                                        <table class = "footable table table-stripped' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" data-page-size='20' data-limit-navigation='5' cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
@@ -135,10 +425,14 @@
                                                         echo "<td>".$row->earnings_type."</td>";
                                                         
                                                         //restore
-                                                        echo "<td style='text-align:center'><a href='earnings_restore.php?earnings_id=".$row->earnings_id."' class='btn btn-success' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
-
+                                                        echo "<td style='text-align:center'>";
+                                                       // echo"<a href='earnings_restore.php?earnings_id=".$row->earnings_id."' class='btn btn-primary' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
+                                                         echo "<a href='#' class='btn btn-primary' onclick='restore_earnings(".$row->earnings_id.")'>Restore</a>&nbsp;&nbsp;";
+                                                            "</td>";
                                                         //delete
-                                                        echo "<a href='earnings_delete_archive.php?earnings_id=".$row->earnings_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure? You want to delete this file?\");'>Delete</a>&nbsp;&nbsp; ";
+                                                       // echo "<a href='earnings_delete_archive.php?earnings_id=".$row->earnings_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure? You want to delete this file?\");'>Delete</a>&nbsp;&nbsp; ";
+                                                         echo "<a href='#' class='btn btn-danger' onclick='delete_earnings(".$row->earnings_id.")'>Delete</a>&nbsp;&nbsp;";
+
                                                         echo "</td>";
                                                         echo "</tr>";
                                                         
@@ -184,7 +478,7 @@
                                         <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" style = "margin-left:-2em;">
                                             <h4>Deleted List of Deductions</h4>
                                         </div>
-                                        <table class = "footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
+                                        <table class = "footable table table-stripped' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" data-page-size='20' data-limit-navigation='5' cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
@@ -209,10 +503,13 @@
                                                         echo "<td>".$row->deduction_type."</td>";
                                                         
                                                         //restore
-                                                        echo "<td style='text-align:center'><a href='deduction_restore.php?deduction_id=".$row->deduction_id."' class='btn btn-success' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
+                                                       echo "<td style='text-align:center'>";
+                                                        //echo"<a href='deduction_restore.php?deduction_id=".$row->deduction_id."' class='btn btn-primary' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
+                                                        echo "<a href='#' class='btn btn-primary' onclick='restore_deductions(".$row->deduction_id.")'>Restore</a>&nbsp;&nbsp;";
 
                                                         //delete
-                                                        echo "<a href='deduction_delete_archive.php?deduction_id=".$row->deduction_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure? You want to delete this file?\");'>Delete</a>&nbsp;&nbsp; ";
+                                                       // echo "<a href='deduction_delete_archive.php?deduction_id=".$row->deduction_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure? You want to delete this file?\");'>Delete</a>&nbsp;&nbsp; ";
+                                                        echo "<a href='#' class='btn btn-danger' onclick='delete_deductions(".$row->deduction_id.")'>Delete</a>&nbsp;&nbsp;";
                                                         echo "</td>";
                                                         echo "</tr>";
                                                         
@@ -258,11 +555,11 @@
                                         <div class = "col-md-12" style = "margin-left:-2em;">
                                             <h4>Deleted List of Announcements</h4>
                                         </div>
-                                        <table style="table-layout: fixed;" class = "footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
+                                        <table style="table-layout: fixed;" class = "footable table table-stripped data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" data-page-size='20' data-limit-navigation='5' cellspacing="0" width="100%">
                                             <thead>
                                                 <tr class = 'josh'>
                                                     <th class = "col-md-5">Date</th>
-                                                    <th class = "col-md-5">Announcement</th>
+                                                    <th class = "col-md-5">Subject</th>
                                                     <th class = "col-md-3" style='text-align:center'>Action</th>
                                                 </tr>
                                             </thead>
@@ -277,15 +574,19 @@
                                                     while ($row = mysqli_fetch_object($result)){
                                                         echo "<tr>";
                                                             echo "<td>". date("Y-m-d", strtotime($row->announcement_date)) ."</td>";
-                                                            echo "<td style='word-wrap: break-word'>". $row->announcement_details ."</td>";
+                                                            echo "<td style='word-wrap: break-word'>". $row->subject ."</td>";
                                                             echo "<td>";
 
+                                                            //view
+                                                           // echo "<a href='announcement_restore.php?ann_id=".$row->announcement_id."' class='btn btn-success'>View</a>&nbsp;&nbsp;";
+                                                            echo "<a href='#' data-toggle='modal' data-target='#myModal4' data-announcement='$row->announcement_details' data-subject = '$row->subject'class = 'answerdialog btn btn-success'>View</a>&nbsp;&nbsp;";
                                                             //restore
-                                                            echo "<a href='announcement_restore.php?ann_id=".$row->announcement_id."' class='btn btn-success' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
+                                                           // echo "<a href='announcement_restore.php?ann_id=".$row->announcement_id."' class='btn btn-primary' onclick='restore_ann(".$row->announcement_id.")'>Restore</a>&nbsp;&nbsp;";
+                                                             echo "<a href='#' class='btn btn-primary' onclick='restore_ann(".$row->announcement_id.")'>Restore</a>&nbsp;&nbsp; ";
 
                                                             //delete
-                                                            echo "<a href='announcement_delete_archive.php?ann_id=".$row->announcement_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure? You want to delete this file?\");'>Delete</a>&nbsp;&nbsp; ";
-
+                                                            //echo "<a href='announcement_delete_archive.php?ann_id=".$row->announcement_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure? You want to delete this file?\");'>Delete</a>&nbsp;&nbsp; ";
+                                                            echo "<a href='#' class='btn btn-danger' onclick='delete_ann(".$row->announcement_id.")'>Delete</a>&nbsp;&nbsp; ";
                                                             "</td>";
                                                         echo "</tr>";
                                                     }
@@ -296,12 +597,12 @@
                                             <tfoot>
                                               <tr>
                                                 <td colspan = "78">
-                                                  <ul class = "pagination pull-right">
+                                                  <ul class = "pagination pull-right" data-limit-navigation="5">
                                                     <li class = "footable-page-arrow disabled">
-                                                      <a data-page = "first" href = "#first"></a>
+                                                      <a data-page = "first" href = "#first"><<</a>
                                                     </li>
                                                     <li class = "footable-page-arrow disabled">
-                                                      <a data-page = "prev" href = "#prev"></a>
+                                                      <a data-page = "prev" href = "#prev"><</a>
                                                     </li>
                                                     <li class = "footable-page active">
                                                       <a data-page = "0" href = "#">1</a>
@@ -329,7 +630,7 @@
                                         <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" style = "margin-left:-2em;">
                                             <h4>Deleted List of Holidays</h4>
                                         </div>
-                                        <table class = "footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" cellspacing="0" width="100%">
+                                        <table class = "footable table table-stripped' data-filter=#filter" id="zctb" class="display table table-bordered table-hover sortable" data-page-size='20' data-limit-navigation='5' cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th class = "col-md-2">Name</th>
@@ -360,10 +661,12 @@
                                                         }
 
                                                         //restore
-                                                        echo "<td style='text-align:center'><a href='holiday_restore.php?holidayid=".$row->holiday_id."' class='btn btn-success' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
-
+                                                        echo "<td style='text-align:center'>";
+                                                       // echo"<a href='holiday_restore.php?holidayid=".$row->holiday_id."' class='btn btn-primary' onclick='return confirm(\"Are you sure? You want to Restore this file?\");'>Restore</a>&nbsp;&nbsp;";
+                                                        echo "<a href='#' class='btn btn-primary' onclick='restore_holidays(".$row->holiday_id.")'>Restore</a>&nbsp;&nbsp; ";
                                                         //delete
-                                                        echo "<a href='holiday_delete_archive.php?holidayid=".$row->holiday_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure? You want to delete this file?\");'>Delete</a>&nbsp;&nbsp; ";
+                                                        //echo "<a href='holiday_delete_archive.php?holidayid=".$row->holiday_id."' class='btn btn-danger' onclick='return confirm(\"Are you sure? You want to delete this file?\");'>Delete</a>&nbsp;&nbsp; ";
+                                                        echo "<a href='#' class='btn btn-danger' onclick='delete_holidays(".$row->holiday_id.")'>Delete</a>&nbsp;&nbsp; ";
                                                         echo "</td>";
                                                         echo "</tr>";
                                                         
@@ -410,6 +713,11 @@
 
                                     <script type="text/javascript">
                                         $(function () {
+                                            $('#div0').hide();
+                                            $('#div1').hide();
+                                            $('#div2').hide();
+                                            $('#div3').hide();
+                                            $('#div4').hide();
                                             $('#selecttype').bind('change', function(event) {
                                            var i= $('#selecttype').val();
                                            
@@ -444,6 +752,13 @@
                                                  $('#div2').hide();
                                                  $('#div3').hide();
                                                  $('#div4').show();
+                                            }
+                                            else{
+                                                 $('#div0').hide();
+                                                 $('#div1').hide();
+                                                 $('#div2').hide();
+                                                 $('#div3').hide();
+                                                 $('#div4').hide();
                                             }
                                             });
                                         });
@@ -504,6 +819,43 @@
                 </div>
             </div>
         
+        <!--modal view-->
+        <div class="modal inmodal fade" id="myModal4" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <i class="fa fa-exclamation-circle modal-icon"></i>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Announcement details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="ibox-content">
+                           
+                                <div class="form-group">
+                                    <div class="col-md-10" id = "quest">
+                                    <input id = "inqid" class="form-control" type = "hidden">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">Subject</label><br><br>
+                                    <div class="col-md-12">
+                                    <input type="text"  id = "subject" class="form-control" readonly/>
+                                    </div><br><br><br>
+                                    <label class="col-sm-1 control-label">Announcement</label><br><br>
+                                    <div class="col-md-12">
+                                    <textarea  id = "details" class="form-control" style="min-width: 100%; margin: 0px -9px 0px 0px; width: 508px; height: 129px;" readonly></textarea>
+                                    </div>
+
+                                </div>
+                          
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
     <?php
         include('menufooter.php');

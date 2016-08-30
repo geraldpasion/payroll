@@ -305,8 +305,17 @@
 				</div>
 				<div class="modal-body">
 					<div class="ibox-content">
-											<form id = "uploadForm" method="POST" action = "editemployee.php" class="form-horizontal">
-															<div class="form-group">
+							<div class="tabs-container">
+							<ul id="mytab" class="nav nav-tabs">
+								<li class="active"><a data-toggle="tab" href="#personaldetails">Personal Details</a></li>
+								<li class=""><a data-toggle="tab" href="#employeedetails">Employment Details</a></li>
+							</ul>
+							<div class="tab-content">
+							<!--Personal details-->
+							<div id="personaldetails" class="tab-pane fade active in" >
+								<div class="panel-body">
+							<form id = "uploadForm" method="POST" action = "editemployee.php" class="form-horizontal">
+							<div class="form-group">
 									<h2>Personal Details<h2>
 									</div>
 							<div class="form-group">
@@ -333,7 +342,7 @@
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Address</label>
-								<div class="col-md-7"><input type="text" id = "address" class="zxc" name = "address" readonly = "readonly" required=""></div>
+								<div class="col-md-9"><input type="text" id = "address" class="zxc" name = "address" readonly = "readonly" required=""></div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">City</label>
@@ -347,7 +356,12 @@
 								<label class="col-sm-2 control-label">Mobile</label>
 								<div class="col-md-4"><input type="text" id = "cellnum" class="zx" maxlength="11" name = "mobile" onKeyPress="return numbersonly(this, event)" readonly = "readonly" required=""></div>
 							</div>
-																<div class="form-group">
+						</div><!--/.panel-body-->
+						</div><!--/#personaldetails-->
+							<!--employee details-->
+							<div style= "max-height:300px; min-height:300px; overflow-y:scroll;" id="employeedetails" class="tab-pane" >
+								<div class="panel-body">
+							<div class="form-group">
 									<h2>Employee Details<h2>
 									</div>
 							<div class="form-group">
@@ -389,7 +403,11 @@
 							<div class="form-group">
 								<label class="col-md-2 control-label">Password</label>
 								<div class="col-md-4"> <input type="text" id = "password" name = "password"class="zx" readonly = "readonly" required="" required=""></div>
-							</div>		
+							</div>
+						</div><!--/.panel-body-->
+					</div><!--#employeedetails-->
+						</div><!--/.tab-content-->	
+					</div>
 					</div>
 				</div>
 				</form>

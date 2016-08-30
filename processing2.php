@@ -537,7 +537,7 @@
 													data-cutoffd='".$initialcut." - ".$endcut."'
 													data-submitdate='".$cutoffsubmitdate."'
 													data-target='#myModal4' class = 'editempdialog'><button class='btn btn-info' name = 'edit' id='edit' type='button'><i class='fa fa-paste'></i> Edit</button></a>&nbsp;&nbsp;";
-											echo "<a href='finalpayexe.php?emp_id=".$row1->employee_id."' id='$empid' cutoff='".$initialcut." - ".$endcut."' class = 'delete'><button id='payment' class='btn btn-warning' type='button'><i class='fa fa-warning'></i> For Final Pay</button></button></a>";											
+											echo "<a href='finalpayexe.php?emp_id=".$row1->employee_id."' id='$empid' cutoff='".$initialcut." - ".$endcut."' class = 'delete'><button id='payment' class='btn btn-warning' type='button'><i class='fa fa-warning'></i> For Back Pay</button></button></a>";											
 											echo "</tr>";
 										}									
 										echo "</table>";
@@ -545,7 +545,7 @@
 								}
 							}							
 						?>
-						<div class="col-sm-9"></div>								
+						<div class="col-sm-5"></div>								
 						<div class="col-sm-3">
 							<button id="subproc" type="submit" name="subproc" class="btn btn3 btn-w-m btn-primary">Submit</button>
 						</div><br><br>

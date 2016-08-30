@@ -1,6 +1,7 @@
 <?php 
 include("dbconfig.php");
-$earnings_id = $_GET['earnings_id'];
+$earnings_id = $_GET['announcement_id'];
+
 	$fetch = $mysqli->query("SELECT * FROM earnings_archive WHERE earnings_id='$earnings_id'")->fetch_object();
 
 

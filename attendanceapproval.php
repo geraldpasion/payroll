@@ -293,9 +293,9 @@ $(".modal-body #wew").val( wew );
 					
 						<div class="ibox-content">	<br><br>						
 							<div class="form-group">
-							<div class="col-md-3"></div>
+							<div class="col-md-2"></div>
 							<form method="POST" action="attendanceapproval.php">
-								<label class="col-sm-1 control-label">Schedule List</label>
+								<label class="col-sm-2 control-label">Schedule List</label>
 								<div class="col-md-4">
 									<select id = "leavetype" class="form-control"  data-default-value="z" name="selection" required="">
 								<?php 
@@ -775,7 +775,7 @@ $(".modal-body #wew").val( wew );
 
 							
 						?>
-						<div class="col-sm-9"></div>								
+						<div class="col-sm-5"></div>								
 						<div class="col-sm-3">
 						<button type="submit" name="submit" id="attendanceapprovalsubmit" class="btn btn-w-m btn-primary">Submit</button>
 					</div><br>
@@ -783,6 +783,7 @@ $(".modal-body #wew").val( wew );
 			</div>
         </div>
     </form>
+    <?php?>
 
 		<script type="text/javascript">
 				//modal to
@@ -1116,11 +1117,9 @@ $(".modal-body #wew").val( wew );
 			</div>
 		</div>
 	</div>
-</div>		
-		<?php
-			include('menufooter.php');
-		?>
-	
+</div>	
+</div>
+		
 		<script type="text/javascript">
 
 
@@ -1149,6 +1148,9 @@ $(".modal-body #wew").val( wew );
 			});
 		</script>
 		<div id="displaysomething"></div>
+		<?php
+			include('menufooter.php');
+		?>
 	</body>
 
 </html>

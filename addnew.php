@@ -15,7 +15,7 @@
 		
 		<style>
 			.btn1{
-				margin-left:283%;
+				margin-left:100%;
 			}
 			.btn2{
 				margin-left:114%;
@@ -249,7 +249,7 @@
 											<label class="col-md-2 control-label">Email</label>
 											<div class="col-md-4"><input type="email" value='.$email.' readonly id = "email" onpaste="return false" onDrop="return false" class="form-control" required="" name = "email"></div>
 											<label class="col-md-2 control-label">Mobile number</label>
-											<div class="col-md-4"><input type="text" value='.$mobile.' readonly id = "mobile" onpaste="return false" onDrop="return false" class="form-control" name = "mobile" required="" onKeyPress="return numbersonly(this, event)"></div>
+											<div class="col-md-4"><input type="text" value='.$mobile.' readonly id = "mobile" onpaste="return false" onDrop="return false" class="form-control" name = "mobile" data-mask="9999-999-9999" required="" onKeyPress="return numbersonly(this, event)"></div>
 										</div>
 										<div class="hr-line-dashed"></div><BR>
 										<div class="form-group"><h2>Employee information<h2></div>
@@ -345,7 +345,7 @@
 											<label class="col-md-2 control-label">Email</label>
 											<div class="col-md-4"><input type="email"  id = "email" onpaste="return false" onDrop="return false" class="form-control" required="" name = "email"></div>
 											<label class="col-md-2 control-label">Mobile number</label>
-											<div class="col-md-4"><input type="text"  id = "mobile" onpaste="return false" onDrop="return false" class="form-control" name = "mobile" required="" onKeyPress="return numbersonly(this, event)"></div>
+											<div class="col-md-4"><input type="text"  id = "mobile" onpaste="return false" onDrop="return false" class="form-control" name = "mobile" required="" data-mask="9999-999-9999" onKeyPress="return numbersonly(this, event)"></div>
 										</div>
 										
 										<div class="hr-line-dashed"></div><BR>
@@ -360,7 +360,7 @@
 											<label class="col-md-2 control-label">Department</label>
 											<div class="col-md-4"><input type="text" id = "department" onpaste="return false" onDrop="return false" class="form-control cap" required="" name = "department"></div>
 											<label class="col-md-2 control-label">Employment Status</label>
-											<div class="col-md-4"><select class = "form-control" id = "empstatus" name="empstatus" value = "Select" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select Employment Status...</option>  <option value = "Project">Project</option><option value = "Contractual">Contractual</option><option value = "Probationary">Probatisonary</option><option value = "Regular">Regular</option><option value = "Student Training">Student Training</option></select></div>
+											<div class="col-md-4"><select class = "form-control" id = "empstatus" name="empstatus" value = "Select" required="" data-default-value="z"><option selected="true" disabled="disabled" value = "">Select Employment Status...</option>  <option value = "Project">Project</option><option value = "Contractual">Contractual</option><option value = "Probationary">Probationary</option><option value = "Regular">Regular</option><option value = "Student Training">Student Training</option></select></div>
 										</div>
 										<div class="form-group">
 											<label class="col-md-2 control-label">Tax code</label>
@@ -475,12 +475,16 @@
 											}
 									}
 									</script>
-									<br><br><div class="col-md-2">
-									<button id ="submit" type="submit" class="btn btn1 btn-w-m btn-primary">Submit</button>
-									</div>
-									<div class="col-md-4">
-										<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
-									</div>
+									<!--br><br-->
+
+									<br><br><br>
+									<center>
+									<input id ="submit" type="submit" class="btn btn-w-m btn-primary" value="Submit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" onclick = "myFunction()" class="btn btn-w-m btn-white" value="Reset">
+									</center>
+
+									<!--div class="col-md-4"-->
+										
+									<!--/div-->
 								</form>		 
 							</div>
 						</div>

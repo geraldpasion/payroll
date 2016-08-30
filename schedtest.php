@@ -213,7 +213,7 @@
 							<div class="col-md-3"></div>
 								<label class="col-sm-2 control-label" style="margin-top:5px;">Date Range</label>
 								<div class="col-md-4"><select id = 'hasdate' name = 'hasdate' onchange="change(this);" class = 'form-control' data-default-value='without' required=''>
-									<option value = 'without' selected>Without Date Range (tomorrow onwards)</option>
+									<option value = 'without' selected="selected">Without Date Range (tomorrow onwards)</option>
 									<option value = 'with'>With Specified Date Range</option>
 								</select></div>
 							</div><br><br>
@@ -358,20 +358,38 @@ $(document).ready(function(){
     });
 });
 </script>
-    <script type="text/javascript">
+    <!--script type="text/javascript">
 
 			function getFormatDate(d){
 			    return d.getMonth()+1 + '/' + d.getDate() + '/' + d.getFullYear()
 			}
 
 			$(document).ready(function() {
-			    var mTemp = new Date(), minDate = getFormatDate(new Date(mTemp.setDate(mTemp.getDate() + 1)));
+			    var mTemp = new Date(), minDate = getFormatDate(new Date(mTemp.setDate(mTemp.getDate())));
 
 			    $('#date').daterangepicker(
 			    {
 			    	startDate: minDate,
 			    	minDate: minDate,
 			    	maxDate: 0
+			    }
+			    );
+			});
+		</script-->
+	<script type="text/javascript">
+
+			function getFormatDate(d){
+			    return d.getMonth()+1 + '/' + d.getDate() + '/' + d.getFullYear()
+			}
+
+			$(document).ready(function() {
+			    var mTemp = new Date(), minDate = getFormatDate(new Date(mTemp.setDate(mTemp.getDate()))), maxDate = 0;
+
+			    $('#date').daterangepicker(
+			    {
+			    	startDate: 0,
+			    	minDate: 0,
+			    	maxDate: maxDate
 			    }
 			    );
 			});

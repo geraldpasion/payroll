@@ -10,8 +10,10 @@
 		<script type="text/javascript">
 			$(document).on("click", ".answerdialog", function () {
 			 var inqid = $(this).data('announcement');
+			 var sub=$(this).data('subject');
 			 
 			  $(".modal-body #details").val( inqid );
+			    $(".modal-body #subject").val( sub );
 			 
 			 });
 		</script>
@@ -162,15 +164,51 @@
                         </form><br>
 
 							<!--table class="table table-striped table-hover table-responsive table-bordered"-->
-							<table class='footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter>
+							<table class='footable table table-stripped' data-page-size='10' data-limit-navigation='5' data-filter=#filter>
+								<thead>
+								 	<tr class = 'josh'>
+								 	<th class = "col-md-5">Date</th>
+								 	<th class = "col-md-5">Subject</th>
+								 	<th class = "col-md-3" style='text-align:center'>Action</th>
+								 	</tr>
+								 </thead>
 								<?php
 									//generate table headers
-									generate_table_header();
+								//	generate_table_header();
 
 									//generate table contents
 									generate_table_contents();
 
 								?>
+								<tfoot>
+                                              <tr>
+                                                <td colspan = "78">
+                                                  <ul class = "pagination pull-right" data-limit-navigation="5">
+                                                    <li class = "footable-page-arrow disabled">
+                                                      <a data-page = "first" href = "#first"><<</a>
+                                                    </li>
+                                                    <li class = "footable-page-arrow disabled">
+                                                      <a data-page = "prev" href = "#prev"><</a>
+                                                    </li>
+                                                    <li class = "footable-page active">
+                                                      <a data-page = "0" href = "#">1</a>
+                                                    </li>
+                                                    <li class = "footable-page">
+                                                      <a data-page = "1" href = "#">2</a>
+                                                    </li>
+                                                    <li class = "footable-page ">
+                                                      <a data-page = "2" href = "#">3</a>
+                                                    </li>
+                                                    <li class = "footable-page-arrow">
+                                                      <a data-page = "next" href = "#next">></a>
+                                                    </li>
+                                                    <li class = "footable-page-arrow">
+                                                      <a data-page = "last" href = "#last">>></a>
+                                                    </li>
+                                                  </ul>
+                                                </td>
+                                              </tr>
+                                            </tfoot>
 							</table>
 
 					</div>
@@ -194,9 +232,19 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-2 control-label">Details</label>
+									<label class="col-sm-2 control-label">Subject</label><br>
+									<br>
+
 									<div class="col-md-10">
-									<textarea  id = "details" class="form-control" style="min-width: 100%" readonly></textarea>
+									<input type="text"  id = "subject" class="form-control" style="min-width: 100%" readonly/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Announcement</label><br>
+									<br>
+
+									<div class="col-md-12">
+									<textarea  id = "details" class="form-control"style="min-width: 100%; min-height: 100%; margin: 0px -2px 0px 0px; height: 145px; width: 498px;"readonly></textarea>
 									</div>
 								</div>
 							</form>
@@ -258,7 +306,7 @@ function generate_table_header(){
 	echo "<thead>";
 		echo "<tr>";
 			echo "<th class='ann-date'>Date</th>";
-			echo "<th>Announcements</th>";
+			echo "<th>Subject</th>";
 			echo "<th>Action</th>";
 		echo "</tr>";
 	echo "</thead>";
@@ -272,7 +320,9 @@ include('dbconfig.php');
 		if ($result->num_rows > 0) //display records if any
 		{
 			while ($row = mysqli_fetch_object($result)){
-				$announcement_details = $row->announcement_details;
+				$announcement_details = $row->subject;
+
+
 				//$announcement_details = str_replace('"','\"',$announcement_details);
 				//$announcement_details = str_replace("'","\'",$announcement_details);
 
@@ -282,7 +332,8 @@ include('dbconfig.php');
 					echo "<td>";
 
 					//view
-					echo "<a href='#' data-toggle='modal' data-target='#myModal4' data-announcement='$row->announcement_details' 
+					echo "<a href='#' data-toggle='modal' data-target='#myModal4' data-announcement='$row->announcement_details'
+					data-subject='$row->subject'
 					class = 'answerdialog btn btn-success'>
 										 View
 										</a>&nbsp;&nbsp";

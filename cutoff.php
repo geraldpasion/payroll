@@ -361,10 +361,12 @@ document.frmUser.submit();
 								
 							?>
 								<div class="form-group">								
-									<div class="col-sm-8"></div>								
+									<div class="col-sm-4"></div>								
 									<div class="col-sm-2">
-									<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button></div>
-									<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary" onClick="setUpdateAction();">Submit</button>
+										<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary" onClick="setUpdateAction();">Submit</button>
+									</div>
+									
+									<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
 								</div>
 							</form>
 						</div>
@@ -413,10 +415,12 @@ document.frmUser.submit();
 								
 							?>
 								<div class="form-group">								
-									<div class="col-sm-8"></div>								
+									<div class="col-sm-4"></div>								
 									<div class="col-sm-2">
-									<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button></div>
-									<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary" onClick="setUpdateAction();">Submit</button>
+										<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary" onClick="setUpdateAction();">Submit</button>
+									</div>
+									
+									<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
 								</div>
 							</form>
 						</div>
@@ -481,7 +485,7 @@ document.frmUser.submit();
 								<label class="col-sm-2 control-label">To</label>
 								<div class="col-md-8"><input type="text" id="daterange3" onpaste="return false" onDrop="return false" class="form-control" name="daterange3" required="" placeholder="click to pick date"></div>
 							</div>
-							<div class="col-md-3"></div>
+							<div class="col-md-4"></div>
 									<button id ="reset" type="reset" class="btn btn-w-m btn-warning">Reset</button>
 									<input id ="addCutoff" type="submit" class="btn btn-w-m btn-primary" name="addCutoff" value="Submit">
 						</form>

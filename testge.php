@@ -1,18 +1,29 @@
 <?php
 
-include 'functions.php';
+//include 'dbconfig.php';
 
-/*$fields=get_fieldnames('philhealth_contribution');
 
-$i=0;
-foreach($fields as $field){
-	echo "\$philhealth_details[]=\$row['".$field."']; //$i<br>";
-	$i++;
-}*/
+ $dateToday = date("Y-m-d");
 
-$cutoff='2016-05-16 - 2016-06-16';
+ echo $dateToday;
 
-$count_emp=count_employees_within_cutoff($cutoff);
+// 	$sql = "SELECT * FROM employee WHERE shift_temp_start>='$dateToday'";
+// 	$result = mysqli_query($mysqli,$sql);
 
-echo "Count: ".$count_emp.nextline();
+// 	while($row = mysqli_fetch_array($result)){
+// 		$pending_shift=$row['pending_shift'];
+
+// 		//update
+// 		$sql = "UPDATE employee SET employee_shift=$pending_shift, pending_shift=null";
+
+// 			if ($conn->query($sql) === TRUE) {
+// 			    //echo $hasdate." Record updated successfully employee ".$empid."<br>";
+			    
+// 			} else {
+// 			    //echo $hasdate." Error updating record employee ".$empid.": " . $conn->error."<br>";
+// 			    //header("Location: schedtest.php?error");
+// 			}
+		
+// 	}
+
 ?>

@@ -227,7 +227,7 @@
 
  // }
  ?>
- <script type="text/javascript">
+ <!--script type="text/javascript">
 	function getFormatDate(d){
 	    return d.getMonth()+1 + '/' + d.getDate() + '/' + d.getFullYear()
 	}
@@ -241,7 +241,25 @@
 	    }
 	    );
 	});
-</script>
+</script-->
+<script type="text/javascript">
+
+			function getFormatDate(d){
+			    return d.getMonth()+1 + '/' + d.getDate() + '/' + d.getFullYear()
+			}
+
+			$(document).ready(function() {
+			    var mTemp = new Date(), minDate = getFormatDate(new Date(mTemp.setDate(mTemp.getDate()))), maxDate = 0;
+
+			    $('#date').daterangepicker(
+			    {
+			    	startDate: 0,
+			    	minDate: 0,
+			    	maxDate: maxDate
+			    }
+			    );
+			});
+		</script>
 <script type="text/javascript">
 $(document).ready(function(){
     $('#select_all').on('click',function(){

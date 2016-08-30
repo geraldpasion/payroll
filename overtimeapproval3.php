@@ -153,7 +153,7 @@
 					$team2 = $_SESSION['employee_team1'];
 					$team3 = $_SESSION['employee_team2'];
 					$team4 = $_SESSION['employee_team3'];
-					if ($result = $mysqli->query("SELECT * FROM overtime RIGHT JOIN employee ON employee.employee_id = overtime.employee_id WHERE overtime_status = 'Pending' AND (employee.employee_team = '$team1' OR employee.employee_team1 = '$team2' OR employee.employee_team2 = '$team3' OR employee.employee_team3 = '$team4') AND (employee.employee_level = 1 OR employee.employee_level = 2) ORDER BY overtime.overtime_date DESC")) //get records from db
+					if ($result = $mysqli->query("SELECT * FROM overtime RIGHT JOIN employee ON employee.employee_id = overtime.employee_id WHERE overtime_status = 'Pending' AND (employee.employee_team = '$team1' OR employee.employee_team = '$team2' OR employee.employee_team = '$team3' OR employee.employee_team = '$team4') AND (employee.employee_level = 1 OR employee.employee_level = 2) ORDER BY overtime.overtime_date DESC")) //get records from db
 					{
 						if ($result->num_rows > 0) //display records if any
 						{

@@ -61,7 +61,7 @@
 		<link href="css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 		<!-- Clock picker -->
 		<script src="js/plugins/clockpicker/clockpicker.js"></script>
-		<script type="text/javascript" >//ajax
+		<!--script type="text/javascript" >//ajax
 			$(document).ready(function(){
 			$(document).on('submit','#myForm', function() {
 			var earningtype = $("#earningtype option:selected").val();
@@ -83,7 +83,7 @@
 				data: dataString,
 				cache: false,
 				success: function(result){
-				$('#reason').val('');
+				//$('#reason').val('');
 				$('#name').val('');
 				//$("#leavetype").val($("#leavetype").data("default-value"));
 				$("#earningtype").val($("#earningtype").data("default-value"));
@@ -96,6 +96,39 @@
 			return false;
 			});
 			});
+		</script-->
+		<script type="text/javascript" >//ajax
+				$(document).ready(function(){
+				$(document).on('submit','#myForm', function() {
+				var earningtype = $("#earningtype option:selected").val();
+				var reason = $("#reason").val();
+				var date = $("#date").val();
+				var name = $("#name").val();
+			
+				// Returns successful data submission message when the entered information is stored in database.
+				var dataString = 'name1=' + name +'&earningtype1=' + earningtype;
+				if(reason==''){
+				$('#warning').fadeIn(700);
+				$('#success').hide();
+				}
+				else{
+				// AJAX Code To Submit Form.
+					$.ajax({
+						type: "POST",
+						url: "earningsexe.php",
+						data: dataString,
+						cache: false,
+						success: function(result){
+							$('#name').val('');
+							$("#earningtype").val($("#earningtype").data("default-value"));
+							$("#myModal4").modal("hide");
+							eval(result);
+						}
+					});
+				}
+				return false;
+				});
+				});
 		</script>
 		<script type="text/javascript">
 		$(document).ready(function(){
@@ -258,10 +291,10 @@
 
 					<div class="ibox-content">		
 							<div class="form-group">
-							<div class="col-md-2"></div>
 							<form method="POST" class="form-horizontal" action="earningsexe.php">
 
-								<label class="col-sm-2 control-label">Type</label>
+								<div class="col-md-3"></div>
+								<label class="col-sm-2 control-label" style="text-align:left">Type</label>
 								<div class="col-md-4">
 								<select class = "form-control" id = "type" name = "type" onchange="filter_type(this.value)" required="" >
 									<option value="" disabled selected>Select Type</option>
@@ -269,10 +302,12 @@
 									<option value="Non-Taxable">Non-Taxable</option>
 									
 								</SELECT>
-								</div><br><br><br>
+								</div>
+							</div><br><br>
 
+								<div class="form-group">
 								<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Earnings List</label>
+								<label class="col-sm-2 control-label">Earnings List</label>
 								<div class="col-md-4" id="partinp">
 								<select id = "earningname" class="form-control"  data-default-value="" name="earningname" required="">
 									<option value="" disabled selected required>Select Earning</option>
@@ -302,19 +337,19 @@
 							<br><br>
 							<div class="form-group">
 								<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Earnings Amount</label>
+								<label class="col-sm-2 control-label">Earnings Amount</label>
 								<div class="col-md-4"><input type="text" class="form-control" name="amount" placeholder="Enter Amount"/></div>
 							</div>
 							<br><br>
 							<div class="form-group">
 								<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Initial Date</label>
+								<label class="col-sm-2 control-label">Initial Date</label>
 								<div class="col-md-4"><input id = "date" type="text" onpaste="return false" onDrop="return false" class="form-control" name="daterange2" required="" onKeyPress="return noneonly(this, event)" placeholder="click to pick date"/></div>
 							</div>
 							<br><br>
 							<div class="form-group">
 								<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">End Date</label>
+								<label class="col-sm-2 control-label">End Date</label>
 								<div class="col-md-4"><input id = "date" type="text" onpaste="return false" onDrop="return false" class="form-control" name="daterange3" onKeyPress="return noneonly(this, event)" placeholder="click to pick date (optional)"/></div>
 								<div class="col-sm-1" style="font-size:18px;"><a class="right" data-placement="right" data-toggle="tooltip" href="#" title="If no end date is specified, the earning will be effective on all cutoffs after the start date."><span class="glyphicon glyphicon-info-sign" ></span></a></div>
 							</div>
@@ -423,20 +458,26 @@
 								
 								<div style= "max-height:500px; min-height:300px; overflow-y:scroll;" id="earn" class="tab-pane" >
 									<div class="panel-body">
-											<table class="footable table table-stripped" data-page-size="8" data-filter=#filter>						
-												<thead>
-													<tr>
-														<th>ID</th>
-														<th>Particular</th>
-														<th>Type</th>
-														<th>Action</th>
-													</tr>
-												</thead>
-												<tbody>
 													<?php
-														$emp_earnings = $mysqli->query("SELECT * FROM earnings_setting  ORDER BY earnings_id");
+														$emp_earnings = $mysqli->query("SELECT * FROM earnings_setting  ORDER BY earnings_id DESC");
 														if($emp_earnings->num_rows > 0){
-															while($earn = mysqli_fetch_object($emp_earnings)){
+														echo '<table class="footable table table-stripped" data-page-size="10" data-limit-navigation="5" data-filter=#filter>';	
+														echo '<thead>';
+														echo '<tr>';
+														echo '<th>ID</th>';
+														echo '<th>Particular</th>';
+														echo '<th>Type</th>';
+														echo '<th>Action</th>';
+														echo '</tr>';
+														echo '</thead>';
+														echo "<tfoot>";                    
+														echo "<tr>";
+														echo "<td colspan='7'>";
+														echo "<ul class='pagination pull-right'></ul>";
+														echo "</td>";
+														echo "</tr>";
+														echo "</tfoot>";
+														while($earn = mysqli_fetch_object($emp_earnings)){
 																$earnid = $earn->earnings_id;
 																echo '<tr>';
 																echo '<td>'.$earn->earnings_id.'</td>';
@@ -446,9 +487,8 @@
 																echo '</tr>';
 															}
 														}
+														echo "</table>";
 													?>
-												</tbody>
-											</table>
 									</div>
 								</div>		
 								<div class="modal-footer">

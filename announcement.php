@@ -110,7 +110,7 @@
 						<form id = "myForm" method="POST"  class="form-horizontal">
 							<div class="form-group">
 								<label class="col-sm-4 control-label">Subject</label>
-								<div class="col-md-3"><input type="text" id = "subject" name = "subject" class = "form-control" required = "" placeholder = "Subject"></textarea></div>
+								<div class="col-md-4"><input type="text" id = "subject" name = "subject" class = "form-control" required = "" placeholder = "Subject"></textarea></div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-4 control-label">Announcements</label>

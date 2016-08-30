@@ -333,6 +333,7 @@ if(isset($_POST['submit'])){
 	$emp_id = $_POST['username'];
 	$date= date("Y-m-d");
 	$status = $mysqli->query("SELECT * FROM attendance WHERE employee_id='$emp_id' AND attendance_status != 'inactive' ORDER BY attendance_id DESC LIMIT 1")->fetch_object();
+	$statusRes = "";
 	$statusRes = $status->attendance_status;
 
 	if($statusRes == "active"){

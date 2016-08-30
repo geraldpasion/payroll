@@ -82,9 +82,9 @@
 					</div>
 					<div class="ibox-content"><br><br>
 						<div class="form-group">
-							<div style="margin-left:-125px" class="col-md-3"></div>
+							<div style="margin-left:-125px" class="col-md-2"></div>
 							<form method="POST" action="payslip.php">
-								<label class="col-sm-1 control-label">Cutoff List</label>
+								<label class="col-sm-2 control-label">Cutoff List</label>
 								<div class="col-md-4" style="padding-bottom:10px;">
 									<select id = "sched" class="form-control"  data-default-value="z" name="sched" required="">
 									<?php 

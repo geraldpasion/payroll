@@ -31,7 +31,7 @@ include('dbconfig.php');
 					echo "<td>";
 
 					//view
-					echo "<a href='#' data-toggle='modal' data-target='#myModal4' data-announcement='$row->announcement_details' 
+					echo "<a href='#' data-toggle='modal' data-target='#myModal4' data-announcement='$row->announcement_details' data-subject = '$row->subject'
 					class = 'answerdialog btn btn-success'>
 										 View
 										</a>&nbsp;&nbsp";
@@ -39,6 +39,7 @@ include('dbconfig.php');
 					//edit
 					echo "<a href='#?id=".$row->announcement_id."' data-toggle='modal' data-target='#myModal5' 
 					data-announcement='$row->announcement_details'
+					data-subject = '$row->subject'
 					data-announcementid='$row->announcement_id'   
 					class = 'answerdialog btn btn-primary'>
 										 Edit
@@ -80,8 +81,10 @@ include('dbconfig.php');
 		<script type="text/javascript">
 			$(document).on("click", ".answerdialog", function () {
 			 var inqid = $(this).data('announcement');
+			 var subje = $(this).data('subject');
 			 
 			  $(".modal-body #details").val( inqid );
+			  $(".modal-body #subject").val( subje );
 			 
 			 });
 		</script>
@@ -89,8 +92,9 @@ include('dbconfig.php');
 		<script type="text/javascript">
 			$(document).on("click", ".answerdialog", function () {
 			 var inqid = $(this).data('announcementid');
-			 
+			 var subje = $(this).data('subject');
 			  $(".modal-body #id_tag_ann").val( inqid );
+			  $(".modal-body #subject1").val( subje );
 			 
 			 });
 		</script>
@@ -205,10 +209,15 @@ include('dbconfig.php');
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-2 control-label">Details</label>
-									<div class="col-md-10">
-									<textarea  id = "details" class="form-control" style="min-width: 100%" readonly></textarea>
+									<label class="col-sm-1 control-label">Subject</label><br><br>
+									<div class="col-md-12">
+									<input type="text"  id = "subject" class="form-control" readonly/>
+									</div><br><br><br>
+									<label class="col-sm-1 control-label">Announcement</label><br><br>
+									<div class="col-md-12">
+									<textarea  id = "details" class="form-control" style="min-width: 100%; margin: 0px -9px 0px 0px; width: 508px; height: 129px;" readonly></textarea>
 									</div>
+
 								</div>
 							</form>
 						</div>
@@ -239,20 +248,24 @@ include('dbconfig.php');
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-2 control-label">Details</label>
-									<div class="col-md-10">
-									<textarea  id = "details" class="form-control" name="ann_val" style="min-width: 100%"></textarea>
-									<textarea  id = "id_tag_ann" class="form-control" name="ann_id" style="min-width: 100%; display: none;" ></textarea>
-									
-									<input type="submit" value="Update">
+									<label class="col-sm-1 control-label">Subject</label><br><br>
+									<div class="col-md-12">
+									<input type="text" name="sebject_val"  id = "subject1" class="form-control" name/>
+									</div><br><br><br>
+									<label class="col-sm-1 control-label">Details</label><br>
+									<div class="col-md-12">
+									<textarea  id = "details" class="form-control" name="ann_val" style="min-width: 100%; margin: 0px -9px 0px 0px; width: 508px; height: 129px;"></textarea>
+									<input type="text"  id = "id_tag_ann" class="form-control" name="ann_id" style="height:10px; width:10px; display:none" />
 									</div>
 								</div>
-							</form>
+							
 						</div>
 					</div>
 					<div class="modal-footer">
+						<input type="submit" class="btn btn-primary" value="Update">
 						<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
 					</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -301,16 +314,52 @@ include('dbconfig.php');
 
 							<!--table class="table table-striped table-hover table-responsive table-bordered"-->
 							<table class='footable table table-stripped' data-page-size='10' data-limit-navigation='5' data-filter=#filter>
+								 <thead>
+								 	<tr class = 'josh'>
+								 	<th class = "col-md-5">Date</th>
+								 	<th class = "col-md-5">Subject</th>
+								 	<th class = "col-md-3" style='text-align:center'>Action</th>
+								 	</tr>
+								 </thead>
 								<?php
 									//generate table headers
-									generate_table_header();
+								//	generate_table_header();
 
 									//generate table contents
 									generate_table_contents();
 									
 								?>
-
+									<tfoot>
+                                              <tr>
+                                                <td colspan = "78">
+                                                  <ul class = "pagination pull-right" data-limit-navigation="5">
+                                                    <li class = "footable-page-arrow disabled">
+                                                      <a data-page = "first" href = "#first"><<</a>
+                                                    </li>
+                                                    <li class = "footable-page-arrow disabled">
+                                                      <a data-page = "prev" href = "#prev"><</a>
+                                                    </li>
+                                                    <li class = "footable-page active">
+                                                      <a data-page = "0" href = "#">1</a>
+                                                    </li>
+                                                    <li class = "footable-page">
+                                                      <a data-page = "1" href = "#">2</a>
+                                                    </li>
+                                                    <li class = "footable-page ">
+                                                      <a data-page = "2" href = "#">3</a>
+                                                    </li>
+                                                    <li class = "footable-page-arrow">
+                                                      <a data-page = "next" href = "#next">></a>
+                                                    </li>
+                                                    <li class = "footable-page-arrow">
+                                                      <a data-page = "last" href = "#last">>></a>
+                                                    </li>
+                                                  </ul>
+                                                </td>
+                                              </tr>
+                                            </tfoot>
 							</table>
+						
 
 					</div>
 				</div>

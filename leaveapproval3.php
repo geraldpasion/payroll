@@ -194,7 +194,7 @@
 						$team2 = $_SESSION['employee_team1'];
 						$team3 = $_SESSION['employee_team2'];
 						$team4 = $_SESSION['employee_team3'];
-						if ($result = $mysqli->query("SELECT * FROM tbl_leave RIGHT JOIN employee ON employee.employee_id = tbl_leave.employee_id WHERE leave_status = 'Pending' AND (employee_team = '$team1' OR employee_team1 = '$team2' OR employee_team2 = '$team3' OR employee_team3 = '$team4') AND (employee_level = 1 OR employee_level = 2) ORDER BY leave_id")) //get records from db
+						if ($result = $mysqli->query("SELECT * FROM tbl_leave RIGHT JOIN employee ON employee.employee_id = tbl_leave.employee_id WHERE leave_status = 'Pending' AND (employee_team = '$team1' OR employee_team = '$team2' OR employee_team = '$team3' OR employee_team = '$team4') AND (employee_level = 1 OR employee_level = 2) ORDER BY leave_id")) //get records from db
 						{
 							if ($result->num_rows > 0) //display records if any
 							{

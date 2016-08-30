@@ -1,6 +1,6 @@
 <?php 
 include("dbconfig.php");
-$deduction_id = $_GET['deduction_id'];
+$deduction_id = $_GET['announcement_id'];
 	$fetch = $mysqli->query("SELECT * FROM deductions_archive WHERE deduction_id='$deduction_id'")->fetch_object();
 
 	$id = $fetch->deduction_id;

@@ -196,6 +196,7 @@ if(!isset($employee_id)){
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'registration.php'){echo 'active'; }else { echo ''; } ?>"><a href="registration.php">Registration</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'payslip.php'){echo 'active'; }else { echo ''; } ?>"><a href="payslip.php">Payslip</a></li>
 							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'finalpay.php'){echo 'active'; }else { echo ''; } ?>"><a href="finalpay.php">Final Pay</a></li>
+							<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == '13month.php'){echo 'active'; }else { echo ''; } ?>"><a href="13month.php">13th Month Pay</a></li>
 						</ul>
 					</li>
 										<li class="<?php if(basename($_SERVER['SCRIPT_NAME']) == 'payrollfactor.php' OR basename($_SERVER['SCRIPT_NAME']) == 'governmenttables.php' OR basename($_SERVER['SCRIPT_NAME']) == 'earnings.php' OR basename($_SERVER['SCRIPT_NAME']) == 'deductions.php' OR basename($_SERVER['SCRIPT_NAME']) == 'processing.php' OR basename($_SERVER['SCRIPT_NAME']) == 'autoupdate.php') {echo 'active'; }else { echo ''; } ?>">

@@ -62,7 +62,7 @@ function computeND($timein, $timeout) { // computes the night differential in a 
 	return sprintf("%.2f", $resArr[0] + $resMin);
 }
 
-$holidayid = $_POST['holiday_id1'];
+$holidayid = $_POST['announcement_id'];
 $dateRow = $mysqli->query("SELECT * FROM holiday where holiday_id = '$holidayid'")->fetch_array();
 $date = $dateRow['holiday_date'];
 $employeeIDs = array();

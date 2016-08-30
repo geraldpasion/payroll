@@ -163,8 +163,8 @@
 		 //var choice = 'Taxable';
 		 var elem = 'New';
 		 var elem2 = 'Deductions';
-			    $("#partinp").replaceWith("<div class='col-md-4' id='partinp'><select id = 'earningname' name = 'earningname' type='text' class='form-control' required></select></div>");
-				$("#earningname").load("filter.php?choice=" + choice + "&elem=" + elem + "&elem2=" + elem2);
+			    $("#partinp").replaceWith("<div class='col-md-4' id='partinp'><select id = 'deductionname' name = 'deductionname' type='text' class='form-control' required></select></div>");
+				$("#deductionname").load("filter.php?choice=" + choice + "&elem=" + elem + "&elem2=" + elem2);
 		}
 		</script>	
 	
@@ -203,22 +203,21 @@
 					</div>
 					<div class="ibox-content">		
 						<div class="form-group">
-							<div class="col-md-2"></div>
+							
 							<form method="POST" id="resetForm" class="form-horizontal" action="deductionexe.php">
-
-
-								<label class="col-sm-2 control-label">Type</label>
+								<div class="col-md-3"></div>
+								<label class="col-sm-2 control-label" style="text-align:left">Type</label>
 								<div class="col-md-4">
 								<select class = "form-control" id = "type" name = "type" onchange="filter_type(this.value)" required="" >
 									<option value="" disabled selected>Select Type</option>
 									<option value="Taxable">Taxable</option>
 									<option value="Non-Taxable">Non-Taxable</option>
-									
-								</SELECT>
-								</div><br><br><br>
-
+								</select>
+								</div>
+							</div><br><br>
+								<div class="form-group">
 								<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Deductions List</label>
+								<label class="col-sm-2 control-label">Deductions List</label>
 								<div class="col-md-4" id="partinp"><select id = "deductionname" class="form-control"  data-default-value="" name="deductionname" required="">
 									<option value="">Select Deductions</option>
 									<?php 
@@ -242,19 +241,19 @@
 							<br><br>
 							<div class="form-group">
 								<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Deductions Amount</label>
+								<label class="col-sm-2 control-label">Deductions Amount</label>
 								<div class="col-md-4"><input type="text" class="form-control" name="amount" placeholder="Enter Amount"/></div>
 							</div>
 							<br><br>
 							<div class="form-group">
 								<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">Initial Date</label>
+								<label class="col-sm-2 control-label">Initial Date</label>
 								<div class="col-md-4"><input id = "date" type="text" onpaste="return false" onDrop="return false" class="form-control" name="daterange2" required="" onKeyPress="return noneonly(this, event)" placeholder="click to pick date"/></div>
 							</div>
 							<br><br>
 							<div class="form-group">
 								<div class="col-md-3"></div>
-								<label class="col-sm-1 control-label">End Date</label>
+								<label class="col-sm-2 control-label">End Date</label>
 								<div class="col-md-4"><input id = "date" type="text" onpaste="return false" onDrop="return false" class="form-control" name="daterange3" onKeyPress="return noneonly(this, event)" placeholder="click to pick date (optional)"/></div>
 								<div class="col-sm-1" style="font-size:18px;"><a class="right" data-placement="right" data-toggle="tooltip" href="#" title="If no end date is specified, the deduction will be effective on all cutoffs after the start date."><span class="glyphicon glyphicon-info-sign" ></span></a></div>
 							</div>
@@ -452,22 +451,28 @@
 									</div>								
 								</div>
 								
-								<div style= "max-height:500px; min-height:300px; overflow-y:scroll;" id="earn" class="tab-pane" >
+								<div style= "max-height:500px; min-height:300px; overflow-y:scroll;" id="deduct" class="tab-pane" >
 									<div class="panel-body">
-											<table class="footable table table-stripped" data-page-size="8" data-filter="#filter">						
-												<thead>
-													<tr>
-														<th>ID</th>
-														<th>Particular</th>
-														<th>Type</th>
-														<th>Action</th>
-													</tr>
-												</thead>
-												<tbody>
-													<?php
-														$emp_deductions = $mysqli->query("SELECT * FROM deductions_setting  ORDER BY deductions_id");
+											<?php
+														$emp_deductions = $mysqli->query("SELECT * FROM deduction_settings ORDER BY deduction_id DESC");
 														if($emp_deductions->num_rows > 0){
-															while($deduct = mysqli_fetch_object($emp_deductions)){
+														echo '<table class="footable table table-stripped" data-page-size="10" data-limit-navigation="5" data-filter=#filter>';	
+														echo '<thead>';
+														echo '<tr>';
+														echo '<th>ID</th>';
+														echo '<th>Particular</th>';
+														echo '<th>Type</th>';
+														echo '<th>Action</th>';
+														echo '</tr>';
+														echo '</thead>';
+														echo "<tfoot>";                    
+														echo "<tr>";
+														echo "<td colspan='7'>";
+														echo "<ul class='pagination pull-right'></ul>";
+														echo "</td>";
+														echo "</tr>";
+														echo "</tfoot>";
+														while($deduct = mysqli_fetch_object($emp_deductions)){
 																$deductid = $deduct->deduction_id;
 																echo '<tr>';
 																echo '<td>'.$deduct->deduction_id.'</td>';
@@ -477,9 +482,8 @@
 																echo '</tr>';
 															}
 														}
+														echo "</table>";
 													?>
-												</tbody>
-											</table>
 									</div>
 								</div>		
 								<div class="modal-footer">
