@@ -145,21 +145,52 @@ $start = $_POST['start1'];
 $breakin = $_POST['breakin1'];
 $breakout = $_POST['breakout1'];
 
-$end = str_replace(' ', '', $end);
-$end = substr_replace($end, '', 5, 1);
-$end = date("H:i", strtotime($end));
+ $end = str_replace(' ', '', $end);
+ $count=strlen($end);
+ echo "count: ".$count."<br>";
+ if($count==7)
+ 	$replace_count=4;
+ else
+ 	$replace_count=5;
+ $end = substr_replace($end, '', $replace_count, 1);
+ $end = date("G:i", strtotime($end));
 
 $start = str_replace(' ', '', $start);
-$start = substr_replace($start, '', 5, 1);
-$start = date("H:i", strtotime($start));
+ $count=strlen($start);
+ echo "count: ".$count."<br>";
+ if($count==7)
+ 	$replace_count=4;
+ else
+ 	$replace_count=5;
+$start = substr_replace($start, '', $replace_count, 1);
+$start = date("G:i", strtotime($start));
 
 $breakin = str_replace(' ', '', $breakin);
-$breakin = substr_replace($breakin, '', 5, 1);
-$breakin = date("H:i", strtotime($breakin));
+ $count=strlen($breakin);
+ echo "count: ".$count."<br>";
+ if($count==7)
+ 	$replace_count=4;
+ else
+ 	$replace_count=5;
+$breakin = substr_replace($breakin, '', $replace_count, 1);
+$breakin = date("G:i", strtotime($breakin));
 
 $breakout = str_replace(' ', '', $breakout);
-$breakout = substr_replace($breakout, '', 5, 1);
-$breakout = date("H:i", strtotime($breakout));
+ $count=strlen($breakout);
+ echo "count: ".$count."<br>";
+ if($count==7)
+ 	$replace_count=4;
+ else
+ 	$replace_count=5;
+$breakout = substr_replace($breakout, '', $replace_count, 1);
+$breakout = date("G:i", strtotime($breakout));
+
+echo 'start: '.$start."<br>";
+echo 'breakout: '.$breakout."<br>";
+echo 'breakin: '.$breakin."<br>";
+echo 'end: '.$end."<br>";
+
+//**************************************************
 
 //$empid = $_POST['empid1'];
 $name = $_POST['name1'];
@@ -184,21 +215,21 @@ if($count > 0) { // if there is at least 1 application, return false
 
 	// insert the new record into the database
 	if($isAbsent == "Present") { // for applications that are present, the hours and pay should be computed 
-		$end = str_replace(' ', '', $end);
-		$end = substr_replace($end, '', 5, 1);
-		$end = date("H:i", strtotime($end));
+		// $end = str_replace(' ', '', $end);
+		// $end = substr_replace($end, '', 5, 1);
+		// $end = date("H:i", strtotime($end));
 
-		$start = str_replace(' ', '', $start);
-		$start = substr_replace($start, '', 5, 1);
-		$start = date("H:i", strtotime($start));
+		// $start = str_replace(' ', '', $start);
+		// $start = substr_replace($start, '', 5, 1);
+		// $start = date("H:i", strtotime($start));
 
-		$breakin = str_replace(' ', '', $breakin);
-		$breakin = substr_replace($breakin, '', 5, 1);
-		$breakin = date("H:i", strtotime($breakin));
+		// $breakin = str_replace(' ', '', $breakin);
+		// $breakin = substr_replace($breakin, '', 5, 1);
+		// $breakin = date("H:i", strtotime($breakin));
 
-		$breakout = str_replace(' ', '', $breakout);
-		$breakout = substr_replace($breakout, '', 5, 1);
-		$breakout = date("H:i", strtotime($breakout));
+		// $breakout = str_replace(' ', '', $breakout);
+		// $breakout = substr_replace($breakout, '', 5, 1);
+		// $breakout = date("H:i", strtotime($breakout));
 		//$empid = $_POST['empid1'];
 
 		// insert the new record into the database
@@ -339,6 +370,6 @@ if($count > 0) { // if there is at least 1 application, return false
 
 	$mysqli->query("UPDATE others SET others_paid='$totalAtt',others_payable='$totalOthers',others_retro='$retro' WHERE others_id='$others_id'");
 
-	echo "Form Submitted Succesfully";
+	echo "Form Submitted xxx Succesfully";
 }
 ?>

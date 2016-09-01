@@ -319,7 +319,7 @@ document.frmUser.submit();
 							<div id="divMonthly" style="display:none;">
 							<?php
 								include('dbconfig.php');
-									if ($result1 = $mysqli->query("SELECT * FROM employee WHERE employee_status = 'active' and cutoff = 'Monthly' ORDER BY employee_id")) //get records from db
+									if ($result1 = $mysqli->query("SELECT * FROM employee WHERE employee_status = 'active' and cutoff = 'Monthly' ORDER BY employee_lastname ASC")) //get records from db
 									{
 
 										if ($result1->num_rows > 0) //display records if any

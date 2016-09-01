@@ -220,7 +220,7 @@
 								echo "<div style='padding-left:60px;padding-right:60px;'>";
 									echo "<input type='text' class='form-control input-sm m-b-xs' id='filter' placeholder='Search in table'><br>";
 								
-								if ($result = $mysqli->query("SELECT DISTINCT employee.employee_id, employee_firstname, employee_lastname FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id $keydate ORDER BY attendance_date")) //get records from db
+								if ($result = $mysqli->query("SELECT DISTINCT employee.employee_id, employee_firstname, employee_lastname FROM attendance INNER JOIN employee ON employee.employee_id = attendance.employee_id $keydate ORDER BY employee_firstname")) //get records from db
 								{
 									if ($result->num_rows > 0) //display employee based on date range
 									{

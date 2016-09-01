@@ -381,8 +381,9 @@ $(".modal-body #wew").val( wew );
 								$empcutempid=$cutoff->employee_id;
 								$empcutinitial=$cutoff->empcut_initial;
 								$empcutend=$cutoff->empcut_end;
+								$keydate = "attendance_date BETWEEN '".$initialcut."' AND '".$endcut."' AND attendance.employee_id = '".$empcutempid."' AND (attendance.status = 'Done' OR attendance.attendance_status = 'active' OR attendance.attendance_status = 'outforbreak' OR attendance.attendance_status = 'infrombreak')";
 
-								if ($result1 = $mysqli->query("SELECT * FROM employee WHERE employee_id='$empcutempid' AND employee_status = 'active' ORDER BY employee_id")) //get records from db
+								if ($result1 = $mysqli->query("SELECT * FROM employee INNER JOIN attendance ON attendance.employee_id = employee.employee_id WHERE employee.employee_id='$empcutempid' AND employee_status = 'active' AND $keydate ORDER BY attendance_date DESC LIMIT 1")) //get records from db
 								{
 									if ($result1->num_rows > 0) //display records if any
 									{
@@ -392,8 +393,8 @@ $(".modal-body #wew").val( wew );
 											$name = $row1->employee_firstname . "  " . $row1->employee_middlename . " " . $row1->employee_lastname;
 											$empid = $row1->employee_id;
 											$emp_type = $row1->employee_type;
-											$emp_shift = $row1->employee_shift;
-											$emp_restday = $row1->employee_restday;
+											$emp_shift = $row1->attendance_shift;
+											$emp_restday = $row1->attendance_restday;
 											$emp_sickleave = $row1->employee_sickleave;
 											$emp_vacationleave = $row1->employee_vacationleave;
 

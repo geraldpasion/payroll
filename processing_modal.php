@@ -423,6 +423,13 @@ $philhealth = sprintf('%.2f',$results['PhilHealth']);//->PhilHealth);
 														}
 													}
 										echo '</tbody>
+										<tfoot class="hide-if-no-paging">
+		<tr>
+			<td colspan="5">
+				<div class="pagination pagination-centered"></div>
+			</td>
+		</tr>
+	</tfoot>
 										</table>
 									</div>
 								</div>

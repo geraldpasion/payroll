@@ -226,7 +226,7 @@
 										echo "<table class='footable table table-stripped' data-page-size='8' data-filter=#filter>";								
 										echo "<thead>";
 									echo "<tr>";
-									echo "<th>ID</th>";
+									echo "<th style='text-align:center'>ID</th>";
 									echo "<th>Name</th>";
 									echo "<th>Department</th>";
 									echo "<th style='text-align:center'>Action</th>";
@@ -247,7 +247,7 @@
 											$shiftend = date("g : i : A",strtotime($shiftend));
 											echo "<tr class = 'josh'>";
 											echo "<td>" . $row->employee_id . "</td>";
-											echo "<td><a href='#' data-toggle='modal'
+											echo "<td style='text-align:left'><a href='#' data-toggle='modal'
 														data-employee-id='$empid' 
 														data-lastname='$row->employee_lastname' 
 														data-firstname='$row->employee_firstname' 
@@ -275,7 +275,7 @@
 														data-password='$row->employee_password' 
 
 											data-target='#myModal2' class = 'viewempdialog'>" . $row->employee_lastname . "," . " " . $row->employee_firstname . " " . $row->employee_middlename . "</a></td>";
-											echo "<td>" . $row->employee_department . "</td>";
+											echo "<td style='text-align:left'>" . $row->employee_department . "</td>";
 											echo "<td style='text-align:center'><a href='#' id='$empid' class = 'activate'><button class='btn btn-primary' type='button'><i class='fa fa-check'></i> Activate</button></a>&nbsp;&nbsp;";
 											// echo "<a href='#' id = '$empid' class = 'delete'><button class='btn btn-danger' name = 'edit' type='button'><i class='fa fa-warning'></i> Delete</button></a>";
 											echo "</td>";

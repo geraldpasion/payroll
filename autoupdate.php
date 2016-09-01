@@ -114,12 +114,13 @@
 			</div>
 		</div>
 		
-		<?php						
+		<?php		
+		date_default_timezone_set('Asia/Manila');				
 			include('dbconfig.php');
 			$sql = $mysqli->query("SELECT MAX(attendance_date) FROM attendance");
 			$maxdate = mysqli_fetch_array($sql);
 			$mdate = date('Y-m-d',strtotime($maxdate[0]));
-
+			echo "<div>";
 			if(isset($_POST['update'])){
 				$number = $_POST['editnum'];
 				$type = $_POST['type'];
@@ -129,18 +130,43 @@
 				if($len == 11){
 					$time = "0".$time;
 				}
+				
+				echo "number: ".$number."<br>";
+				echo "type: ".$type."<br>";
+				echo "date: ".$date."<br>";
+				echo "time: ".$time."<br>";
+				echo "len: ".$len."<br>";
+				
+
 				$time = str_replace(' ', '', $time);
-				$time = substr_replace($time, '', 5, 1);
+				echo "time str_replace: ".$time."<br>";
+				$time = substr_replace($time, ' ', 5, 1);
+				echo "time substr_replace: ".$time."<br>";
 				$time = date("H:i:s", strtotime($time));
+				echo "time date strtotime: ".$time."<br>";
 				$cond = $number . " " . $type;
 				$timestamp = "'". $date . " " . $time ."'";
 
-				$mysqli->query("ALTER EVENT hris_event
-					ON SCHEDULE EVERY $cond
+				echo "<b>cond:</b> ".$cond."<br>";
+				echo "<b>timetamp:</b> ".$timestamp."<br>";
+
+				/*$sql_alter="ALTER EVENT hris_event
+					ON SCHEDULE EVERY '$cond'
 					STARTS $timestamp
 					DO
-						CALL logs(NOW(), DATE_ADD(NOW(),INTERVAL $cond))");
+						CALL logs(NOW(), DATE_ADD(NOW(),INTERVAL $cond))";
+				echo "sql_alter: ".$sql_alter."<br>";
+
+				$query=$mysqli->query($sql_alter);*/
 			}
+
+				/*if($query){
+					echo "Successfull!<br>";
+				}
+				else
+					echo("Error description: " . mysqli_error($query));*/
+
+				echo "</div>";
 		?>
 
 	<script type="text/javascript">

@@ -467,7 +467,7 @@
 														echo '<th>ID</th>';
 														echo '<th>Particular</th>';
 														echo '<th>Type</th>';
-														echo '<th>Action</th>';
+														echo '<th style="text-align:center;">Action</th>';
 														echo '</tr>';
 														echo '</thead>';
 														echo "<tfoot>";                    
@@ -483,7 +483,7 @@
 																echo '<td>'.$earn->earnings_id.'</td>';
 																echo '<td>'.$earn->earnings_name.'</td>';
 																echo '<td>'.$earn->earnings_type.'</td>';
-																echo "<td><a href='#' data-toggle='modal' data-target='#myModal4' id='$earnid' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Delete</button></a></td>";
+																echo "<td style='text-align:center;'><a href='#' data-toggle='modal' data-target='#myModal4' id='$earnid' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Delete</button></a></td>";
 																echo '</tr>';
 															}
 														}

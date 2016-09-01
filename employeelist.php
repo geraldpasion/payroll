@@ -488,9 +488,9 @@
 											$restdayArray = split('/', $row1->employee_restday);
 											echo "<tr class = 'josh'>";
 											//employee id
-											echo "<td>" . $row1->employee_id . "</td>";
+											echo "<td style='text-align:left'>" . $row1->employee_id . "</td>";
 											//name
-											echo "<td><a href='#' data-toggle='modal'
+											echo "<td style='text-align:left'><a href='#' data-toggle='modal'
 														data-employee-id='$empid' 
 														data-lastname='$row1->employee_lastname' 
 														data-firstname='$row1->employee_firstname' 
@@ -534,9 +534,9 @@
 
 											data-target='#myModal2' class = 'viewempdialog'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</a></td>";
 											//department
-											echo "<td>" . $row1->employee_department . "</td>";
+											echo "<td style='text-align:left'>" . $row1->employee_department . "</td>";
 											//team
-											echo "<td>" . $row1->employee_team . "</td>";
+											echo "<td style='text-align:left'>" . $row1->employee_team . "</td>";
 											//access level
 											echo "<td style='text-align:center'>" . $row1->employee_level . "</td>";
 											//edit
@@ -612,7 +612,7 @@
 
  // }
  ?>
-	<div class="modal inmodal fade" id="myModal2" tabindex="-1" role="dialog"  aria-hidden="true">
+	<div class="modal inmodal fade" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content" id="employeelist_modal">
 				<div class="modal-header">
@@ -637,6 +637,8 @@
 								<li class=""><a data-toggle="tab" href="#deductions">Deductions</a></li> -->
 								<li class=""><a data-toggle="tab" href="#leavedetails">Leave Details</a></li>
 								<li class=""><a data-toggle="tab" href="#passwords">Password</a></li>
+								<li class=""><a data-toggle="tab" href="#shiftlog">Shift Schedule</a></li>
+								<li class=""><a data-toggle="tab" href="#restdaylog">Rest Day</a></li>
 
 							
 							</ul>
@@ -972,6 +974,45 @@
 							</div>
 						</ul>
 
+						<div style= "max-height:100px; min-height:300px; overflow-y:scroll;" id="shiftlog" class="tab-pane" >
+								<div class="panel-body">
+							<table id="shift_log" class='footable table table-stripped' data-page-size='20' data-filter=#filter>						
+										<thead>
+											<tr>
+												<th>Date</th>
+												<th>Start Date</th>
+												<th>End Date</th>
+												<th>Schedule</th>
+												<th>Rest Day</th>
+												<th>Status</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php
+											//call employeelist_modal.php here
+
+
+
+												/*$leavedetails = $mysqli->query("SELECT * FROM tbl_leave WHERE employee_id=$empid");
+													if($leavedetails->num_rows > 0){
+														while($leave = $leavedetails->fetch_object()){
+															echo '<tr>';
+															echo '<td>'.$leave->leave_type.'</td>';
+															echo '<td>'.$leave->leave_start.'</td>';
+															//echo '<td>'.$leave->.'</td>';
+															echo '<td>'.$leave->leave_approvedby.'</td>';
+															echo '<td>'.$leave->leave_approvaldate.'</td>';
+															echo '</tr>';
+														}
+													}
+												*/
+											?>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</ul>
+
 					<div id="passwords" class="tab-pane" >
 							<div class="panel-body">
 										<form id = "uploadForm" method="POST" action = "editemployee.php" class="form-horizontal">
@@ -983,6 +1024,15 @@
 							</div>
 						</div>
 					</div>
+				</ul>
+
+
+					<!--div id="rest" class="tab-pane" >
+						<div class="panel-body">
+							
+						</div>
+					</div>
+					</ul-->
 						<!--script>
 								/function dis(){
 								//	var val=document.getElementByClassname("level").value;
@@ -1453,6 +1503,27 @@
 			request.done(function(msg) {
 				//alert(msg);
 			  $("#leave_type").html(msg);
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			});
+		});
+
+	</script>
+	<script type="text/javascript">
+		$('#myModal2').on('shown.bs.modal', function () {
+	   		var menuId = $('#empid').val();
+			var request = $.ajax({
+			  url: "shift_log_table.php",
+			  method: "GET",
+			  data: { empid : menuId },
+			  dataType: "html"
+			});
+			 
+			request.done(function(msg) {
+				//alert(msg);
+			  $("#shift_log").html(msg);
 			});
 			 
 			request.fail(function( jqXHR, textStatus ) {

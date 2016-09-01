@@ -297,7 +297,7 @@
 										
 									{
 										$empid = $row1->employee_id;
-
+										
 										echo "<tr class = 'josh'>";
 										echo "<td align='center'><input type='checkbox'  class='checkbox' name='id[]' value='$empid'></td>";
 										echo "<td style='padding-left:100px;'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</td>";
@@ -462,7 +462,7 @@
 														echo '<th>ID</th>';
 														echo '<th>Particular</th>';
 														echo '<th>Type</th>';
-														echo '<th>Action</th>';
+														echo '<th style="text-align:center;">Action</th>';
 														echo '</tr>';
 														echo '</thead>';
 														echo "<tfoot>";                    
@@ -478,7 +478,7 @@
 																echo '<td>'.$deduct->deduction_id.'</td>';
 																echo '<td>'.$deduct->deduction_name.'</td>';
 																echo '<td>'.$deduct->deduction_type.'</td>';
-																echo "<td><a href='#' data-toggle='modal' data-target='#myModal4' id='$deductid' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Delete</button></a></td>";
+																echo "<td style='text-align:center;'><a href='#' data-toggle='modal' data-target='#myModal4' id='$deductid' class = 'delete'><button class='btn btn-warning' type='button'><i class='fa fa-warning'></i> Delete</button></a></td>";
 																echo '</tr>';
 															}
 														}

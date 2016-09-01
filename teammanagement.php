@@ -169,9 +169,9 @@ document.frmUser.submit();
 											echo "<tr class = 'josh'>";
 
 											echo "<td align='center'><input type='checkbox'  class='checkbox' name='id[]' value='$empid'></td>";
-											echo "<td style='padding-left:100px;'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</td>";
-											echo "<td>" . $row1->employee_department. "</td>";
-											echo "<td>" . $row1->employee_team. "</td>";
+											echo "<td style='padding-left:100px;text-align:left'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</td>";
+											echo "<td style='text-align:left'>" . $row1->employee_department. "</td>";
+											echo "<td style='text-align:left'>" . $row1->employee_team. "</td>";
 										
 											echo "</tr>";
 										}

@@ -12,7 +12,7 @@ $tables=array(
 	'others', //retro
 	'cutoff',
 
-	'announcement',
+	//'announcement',
 	'emp_earnings', //other taxable/non-taxable earnings
 	'emp_deductions' //other taxable/non-taxable deductions
 	);

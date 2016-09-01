@@ -12,12 +12,27 @@
 		?>
 		</head>
 <body>
-<select>
-	<?php 
-   for($i = 2000 ; $i <= date('Y'); $i++){
-      echo "<option>$i</option>";
-   }
-?>
-</select>
+<div class="row">
+<div class="col-lg-12">
+<div class="ibox float-e-margins">
+<div class="ibox-title">
+	<h5>13 Month Pay</h5><br>
+	<hr>
+	<center>
+	<select>
+		<?php 
+  			 for($i = 2000 ; $i <= date('Y'); $i++){
+    			  echo "<option>$i</option>";
+  			 }
+		?>
+	</select>
+	<input type="submit"/>
+	</center>
+</div>
+</div>
+</div>
+</div>
+
+</center>
 </body>
 </html>
