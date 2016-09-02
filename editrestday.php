@@ -208,8 +208,8 @@
 							
 						?>
 							<div class="form-group">
-								<div class="col-md-4"></div>
-								<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<div class="col-md-9"></div>
+								<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;
 								<button type="button" onClick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
 							</div>
 						</form>

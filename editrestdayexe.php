@@ -76,20 +76,42 @@ include("dbconfig.php");
 	$end = $cutarray[1];
 	$end = date("Y-m-d", strtotime($end));
 
+	$tom = strtotime("tomorrow");
+	$dateTomorrow=date("Y-m-d", $tom);
+
+	session_start();
+	$approvedby = $_SESSION['fname'] . " " . $_SESSION['lname'];
 	for ($i=0; $i <$count ; $i++) { 
 		// if ($stmt = $mysqli->prepare("UPDATE employee SET employee_restday = '$restday' WHERE employee_id = '".$_POST["id"][$i]."'")) {	
 		// 	$stmt->execute();
 		// 	$stmt->close();
 		// }
 		if($hasdate == "with") {
+			echo"haha";
+				$sql_up ="INSERT INTO restday_logs (employee_id, restday_date, restday_startdate, restday_enddate, restday_schedule, restday_createdby) VALUES ('".$_POST["id"][$i]."', '$dateToday', '$start' ,'$end', '$restday', '$approvedby')";
+				if ($conn->query($sql_up) === TRUE) {
+				    echo $hasdate." Record updated successfully employee <br>";
+				} else {
+				    echo $hasdate." Error updating record <br>";
+				}
 			if($stmt2 = $mysqli->prepare("UPDATE attendance SET attendance_restday = '$restday' WHERE employee_id = '".$_POST["id"][$i]."' AND attendance_date BETWEEN '$start' AND '$end'")) {
 				$stmt2->execute();
 				$stmt2->close();
+				echo"<script>alert('update with date range');</script>";
 			}
 		} else {
+
+			$sql_up ="INSERT INTO restday_logs (employee_id, restday_date, restday_startdate, restday_enddate, restday_schedule, restday_createdby) VALUES ('".$_POST["id"][$i]."', '$dateToday', '$dateTomorrow', 'NULL', $restday', '$approvedby')";
+				if ($conn->query($sql_up) === TRUE) {
+				    echo $hasdate." Record updated successfully employee <br>";
+				} else {
+				    echo $hasdate." Error updating record <br>";
+				}
+
 			if($stmt2 = $mysqli->prepare("UPDATE attendance SET attendance_restday = '$restday' WHERE attendance_date > '$dateToday' AND employee_id = '".$_POST["id"][$i]."'")) {
 				$stmt2->execute();
 				$stmt2->close();
+				//echo"<script>alert('update without');</script>";
 			}
 		}
 	}

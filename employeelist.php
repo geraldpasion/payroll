@@ -457,7 +457,7 @@
 								{
 									if ($result1->num_rows > 0) //display records if any
 									{
-										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
+										echo "<table class='footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
 										echo "<th>ID</th>";
@@ -638,6 +638,7 @@
 								<li class=""><a data-toggle="tab" href="#leavedetails">Leave Details</a></li>
 								<li class=""><a data-toggle="tab" href="#passwords">Password</a></li>
 								<li class=""><a data-toggle="tab" href="#shiftlog">Shift Schedule</a></li>
+								<li class=""><a data-toggle="tab" href="#daily">Daily Schedule</a></li>
 								<li class=""><a data-toggle="tab" href="#restdaylog">Rest Day</a></li>
 
 							
@@ -983,8 +984,81 @@
 												<th>Start Date</th>
 												<th>End Date</th>
 												<th>Schedule</th>
-												<th>Rest Day</th>
 												<th>Status</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php
+											//call employeelist_modal.php here
+
+
+
+												/*$leavedetails = $mysqli->query("SELECT * FROM tbl_leave WHERE employee_id=$empid");
+													if($leavedetails->num_rows > 0){
+														while($leave = $leavedetails->fetch_object()){
+															echo '<tr>';
+															echo '<td>'.$leave->leave_type.'</td>';
+															echo '<td>'.$leave->leave_start.'</td>';
+															//echo '<td>'.$leave->.'</td>';
+															echo '<td>'.$leave->leave_approvedby.'</td>';
+															echo '<td>'.$leave->leave_approvaldate.'</td>';
+															echo '</tr>';
+														}
+													}
+												*/
+											?>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</ul>
+
+					<div style= "max-height:100px; min-height:300px; overflow-y:scroll;" id="daily" class="tab-pane" >
+								<div class="panel-body">
+							<table id="daily_log" class='footable table table-stripped' data-page-size='20' data-filter=#filter>						
+										<thead>
+											<tr>
+												<th>Date</th>
+												<th>Day</th>
+												<th>Schedule</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php
+											//call employeelist_modal.php here
+
+
+
+												/*$leavedetails = $mysqli->query("SELECT * FROM tbl_leave WHERE employee_id=$empid");
+													if($leavedetails->num_rows > 0){
+														while($leave = $leavedetails->fetch_object()){
+															echo '<tr>';
+															echo '<td>'.$leave->leave_type.'</td>';
+															echo '<td>'.$leave->leave_start.'</td>';
+															//echo '<td>'.$leave->.'</td>';
+															echo '<td>'.$leave->leave_approvedby.'</td>';
+															echo '<td>'.$leave->leave_approvaldate.'</td>';
+															echo '</tr>';
+														}
+													}
+												*/
+											?>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</ul>
+
+					<div style= "max-height:100px; min-height:300px; overflow-y:scroll;" id="restdaylog" class="tab-pane" >
+								<div class="panel-body">
+							<table id="restday_log" class='footable table table-stripped' data-page-size='20' data-filter=#filter>						
+										<thead>
+											<tr>
+												<th>Date</th>
+												<th>Start Date</th>
+												<th>End Date</th>
+												<th>Rest Day Schedule</th>
+												<th>Created By</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -1524,6 +1598,48 @@
 			request.done(function(msg) {
 				//alert(msg);
 			  $("#shift_log").html(msg);
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			});
+		});
+
+	</script>
+	<script type="text/javascript">
+		$('#myModal2').on('shown.bs.modal', function () {
+	   		var menuId = $('#empid').val();
+			var request = $.ajax({
+			  url: "daily_log_table.php",
+			  method: "GET",
+			  data: { empid : menuId },
+			  dataType: "html"
+			});
+			 
+			request.done(function(msg) {
+				//alert(msg);
+			  $("#daily_log").html(msg);
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			});
+		});
+	</script>
+	
+	<script type="text/javascript">
+		$('#myModal2').on('shown.bs.modal', function () {
+	   		var menuId = $('#empid').val();
+			var request = $.ajax({
+			  url: "restday_log_table.php",
+			  method: "GET",
+			  data: { empid : menuId },
+			  dataType: "html"
+			});
+			 
+			request.done(function(msg) {
+				//alert(msg);
+			  $("#restday_log").html(msg);
 			});
 			 
 			request.fail(function( jqXHR, textStatus ) {

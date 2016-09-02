@@ -49,7 +49,7 @@ if ($emp_shiftlog = $mysqli->query("SELECT * FROM shift_logs WHERE employee_id =
 								echo '<th>End Date</th>';
 								echo '<th>Schedule</th>';
 								echo '<th>Created By</th>';
-								echo '<th>Status</th>';
+								//echo '<th>Status</th>';
 								echo '</tr>';
 								echo '</thead>';
 								echo "<tfoot>";                    
@@ -67,7 +67,7 @@ if ($emp_shiftlog = $mysqli->query("SELECT * FROM shift_logs WHERE employee_id =
 									echo '<td>'.$shiftlog->shiftlog_enddate.'</td>';
 									echo '<td>'.$shiftlog->shiftlog_schedule.'</td>';
 									echo '<td>'.$shiftlog->shiftlog_createdby.'</td>';
-									echo '<td>'.$shiftlog->shiftlog_status.'</td>';
+									//echo '<td>'.$shiftlog->shiftlog_status.'</td>';
 									echo '</tr>';
 									}
 								}

@@ -77,7 +77,9 @@
 							</a>
 						</div>
 					</div>
-					<div class="ibox-content">
+
+					<!--note.. is this still needed? uncomment na lang..-->
+					<!--div class="ibox-content">
 						<form method = "POST" action="autoupdate.php" class="form-horizontal">
 							<div class="form-group"><br>
 								<label class="col-sm-4 control-label">Execute every</label>
@@ -109,7 +111,7 @@
 							<div class="col-md-5"></div>
 								<button id ="submit" type="submit" name = "update" class="btn btn-w-m btn-primary">Submit</button>
 						</form>
-					</div>
+					</div-->
 				</div>
 			</div>
 		</div>
