@@ -485,7 +485,7 @@
 							include('dbconfig.php');
 								if(isset($_POST['test1'])){
 									
-								if ($result1 = $mysqli->query("SELECT * FROM employee INNER JOIN emp_cutoff ON employee.employee_id = emp_cutoff.employee_id WHERE emp_cutoff.empcut_initial='$initialcut' AND emp_cutoff.empcut_end = '$endcut' AND employee_status='active'")) //get records from db
+								if ($result1 = $mysqli->query("SELECT * FROM employee INNER JOIN emp_cutoff ON employee.employee_id = emp_cutoff.employee_id WHERE emp_cutoff.empcut_initial='$initialcut' AND emp_cutoff.empcut_end = '$endcut' AND employee_status='active' AND emp_cutoff.status='done'")) //get records from db
 								{
 									if ($result1->num_rows > 0) //display records if any
 									{

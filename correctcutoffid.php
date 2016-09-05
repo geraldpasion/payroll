@@ -11,7 +11,7 @@ include 'functions.php';
 
 //compute('2016-05-16 - 2016-06-15');
 
-$cutoff_field='2016-07-01 - 2016-07-31';
+$cutoff_field='2016-05-16 - 2016-06-16';
 $update=1;
 $emp='121';
 

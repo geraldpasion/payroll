@@ -898,6 +898,27 @@ echo nextline().'**********************************************************'.dou
          insert_statement($into, $values, 'totalcomputation');
          }
 
+         //update emp_cutoff. update status to done if that certain employee_id was included to the computation. this limits the error under processing2.php
+         //on retrieving empty entry.
+
+         //parse cutoff
+         $explode_cutoff=explode(" - ", $cutoff_total_comp);
+         $explode_cutoff[0]=str_replace(" ", "", $explode_cutoff[0]);
+         $explode_cutoff[1]=str_replace(" ", "", $explode_cutoff[1]);
+
+         $initial_cutoff=$explode_cutoff[0];
+         $end_cutoff=$explode_cutoff[1];
+         //echo 
+         echo "initial_cutoff: ".$initial_cutoff."<br>";
+         echo "end_cutoff: ".$end_cutoff."<br>";
+         $update_sql="UPDATE emp_cutoff SET status = 'done' WHERE employee_id = '$employee_id' AND empcut_initial='$initial_cutoff' AND empcut_end='$end_cutoff'";
+
+         if ($conn->query($update_sql) === TRUE) {
+                echo "Record updated successfully ".$update_sql."<br>";
+            } else {
+                echo "Error updating record: " . $conn->error;
+            }
+
          //restart time limit - this is to avoid fatal erros from php limitations
          set_time_limit(30);
 

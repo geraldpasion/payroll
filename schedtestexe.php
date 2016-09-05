@@ -4,60 +4,158 @@ session_start();
 $approvedby = $_SESSION['fname'] . " " . $_SESSION['lname'];
 $dateToday = date("Y-m-d");
 $hasdate = $_POST['hasdate'];
-echo "hasdate: ".$hasdate."<br>";
-$sched=$_POST["sched"];
+echo "hasdate: <b>".$hasdate."</b><br>";
+$sched=$_POST["sched"]; //time
 		$schedArray = split('-', $sched);
-		$schedArray[0] = substr($schedArray[0], 0, -3);
-		$schedArray[1] = substr($schedArray[1], 0, -3);
+		$schedArray[0] = substr($schedArray[0], 0, -3); //start time
+		echo 'schedArray[0]: '.$schedArray[0]."<br>";
+		$schedArray[1] = substr($schedArray[1], 0, -3); //end time
+		echo 'schedArray[1]: '.$schedArray[1]."<br>";
 		$sched = $schedArray[0].'-'.$schedArray[1];
+		//echo 'sched: '.$sched."<br>";
 
 		$start=$schedArray[0];
 		$end=$schedArray[1];
 
 $shift_start=$schedArray[0];
 $tom = strtotime("tomorrow");
-echo "tomorrow: ".$tom."<br>";
 $dateTomorrow=date("Y-m-d", $tom);
 $shift_end=$schedArray[1];
-echo "sched: ".$sched."<br>";
+echo "sched: ".$sched."<br><br>";
 
 //check first if already exist
-function check_if_existing($sched, $date_start, $date_end=0){
+function check_if_existing($sched){
 	include 'dbconfig.php';
 
 $usersCount = count($_POST["id"]);
 		for($i=0;$i<$usersCount;$i++){ 
 			$empid = $_POST["id"][$i];
 
-			$sql = "SELECT shiftlog_id FROM shift_logs 
-			WHERE employee_id='$empid' 
-			AND shiftlog_schedule='$sched' 
-			AND shiftlog_startdate='$date_start'";
-			
-			echo "sql: ".$sql."<br>";
 
+			if(isset($_POST['daterange'])){
+            	$user_daterange=$_POST['daterange'];
+                echo "user daterange: ".$user_daterange."<br><br>";
+
+                $str_explode=explode("-",$user_daterange);
+
+				$string1 = $str_explode[0];
+				$string1 = str_replace(' ', '', $string1);
+				$string1Array = split('/', $string1);
+				$string1 = $string1Array[2].'-'.$string1Array[0].'-'.$string1Array[1];
+				echo "user string1: ".$string1."<br>";
+
+				$string2 = $str_explode[1];
+				$string2 = str_replace(' ', '', $string2);
+				$string2Array = split('/', $string2);
+				$string2 = $string2Array[2].'-'.$string2Array[0].'-'.$string2Array[1];
+				echo "user string2: ".$string2."<br><br>";
+         		}
+         		else{
+         		//tomorrow
+         		$tom = strtotime("tomorrow");
+				$dateTomorrow=date("Y-m-d", $tom);
+				echo "tomorrow's date: ".$tom."<br>";
+				echo "converted: ".$dateTomorrow."<br><br>";
+				}
+
+
+
+			//$sql = "SELECT shiftlog_id FROM shift_logs WHERE employee_id='$empid' AND shiftlog_schedule='$sched'";
+			$sql = "SELECT * FROM shift_logs WHERE employee_id='$empid' shiftlog_startdate>='$string1' AND shiftlog_startdate";
 			$result = $conn->query($sql);
          	if ($result->num_rows > 0) {
-         		//if existing, error, then ask if they want to change with new sched
          		
+         		// output data of each row
+            while($row = $result->fetch_assoc()) {
+
+            	//start date in db
+            	echo "db start date: ".$row['shiftlog_startdate']."<br>";
+				echo "db end date: ".$row['shiftlog_enddate']."<br>";      	
+
+                //if existing, error, then ask if they want to change with new sched
+            	
+         		//initialize variables for ease of coding
+         		//database date
+         		$start_date=$row['shiftlog_startdate'];
+         		$end_date=$row['shiftlog_enddate'];
+
+
+         		//time start-end at db
+         		$schedule=$row['shiftlog_schedule']; 
+         		//parse schedule //these are times
+         		$dbsched=split("-", $schedule);
+         		$db_start=$dbsched[0];
+         		$db_end=$dbsched[1];
+
+         		echo "db_start: ".$db_start."<br>";
+         		echo "db_end: ".$db_end."<br>";
+
+         		//convert to time
+         		$db_start=strtotime($db_start);
+         		$db_end=strtotime($db_end);
+         		echo "converted:<br>";
+         		echo "db_start: ".$db_start."<br>";
+         		echo "db_end: ".$db_end."<br><br>";
+
+         		//***user input
+
+         		//$sched - user input schedule
+         		//parse this too.
+         		$usersched=split("-", $sched);
+         		$user_start = $usersched[0];
+         		$user_end = $usersched[1];
+
+         		echo "user_start: ".$user_start."<br>";
+         		echo "user_db: ".$user_end."<br>";
+
+         		//convert to time
+         		$user_start=strtotime($user_start);
+         		$user_end=strtotime($user_end);
+         		echo "converted:<br>";
+         		echo "user_start: ".$user_start."<br>";
+         		echo "user_db: ".$user_end."<br><br>";
+
+		         		//start comparison here
+		         		if(
+		         			//cases here //do not accept
+		         			//A
+		         			($db_start<=$user_end and $db_end>=$user_end) OR
+							//B
+							($db_start<=$user_start and $db_end>=$user_start) OR
+							//C
+							($db_start>=$user_start and $db_end>=$user_end) 
+							
+
+		         		){
+		         			echo "<b>conflict!</b><br>";
+		         		}//end if
+		         		else{
+		         			echo "<b>accept!</b><br>";
+		         		}
+
+
+		         		echo "**************<br>";
+             } //end while        		
          		return 1;
          		break;
          		
            
          }//end if
+
+         echo "==============================<br>";
 		}//end for
 			
 			return 0;
 }//end function
 
+$check_exist=0;
+$check_exist=check_if_existing($sched);
 
+echo "existing: ".$check_exist;
 
-
-
-
-if(isset($_POST['daterange']) AND $hasdate=='with')
+if(isset($_POST['daterange']) AND $hasdate=='with' AND $check_exist==0)
 {
-	
+
 	echo "daterange: ".$_POST['daterange']."<br>";
 	$daterange=$_POST['daterange'];
 	$str_explode=explode("-",$daterange);
@@ -78,11 +176,7 @@ if(isset($_POST['daterange']) AND $hasdate=='with')
 
 	echo "dateToday: ".$dateToday."<br>";
 
-
-	$check_exist=check_if_existing($sched, $string1, $string2);
-	echo "existing: ".$check_exist."<br>";
-
-	if($dateToday <= $string1 AND $check_exist==0) {
+	if($dateToday <= $string1) {
 
 		$usersCount = count($_POST["id"]);
 		for($i=0;$i<$usersCount;$i++) {
@@ -136,23 +230,18 @@ if(isset($_POST['daterange']) AND $hasdate=='with')
 				echo $hasdate." ERROR: Could not prepare SQL statement."."<br>";
 			}
 		}//end for loop
-	header	("Location: schedtest.php?edited");
+		//header("Location: schedtest.php?edited");
 	} 
 	else {
-	header	("Location: schedtest.php?error");
+		//header("Location: schedtest.php?error");
 	}//end else
 }//end if daterange
-else if($hasdate=='without'){
+else if($hasdate=='without' AND $check_exist==0){
 	//update employee table
 
 	$datetime = new DateTime('tomorrow');
-	$datetime = $datetime->format('Y-m-d'); 
+	$datetime = $datetime->format('m/d/Y'); 
 
-	$check_exist=check_if_existing($sched, $datetime);
-	echo "existing: ".$check_exist."<br>";
-
-if($hasdate='without' AND $check_exist==0){
-	
 	$usersCount = count($_POST["id"]);
 		for($i=0;$i<$usersCount;$i++) {
 			$empid = $_POST["id"][$i];
@@ -186,38 +275,30 @@ if($hasdate='without' AND $check_exist==0){
 			$sql="INSERT INTO shift_logs (employee_id, shiftlog_date, shiftlog_startdate, shiftlog_enddate, shiftlog_schedule, shiftlog_createdby, shiftlog_status) VALUES('$empid', '$dateToday', '$dateTomorrow', 'NULL' ,'$sched' ,'$approvedby', '$status')";
 			if ($conn->query($sql) === TRUE) {
 			   echo $hasdate." Record updated successfully employee ".$empid."<br>";
-			   header("Location: schedtest.php?edited");
+			  // header("Location: schedtest.php?edited");
 			 //  echo"<script>alert('insert!')</script>";
 
 			} else {
 			   echo $hasdate." Error updating record employee ".$empid.": " . $conn->error."<br>";
-			   header("Location: schedtest.php?error");
+			  // header("Location: schedtest.php?error");
 			}
 
 			$sqlup = "UPDATE attendance SET attendance_shift='$sched' WHERE attendance_date >='$dateTomorrow' AND employee_id='$empid'";
 			if ($conn->query($sqlup) === TRUE) {
 			    echo $hasdate." Record updated successfully employee ".$empid."<br>";
-			   header("Location: schedtest.php?edited");
+			    //header("Location: schedtest.php?edited");
 			  //  echo"<script>alert('updated successfully')</script>";
 
 			} else {
 			   echo $hasdate." Error updating record employee ".$empid.": " . $conn->error."<br>";
-			   header("Location: schedtest.php?error");
+			   //header("Location: schedtest.php?error");
 				//echo"<script>alert('error updating record ')</script>";
 			}
 		}//end for loop
 
-	}//end if check_exist==0
-	else{
-		echo "existing already!";
-		//echo "<input type=text name=textmessage value='hello'>";
-		header("Location: schedtest.php?existing=1&value=hello");
-
-	}
 }//end else if
 else
 {
 	echo "nothing!<br>";
-	header("Location: schedtest.php?existing");
 }
 ?>

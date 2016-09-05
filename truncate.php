@@ -9,12 +9,12 @@ $tables=array(
 	'total_comp', //total hours ng attendance within cutoff, nabubura to kaya..
 	'total_hours', //duplicate of total_comp, hindi nabubura
 	'total_comp_salary', //similar to total_hours, but converted to money
-	'others', //retro
+	//'others', //retro
 	'cutoff',
 
 	//'announcement',
-	'emp_earnings', //other taxable/non-taxable earnings
-	'emp_deductions' //other taxable/non-taxable deductions
+	//'emp_earnings', //other taxable/non-taxable earnings
+	//'emp_deductions' //other taxable/non-taxable deductions
 	);
 
 foreach($tables as $tab){

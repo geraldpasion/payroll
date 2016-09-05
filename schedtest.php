@@ -77,39 +77,6 @@
 						toastr.success("Start date should be greater than date today!");
 				}
 
-
-				showExist=function(){
-			swal({
-					  title: 'Are you sure?',
-					  text: "You won't be able to revert this!",
-					  type: 'warning',
-					  showCancelButton: true,
-					  confirmButtonColor: '#3085d6',
-					  cancelButtonColor: '#d33',
-					  confirmButtonText: 'Yes, delete it!',
-					  cancelButtonText: 'No, cancel!',
-					  confirmButtonClass: 'btn btn-success',
-					  cancelButtonClass: 'btn btn-danger',
-					  buttonsStyling: false
-					}).then(function() {
-					  swal(
-					    'Deleted!',
-					    'Your file has been deleted.',
-					    'success'
-					  );
-					}, function(dismiss) {
-					  // dismiss can be 'cancel', 'overlay', 'close', 'timer'
-					  if (dismiss === 'cancel') {
-					    swal(
-					      'Cancelled',
-					      'Your imaginary file is safe :)',
-					      'error'
-					    );
-					  }
-					})
-				}
-
-
 				shiftEdit=function(){
 			toastr.options = {
 						"closeButton": true,
@@ -176,17 +143,6 @@
 			echo '<script type="text/javascript">'
 					, '$(document).ready(function(){'	
 					, 'showError();'
-					, '});' 
-			   
-			   , '</script>'
-			;	
-		}
-
-		if(isset($_GET['existing']))
-		{
-			echo '<script type="text/javascript">'
-					, '$(document).ready(function(){'
-					, 'showExist();'
 					, '});' 
 			   
 			   , '</script>'
@@ -319,13 +275,8 @@
 							
 						?>
 							<div class="form-group">
-								<div class="col-md-9"></div>
-								<?php
-									// if(isset($_GET['value'])){
-									// 	echo "xxxxxx: ".$_GET['value']."<br>"; 
-									// }
-									?>
-								<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;
+								<div class="col-md-4"></div>
+								<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
 							</div>
 							

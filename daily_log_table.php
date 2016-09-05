@@ -1,7 +1,13 @@
+
+
+
 <?php 
 include_once 'dbconfig.php';
 date_default_timezone_set('asia/manila');
 $empid = isset($_GET['empid']) ? $_GET['empid'] : false;
+$year=isset($_GET['year'])? $_GET['year'] : false;
+$month=isset($_GET['month'])? $_GET['month'] : false;
+$days=isset($_GET['day'])? $_GET['day'] : false;
 
 /*if($empid) {
 	echo "<table id='leave_type' class='footable table table-stripped' data-page-size='20' data-filter=#filter>						
@@ -38,6 +44,7 @@ $empid = isset($_GET['empid']) ? $_GET['empid'] : false;
 	echo "</tbody>
 	</table>";
 }*/
+
 
 if ($emp_shiftlog = $mysqli->query("SELECT * FROM shift_logs WHERE employee_id = $empid ORDER BY shiftlog_date DESC")){
 
@@ -76,14 +83,32 @@ if ($emp_shiftlog = $mysqli->query("SELECT * FROM shift_logs WHERE employee_id =
 									$startyear = date("Y", $startdate);
 									$startmonth = date("F", $startdate);
 									$startday = date("d", $startdate);
+									//$ha=2;
+									//$day=date("l",$ha);
+									
+									
 									if($shiftlog->shiftlog_enddate!="0000-00-00"){
 										$diff=$star-$end;
 
+									echo"
+									<script> 
+
+										$( '#dyear' ).change(function() {
+										var year=$('#dyear').val();
+										if(year==".$startyear."){
+											 alert('year');
+											}
+									});
+
+									</script>";
+
 									for($i = 0; $i <= $diff; $i++){
-										
-									$day=date('d',$i);
+									$d=$i+1;
+									$day = date('l', strtotime("$d days")); 
+									
 									
 									//$finaldate = date(" F d, Y", ($startyear. $startmonth. ($startday+$i)) );
+									
 
 									echo '<tr>';
 									//echo '<td>'.$shiftlog->shiftlog_date.'</td>';
@@ -92,6 +117,7 @@ if ($emp_shiftlog = $mysqli->query("SELECT * FROM shift_logs WHERE employee_id =
 									echo '<td>'.$startmonth.' '.($startday+$i).', '.$startyear.'</td>';
 									//echo '<td>'.$finaldate.'</td>';
 									echo '<td>'.$day.'</td>';
+									
 									//echo '<td>'.$startyear.'</td>';
 									//echo '<td>'.$startmonth.'</td>';
 									//echo '<td>'.$startday.'</td>';
@@ -108,7 +134,7 @@ if ($emp_shiftlog = $mysqli->query("SELECT * FROM shift_logs WHERE employee_id =
 								echo "</table>";
 							}
 
-
+if(isset($_P))
 
 ?>
 
