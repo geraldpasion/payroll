@@ -216,6 +216,7 @@
 		</script>
 		<script type="text/javascript">
 			$(document).on("click", ".viewempdialog", function () {
+				///alert('asdasd');
 			 var employeeid = $(this).data('employee-id');
 			 var lastname = $(this).data('lastname');
 			 var firstname = $(this).data('firstname');
@@ -1026,10 +1027,12 @@
 									
 							<table id="daily_log" class='footable table table-stripped' data-page-size='20' data-filter=#filter>
 							<div class="form-group">
+
 								<label class="col-md-1 control-label" id ="lt3">Year:</label>
 								<div class="col-md-3">
-									<select id = "dyear" data-default-value="z" name="dyear">
-										<option selected="true"  value = "2016">2016</option>
+									<select id = "dyear" data-default-value="z" name="dyear" onchange="filterdailylogs()" >
+										<option value = "" selected="true" disabled>Year</option>
+										<option value = "2016">2016</option>
 										<option value = "2015">2015</option>
 										<option value = "2014">2014</option>
 										<option value = "2013">2013</option>
@@ -1046,28 +1049,32 @@
 										<option value = "2002">2002</option>
 										<option value = "2001">2001</option>
 										<option value = "2000">2000</option>
+
+										
 									</SELECT>
 								</div>		
 								<label class="col-md-1 control-label" id ="lt3">Month:</label>
 								<div class="col-md-3">
-									<select id = "dmonth" data-default-value="z" name="dmonth" >
-										<option selected="true"  value = "01">January</option>
-										<option value = "02">February</option>
-										<option value = "03">March</option>
-										<option value = "04">April</option>
-										<option value = "05">May</option>
-										<option value = "06">June</option>
-										<option value = "07">July</option>
-										<option value = "08">August</option>
-										<option value = "09">September</option>
-										<option value = "10">October</option>
-										<option value = "11">November</option>
-										<option value = "12">December</option>
+									<select id = "dmonth" data-default-value="z" name="dmonth" onchange="filterdailylogs_month()">
+										<option value = "" selected="true" disabled>Month</option>
+										<option value = "January">January</option>
+										<option value = "February">February</option>
+										<option value = "March">March</option>
+										<option value = "April">April</option>
+										<option value = "May">May</option>
+										<option value = "June">June</option>
+										<option value = "July">July</option>
+										<option value = "August">August</option>
+										<option value = "September">September</option>
+										<option value = "October">October</option>
+										<option value = "November">November</option>
+										<option value = "December">December</option>
 									</SELECT>
 								</div>
-								<label class="col-md-1 control-label" id ="lt3">Day:</label>
+								<!--label class="col-md-1 control-label" id ="lt3">Day:</label>
 								<div class="col-md-3">
-									<select id = "dday" data-default-value="z" name="dday" >
+									<select id = "dday" data-default-value="z" name="dday" onchange="filterdailylogs_day()">
+										<option value = "" selected="true" disabled>Day</option>
 										<option selected="true"  value = "1">1</option>
 										<option value = "2">2</option>
 										<option value = "3">3</option>
@@ -1102,7 +1109,7 @@
 									</SELECT>
 								
 								</div>
-							</div>
+							</div-->
 							<br><br>						
 										<thead>
 											<tr>
@@ -1654,6 +1661,7 @@
 	</body>
 	<script type="text/javascript">
 		$('#myModal2').on('shown.bs.modal', function () {
+			//alert('asdasdas');
 	   		var menuId = $('#empid').val();
 			var request = $.ajax({
 			  url: "leave_type_table.php",
@@ -1742,5 +1750,6 @@
 		});
 
 	</script>
+
 
 </html>

@@ -115,6 +115,16 @@
 			}
 		}
 		</script>
+
+		<!--sweet alert before proceeding-->
+		<script>
+		 $(document).on("click", ".clickdialog", function () {
+		 	//alert('hasdhashdhasdh');
+			 var empid = $(this).data('empid');
+			 $(".modal-body #empid").val( empid );
+			});
+		</script>
+
 		<?php
 		if(isset($_GET['edited']))
 		{
@@ -261,8 +271,9 @@
 											$empid = $row1->employee_id;
 
 											echo "<tr class = 'josh'>";
-											echo "<td align='center'><input type='checkbox'  class='checkbox' name='id[]' value='$empid'></td>";
-											echo "<td style='padding-left:100px;text-align:left'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</td>";
+											echo "<td align='center'><input type='checkbox' id='empid' class='checkbox' name='id[]' value='$empid'></td>";
+											echo "<td style='padding-left:100px;text-align:left'>
+											<a href='#' data-toggle='modal' data-empid='$empid'  class='clickdialog' data-target='#myModal2'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</a></td>";
 											echo "<td style='text-align:left'>" . $row1->employee_department. "</td>";
 											echo "<td style='text-align:left'>". $row1->employee_type . "</td>";
 
@@ -276,7 +287,7 @@
 						?>
 							<div class="form-group">
 								<div class="col-md-4"></div>
-								<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<button id = "button" onclick='swalC()' type="button" name="sx" class="btn btn3 btn-w-m btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<button type="button" onclick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
 							</div>
 							
@@ -285,8 +296,269 @@
 						<br>
 						</div>
 						<br><br>
-				
+
+				<script>
+					function swalC(){
+						if($('#hasdate').val()=="without"){
+							var str="This will overwrite the succeeding dates starting tomorrow.";
+						}else{
+							var str=" ";
+						}
+
+						swal({
+							html:true,
+							title:'Are you sure?',
+							text: str,
+							type:'warning',
+							closeOnConfirm:true,
+							confirmButtonText:'Yes',
+							cancelButtonText:'No',
+							showCancelButton:true
+						},
+						function(isConfirm){
+							if(isConfirm){
+								$('#frmUser').submit();
+							}
+						});
+					}
+				</script>
 			
+
+<div class="modal inmodal fade" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" id="employeelist_modal">
+				<div class="modal-header">
+				<?php
+					//$q = mysqli_query("SELECT * FROM employee WHERE employee_id = '$empid");
+					// $result = $mysqli->query("SELECT * FROM employee WHERE employee_id = '$empid'")->fetch_array();
+					// $res = $mysqli->query("SELECT * FROM employee");
+				?>
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<i class="fa fa-user modal-icon"></i>
+					<h4 class="modal-title">Employee Information</h4>
+				</div>
+				<div class="modal-body">
+					<div class="ibox-content">
+							<div class="tabs-container">
+							<ul id="mytab" class="nav nav-tabs">
+								<li class="active"><a data-toggle="tab" href="#shiftlog">Shift Schedule</a></li>
+								<li class=""><a data-toggle="tab" href="#daily">Daily Schedule</a></li>
+								<li class=""><a data-toggle="tab" href="#restdaylog">Rest Day</a></li>
+							</ul>
+							<div class="tab-content">
+						<div style= "max-height:100px; min-height:300px; overflow-y:scroll;" id="shiftlog" class="tab-pane fade active in" >
+								<div class="panel-body">
+							<table id="shift_log" class='footable table table-stripped' data-page-size='20' data-filter=#filter>						
+										<thead>
+											<tr>
+												<th>Date</th>
+												<th>Start Date</th>
+												<th>End Date</th>
+												<th>Schedule</th>
+												<th>Status</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php
+											//call employeelist_modal.php here
+
+
+
+												/*$leavedetails = $mysqli->query("SELECT * FROM tbl_leave WHERE employee_id=$empid");
+													if($leavedetails->num_rows > 0){
+														while($leave = $leavedetails->fetch_object()){
+															echo '<tr>';
+															echo '<td>'.$leave->leave_type.'</td>';
+															echo '<td>'.$leave->leave_start.'</td>';
+															//echo '<td>'.$leave->.'</td>';
+															echo '<td>'.$leave->leave_approvedby.'</td>';
+															echo '<td>'.$leave->leave_approvaldate.'</td>';
+															echo '</tr>';
+														}
+													}
+												*/
+											?>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</ul>
+
+					<div style= "max-height:100px; min-height:300px; overflow-y:scroll;" id="daily" class="tab-pane" >
+								<div class="panel-body">
+									
+							<table id="daily_log" class='footable table table-stripped' data-page-size='20' data-filter=#filter>
+							<div class="form-group">
+
+								<label class="col-md-1 control-label" id ="lt3">Year:</label>
+								<div class="col-md-3">
+									<select id = "dyear" data-default-value="z" name="dyear" onchange="filterdailylogs()" >
+										<option value = "" selected="true" disabled>Year</option>
+										<option value = "2016">2016</option>
+										<option value = "2015">2015</option>
+										<option value = "2014">2014</option>
+										<option value = "2013">2013</option>
+										<option value = "2012">2012</option>
+										<option value = "2011">2011</option>
+										<option value = "2010">2010</option>
+										<option value = "2009">2009</option>
+										<option value = "2008">2008</option>
+										<option value = "2007">2007</option>
+										<option value = "2006">2006</option>
+										<option value = "2005">2005</option>
+										<option value = "2004">2004</option>
+										<option value = "2003">2003</option>
+										<option value = "2002">2002</option>
+										<option value = "2001">2001</option>
+										<option value = "2000">2000</option>
+
+										
+									</SELECT>
+								</div>		
+								<label class="col-md-1 control-label" id ="lt3">Month:</label>
+								<div class="col-md-3">
+									<select id = "dmonth" data-default-value="z" name="dmonth" onchange="filterdailylogs_month()">
+										<option value = "" selected="true" disabled>Month</option>
+										<option value = "January">January</option>
+										<option value = "February">February</option>
+										<option value = "March">March</option>
+										<option value = "April">April</option>
+										<option value = "May">May</option>
+										<option value = "June">June</option>
+										<option value = "July">July</option>
+										<option value = "August">August</option>
+										<option value = "September">September</option>
+										<option value = "October">October</option>
+										<option value = "November">November</option>
+										<option value = "December">December</option>
+									</SELECT>
+								</div>
+								<!--label class="col-md-1 control-label" id ="lt3">Day:</label>
+								<div class="col-md-3">
+									<select id = "dday" data-default-value="z" name="dday" onchange="filterdailylogs_day()">
+										<option value = "" selected="true" disabled>Day</option>
+										<option selected="true"  value = "1">1</option>
+										<option value = "2">2</option>
+										<option value = "3">3</option>
+										<option value = "4">4</option>
+										<option value = "5">5</option>
+										<option value = "6">6</option>
+										<option value = "7">7</option>
+										<option value = "8">8</option>
+										<option value = "9">9</option>
+										<option value = "10">10</option>
+										<option value = "11">11</option>
+										<option value = "12">12</option>
+										<option value = "13">13</option>
+										<option value = "14">14</option>
+										<option value = "15">15</option>
+										<option value = "16">16</option>
+										<option value = "17">17</option>
+										<option value = "18">18</option>
+										<option value = "19">19</option>
+										<option value = "20">20</option>
+										<option value = "21">21</option>
+										<option value = "22">22</option>
+										<option value = "23">23</option>
+										<option value = "24">24</option>
+										<option value = "25">25</option>
+										<option value = "26">26</option>
+										<option value = "27">27</option>
+										<option value = "28">28</option>
+										<option value = "29">29</option>
+										<option value = "30">30</option>
+										<option value = "31">31</option>
+									</SELECT>
+								
+								</div>
+							</div-->
+							<br><br>						
+										<thead>
+											<tr>
+												<th>Date</th>
+												<th>Day</th>
+												<th>Schedule</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php
+											//call employeelist_modal.php here
+
+
+
+												/*$leavedetails = $mysqli->query("SELECT * FROM tbl_leave WHERE employee_id=$empid");
+													if($leavedetails->num_rows > 0){
+														while($leave = $leavedetails->fetch_object()){
+															echo '<tr>';
+															echo '<td>'.$leave->leave_type.'</td>';
+															echo '<td>'.$leave->leave_start.'</td>';
+															//echo '<td>'.$leave->.'</td>';
+															echo '<td>'.$leave->leave_approvedby.'</td>';
+															echo '<td>'.$leave->leave_approvaldate.'</td>';
+															echo '</tr>';
+														}
+													}
+												*/
+											?>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</ul>
+
+					<div style= "max-height:100px; min-height:300px; overflow-y:scroll;" id="restdaylog" class="tab-pane" >
+								<div class="panel-body">
+							<table id="restday_log" class='footable table table-stripped' data-page-size='20' data-filter=#filter>						
+										<thead>
+											<tr>
+												<th>Date</th>
+												<th>Start Date</th>
+												<th>End Date</th>
+												<th>Rest Day Schedule</th>
+												<th>Created By</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php
+											//call employeelist_modal.php here
+
+
+
+												/*$leavedetails = $mysqli->query("SELECT * FROM tbl_leave WHERE employee_id=$empid");
+													if($leavedetails->num_rows > 0){
+														while($leave = $leavedetails->fetch_object()){
+															echo '<tr>';
+															echo '<td>'.$leave->leave_type.'</td>';
+															echo '<td>'.$leave->leave_start.'</td>';
+															//echo '<td>'.$leave->.'</td>';
+															echo '<td>'.$leave->leave_approvedby.'</td>';
+															echo '<td>'.$leave->leave_approvaldate.'</td>';
+															echo '</tr>';
+														}
+													}
+												*/
+											?>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</ul>
+					
+							</div>
+						</div>
+						
+					</div>
+					
+				</form>
+				
+				
+			</div>
+			<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+				</div>
+		</div>
+		</div>
+		</div>
 
 	<div class="modal inmodal fade" id="myModal4" tabindex="-1" role="dialog"  aria-hidden="true">
 		<div class="modal-dialog modal-small">
@@ -329,9 +601,9 @@
 <?php
 // if(isset($_POST['edit'])){
 // echo "<div class='modal-body'>";
-// echo "<input id = 'employeeid' name = 'employeeid' type='text' class='form-control'>";
+// echo "<input id = 'empid' name = 'empid' type='text' class='form-control'>";
 // echo "</div>";
- // $employeeid = $_GET['employeeid'];
+ // $empid = $_GET['empid'];
 
  // }
  ?>
@@ -403,11 +675,153 @@ $(document).ready(function(){
      <script>
 	$('.timepicker2').timepicki();
     </script>
+
+
+    <script type="text/javascript">
+
+		$('.myModal2').on('shown.bs.modal', function () {
+			
+			var menuId = $('#empid').val();
+			alert(menuId);
+	   		/*var menuId = $('#empid').val();
+			var request = $.ajax({
+			  url: "shift_log_table.php",
+			  method: "GET",
+			  data: { empid : menuId },
+			  dataType: "html"
+			});
+			 
+			request.done(function(msg) {
+				//alert(msg);
+			  $("#shift_log").html(msg);
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			});*/
+		});
+
+	</script>
+
+	<script type="text/javascript">	
+		$('#myModal2').on('shown.bs.modal', function () {
+	   		var menuId = $('#empid').val();
+	   		var year=$('#dyear').val();
+	   		var month=$('#dmonth').val();
+	   		var day=$('#dday').val();
+			var request = $.ajax({
+			  url: "daily_log_table.php",
+			  method: "GET",
+			  data: { empid : menuId , year : year , month : month , day : day },
+			  dataType: "html"
+			});
+			 
+			request.done(function(msg) {
+				//alert(msg);
+			  $("#daily_log").html(msg);
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		$('#myModal2').on('shown.bs.modal', function () {
+	   		var menuId = $('#empid').val();
+	   		alert(menuId);
+			var request = $.ajax({
+			  url: "restday_log_table.php",
+			  method: "GET",
+			  data: { empid : menuId },
+			  dataType: "html"
+			});
+			 
+			request.done(function(msg) {
+				//alert(msg);
+			  $("#restday_log").html(msg);
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			});
+		});
+
+	</script>
     <link href="css/timepicki.css" rel="stylesheet">
 
 		<?php
 			include('menufooter.php');
 		?>
 	</body>
+	<script type="text/javascript">
+		$('#myModal2').on('shown.bs.modal', function () {
+	   		var menuId = $('#empid').val();
+			var request = $.ajax({
+			  url: "shift_log_table.php",
+			  method: "GET",
+			  data: { empid : menuId },
+			  dataType: "html"
+			});
+			 
+			request.done(function(msg) {
+				//alert(msg);
+			  $("#shift_log").html(msg);
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			});
+		});
 
+	</script>
+
+
+
+	<script type="text/javascript">	
+		$('#myModal2').on('shown.bs.modal', function () {
+	   		var menuId = $('#empid').val();
+	   		var year=$('#dyear').val();
+	   		var month=$('#dmonth').val();
+	   		var day=$('#dday').val();
+			var request = $.ajax({
+			  url: "daily_log_table.php",
+			  method: "GET",
+			  data: { empid : menuId , year : year , month : month , day : day },
+			  dataType: "html"
+			});
+			 
+			request.done(function(msg) {
+				//alert(msg);
+			  $("#daily_log").html(msg);
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		$('#myModal2').on('shown.bs.modal', function () {
+	   		var menuId = $('#empid').val();
+			var request = $.ajax({
+			  url: "restday_log_table.php",
+			  method: "GET",
+			  data: { empid : menuId },
+			  dataType: "html"
+			});
+			 
+			request.done(function(msg) {
+				//alert(msg);
+			  $("#restday_log").html(msg);
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			});
+		});
+
+	</script>
 </html>

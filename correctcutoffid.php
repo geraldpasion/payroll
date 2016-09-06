@@ -11,13 +11,13 @@ include 'functions.php';
 
 //compute('2016-05-16 - 2016-06-15');
 
-$cutoff_field='2016-05-16 - 2016-06-16';
+$cutoff_field='2016-07-01 - 2016-07-30';
 $update=1;
-$emp='121';
+$emp='143';
 
-//compute($cutoff_field, $update, $emp);
+compute($cutoff_field, $update, $emp);
 //ob_start();
-compute($cutoff_field,0,0,0);
+//compute($cutoff_field,0,0,0);
 //ob_end_clean();
 //delete_emp_salary($cutoff_field, $emp);
 

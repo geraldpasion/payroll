@@ -209,7 +209,7 @@
 						?>
 							<div class="form-group">
 								<div class="col-md-9"></div>
-								<button id = "submit" type="submit" name="sx" class="btn btn3 btn-w-m btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;
+								<button id = "button" onclick='swalC()' type="button" name="sx" class="btn btn3 btn-w-m btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;
 								<button type="button" onClick = "myFunction()" class="btn btn2 btn-w-m btn-white">Reset</button>
 							</div>
 						</form>
@@ -217,6 +217,32 @@
 						<br>
 						</div>
 						<br><br>
+
+						<script>
+					function swalC(){
+						if($('#hasdate').val()=="without"){
+							var str="This will overwrite the succeeding dates starting tomorrow.";
+						}else{
+							var str=" ";
+						}
+
+						swal({
+							html:true,
+							title:'Are you sure?',
+							text: str,
+							type:'warning',
+							closeOnConfirm:true,
+							confirmButtonText:'Yes',
+							cancelButtonText:'No',
+							showCancelButton:true
+						},
+						function(isConfirm){
+							if(isConfirm){
+								$('#frmUser').submit();
+							}
+						});
+					}
+				</script>
 
 <?php
 // if(isset($_POST['edit'])){

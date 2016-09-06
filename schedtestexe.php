@@ -61,7 +61,7 @@ $usersCount = count($_POST["id"]);
 
 
 			//$sql = "SELECT shiftlog_id FROM shift_logs WHERE employee_id='$empid' AND shiftlog_schedule='$sched'";
-			$sql = "SELECT * FROM shift_logs WHERE employee_id='$empid' shiftlog_startdate>='$string1' AND shiftlog_startdate";
+			$sql = "SELECT * FROM shift_logs WHERE employee_id='$empid'";
 			$result = $conn->query($sql);
          	if ($result->num_rows > 0) {
          		
@@ -149,7 +149,7 @@ $usersCount = count($_POST["id"]);
 }//end function
 
 $check_exist=0;
-$check_exist=check_if_existing($sched);
+//$check_exist=check_if_existing($sched);
 
 echo "existing: ".$check_exist;
 
@@ -214,7 +214,7 @@ if(isset($_POST['daterange']) AND $hasdate=='with' AND $check_exist==0)
 			       	$status="completed";
 			       	echo"completed";
 			       }
-
+			       
 				//update employee db2_tables(connection)				   								//put the new shift 		 //backup the previous
 				//$sql_up = "UPDATE employee SET shift_temp_start='$string1', shift_temp_end='$string2', pending_shift='$sched',  employee_shift_temp='$shift_current' WHERE employee_id=$empid";
 				$sql_up ="INSERT INTO shift_logs (employee_id, shiftlog_date, shiftlog_startdate, shiftlog_enddate, shiftlog_schedule, shiftlog_createdby, shiftlog_status) VALUES('$empid', '$dateToday', '$string1', '$string2' ,'$sched' ,'$approvedby', '$status')";
@@ -230,10 +230,10 @@ if(isset($_POST['daterange']) AND $hasdate=='with' AND $check_exist==0)
 				echo $hasdate." ERROR: Could not prepare SQL statement."."<br>";
 			}
 		}//end for loop
-		//header("Location: schedtest.php?edited");
+		header("Location: schedtest.php?edited");
 	} 
 	else {
-		//header("Location: schedtest.php?error");
+		header("Location: schedtest.php?error");
 	}//end else
 }//end if daterange
 else if($hasdate=='without' AND $check_exist==0){
@@ -286,12 +286,12 @@ else if($hasdate=='without' AND $check_exist==0){
 			$sqlup = "UPDATE attendance SET attendance_shift='$sched' WHERE attendance_date >='$dateTomorrow' AND employee_id='$empid'";
 			if ($conn->query($sqlup) === TRUE) {
 			    echo $hasdate." Record updated successfully employee ".$empid."<br>";
-			    //header("Location: schedtest.php?edited");
+			    header("Location: schedtest.php?edited");
 			  //  echo"<script>alert('updated successfully')</script>";
 
 			} else {
 			   echo $hasdate." Error updating record employee ".$empid.": " . $conn->error."<br>";
-			   //header("Location: schedtest.php?error");
+			   header("Location: schedtest.php?error");
 				//echo"<script>alert('error updating record ')</script>";
 			}
 		}//end for loop

@@ -1,5 +1,86 @@
 
 
+<script>
+function filterdailylogs() {
+
+  var input, filter, table, tr, td, i,year,date,day;
+   //year = document.getElementById("dyear").value;
+  // month = document.getElementById("dmonth").value;
+  // day = document.getElementById("dday").value;
+ input = document.getElementById("dyear");
+
+ //input = month+" "+day+", "+year
+  filter = input.value.toUpperCase();
+  table = document.getElementById("dailytable");
+  tr = table.getElementsByTagName("tr");
+  
+  for (i = 0; i < tr.length; i++) {
+  	
+    td = tr[i].getElementsByTagName("td")[0];
+
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+   
+  }
+}
+function filterdailylogs_month() {
+
+  var input, filter, table, tr, td, i,year,date,day;
+   //year = document.getElementById("dyear").value;
+  // month = document.getElementById("dmonth").value;
+  // day = document.getElementById("dday").value;
+ input = document.getElementById("dmonth");
+ 
+ //input = month+" "+day+", "+year
+  filter = input.value.toUpperCase();
+  table = document.getElementById("dailytable");
+  tr = table.getElementsByTagName("tr");
+  
+  for (i = 0; i < tr.length; i++) {
+  	
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+function filterdailylogs_day() {
+//var res = str.substring(1, 4);
+
+  var input, filter, table, tr, td, i,year,date,day;
+   //year = document.getElementById("dyear").value;
+  // month = document.getElementById("dmonth").value;
+  // day = document.getElementById("dday").value;
+ input = document.getElementById("dday");
+ 
+ //input = month+" "+day+", "+year
+  filter = input.value.toUpperCase();
+  table = document.getElementById("dailytable");
+  tr = table.getElementsByTagName("tr");
+  
+  for (i = 0; i < tr.length; i++) {
+  	
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
 
 <?php 
 include_once 'dbconfig.php';
@@ -53,12 +134,12 @@ if ($emp_shiftlog = $mysqli->query("SELECT * FROM shift_logs WHERE employee_id =
 								if($emp_shiftlog->num_rows > 0){
 
 									
-								echo '<table class="footable table table-stripped" data-page-size="10" data-limit-navigation="5" data-filter=#filter>';	
+								echo '<table id="dailytable" class="footable table table-stripped" data-page-size="10" data-limit-navigation="5" data-filter=#filter>';	
 								echo '<thead>';
 								echo '<tr>';
 								//echo '<th>Date</th>';
-								echo '<th>Start Date</th>';
-								echo '<th>End Date</th>';
+								//echo '<th>Start Date</th>';
+								//echo '<th>End Date</th>';
 								echo '<th>Date</th>';
 								echo '<th>Day</th>';
 								echo '<th>Schedule</th>';
@@ -90,21 +171,11 @@ if ($emp_shiftlog = $mysqli->query("SELECT * FROM shift_logs WHERE employee_id =
 									if($shiftlog->shiftlog_enddate!="0000-00-00"){
 										$diff=$star-$end;
 
-									echo"
-									<script> 
-
-										$( '#dyear' ).change(function() {
-										var year=$('#dyear').val();
-										if(year==".$startyear."){
-											 alert('year');
-											}
-									});
-
-									</script>";
+									
 
 									for($i = 0; $i <= $diff; $i++){
 									$d=$i+1;
-									$day = date('l', strtotime("$d days")); 
+									$day = date('l', strtotime("$i days")); 
 									
 									
 									//$finaldate = date(" F d, Y", ($startyear. $startmonth. ($startday+$i)) );
@@ -112,9 +183,9 @@ if ($emp_shiftlog = $mysqli->query("SELECT * FROM shift_logs WHERE employee_id =
 
 									echo '<tr>';
 									//echo '<td>'.$shiftlog->shiftlog_date.'</td>';
-									echo '<td>'.$shiftlog->shiftlog_startdate.'</td>';
-									echo '<td>'.$shiftlog->shiftlog_enddate.'</td>';
-									echo '<td>'.$startmonth.' '.($startday+$i).', '.$startyear.'</td>';
+									//echo '<td>'.$shiftlog->shiftlog_startdate.'</td>';
+									//echo '<td>'.$shiftlog->shiftlog_enddate.'</td>';
+									echo '<td id="mdy">'.$startmonth.' '.($startday+$i).', '.$startyear.'</td>';
 									//echo '<td>'.$finaldate.'</td>';
 									echo '<td>'.$day.'</td>';
 									
@@ -128,13 +199,15 @@ if ($emp_shiftlog = $mysqli->query("SELECT * FROM shift_logs WHERE employee_id =
 									echo '</tr>';
 									
 									}
+									
 									}//end if
+									
 									}
 								}
 								echo "</table>";
 							}
 
-if(isset($_P))
+
 
 ?>
 

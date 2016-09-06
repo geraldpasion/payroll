@@ -87,23 +87,26 @@ include("dbconfig.php");
 		// 	$stmt->close();
 		// }
 		if($hasdate == "with") {
-			echo"haha";
+			//echo"haha";
 				$sql_up ="INSERT INTO restday_logs (employee_id, restday_date, restday_startdate, restday_enddate, restday_schedule, restday_createdby) VALUES ('".$_POST["id"][$i]."', '$dateToday', '$start' ,'$end', '$restday', '$approvedby')";
 				if ($conn->query($sql_up) === TRUE) {
 				    echo $hasdate." Record updated successfully employee <br>";
+				    //header("Location: editrestday.php?edited");
 				} else {
 				    echo $hasdate." Error updating record <br>";
 				}
-			if($stmt2 = $mysqli->prepare("UPDATE attendance SET attendance_restday = '$restday' WHERE employee_id = '".$_POST["id"][$i]."' AND attendance_date BETWEEN '$start' AND '$end'")) {
+				if($stmt2 = $mysqli->prepare("UPDATE attendance SET attendance_restday = '$restday' WHERE employee_id = '".$_POST["id"][$i]."' AND attendance_date BETWEEN '$start' AND '$end'")) {
 				$stmt2->execute();
 				$stmt2->close();
-				echo"<script>alert('update with date range');</script>";
-			}
+				//echo"<script>alert('update with date range');</script>";
+				}
+				header("Location: editrestday.php?edited");
 		} else {
-
-			$sql_up ="INSERT INTO restday_logs (employee_id, restday_date, restday_startdate, restday_enddate, restday_schedule, restday_createdby) VALUES ('".$_POST["id"][$i]."', '$dateToday', '$dateTomorrow', 'NULL', $restday', '$approvedby')";
+			$sql_up ="INSERT INTO restday_logs (employee_id, restday_date, restday_startdate, restday_enddate, restday_schedule, restday_createdby) VALUES ('".$_POST["id"][$i]."', '$dateToday', '$dateTomorrow', 'NULL', '$restday', '$approvedby')";
 				if ($conn->query($sql_up) === TRUE) {
 				    echo $hasdate." Record updated successfully employee <br>";
+				    //header("Location: editrestday.php?edited");
+				 //   echo"<script>alert('insert without');</script>";
 				} else {
 				    echo $hasdate." Error updating record <br>";
 				}
@@ -153,6 +156,6 @@ include("dbconfig.php");
 		}
 	}
 	// redirec the user
-	header("Location: editrestday.php?edited");
+header("Location: editrestday.php?edited");
 
 ?>

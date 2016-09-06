@@ -23,7 +23,7 @@ $schedArray = array();
 $schedArray = split(" - ", $sched);
 
 $emp_count=count_employees_within_cutoff($sched);
-$timer=$emp_count*1000*2;
+$timer=$emp_count*1000*4;
 $seconds=$timer/1000;
 
 
