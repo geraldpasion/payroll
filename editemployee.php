@@ -58,7 +58,7 @@ echo"<script>alert('$team3');</script>";
 		if ($stmt = $mysqli->prepare("UPDATE employee SET employee_lastname = '$lastname', employee_firstname = '$firstname',
 		 employee_middlename = '$middlename', employee_gender = '$gender', employee_birthday = '$birthday',
 		 employee_marital = '$marital', employee_address = '$address', employee_city = '$city', employee_zip = '$zip', employee_email = '$email',
-		 employee_cellnum = '$mobile', employee_type = '$type', employee_jobtitle = '$jobtitle', employee_department = '$department', employee_empstatus = '$empstat',
+		 employee_cellnum = '$mobile', employee_type = '$type', employee_jobtitle = '$jobtitle', employee_department = '$department', employee_rate = '$rate', employee_empstatus = '$empstat',
 		 employee_taxcode = '$taxcode', employee_sss = '$sss', employee_philhealth = '$philhealth', employee_pagibig = '$hdmf', employee_tin = '$tin', employee_shift = '$shift',
 		 employee_datehired = '$datehired', employee_restday = '$restday',employee_password = '$password', employee_level = '$level', employee_team = '$team', cutoff = '$paymentSched',
 		 account_number='$accountNo', employee_payslippassword='$paypass', employee_team1 = '-', employee_team2 = '-' , employee_team3 = '-' WHERE employee_id = '$employeeid' ")){	
@@ -116,7 +116,7 @@ echo"<script>alert('$team3');</script>";
 		if ($stmt = $mysqli->prepare("UPDATE employee SET employee_lastname = '$lastname', employee_firstname = '$firstname',
 		 employee_middlename = '$middlename', employee_gender = '$gender', employee_birthday = '$birthday',
 		 employee_marital = '$marital', employee_address = '$address', employee_city = '$city', employee_zip = '$zip', employee_email = '$email',
-		 employee_cellnum = '$mobile', employee_type = '$type', employee_jobtitle = '$jobtitle', employee_department = '$department', employee_empstatus = '$empstat',
+		 employee_cellnum = '$mobile', employee_type = '$type', employee_jobtitle = '$jobtitle', employee_department = '$department', employee_rate = '$rate', employee_empstatus = '$empstat',
 		 employee_taxcode = '$taxcode', employee_sss = '$sss', employee_philhealth = '$philhealth', employee_pagibig = '$hdmf', employee_tin = '$tin', employee_shift = '$shift',
 		 employee_datehired = '$datehired', employee_restday = '$restday',employee_password = '$password', employee_level = '$level', employee_team = '$team', cutoff = '$paymentSched',
 		 account_number='$accountNo', employee_payslippassword='$paypass', employee_team1 = '$team1', employee_team2 = '$team2' , employee_team3 = '$team3' WHERE employee_id = '$employeeid' ")){	
@@ -174,7 +174,7 @@ echo"<script>alert('$team3');</script>";
 		if ($stmt = $mysqli->prepare("UPDATE employee SET employee_lastname = '$lastname', employee_firstname = '$firstname',
 		 employee_middlename = '$middlename', employee_gender = '$gender', employee_birthday = '$birthday',
 		 employee_marital = '$marital', employee_address = '$address', employee_city = '$city', employee_zip = '$zip', employee_email = '$email',
-		 employee_cellnum = '$mobile', employee_type = '$type', employee_jobtitle = '$jobtitle', employee_department = '$department', employee_empstatus = '$empstat',
+		 employee_cellnum = '$mobile', employee_type = '$type', employee_jobtitle = '$jobtitle', employee_department = '$department', employee_rate = '$rate', employee_empstatus = '$empstat',
 		 employee_taxcode = '$taxcode', employee_sss = '$sss', employee_philhealth = '$philhealth', employee_pagibig = '$hdmf', employee_tin = '$tin', employee_shift = '$shift',
 		 employee_datehired = '$datehired', employee_restday = '$restday',employee_password = '$password', employee_level = '$level', employee_team = '$team', cutoff = '$paymentSched',
 		 account_number='$accountNo', employee_payslippassword='$paypass', employee_team1 = '-', employee_team2 = '-' , employee_team3 = '-' WHERE employee_id = '$employeeid' ")){	
@@ -232,7 +232,7 @@ echo"<script>alert('$team3');</script>";
 		if ($stmt = $mysqli->prepare("UPDATE employee SET employee_lastname = '$lastname', employee_firstname = '$firstname',
 		 employee_middlename = '$middlename', employee_gender = '$gender', employee_birthday = '$birthday',
 		 employee_marital = '$marital', employee_address = '$address', employee_city = '$city', employee_zip = '$zip', employee_email = '$email',
-		 employee_cellnum = '$mobile', employee_type = '$type', employee_jobtitle = '$jobtitle', employee_department = '$department', employee_empstatus = '$empstat',
+		 employee_cellnum = '$mobile', employee_type = '$type', employee_jobtitle = '$jobtitle', employee_department = '$department', employee_rate = '$rate', employee_empstatus = '$empstat',
 		 employee_taxcode = '$taxcode', employee_sss = '$sss', employee_philhealth = '$philhealth', employee_pagibig = '$hdmf', employee_tin = '$tin', employee_shift = '$shift',
 		 employee_datehired = '$datehired', employee_restday = '$restday',employee_password = '$password', employee_level = '$level', employee_team = '$team', cutoff = '$paymentSched',
 		 account_number='$accountNo', employee_payslippassword='$paypass', employee_team1 = '-', employee_team2 = '-' , employee_team3 = '-' WHERE employee_id = '$employeeid' ")){	

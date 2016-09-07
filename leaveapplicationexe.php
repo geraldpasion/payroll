@@ -41,7 +41,7 @@ if(isset($_POST['adleavesub'])){
 				$stmt->execute();
 				$table_leave_id =  $stmt->insert_id;
 				$stmt->close();
-				if($leavetype == 'Sick leave'){
+				/*if($leavetype == 'Sick leave'){
 					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Credited','-1','0','0','0','0','0')"))
 					{
 						$stmt3->execute();
@@ -82,7 +82,7 @@ if(isset($_POST['adleavesub'])){
 						$stmt3->execute();
 						$stmt3->close();
 					}
-				}
+				}*/
 			}
 			header("Location: adminleaveapplication.php?able");
 		}
@@ -105,7 +105,7 @@ if(isset($_POST['adleavesub'])){
 				$stmt->execute();
 				$table_leave_id =  $stmt->insert_id;
 				$stmt->close();
-				if($leavetype == 'Sick leave'){
+				/*if($leavetype == 'Sick leave'){
 					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id,  table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Credited','-1','0','0','0','0','0')"))
 					{
 						$stmt3->execute();
@@ -146,7 +146,7 @@ if(isset($_POST['adleavesub'])){
 						$stmt3->execute();
 						$stmt3->close();
 					}
-				}
+				}*/
 			}
 			header("Location: adminleaveapplication.php?able");
 		}
@@ -169,7 +169,7 @@ if(isset($_POST['adleavesub'])){
 				$stmt->execute();
 				$table_leave_id =  $stmt->insert_id;
 				$stmt->close();
-				if($leavetype == 'Sick leave'){
+				/*if($leavetype == 'Sick leave'){
 					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id,  table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Credited','-1','0','0','0','0','0')"))
 					{
 						$stmt3->execute();
@@ -210,7 +210,7 @@ if(isset($_POST['adleavesub'])){
 						$stmt3->execute();
 						$stmt3->close();
 					}
-				}
+				}*/
 			}
 			header("Location: adminleaveapplication.php?able");
 		}
@@ -234,7 +234,7 @@ if(isset($_POST['adleavesub'])){
 				$stmt->execute();
 				$table_leave_id =  $stmt->insert_id;
 				$stmt->close();
-				if($leavetype == 'Sick leave'){
+				/*if($leavetype == 'Sick leave'){
 					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id,  table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Credited','-1','0','0','0','0','0')"))
 					{
 						$stmt3->execute();
@@ -275,7 +275,7 @@ if(isset($_POST['adleavesub'])){
 						$stmt3->execute();
 						$stmt3->close();
 					}
-				}
+				}*/
 			}
 			header("Location: adminleaveapplication.php?able");
 		}
@@ -323,7 +323,7 @@ if(isset($_POST['adleavesub3'])){
 				$stmt->execute();
 				$table_leave_id =  $stmt->insert_id;
 				$stmt->close();
-				if($leavetype == 'Sick leave'){
+				/*if($leavetype == 'Sick leave'){
 					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Credited','-1','0','0','0','0','0')"))
 					{
 						$stmt3->execute();
@@ -364,7 +364,7 @@ if(isset($_POST['adleavesub3'])){
 						$stmt3->execute();
 						$stmt3->close();
 					}
-				}
+				}*/
 			}
 			header("Location: adminleaveapplication3.php?able");
 		}
@@ -387,7 +387,7 @@ if(isset($_POST['adleavesub3'])){
 				$stmt->execute();
 				$table_leave_id =  $stmt->insert_id;
 				$stmt->close();
-				if($leavetype == 'Sick leave'){
+				/*if($leavetype == 'Sick leave'){
 					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id,  table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Credited','-1','0','0','0','0','0')"))
 					{
 						$stmt3->execute();
@@ -428,7 +428,7 @@ if(isset($_POST['adleavesub3'])){
 						$stmt3->execute();
 						$stmt3->close();
 					}
-				}
+				}*/
 			}
 			header("Location: adminleaveapplication3.php?able");
 		}
@@ -451,7 +451,7 @@ if(isset($_POST['adleavesub3'])){
 				$stmt->execute();
 				$table_leave_id =  $stmt->insert_id;
 				$stmt->close();
-				if($leavetype == 'Sick leave'){
+				/*if($leavetype == 'Sick leave'){
 					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id,  table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Credited','-1','0','0','0','0','0')"))
 					{
 						$stmt3->execute();
@@ -492,7 +492,7 @@ if(isset($_POST['adleavesub3'])){
 						$stmt3->execute();
 						$stmt3->close();
 					}
-				}
+				}*/
 			}
 			header("Location: adminleaveapplication3.php?able");
 		}
@@ -516,7 +516,7 @@ if(isset($_POST['adleavesub3'])){
 				$stmt->execute();
 				$table_leave_id =  $stmt->insert_id;
 				$stmt->close();
-				if($leavetype == 'Sick leave'){
+				/*if($leavetype == 'Sick leave'){
 					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id,  table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Credited','-1','0','0','0','0','0')"))
 					{
 						$stmt3->execute();
@@ -557,7 +557,7 @@ if(isset($_POST['adleavesub3'])){
 						$stmt3->execute();
 						$stmt3->close();
 					}
-				}
+				}*/
 			}
 			header("Location: adminleaveapplication3.php?able");
 		}

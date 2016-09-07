@@ -67,6 +67,13 @@
 			}
 		}
 		</script>
+		<script>
+		 $(document).on("click", ".clickdialog", function () {
+		 	//alert('hasdhashdhasdh');
+			 var empid = $(this).data('empid');
+			 $(".modal-body #empid").val( empid );
+			});
+		</script>
 		<?php
 		if(isset($_GET['edited']))
 		{
@@ -165,8 +172,7 @@
 					<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
 						</div>
 						<div class="ibox-content" id = "tableHolderz">
-
-							<?php
+						<?php
 							include('dbconfig.php');
 								if ($result1 = $mysqli->query("SELECT * FROM employee WHERE employee_status = 'active' ORDER BY employee_id")) //get records from db
 								{
@@ -174,7 +180,7 @@
 									if ($result1->num_rows > 0) //display records if any
 									{
 										echo "<label><input type='checkbox' id='select_all'/>&nbsp;&nbsp;Check/Uncheck All</label>";
-										echo "<table class='footable table table-stripped' data-page-size='20' data-filter=#filter>";								
+										echo "<table class='footable table table-stripped' data-page-size='20' data-limit-navigation='5' data-filter=#filter>";								
 										echo "<thead>";
 										echo "<tr>";
 										echo "<th style='text-align:center; width:150px;'></th>";
@@ -196,8 +202,9 @@
 											$empid = $row1->employee_id;
 
 											echo "<tr class = 'josh'>";
-											echo "<td align='center'><input type='checkbox'  class='checkbox' name='id[]' value='$empid'></td>";
-											echo "<td style='padding-left:100px;text-align:left'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</td>";
+											echo "<td align='center'><input type='checkbox' id='empid' class='checkbox' name='id[]' value='$empid'></td>";
+											echo "<td style='padding-left:100px;text-align:left'>
+											<a href='#".$empid."' data-toggle='modal' data-empid='$empid'  class='clickdialog' data-target='#myModal2'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</a></td>";
 											echo "<td style='text-align:left'>" . $row1->employee_department. "</td>";
 											echo "</tr>";
 										}
@@ -207,6 +214,7 @@
 								}
 							
 						?>
+
 							<div class="form-group">
 								<div class="col-md-9"></div>
 								<button id = "button" onclick='swalC()' type="button" name="sx" class="btn btn3 btn-w-m btn-primary">Submit</button>&nbsp;&nbsp;&nbsp;
@@ -243,6 +251,77 @@
 						});
 					}
 				</script>
+<div class="modal inmodal fade" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" id="employeelist_modal">
+				<div class="modal-header">
+				<?php
+					//$q = mysqli_query("SELECT * FROM employee WHERE employee_id = '$empid");
+					// $result = $mysqli->query("SELECT * FROM employee WHERE employee_id = '$empid'")->fetch_array();
+					// $res = $mysqli->query("SELECT * FROM employee");
+				?>
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<i class="fa fa-user modal-icon"></i>
+					<h4 class="modal-title">Employee Information</h4>
+				</div>
+				<div class="modal-body">
+					<div class="ibox-content">
+							<div class="tabs-container">
+							<ul id="mytab" class="nav nav-tabs">
+								<!--li class="active"><a data-toggle="tab" href="#shiftlog">Shift Schedule</a></li>
+								<li class=""><a data-toggle="tab" href="#daily">Daily Schedule</a></li-->
+								<li class="active"><a data-toggle="tab" href="#restdaylog">Rest Day</a></li>
+							</ul>
+							<div class="tab-content">
+					<div style= "max-height:100px; min-height:300px; overflow-y:scroll;" id="restdaylog" class="tab-pane fade active in" >
+								<div class="panel-body">
+									<input type="hidden" id = "empid" name = "empid" onKeyPress="return lettersonly(this, event)" readonly = "readonly" required="">
+							<table id="restday_log" class='footable table table-stripped' data-page-size='20' data-filter=#filter>						
+										<thead>
+											<tr>
+												<th>Date</th>
+												<th>Start Date</th>
+												<th>End Date</th>
+												<th>Rest Day Schedule</th>
+												<th>Created By</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php
+											//call employeelist_modal.php here
+
+
+
+												/*$leavedetails = $mysqli->query("SELECT * FROM tbl_leave WHERE employee_id=$empid");
+													if($leavedetails->num_rows > 0){
+														while($leave = $leavedetails->fetch_object()){
+															echo '<tr>';
+															echo '<td>'.$leave->leave_type.'</td>';
+															echo '<td>'.$leave->leave_start.'</td>';
+															//echo '<td>'.$leave->.'</td>';
+															echo '<td>'.$leave->leave_approvedby.'</td>';
+															echo '<td>'.$leave->leave_approvaldate.'</td>';
+															echo '</tr>';
+														}
+													}
+												*/
+											?>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</ul>
+					
+							</div>
+						</div>
+					</div>
+			</div>
+			<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+				</div>
+		</div>
+		</div>
+		</div>
 
 <?php
 // if(isset($_POST['edit'])){
@@ -318,5 +397,27 @@ $(document).ready(function(){
 	include('menufooter.php');
 ?>
 </body>
+<script type="text/javascript">
+		$('#myModal2').on('shown.bs.modal', function () {
+	   		var menuId = $(".modal-body #empid").val();
+	   		//$(".modal-body #empid").val( empid );
+	   		//alert(menuId);
+			var request = $.ajax({
+			  url: "restday_log_table.php",
+			  method: "GET",
+			  data: { empid : menuId },
+			  dataType: "html"
+			});
+			 
+			request.done(function(msg) {
+				//alert(msg);
+			  $("#restday_log").html(msg);
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			});
+		});
 
+	</script>
 </html>

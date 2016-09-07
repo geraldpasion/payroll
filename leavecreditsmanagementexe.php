@@ -2,7 +2,7 @@
 include("dbconfig.php");
 
 $usersCount = count($_POST["id"]);
-
+//$empid = $_POST['empid'];
 $leavetype = $_POST["leavetype"];
 $action = $_POST["action"];
 $leavecredit = $_POST["leavecredit"];
@@ -22,6 +22,11 @@ for($i=0;$i<$usersCount;$i++) {
 						{
 							$stmt->execute();
 							$stmt->close();
+							if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$_POST["id"][$i]."','$table_leave_id',CURDATE(),'Credited','0','0','".$leavecredit."','0','0','0')"))
+							{
+								$stmt3->execute();
+								$stmt3->close();
+							}
 						}
 						// show an error if the query has an error
 						else
@@ -85,6 +90,11 @@ for($i=0;$i<$usersCount;$i++) {
 						{
 							$stmt->execute();
 							$stmt->close();
+							if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$_POST["id"][$i]."','$table_leave_id',CURDATE(),'Credited','0','".$leavecredit."','0','0','0','0')"))
+							{
+								$stmt3->execute();
+								$stmt3->close();
+							}
 						}
 						// show an error if the query has an error
 						else
@@ -147,6 +157,12 @@ for($i=0;$i<$usersCount;$i++) {
 						{
 							$stmt->execute();
 							$stmt->close();
+							if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$_POST["id"][$i]."','$table_leave_id',CURDATE(),'Credited','".$leavecredit."','0','0','0','0','0')"))
+							{
+								$stmt3->execute();
+								$stmt3->close();
+							}
+
 						}
 						// show an error if the query has an error
 						else
@@ -208,6 +224,11 @@ for($i=0;$i<$usersCount;$i++) {
 						{
 							$stmt->execute();
 							$stmt->close();
+							if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$_POST["id"][$i]."','$table_leave_id',CURDATE(),'Credited','0','0','0','".$leavecredit."','0','0')"))
+							{
+								$stmt3->execute();
+								$stmt3->close();
+							}
 						}
 						// show an error if the query has an error
 						else
@@ -270,6 +291,11 @@ for($i=0;$i<$usersCount;$i++) {
 						{
 							$stmt->execute();
 							$stmt->close();
+							if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$_POST["id"][$i]."','$table_leave_id',CURDATE(),'Credited','0','0','0','0','".$leavecredit."','0')"))
+							{
+								$stmt3->execute();
+								$stmt3->close();
+							}
 						}
 						// show an error if the query has an error
 						else
@@ -333,6 +359,11 @@ for($i=0;$i<$usersCount;$i++) {
 						{
 							$stmt->execute();
 							$stmt->close();
+							if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$_POST["id"][$i]."','$table_leave_id',CURDATE(),'Credited','0','0','0','0','0','".$leavecredit."')"))
+							{
+								$stmt3->execute();
+								$stmt3->close();
+							}
 						}
 						// show an error if the query has an error
 						else

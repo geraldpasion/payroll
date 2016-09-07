@@ -1439,6 +1439,187 @@ function printarraystructure($ArrayVariable){
     echo "</pre>";
 
 }
+
+
+function recompute_attendance_details($string1, $string2, $empid){
+
+include 'dbconfig.php';
+
+if($string2=='0000-00-00'){
+    //without
+    $sql = "SELECT * FROM attendance WHERE attendance_date >='$string1' AND employee_id='$empid'";
+}
+else
+    $sql = "SELECT * FROM attendance WHERE attendance_date BETWEEN '$string1' AND '$string2' AND employee_id = '$empid'";
+
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+            //initialize
+        echo "==============================================<br>";
+        $att_id=$row['attendance_id'];
+        echo "attendance_id: ".$att_id."<br>";
+            $attendance_shift=$row['attendance_shift'];
+            echo "attendance_shift: ".$attendance_shift."<br>";
+            $attendance_date_from_db=$row['attendance_date'];
+            $daytype=$row['attendance_daytype'];
+            echo 'attendance_daytype: '.$daytype."<br>";
+
+            $timein=$row['attendance_timein'];
+            $timeout=$row['attendance_timeout'];
+            echo 'timein: '.$timein."<br>";
+            echo 'timeout: '.$timeout."<br>";
+        $absent=0;
+            if($timein!=""){
+                
+                $attendance_date = new DateTime($attendance_date_from_db);
+                $attendance_date->format('Y-m-d');
+
+                $next_day = new DateTime($attendance_date_from_db);
+                $next_day->modify('+1 day');
+                $next_day->format('Y-m-d');//$next_day=$attendance_date+1;
+
+                $timein_date = $row['timein_date']; //check if what date he/she timed in
+
+                $timein = $timein_date." ".$timein;
+                echo $timein."<br><br>";
+
+                //check if ND
+
+
+                //db
+                $timein_conv = strtotime($timein);
+                $timeout_conv = strtotime($timeout);
+
+                //check if timein_conv is bigger than timeout_conv, if so.. apply next_day to timeout;
+                //this case applies usually for nigh differentail issue where timeout is less then timein due to next day clock cycle
+                if($timein_conv>$timeout_conv)
+                    $timeout_conv=strtotime($next_day->format('Y-m-d')." ".$timeout);
+
+                //user
+                $usertimein= new DateTime($timein); //varchar
+                $usertimeout= new DateTime($timeout); //varchar
+
+
+                //compute for attendance_hours, attendance_late, attendance_overtime, attendance_absent
+                //main
+                $shift=explode("-", $attendance_shift);
+                $shift[0]=$attendance_date->format('Y-m-d')." ".$shift[0];
+
+                $db_start = strtotime($shift[0]);
+                $db_end = strtotime($shift[1]);
+
+                $start = new DateTime($shift[0]);
+                $end = new DateTime($shift[1]);
+
+                //computation for late
+                if($timein_conv>$db_start){
+                $diff = $usertimein->diff( $start );
+                echo "Late: ".$diff->format( '%H:%I' )."<br>"; // -> 00:25:25
+                $timestring = $diff->format( '%H:%I' );
+                $parsed = date_parse($timestring);
+                $late_minutes = $parsed['hour'] * 60 + $parsed['minute'];
+                }
+                else
+                    $late_minutes=0;
+
+                        if($late_minutes>=540){
+                            $late_minutes=0;
+                            $ut_minutes=0;
+                            $ot_minutes=0;
+                            $absent=1;
+                            echo 'Absent: 1<br>';
+                        }
+                    
+                echo "Total Late Minutes: ".$late_minutes."<br>";
+
+                //computation for undertime
+                if($timeout_conv<$db_end){
+                $diff = $end->diff( $usertimeout );
+                echo "UT: ".$diff->format( '%H:%I' )."<br>"; // -> 00:25:25
+                $timestring = $diff->format( '%H:%I' );
+                $parsed = date_parse($timestring);
+                $ut_minutes = $parsed['hour'] * 60 + $parsed['minute'];
+                }
+                else
+                    $ut_minutes=0;
+
+                echo "Total UT Minutes: ".$ut_minutes."<br>";
+
+
+                //computation for overtime
+                if($timeout_conv>$db_end){
+                $diff = $usertimeout->diff( $end );
+                echo "OT: ".$diff->format( '%H:%I' )."<br>"; // -> 00:25:25
+                $timestring = $diff->format( '%H:%I' );
+                $parsed = date_parse($timestring);
+                $ot_minutes = $parsed['hour'] * 60 + $parsed['minute'];
+                }
+                else
+                    $ot_minutes=0;
+
+                echo "Total OT Minutes: ".$ot_minutes."<br>";
+                echo "Absent on this day: ".$absent."<br>";
+                
+                //reset to 0
+                if($absent==1){
+                    $late_minutes=0;
+                    $ut_minutes=0;
+                    $ot_minutes=0;
+
+                    echo "Late, UT, OT: 0<br>";
+                }
+            }
+            else if($timein=='' AND $daytype=='Regular'){
+                $late_minutes=0;
+                $ut_minutes=0;
+                $ot_minutes=0;
+                $absent=1;
+                echo "Total Late Minutes: ".$late_minutes."<br>";
+                echo "Total UT Minutes: ".$ut_minutes."<br>";
+                echo "Total OT Minutes: ".$ot_minutes."<br>";
+                echo "Absent on this day: ".$absent."<br><br>";
+            }
+            else{ //holiday,restday,
+
+                $late_minutes=0;
+                $ut_minutes=0;
+                $ot_minutes=0;
+                $absent=0;
+
+                echo "Total Late Minutes: ".$late_minutes."<br>";
+                echo "Total UT Minutes: ".$ut_minutes."<br>";
+                echo "Total OT Minutes: ".$ot_minutes."<br>";
+            }
+
+            //set values
+            
+
+            //update here
+            $sql_up = "UPDATE attendance 
+            SET attendance_late='$late_minutes', 
+            attendance_overtime='$ot_minutes', 
+            attendance_undertime='$ut_minutes',
+            attendance_absent='$absent'
+             WHERE attendance_id='$att_id'
+             ";
+
+            if ($conn->query($sql_up) === TRUE) {
+                //echo $row['attendance_id']." ".$dbdate.": ";
+                echo "Record updated successfully<br>";
+
+            } else {
+                echo "Error updating record: " . $conn->error;
+            }
+            
+    }//end while
+
+}//end if
+header("Location: schedtest.php?edited");
+}//end function
+
 //**********************Wilma**************************//
 
 

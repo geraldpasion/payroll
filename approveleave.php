@@ -42,7 +42,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','-1','0','0','0','0','0')"))
 						
 					{
 						$stmt3->execute();
@@ -66,7 +66,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','0','-1','0','0','0','0')"))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -89,7 +89,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','0','0','-1','0','0','0')"))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -112,7 +112,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','0','0','0','-1','0','0')"))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -135,7 +135,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','0','0','0','0','-1','0')"))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -158,7 +158,7 @@ if(isset($_POST['approved'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','0','0','0','0','0','-1')"))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -246,7 +246,7 @@ if(isset($_POST['approved3'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','-1','0','0','0','0','0')"))
 						
 					{
 						$stmt3->execute();
@@ -270,7 +270,7 @@ if(isset($_POST['approved3'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','0','-1','0','0','0','0')"))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -293,7 +293,7 @@ if(isset($_POST['approved3'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','0','0','-1','0','0','0')"))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -316,7 +316,7 @@ if(isset($_POST['approved3'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','0','0','0','-1','0','0')"))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -339,7 +339,7 @@ if(isset($_POST['approved3'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','0','0','0','0','-1','0')"))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -362,7 +362,7 @@ if(isset($_POST['approved3'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','0','0','0','0','0','-1')"))
 					{
 						$stmt3->execute();
 						$stmt3->close();
@@ -443,7 +443,7 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','-1','0','0','0','0','0')"))
 						
 					{
 						$stmt3->execute();
@@ -467,7 +467,7 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','0','-1','0','0','0','0')"))
 						
 					{
 						$stmt3->execute();
@@ -491,7 +491,7 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','0','0','-1','0','0','0')"))
 						
 					{
 						$stmt3->execute();
@@ -515,7 +515,7 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','0','0','0','-1','0','0')"))
 						
 					{
 						$stmt3->execute();
@@ -539,7 +539,7 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','0','0','0','0','-1','0')"))
 						
 					{
 						$stmt3->execute();
@@ -563,7 +563,7 @@ if(isset($_POST['approved2'])){
 				{
 					$stmt2->execute();
 					$stmt2->close();
-					if($stmt3 = $mysqli->prepare("UPDATE leave_logs SET type = 'Applied' WHERE table_leave_id = '$leaveid' "))
+					if($stmt3 = $mysqli->prepare("INSERT INTO leave_logs (employee_id, table_leave_id,date, type, employee_sickleave, employee_vacationleave, employee_incentive, employee_maternityleave, employee_paternityleave, employee_singleparentleave) VALUES ('".$empid."','$table_leave_id',CURDATE(),'Used','0','0','0','0','0','-1')"))
 						
 					{
 						$stmt3->execute();

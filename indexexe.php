@@ -1,6 +1,6 @@
 <?php
 	include("dbconfig.php");
-	date_default_timezone_set("Asia/Hong_Kong");
+	date_default_timezone_set("Asia/Manila");
 	$date = date("Y-m-d");
 	$yesterday = date('Y-m-d',strtotime("-1 days"));
 	$timein2 = date("G:i");

@@ -2,7 +2,7 @@
 include_once 'dbconfig.php';
 
 $empid = isset($_GET['empid']) ? $_GET['empid'] : false;
-echo $empid;
+
 /*if($empid) {
 	echo "<table id='leave_type' class='footable table table-stripped' data-page-size='20' data-filter=#filter>						
 	<thead>

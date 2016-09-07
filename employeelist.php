@@ -545,7 +545,12 @@
 											//department
 											echo "<td style='text-align:left'>" . $row1->employee_department . "</td>";
 											//team
+											if($row1->employee_level == 1 || $row1->employee_level == 2 || $row1->employee_level == 4){
 											echo "<td style='text-align:left'>" . $row1->employee_team . "</td>";
+											}
+											elseif ($row1->employee_level == 3) {
+											echo "<td style='text-align:left'>" . $row1->employee_team . "<br>". $row1->employee_team1 ."<br>". $row1->employee_team2 ."<br>". $row1->employee_team3 . "</td>";
+											}
 											//access level
 											echo "<td style='text-align:center'>" . $row1->employee_level . "</td>";
 											//edit
@@ -1028,32 +1033,18 @@
 							<table id="daily_log" class='footable table table-stripped' data-page-size='20' data-filter=#filter>
 							<div class="form-group">
 
-								<label class="col-md-1 control-label" id ="lt3">Year:</label>
+								<label class="col-md-1 control-label" >Year:</label>
 								<div class="col-md-3">
 									<select id = "dyear" data-default-value="z" name="dyear" onchange="filterdailylogs()" >
 										<option value = "" selected="true" disabled>Year</option>
-										<option value = "2016">2016</option>
-										<option value = "2015">2015</option>
-										<option value = "2014">2014</option>
-										<option value = "2013">2013</option>
-										<option value = "2012">2012</option>
-										<option value = "2011">2011</option>
-										<option value = "2010">2010</option>
-										<option value = "2009">2009</option>
-										<option value = "2008">2008</option>
-										<option value = "2007">2007</option>
-										<option value = "2006">2006</option>
-										<option value = "2005">2005</option>
-										<option value = "2004">2004</option>
-										<option value = "2003">2003</option>
-										<option value = "2002">2002</option>
-										<option value = "2001">2001</option>
-										<option value = "2000">2000</option>
-
-										
+										<?php 
+  			 								for($i = 2000 ; $i <= date('Y'); $i++){
+    			  								echo "<option value='".$i."'>$i</option>";
+  			 								}
+										?>
 									</SELECT>
 								</div>		
-								<label class="col-md-1 control-label" id ="lt3">Month:</label>
+								<label class="col-md-1 control-label">Month:</label>
 								<div class="col-md-3">
 									<select id = "dmonth" data-default-value="z" name="dmonth" onchange="filterdailylogs_month()">
 										<option value = "" selected="true" disabled>Month</option>
@@ -1607,7 +1598,7 @@
 								//var val =  document.getElementsByName("level").value;
 								var myValue = $( ".access" ).val();
 								//alert(myValue);
-										if(myValue==1 || myValue==2 || myValue==4){
+										if(myValue==1){
 											  $(".teams2").fadeOut();
 											  $(".teams3").fadeOut();
 											  $(".teams4").fadeOut();
@@ -1620,7 +1611,22 @@
 											 
 											// alert('1,2,4');
 
-										}else if(myValue==3){
+										}
+										if(myValue==2){
+											  $(".teams2").fadeOut();
+											  $(".teams3").fadeOut();
+											  $(".teams4").fadeOut();
+											  $("#lt2").fadeOut();
+											  $("#lt3").fadeOut();
+											  $("#lt4").fadeOut();
+											 //document.getElementById("team2").disabled=true;
+											// document.getElementById("team3").disabled=true;
+											// document.getElementById("team4").disabled=true;
+											 
+											// alert('1,2,4');
+
+										}
+										if(myValue==3){
 											  $(".teams2").fadeIn();
 											  $(".teams3").fadeIn();
 											  $(".teams4").fadeIn();
@@ -1630,6 +1636,20 @@
 											//document.getElementById("team2").style.visibility=false;
 											// document.getElementById("team3").style.visibility=false;
 											// document.getElementById("team4").style.visibility=false;
+										}
+										if(myValue==4){
+											  $(".teams2").fadeOut();
+											  $(".teams3").fadeOut();
+											  $(".teams4").fadeOut();
+											  $("#lt2").fadeOut();
+											  $("#lt3").fadeOut();
+											  $("#lt4").fadeOut();
+											 //document.getElementById("team2").disabled=true;
+											// document.getElementById("team3").disabled=true;
+											// document.getElementById("team4").disabled=true;
+											 
+											// alert('1,2,4');
+
 										}
 								}
 							</script>	

@@ -1,5 +1,6 @@
 <?php 
 include("dbconfig.php");
+include 'testdeductcomp.php';
 session_start();
 $approvedby = $_SESSION['fname'] . " " . $_SESSION['lname'];
 $dateToday = date("Y-m-d");
@@ -176,7 +177,7 @@ if(isset($_POST['daterange']) AND $hasdate=='with' AND $check_exist==0)
 
 	echo "dateToday: ".$dateToday."<br>";
 
-	if($dateToday <= $string1) {
+	//if($dateToday <= $string1) {
 
 		$usersCount = count($_POST["id"]);
 		for($i=0;$i<$usersCount;$i++) {
@@ -214,15 +215,18 @@ if(isset($_POST['daterange']) AND $hasdate=='with' AND $check_exist==0)
 			       	$status="completed";
 			       	echo"completed";
 			       }
-			       
+			       $t=time();
 				//update employee db2_tables(connection)				   								//put the new shift 		 //backup the previous
 				//$sql_up = "UPDATE employee SET shift_temp_start='$string1', shift_temp_end='$string2', pending_shift='$sched',  employee_shift_temp='$shift_current' WHERE employee_id=$empid";
-				$sql_up ="INSERT INTO shift_logs (employee_id, shiftlog_date, shiftlog_startdate, shiftlog_enddate, shiftlog_schedule, shiftlog_createdby, shiftlog_status) VALUES('$empid', '$dateToday', '$string1', '$string2' ,'$sched' ,'$approvedby', '$status')";
+				$sql_up ="INSERT INTO shift_logs (employee_id, shiftlog_date, shiftlog_startdate, shiftlog_enddate, shiftlog_schedule, shiftlog_createdby, shiftlog_status, shiftlog_time) VALUES('$empid', '$dateToday', '$string1', '$string2' ,'$sched' ,'$approvedby', '$status', '$t')";
 				if ($conn->query($sql_up) === TRUE) {
 				    echo $hasdate." Record updated successfully employee ".$empid."<br>";
 				} else {
 				    echo $hasdate." Error updating record ".$empid.": " . $conn->error."<br>";
 				}
+
+				recompute_attendance_details($string1, $string2, $empid);
+
 
 			}
 			// show an error if the query has an error
@@ -231,10 +235,10 @@ if(isset($_POST['daterange']) AND $hasdate=='with' AND $check_exist==0)
 			}
 		}//end for loop
 		header("Location: schedtest.php?edited");
-	} 
-	else {
-		header("Location: schedtest.php?error");
-	}//end else
+	//} //end if datetoday >= string1
+	//else {
+	//	header("Location: schedtest.php?error");
+	//}//end else
 }//end if daterange
 else if($hasdate=='without' AND $check_exist==0){
 	//update employee table
@@ -286,6 +290,8 @@ else if($hasdate=='without' AND $check_exist==0){
 			$sqlup = "UPDATE attendance SET attendance_shift='$sched' WHERE attendance_date >='$dateTomorrow' AND employee_id='$empid'";
 			if ($conn->query($sqlup) === TRUE) {
 			    echo $hasdate." Record updated successfully employee ".$empid."<br>";
+			    $string2='0000-00-00';
+			    recompute_attendance_details($dateTomorrow, $string2, $empid);
 			    header("Location: schedtest.php?edited");
 			  //  echo"<script>alert('updated successfully')</script>";
 

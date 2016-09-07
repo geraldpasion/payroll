@@ -273,7 +273,7 @@
 											echo "<tr class = 'josh'>";
 											echo "<td align='center'><input type='checkbox' id='empid' class='checkbox' name='id[]' value='$empid'></td>";
 											echo "<td style='padding-left:100px;text-align:left'>
-											<a href='#' data-toggle='modal' data-empid='$empid'  class='clickdialog' data-target='#myModal2'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</a></td>";
+											<a href='#".$empid."' data-toggle='modal' data-empid='$empid'  class='clickdialog' data-target='#myModal2'>" . $row1->employee_lastname . "," . " " . $row1->employee_firstname . " " . $row1->employee_middlename . "</a></td>";
 											echo "<td style='text-align:left'>" . $row1->employee_department. "</td>";
 											echo "<td style='text-align:left'>". $row1->employee_type . "</td>";
 
@@ -343,14 +343,14 @@
 							<ul id="mytab" class="nav nav-tabs">
 								<li class="active"><a data-toggle="tab" href="#shiftlog">Shift Schedule</a></li>
 								<li class=""><a data-toggle="tab" href="#daily">Daily Schedule</a></li>
-								<li class=""><a data-toggle="tab" href="#restdaylog">Rest Day</a></li>
+								<!--li class=""><a data-toggle="tab" href="#restdaylog">Rest Day</a></li-->
 							</ul>
 							<div class="tab-content">
 						<div style= "max-height:100px; min-height:300px; overflow-y:scroll;" id="shiftlog" class="tab-pane fade active in" >
 								<div class="panel-body">
+									<input type="hidden" id = "empid" name = "empid" onKeyPress="return lettersonly(this, event)" readonly = "readonly" required="">
 							<table id="shift_log" class='footable table table-stripped' data-page-size='20' data-filter=#filter>						
-										<thead>
-											<tr>
+										<thead><input type="hidden" id = "empid" name = "empid" onKeyPress="return lettersonly(this, event)" readonly = "readonly" required="">
 												<th>Date</th>
 												<th>Start Date</th>
 												<th>End Date</th>
@@ -386,33 +386,19 @@
 
 					<div style= "max-height:100px; min-height:300px; overflow-y:scroll;" id="daily" class="tab-pane" >
 								<div class="panel-body">
-									
+									<input type="hidden" id = "empid" name = "empid" onKeyPress="return lettersonly(this, event)" readonly = "readonly" required="">
 							<table id="daily_log" class='footable table table-stripped' data-page-size='20' data-filter=#filter>
 							<div class="form-group">
 
 								<label class="col-md-1 control-label" id ="lt3">Year:</label>
 								<div class="col-md-3">
-									<select id = "dyear" data-default-value="z" name="dyear" onchange="filterdailylogs()" >
+									<select id = "dyear" data-default-value="z" name="dyear" onchange="filterdailylogs()">
 										<option value = "" selected="true" disabled>Year</option>
-										<option value = "2016">2016</option>
-										<option value = "2015">2015</option>
-										<option value = "2014">2014</option>
-										<option value = "2013">2013</option>
-										<option value = "2012">2012</option>
-										<option value = "2011">2011</option>
-										<option value = "2010">2010</option>
-										<option value = "2009">2009</option>
-										<option value = "2008">2008</option>
-										<option value = "2007">2007</option>
-										<option value = "2006">2006</option>
-										<option value = "2005">2005</option>
-										<option value = "2004">2004</option>
-										<option value = "2003">2003</option>
-										<option value = "2002">2002</option>
-										<option value = "2001">2001</option>
-										<option value = "2000">2000</option>
-
-										
+										<?php 
+  			 								for($i = 2005 ; $i <= date('Y'); $i++){
+    			  								echo "<option value='".$i."'>$i</option>";
+  			 								}
+										?>
 									</SELECT>
 								</div>		
 								<label class="col-md-1 control-label" id ="lt3">Month:</label>
@@ -506,7 +492,7 @@
 							</div>
 						</ul>
 
-					<div style= "max-height:100px; min-height:300px; overflow-y:scroll;" id="restdaylog" class="tab-pane" >
+					<!--div style= "max-height:100px; min-height:300px; overflow-y:scroll;" id="restdaylog" class="tab-pane" >
 								<div class="panel-body">
 							<table id="restday_log" class='footable table table-stripped' data-page-size='20' data-filter=#filter>						
 										<thead>
@@ -542,7 +528,7 @@
 									</table>
 								</div>
 							</div>
-						</ul>
+						</ul-->
 					
 							</div>
 						</div>
@@ -675,89 +661,19 @@ $(document).ready(function(){
      <script>
 	$('.timepicker2').timepicki();
     </script>
-
-
-    <script type="text/javascript">
-
-		$('.myModal2').on('shown.bs.modal', function () {
-			
-			var menuId = $('#empid').val();
-			alert(menuId);
-	   		/*var menuId = $('#empid').val();
-			var request = $.ajax({
-			  url: "shift_log_table.php",
-			  method: "GET",
-			  data: { empid : menuId },
-			  dataType: "html"
-			});
-			 
-			request.done(function(msg) {
-				//alert(msg);
-			  $("#shift_log").html(msg);
-			});
-			 
-			request.fail(function( jqXHR, textStatus ) {
-			  alert( "Request failed: " + textStatus );
-			});*/
-		});
-
-	</script>
-
-	<script type="text/javascript">	
-		$('#myModal2').on('shown.bs.modal', function () {
-	   		var menuId = $('#empid').val();
-	   		var year=$('#dyear').val();
-	   		var month=$('#dmonth').val();
-	   		var day=$('#dday').val();
-			var request = $.ajax({
-			  url: "daily_log_table.php",
-			  method: "GET",
-			  data: { empid : menuId , year : year , month : month , day : day },
-			  dataType: "html"
-			});
-			 
-			request.done(function(msg) {
-				//alert(msg);
-			  $("#daily_log").html(msg);
-			});
-			 
-			request.fail(function( jqXHR, textStatus ) {
-			  alert( "Request failed: " + textStatus );
-			});
-		});
-	</script>
-
-	<script type="text/javascript">
-		$('#myModal2').on('shown.bs.modal', function () {
-	   		var menuId = $('#empid').val();
-	   		alert(menuId);
-			var request = $.ajax({
-			  url: "restday_log_table.php",
-			  method: "GET",
-			  data: { empid : menuId },
-			  dataType: "html"
-			});
-			 
-			request.done(function(msg) {
-				//alert(msg);
-			  $("#restday_log").html(msg);
-			});
-			 
-			request.fail(function( jqXHR, textStatus ) {
-			  alert( "Request failed: " + textStatus );
-			});
-		});
-
-	</script>
+	
     <link href="css/timepicki.css" rel="stylesheet">
 
 		<?php
 			include('menufooter.php');
 		?>
 	</body>
+
 	<script type="text/javascript">
 		$('#myModal2').on('shown.bs.modal', function () {
-	   		var menuId = $('#empid').val();
+	   		var menuId = $(".modal-body #empid").val();
+	   		//var menuId =142;
+	   		//alert(menuId);
 			var request = $.ajax({
 			  url: "shift_log_table.php",
 			  method: "GET",
@@ -779,16 +695,15 @@ $(document).ready(function(){
 
 
 
-	<script type="text/javascript">	
+	<script type="text/javascript">
 		$('#myModal2').on('shown.bs.modal', function () {
-	   		var menuId = $('#empid').val();
-	   		var year=$('#dyear').val();
-	   		var month=$('#dmonth').val();
-	   		var day=$('#dday').val();
+	   		var menuId = $(".modal-body #empid").val();
+	   		//var menuId =142;
+	   		//alert(menuId);
 			var request = $.ajax({
 			  url: "daily_log_table.php",
 			  method: "GET",
-			  data: { empid : menuId , year : year , month : month , day : day },
+			  data: { empid : menuId },
 			  dataType: "html"
 			});
 			 
@@ -801,27 +716,7 @@ $(document).ready(function(){
 			  alert( "Request failed: " + textStatus );
 			});
 		});
-	</script>
-
-	<script type="text/javascript">
-		$('#myModal2').on('shown.bs.modal', function () {
-	   		var menuId = $('#empid').val();
-			var request = $.ajax({
-			  url: "restday_log_table.php",
-			  method: "GET",
-			  data: { empid : menuId },
-			  dataType: "html"
-			});
-			 
-			request.done(function(msg) {
-				//alert(msg);
-			  $("#restday_log").html(msg);
-			});
-			 
-			request.fail(function( jqXHR, textStatus ) {
-			  alert( "Request failed: " + textStatus );
-			});
-		});
 
 	</script>
+
 </html>
